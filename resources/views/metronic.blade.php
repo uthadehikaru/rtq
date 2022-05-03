@@ -82,6 +82,16 @@
                                             <span class="kt-menu__link-text">@lang('Users')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('member') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Members')</span>
+                                        </a>
+                                    </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('course')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('course') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Courses')</span>
+                                        </a>
+                                    </li>
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Sign Out')</span>

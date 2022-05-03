@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Interfaces\CourseRepositoryInterface;
+use App\Models\Course;
+
+class CourseRepository implements CourseRepositoryInterface 
+{
+
+    public function all() 
+    {
+        return Course::all();
+    }
+
+    public function count() 
+    {
+        return Course::count();
+    }
+    
+    public function getLatest($limit=10) 
+    {
+        return Course::latest()->paginate($limit);
+    }
+
+    public function find($id) 
+    {
+        return Course::findOrFail($id);
+    }
+
+    public function delete($id) 
+    {
+        Course::destroy($id);
+    }
+
+    public function create(array $data) 
+    {
+        return Course::create($data);
+    }
+
+    public function update($id, array $data) 
+    {
+        return Course::whereId($id)->update($data);
+    }
+}

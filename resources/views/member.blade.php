@@ -34,7 +34,7 @@ jQuery(document).ready(function() {
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Users')
+    @lang('Members')
 </span>
 @endsection
 @section('content')
@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Users')
+                {{ $total }} @lang('Members')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
@@ -84,19 +84,27 @@ jQuery(document).ready(function() {
             <thead>
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
-                    <th title="Field #2">@lang('Name')</th>
+                    <th title="Field #2">@lang('Full Name')</th>
+                    <th title="Field #4">@lang('Short Name')</th>
                     <th title="Field #3">@lang('Email')</th>
-                    <th title="Field #4">@lang('Status')</th>
-                    <th title="Action">@lang('Action')</th>
+                    <th title="Field #4">@lang('Gender')</th>
+                    <th title="Field #4">@lang('Phone')</th>
+                    <th title="Field #4">@lang('Address')</th>
+                    <th title="Field #4">@lang('Post Code')</th>
+                    <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
+                @foreach($members as $member)
                     <tr>
-                        <td>{{ $user->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->is_admin?'Admin':'User' }}</td>
+                        <td>{{ $member->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $member->full_name }}</td>
+                        <td>{{ $member->short_name }}</td>
+                        <td>{{ $member->email }}</td>
+                        <td>{{ $member->gender }}</td>
+                        <td>{{ $member->phone }}</td>
+                        <td>{{ $member->address }}</td>
+                        <td>{{ $member->postcode }}</td>
                         <td></td>
                     </tr>
                 @endforeach

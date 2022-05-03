@@ -34,7 +34,7 @@ jQuery(document).ready(function() {
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Users')
+    @lang('Courses')
 </span>
 @endsection
 @section('content')
@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Users')
+                {{ $total }} @lang('Courses')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
@@ -85,18 +85,16 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
-                    <th title="Field #3">@lang('Email')</th>
-                    <th title="Field #4">@lang('Status')</th>
-                    <th title="Action">@lang('Action')</th>
+                    <th title="Field #2">@lang('Fee')</th>
+                    <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
+                @foreach($courses as $course)
                     <tr>
-                        <td>{{ $user->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->is_admin?'Admin':'User' }}</td>
+                        <td>{{ $course->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $course->name }}</td>
+                        <td>{{ $course->fee }}</td>
                         <td></td>
                     </tr>
                 @endforeach

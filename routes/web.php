@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\CourseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
     });
     Route::get('/users', [UserController::class,'index'])->name('user');
+    Route::get('/members', [MemberController::class,'index'])->name('member');
+    Route::get('/courses', [CourseController::class,'index'])->name('course');
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');

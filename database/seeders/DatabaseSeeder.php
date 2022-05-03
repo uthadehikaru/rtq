@@ -22,5 +22,10 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'is_admin'=> true,
         ]);
+        
+        $this->call([
+            CourseSeeder::class,
+            MemberSeeder::class,
+        ]);
     }
 }

@@ -22,17 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
-        'user_id',
-        'campaign_id',
-        'campaign_name',
-        'warehouse_id',
-        'warehouse_name',
-        'customer_id',
-        'customer_name',
-        'location_id',
-        'location_name',
-        'doctype_id',
-        'doctype_name',
     ];
 
     /**
