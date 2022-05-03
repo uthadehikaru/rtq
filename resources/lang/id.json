@@ -1,0 +1,65 @@
+{
+    "A":"",
+    "Active":"Aktif",
+    "All":"Semua",
+
+    "C":"",
+    "Created at":"Dibuat pada",
+    "Customer":"Pelanggan",
+
+    "E":"",
+    "Email":"Email",
+    "Error Message":"Pesan Error",
+
+    "Failed at":"Gagal pada",
+
+    "H":"",
+    "Hi":"Halo",
+
+    "Integration to":"Integrasi ke",
+
+    "N":"",
+    "Name":"Nama",
+    "Not Active":"Tidak aktif",
+
+    "O":"",
+    "Outlet":"Toko",
+
+    "P":"",
+    "Price":"Harga",
+    "Print":"Cetak",
+    "Products":"Produk",
+
+    "Q":"",
+    "Queue is processing":"antrian sedang diproses",
+
+    "R":"",
+    "Registered":"Terdaftar",
+
+    "S":"",
+    "Search":"Pencarian",
+    "Sign Out":"Keluar",
+    "Status":"Status",
+    "Sync":"Sinkronisasi",
+    "Synced at":"Disinkronkan pada",
+    
+    "U":"",
+    "Unit Business":"Unit Bisnis",
+    "Users":"Pengguna",   
+
+    "V":"",
+    "Value":"Kode",
+
+    
+    "controllerhome.title.dashboard": "Beranda",
+    "controlleruser.title.usersdata": "Data Pengguna",
+    "login.title": "Masuk",
+    "login.subtitle": "Selamat Datang",
+    "login.email": "Email",
+    "login.password": "Password",
+    "login.rememberme": "Ingat Saya",
+    "login.signin": "Masuk",
+    "metronic.dashboard": "Beranda",
+    "metronic.users":"Pengguna",
+    "-": "-"
+}
