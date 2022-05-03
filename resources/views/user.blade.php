@@ -1,10 +1,40 @@
 @extends('metronic')
 @push('scripts')
-		<script src="{{ asset('assets/js/user-table.js') }}" type="text/javascript"></script>
+		<script type="text/javascript">
+            var KTDatatable = function() {
+	// Private functions
+
+	// table initializer
+	var table = function() {
+
+		var datatable = $('.kt-datatable').KTDatatable({
+			data: {
+				saveState: {cookie: false},
+			},
+			search: {
+				input: $('#generalSearch'),
+			},
+		});
+
+	};
+
+	return {
+		// Public functions
+		init: function() {
+			// init dmeo
+			table();
+		},
+	};
+}();
+
+jQuery(document).ready(function() {
+	KTDatatable.init();
+});
+        </script>
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('controlleruser.title.usersdata')
+    @lang('Users')
 </span>
 @endsection
 @section('content')
@@ -15,7 +45,7 @@
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('controlleruser.title.usersdata')
+                {{ $total }} @lang('Users')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">

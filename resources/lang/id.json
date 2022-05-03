@@ -7,6 +7,9 @@
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
 
+    "D":"",
+    "Dashboard": "Beranda",
+
     "E":"",
     "Email":"Email",
     "Error Message":"Pesan Error",
@@ -16,7 +19,16 @@
     "H":"",
     "Hi":"Halo",
 
+    "I":"",
     "Integration to":"Integrasi ke",
+
+    "L":"",
+    "login.title": "Masuk",
+    "login.subtitle": "Selamat Datang",
+    "login.email": "Email",
+    "login.password": "Password",
+    "login.rememberme": "Ingat Saya",
+    "login.signin": "Masuk",
 
     "N":"",
     "Name":"Nama",
@@ -50,16 +62,5 @@
     "V":"",
     "Value":"Kode",
 
-    
-    "controllerhome.title.dashboard": "Beranda",
-    "controlleruser.title.usersdata": "Data Pengguna",
-    "login.title": "Masuk",
-    "login.subtitle": "Selamat Datang",
-    "login.email": "Email",
-    "login.password": "Password",
-    "login.rememberme": "Ingat Saya",
-    "login.signin": "Masuk",
-    "metronic.dashboard": "Beranda",
-    "metronic.users":"Pengguna",
     "-": "-"
 }

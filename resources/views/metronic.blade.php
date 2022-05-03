@@ -74,12 +74,12 @@
 								<ul class="kt-menu__nav ">
                                     <li class="kt-menu__item kt-menu__item--rel {{ \Request::is('dashboard')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('dashboard') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('metronic.dashboard')</span>
+                                            <span class="kt-menu__link-text">@lang('Dashboard')</span>
                                         </a>
                                     </li>
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('user')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('user') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('metronic.users')</span>
+                                            <span class="kt-menu__link-text">@lang('Users')</span>
                                         </a>
                                     </li>
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
@@ -149,7 +149,7 @@
                                         <a href="{{ route('dashboard') }}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
                                         <span class="kt-subheader__breadcrumbs-separator"></span>
                                         <a href="{{ route('dashboard') }}" class="kt-subheader__breadcrumbs-link">
-										@lang("controllerhome.title.dashboard") </a>
+										@lang("Dashboard") </a>
                                         <span class="kt-subheader__breadcrumbs-separator"></span>
 										@yield('breadcrumbs')
 									</div>

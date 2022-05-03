@@ -21,7 +21,7 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        $data['title'] = __('controllerhome.title.dashboard');
+        $data['title'] = __('Dashboard');
         
         return view('dashboard', $data);
     }

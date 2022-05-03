@@ -13,7 +13,7 @@ class UserController extends Controller
         if (Auth::user()->cannot('list', Auth::user())) {
             return abort(403);
         }
-        $data['title'] = __('controlleruser.title.usersdata');
+        $data['title'] = __('Users');
         $data['users'] = User::orderBy('name')->get();
         $data['total'] = User::count();
         return view('user', $data);
