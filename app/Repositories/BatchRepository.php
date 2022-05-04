@@ -4,9 +4,21 @@ namespace App\Repositories;
 
 use App\Interfaces\BatchRepositoryInterface;
 use App\Models\Batch;
+use App\Models\Member;
+use DB;
 
 class BatchRepository implements BatchRepositoryInterface 
 {
+
+    public function all() 
+    {
+        return Batch::all();
+    }
+
+    public function count() 
+    {
+        return Batch::count();
+    }
 
     public function getByCourse($course_id) 
     {
@@ -16,6 +28,26 @@ class BatchRepository implements BatchRepositoryInterface
     public function countByCourse($course_id) 
     {
         return Batch::where('course_id', $course_id)->count();
+    }
+
+    public function getAvailableMembers($batch_id) 
+    {
+        return Member::whereNotExists(function ($query) use($batch_id) {
+            $query->select(DB::raw(1))
+                  ->from('batch_member')
+                  ->whereColumn('batch_member.member_id', 'members.id')
+                  ->where('batch_member.batch_id',$batch_id);
+        })->orderBy('full_name')->get();
+    }
+
+    public function members($batch_id) 
+    {
+        return Batch::find($batch_id)->members;
+    }
+
+    public function removeMember($batch_id, $member_id) 
+    {
+        return Batch::find($batch_id)->members()->detach($member_id);
     }
     
     public function getLatest($limit=10) 
@@ -30,7 +62,8 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function delete($id) 
     {
-        Batch::destroy($id);
+        $batch = Batch::find($id);
+        return $batch->destroy($id);
     }
 
     public function create(array $data) 

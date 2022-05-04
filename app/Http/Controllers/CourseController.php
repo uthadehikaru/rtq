@@ -12,12 +12,50 @@ class CourseController extends Controller
         $data['title'] = __('Courses');
         $data['courses'] = $courseRepository->all();
         $data['total'] = $courseRepository->count();
-        return view('course', $data);
+        return view('datatables.course', $data);
     }
 
-    public function json(CourseRepositoryInterface $courseRepository)
+    public function create(Request $request)
     {
-        $courses = $courseRepository->all();
-        return response()->json($courses);
+        $data['title'] = __('New Course');
+        $data['course'] = null;
+        return view('forms.course', $data);
+    }
+
+    public function store(CourseRepositoryInterface $courseRepository, Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+            'fee'=>'numeric',
+        ]);
+
+        $course = $request->all();
+        $courseRepository->create($course);
+        return redirect()->route('courses.index')->with('message',__('Created Successfully'));
+    }
+
+    public function edit(CourseRepositoryInterface $courseRepository, $course_id)
+    {
+        $data['title'] = __('Edit Course');
+        $data['course'] = $courseRepository->find($course_id);
+        return view('forms.course', $data);
+    }
+
+    public function update(CourseRepositoryInterface $courseRepository, Request $request, $course_id)
+    {
+        $data = $request->validate([
+            'name'=>'required',
+            'fee'=>'numeric',
+        ]);
+
+        $courseRepository->update($course_id, $data);
+        return redirect()->route('courses.index')->with('message',__('Updated Successfully'));
+    }
+
+    public function destroy(CourseRepositoryInterface $courseRepository, $course_id)
+    {
+        $status = $courseRepository->delete($course_id);
+        $data['statusCode'] = 200;
+        return response()->json($data);
     }
 }

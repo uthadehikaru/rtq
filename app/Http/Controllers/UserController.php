@@ -16,6 +16,6 @@ class UserController extends Controller
         $data['title'] = __('Users');
         $data['users'] = User::orderBy('name')->get();
         $data['total'] = User::count();
-        return view('user', $data);
+        return view('datatables.user', $data);
     }
 }

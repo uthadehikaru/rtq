@@ -1,9 +1,18 @@
 {
     "A":"",
     "Active":"Aktif",
+    "Action":"Aksi",
+    "Add":"Tambah",
+    "Add Member":"Tambah Anggota",
+    "Address":"Alamat",
     "All":"Semua",
 
+    "B":"",
+    "Batch":"Angkatan",
+    "Batches":"Angkatan",
+
     "C":"",
+    "Cancel":"Batal",
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
     "Course":"Kelas",
@@ -11,14 +20,23 @@
 
     "D":"",
     "Dashboard": "Beranda",
+    "Delete":"Hapus",
 
     "E":"",
+    "Edit":"Ubah",
+    "Edit Batch":"Ubah Angkatan",
+    "Edit Course":"Ubah Kelas",
+    "Edit Member":"Ubah Anggota",
     "Email":"Email",
     "Error Message":"Pesan Error",
+
+    "G":"",
+    "Gender":"Jenis Kelamin",
 
     "F":"",
     "Failed at":"Gagal pada",
     "Fee":"Biaya",
+    "Full Name":"Nama Lengkap",
 
     "H":"",
     "Hi":"Halo",
@@ -40,12 +58,17 @@
 
     "N":"",
     "Name":"Nama",
+    "New Batch":"Buat Angkatan",
+    "New Course":"Buat Kelas",
+    "New Member":"Buat Anggota",
     "Not Active":"Tidak aktif",
 
     "O":"",
     "Outlet":"Toko",
 
     "P":"",
+    "Phone":"Telp",
+    "Post Code":"Kode Pos",
     "Price":"Harga",
     "Print":"Cetak",
     "Products":"Produk",
@@ -58,8 +81,11 @@
 
     "S":"",
     "Search":"Pencarian",
+    "Select a member":"Pilih anggota",
+    "Short Name":"Nama Panggilan",
     "Sign Out":"Keluar",
     "Status":"Status",
+    "Submit":"Simpan",
     "Sync":"Sinkronisasi",
     "Synced at":"Disinkronkan pada",
     

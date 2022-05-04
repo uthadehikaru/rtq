@@ -29,6 +29,28 @@ var KTDatatableJsonRemoteDemo = function () {
 
 jQuery(document).ready(function () {    
 	KTDatatableJsonRemoteDemo.init();
+
+    $(document).on("click", ".delete", function() { 
+        if(confirm("@lang('Are you sure?')")) {
+            var id= $(this).data('id');
+            var url = "{{ route('courses.index') }}";
+            var dltUrl = url+"/"+id;
+            $.ajax({
+                url: dltUrl,
+                type: "DELETE",
+                cache: false,
+                data:{
+                    _token:'{{ csrf_token() }}'
+                },
+                success: function(dataResult){
+                    if(dataResult.statusCode==200){
+                        alert('@lang('Deleted Successfully')');
+                        location.reload(true);
+                    }
+                }
+            });
+        }
+	});
 });
 </script>
 @endpush
@@ -38,6 +60,9 @@ jQuery(document).ready(function () {
 </span>
 @endsection
 @section('content')
+@if(session()->has('message'))
+<x-alert type="success">{{ session()->get('message') }}</x-alert>
+@endif
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
@@ -51,9 +76,9 @@ jQuery(document).ready(function () {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="#" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('courses.create') }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
-                        @lang('New')
+                        @lang('New Course')
                     </a>
                 </div>
             </div>
@@ -100,13 +125,13 @@ jQuery(document).ready(function () {
                         <td>{{ $course->name }}</td>
                         <td>{{ $course->fee }}</td>
                         <td>
-                            <a href="{{ route('course.batch', $course->id) }}" class="text-primary">
+                            <a href="{{ route('courses.batches.index', $course->id) }}" class="text-primary">
                                 <i class="la la-list"></i> @lang('Detail')
                             </a>
-                            <a href="javascript:;" class="text-warning">
+                            <a href="{{ route('courses.edit', $course->id) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>
-                            <a href="javascript:;" class="text-danger">
+                            <a href="javascript:;" class="text-danger delete" data-id="{{ $course->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
                         </td>

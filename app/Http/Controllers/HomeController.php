@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\User;
-use App\Models\Product;
+use App\Interfaces\CourseRepositoryInterface;
+use App\Interfaces\BatchRepositoryInterface;
+use App\Interfaces\MemberRepositoryInterface;
 use Auth;
-use DB;
 
 class HomeController extends Controller
 {
@@ -19,10 +18,12 @@ class HomeController extends Controller
             return redirect('login');
     }
 
-    public function dashboard()
+    public function dashboard(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, MemberRepositoryInterface $memberRepository)
     {
         $data['title'] = __('Dashboard');
-        
+        $data['courses'] = $courseRepository->count();
+        $data['batches'] = $batchRepository->count();
+        $data['members'] = $memberRepository->count();
         return view('dashboard', $data);
     }
 }

@@ -29,21 +29,46 @@ var KTDatatableJsonRemoteDemo = function () {
 
 jQuery(document).ready(function () {    
 	KTDatatableJsonRemoteDemo.init();
+
+    $(document).on("click", ".delete", function() { 
+        if(confirm("@lang('Are you sure?')")) {
+            var id= $(this).data('id');
+            var url = "{{ route('courses.batches.index', [$course->id]) }}";
+            var dltUrl = url+"/"+id;
+            $.ajax({
+                url: dltUrl,
+                type: "DELETE",
+                cache: false,
+                data:{
+                    _token:'{{ csrf_token() }}'
+                },
+                success: function(dataResult){
+                    if(dataResult.statusCode==200){
+                        alert('@lang('Deleted Successfully')');
+                        location.reload(true);
+                    }
+                }
+            });
+        }
+	});
 });
 </script>
 @endpush
 @section('breadcrumbs')
-<a href="{{ route('course') }}" class="kt-subheader__breadcrumbs-link">
+<a href="{{ route('courses.index') }}" class="kt-subheader__breadcrumbs-link">
 @lang("Course") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
-<a href="{{ route('course.batch',$batch->id) }}" class="kt-subheader__breadcrumbs-link">
+<a href="{{ route('courses.batches.index', $course->id) }}" class="kt-subheader__breadcrumbs-link">
 @lang("Batch") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Batch Members')
+    @lang('New Batch')
 </span>
 @endsection
 @section('content')
+@if(session()->has('message'))
+<x-alert type="success">{{ session()->get('message') }}</x-alert>
+@endif
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
@@ -51,15 +76,15 @@ jQuery(document).ready(function () {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Batch Members')
+                {{ $total }} @lang('Batches')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="#" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('courses.batches.create', $course->id) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
-                        @lang('New')
+                        @lang('New Batch')
                     </a>
                 </div>
             </div>
@@ -95,19 +120,24 @@ jQuery(document).ready(function () {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
+                    <th title="Field #2">@lang('Description')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($batch->members as $member)
+                @foreach($batches as $batch)
                     <tr>
-                        <td>{{ $member->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $member->full_name }}</td>
+                        <td>{{ $batch->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $batch->name }}</td>
+                        <td>{{ $batch->description }}</td>
                         <td>
-                            <a href="javascript:;" class="text-warning">
+                            <a href="{{ route('courses.batches.batchmembers.index', [$batch->course_id, $batch->id]) }}" class="text-primary">
+                                <i class="la la-list"></i> @lang('Detail')
+                            </a>
+                            <a href="{{ route('courses.batches.edit', [$batch->course_id, $batch->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>
-                            <a href="javascript:;" class="text-danger">
+                            <a href="javascript:;" class="text-danger delete" data-id="{{ $batch->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
                         </td>

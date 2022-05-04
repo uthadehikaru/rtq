@@ -25,11 +25,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
     });
-    Route::get('/users', [UserController::class,'index'])->name('user');
-    Route::get('/members', [MemberController::class,'index'])->name('member');
-    Route::get('/courses', [CourseController::class,'index'])->name('course');
-    Route::get('/courses/{course_id}/batches', [BatchController::class,'index'])->name('course.batch');
-    Route::get('/courses/{course_id}/batches/{batch_id}/members', [BatchMemberController::class,'index'])->name('course.batch.member');
+    Route::resource('users', UserController::class);
+    Route::resource('members', MemberController::class);
+    Route::resource('courses', CourseController::class);
+    Route::resource('courses.batches', BatchController::class);
+    Route::resource('courses.batches.batchmembers', BatchMemberController::class);
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');

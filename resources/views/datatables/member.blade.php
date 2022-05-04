@@ -29,8 +29,30 @@
 
 jQuery(document).ready(function() {
 	KTDatatable.init();
+
+    $(document).on("click", ".delete", function() { 
+        if(confirm("@lang('Are you sure?')")) {
+            var id= $(this).data('id');
+            var url = "{{ route('members.index') }}";
+            var dltUrl = url+"/"+id;
+            $.ajax({
+                url: dltUrl,
+                type: "DELETE",
+                cache: false,
+                data:{
+                    _token:'{{ csrf_token() }}'
+                },
+                success: function(dataResult){
+                    if(dataResult.statusCode==200){
+                        alert('@lang('Deleted Successfully')');
+                        location.reload(true);
+                    }
+                }
+            });
+        }
+	});
 });
-        </script>
+</script>
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
@@ -38,6 +60,9 @@ jQuery(document).ready(function() {
 </span>
 @endsection
 @section('content')
+@if(session()->has('message'))
+<x-alert type="success">{{ session()->get('message') }}</x-alert>
+@endif
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
@@ -51,6 +76,10 @@ jQuery(document).ready(function() {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    <a href="{{ route('members.create') }}" class="btn btn-primary btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @lang('New Member')
+                    </a>
                 </div>
             </div>
         </div>
@@ -105,7 +134,14 @@ jQuery(document).ready(function() {
                         <td>{{ $member->phone }}</td>
                         <td>{{ $member->address }}</td>
                         <td>{{ $member->postcode }}</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ route('members.edit', $member->id) }}" class="text-warning">
+                                <i class="la la-edit"></i> @lang('Edit')
+                            </a>
+                            <a href="javascript:;" class="text-danger delete" data-id="{{ $member->id }}">
+                                <i class="la la-trash"></i> @lang('Delete')
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
