@@ -14,4 +14,10 @@ class CourseController extends Controller
         $data['total'] = $courseRepository->count();
         return view('course', $data);
     }
+
+    public function json(CourseRepositoryInterface $courseRepository)
+    {
+        $courses = $courseRepository->all();
+        return response()->json($courses);
+    }
 }

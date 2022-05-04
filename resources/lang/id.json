@@ -6,6 +6,8 @@
     "C":"",
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
+    "Course":"Kelas",
+    "Courses":"Kelas",
 
     "D":"",
     "Dashboard": "Beranda",
@@ -14,7 +16,9 @@
     "Email":"Email",
     "Error Message":"Pesan Error",
 
+    "F":"",
     "Failed at":"Gagal pada",
+    "Fee":"Biaya",
 
     "H":"",
     "Hi":"Halo",
@@ -29,6 +33,10 @@
     "login.password": "Password",
     "login.rememberme": "Ingat Saya",
     "login.signin": "Masuk",
+
+    "M":"",
+    "Member":"Anggota",
+    "Members":"Anggota",
 
     "N":"",
     "Name":"Nama",

@@ -33,8 +33,11 @@ jQuery(document).ready(function () {
 </script>
 @endpush
 @section('breadcrumbs')
+<a href="{{ route('course') }}" class="kt-subheader__breadcrumbs-link">
+@lang("Course") </a>
+<span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Courses')
+    @lang('Batch')
 </span>
 @endsection
 @section('content')
@@ -45,7 +48,7 @@ jQuery(document).ready(function () {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Courses')
+                {{ $total }} @lang('Batches')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
@@ -89,18 +92,18 @@ jQuery(document).ready(function () {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
-                    <th title="Field #2">@lang('Fee')</th>
+                    <th title="Field #2">@lang('Description')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($courses as $course)
+                @foreach($batches as $batch)
                     <tr>
-                        <td>{{ $course->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $course->name }}</td>
-                        <td>{{ $course->fee }}</td>
+                        <td>{{ $batch->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $batch->name }}</td>
+                        <td>{{ $batch->description }}</td>
                         <td>
-                            <a href="{{ route('course.batch', $course->id) }}" class="text-primary">
+                            <a href="{{ route('course.batch.member', [$batch->course_id, $batch->id]) }}" class="text-primary">
                                 <i class="la la-list"></i> @lang('Detail')
                             </a>
                             <a href="javascript:;" class="text-warning">

@@ -20,8 +20,8 @@ class Batch extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function users()
+    public function members()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Member::class);
     }
 }
