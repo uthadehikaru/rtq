@@ -8,6 +8,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
+use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +22,10 @@ use App\Http\Controllers\BatchMemberController;
 |
 */
 
+Route::get('/', [HomeController::class,'index'])->name('home');
+
 Route::middleware('auth')->group(function () {
     Route::controller(HomeController::class)->group(function () {
-        Route::get('/', 'index')->name('home');
         Route::get('/dashboard', 'dashboard')->name('dashboard');
     });
     Route::resource('users', UserController::class);
@@ -30,9 +33,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class);
     Route::resource('courses.batches', BatchController::class);
     Route::resource('courses.batches.batchmembers', BatchMemberController::class);
+    Route::resource('periods', PeriodController::class);
+    Route::get('payments/{payment}/confirm', [PaymentController::class,'confirm'])->name('payments.confirm');
+    Route::resource('payments', PaymentController::class);
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
 });
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('login.authenticate');
+
+Route::get('/payment', [PaymentController::class,'form'])->name('payment');
+Route::post('/payment', [PaymentController::class,'store'])->name('payment.confirm');

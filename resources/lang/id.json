@@ -6,8 +6,11 @@
     "Add Member":"Tambah Anggota",
     "Address":"Alamat",
     "All":"Semua",
+    "Amount":"Nominal",
+    "Attachment":"Lampiran",
 
     "B":"",
+    "Back":"Kembali",
     "Batch":"Angkatan",
     "Batches":"Angkatan",
 
@@ -15,6 +18,7 @@
     "Cancel":"Batal",
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
+    "Confirmed at":"Dikonfirmasi pada",
     "Course":"Kelas",
     "Courses":"Kelas",
 
@@ -28,6 +32,7 @@
     "Edit Course":"Ubah Kelas",
     "Edit Member":"Ubah Anggota",
     "Email":"Email",
+    "Enter":"Masukkan",
     "Error Message":"Pesan Error",
 
     "G":"",
@@ -36,6 +41,7 @@
     "F":"",
     "Failed at":"Gagal pada",
     "Fee":"Biaya",
+    "Female":"Perempuan",
     "Full Name":"Nama Lengkap",
 
     "H":"",
@@ -45,6 +51,7 @@
     "Integration to":"Integrasi ke",
 
     "L":"",
+    "Login":"Masuk",
     "login.title": "Masuk",
     "login.subtitle": "Selamat Datang",
     "login.email": "Email",
@@ -53,20 +60,29 @@
     "login.signin": "Masuk",
 
     "M":"",
+    "Male":"Laki-Laki",
     "Member":"Anggota",
     "Members":"Anggota",
 
     "N":"",
     "Name":"Nama",
-    "New Batch":"Buat Angkatan",
-    "New Course":"Buat Kelas",
-    "New Member":"Buat Anggota",
+    "New":"Baru",
+    "New Batch":"Tambah Angkatan",
+    "New Course":"Tambah Kelas",
+    "New Member":"Tambah Anggota",
+    "New Payment":"Tambah Pembayaran",
     "Not Active":"Tidak aktif",
 
     "O":"",
     "Outlet":"Toko",
 
     "P":"",
+    "Paid":"Lunas",
+    "Payment":"Pembayaran",
+    "Payments":"Pembayaran",
+    "Payment Confirm":"Konfirmasi Pembayaran",
+    "Period":"Periode Pembayaran",
+    "Periods":"Periode Pembayaran",
     "Phone":"Telp",
     "Post Code":"Kode Pos",
     "Price":"Harga",
@@ -80,6 +96,7 @@
     "Registered":"Terdaftar",
 
     "S":"",
+    "Save":"Simpan",
     "Search":"Pencarian",
     "Select a member":"Pilih anggota",
     "Short Name":"Nama Panggilan",

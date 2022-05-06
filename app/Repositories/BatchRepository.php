@@ -40,6 +40,16 @@ class BatchRepository implements BatchRepositoryInterface
         })->orderBy('full_name')->get();
     }
 
+    public function getBatchMembers($keyword="") 
+    {
+        return DB::table('batch_member')
+        ->select('members.full_name','batches.name','batch_member.member_id','batch_member.batch_id')
+        ->join('batches','batch_member.batch_id','batches.id')
+        ->join('members','batch_member.member_id','members.id')
+        ->where('members.full_name','LIKE','%'.$keyword.'%')
+        ->orderBy('members.full_name')->get();
+    }
+
     public function members($batch_id) 
     {
         return Batch::find($batch_id)->members;

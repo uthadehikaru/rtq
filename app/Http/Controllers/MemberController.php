@@ -67,4 +67,11 @@ class MemberController extends Controller
         $data['statusCode'] = 200;
         return response()->json($data);
     }
+
+    public function json(MemberRepositoryInterface $memberRepository)
+    {
+        $data['items'] = $memberRepository->all();
+        $data['total_count'] = 10;
+        return response()->json($data);
+    }
 }

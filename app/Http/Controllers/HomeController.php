@@ -12,10 +12,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (Auth::check())
-            return redirect('dashboard');
-        else
-            return redirect('login');
+        return view('home');
     }
 
     public function dashboard(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, MemberRepositoryInterface $memberRepository)

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CourseController;
+use App\Http\Controllers\BatchMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,6 @@ use App\Http\Controllers\CourseController;
 |
 */
 
-Route::middleware('auth')->name('api.')->group(function () {
-    Route::post('/courses', [CourseController::class,'json'])->name('courses');
+Route::name('api.')->group(function () {
+    Route::get('/batchmembers', [BatchMemberController::class,'json'])->name('batchmembers');
 });

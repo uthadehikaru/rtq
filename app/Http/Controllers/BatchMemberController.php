@@ -37,4 +37,12 @@ class BatchMemberController extends Controller
         return response()->json($data);
 
     }
+
+    public function json(BatchRepositoryInterface $batchRepository, Request $request)
+    {
+        $keyword = $request->get('q');
+        $data['items'] = $batchRepository->getBatchMembers($keyword);
+        $data['total_count'] = 10;
+        return response()->json($data);
+    }
 }

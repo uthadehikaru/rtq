@@ -40,7 +40,7 @@
 		<!-- begin:: Header Mobile -->
 		<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 			<div class="kt-header-mobile__logo">
-				<a href="{{ url('dashboard') }}" class="h2">
+				<a href="{{ url('') }}" class="h2">
 					<!-- <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" /> -->
 					{{ config('app.name') }}
 				</a>
@@ -66,7 +66,7 @@
 -->
 						<div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
 							<div class="kt-header-logo">
-								<a href="{{ url('dashboard') }}" class="h2">
+								<a href="{{ url('') }}" class="h2">
 									<!-- <img alt="Logo" src="{{ asset('assets/media/logos/logo-dark.png') }}" /> -->
 									{{ config('app.name') }}
 								</a>
@@ -78,19 +78,19 @@
                                             <span class="kt-menu__link-text">@lang('Dashboard')</span>
                                         </a>
                                     </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('user')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('users.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Users')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member')?'kt-menu__item--active':'' }}">
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('members.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Members')</span>
                                         </a>
                                     </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('course')?'kt-menu__item--active':'' }}">
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('course*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('courses.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Courses')</span>
+                                        </a>
+                                    </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('payments*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('payments.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Payments')</span>
                                         </a>
                                     </li>
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
