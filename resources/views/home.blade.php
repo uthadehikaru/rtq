@@ -12,8 +12,39 @@
 						{{ config('app.name') }}
 					</h3>
 					<div class="kt-sc__nav">
-						<a href="{{ route('login') }}" class="kt-link kt-font-bold">@lang('Login')</a>
-						<a href="{{ route('payment') }}" class="kt-link kt-font-bold">@lang('Payment Confirm')</a>
+						<div class="d-sm-only d-md-none">
+							<div class="dropdown dropdown-inline">
+								<button type="button" class="btn btn-clean btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="flaticon-more text-info"></i>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right" style="">
+									<ul class="kt-nav">
+										<li class="kt-nav__item">
+											@guest
+											<a href="{{ route('login') }}" class="kt-nav__link">
+												<span class="kt-nav__link-text">@lang('Login')</span>
+											</a>
+											@else
+											<a href="{{ route('dashboard') }}" class="kt-nav__link">
+												<span class="kt-nav__link-text">@lang('Dashboard')</span>
+											</a>
+											@endif
+											<a href="{{ route('payment') }}" class="kt-nav__link">
+												<span class="kt-nav__link-text">@lang('Payment Confirm')</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="d-none d-md-block">
+							@guest
+							<a href="{{ route('login') }}" class="kt-link kt-font-bold text-info">@lang('Login')</a>
+							@else
+							<a href="{{ route('dashboard') }}" class="kt-link kt-font-bold text-info">@lang('Dashboard')</a>
+							@endif
+							<a href="{{ route('payment') }}" class="kt-link kt-font-bold text-info">@lang('Payment Confirm')</a>
+						</div>
 					</div>
 				</div>
 				<div class="kt-sc__bottom">
@@ -167,7 +198,7 @@
 									</p>
 								</div>
 								<div class="kt-callout__action">
-									<a href="#" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">+62 1234 1234 1234</a>
+									<a href="https://wa.me/6281293297936" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">+62 812-9329-7936</a>
 								</div>
 							</div>
 						</div>

@@ -130,7 +130,7 @@ jQuery(document).ready(function() {
                         <td>{{ $member->full_name }}</td>
                         <td>{{ $member->short_name }}</td>
                         <td>{{ $member->email }}</td>
-                        <td>{{ $member->gender }}</td>
+                        <td>@lang(Str::title($member->gender))</td>
                         <td>{{ $member->phone }}</td>
                         <td>{{ $member->address }}</td>
                         <td>{{ $member->postcode }}</td>

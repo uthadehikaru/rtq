@@ -11,8 +11,8 @@
 
     "B":"",
     "Back":"Kembali",
-    "Batch":"Angkatan",
-    "Batches":"Angkatan",
+    "Batch":"Halaqoh",
+    "Batches":"Halaqoh",
 
     "C":"",
     "Cancel":"Batal",
@@ -28,7 +28,7 @@
 
     "E":"",
     "Edit":"Ubah",
-    "Edit Batch":"Ubah Angkatan",
+    "Edit Batch":"Ubah Halaqoh",
     "Edit Course":"Ubah Kelas",
     "Edit Member":"Ubah Anggota",
     "Email":"Email",
@@ -67,7 +67,7 @@
     "N":"",
     "Name":"Nama",
     "New":"Baru",
-    "New Batch":"Tambah Angkatan",
+    "New Batch":"Tambah Halaqoh",
     "New Course":"Tambah Kelas",
     "New Member":"Tambah Anggota",
     "New Payment":"Tambah Pembayaran",

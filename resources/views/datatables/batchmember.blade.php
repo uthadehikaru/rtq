@@ -60,10 +60,10 @@ jQuery(document).ready(function () {
 @endpush
 @section('breadcrumbs')
 <a href="{{ route('courses.index') }}" class="kt-subheader__breadcrumbs-link">
-@lang("Course") </a>
+@lang("Course") {{ $batch->course->name }}</a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <a href="{{ route('courses.batches.index', [$batch->course_id, $batch->id]) }}" class="kt-subheader__breadcrumbs-link">
-@lang("Batch") </a>
+@lang("Batch") {{ $batch->name }}</a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
     @lang('Members')
@@ -86,6 +86,10 @@ jQuery(document).ready(function () {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    <a href="{{ route('courses.batches.index', $batch->course_id) }}" class="btn btn-warning btn-icon-sm">
+                        <i class="la la-arrow-left"></i>
+                        @lang('Back')
+                    </a>
                 </div>
             </div>
         </div>
@@ -148,9 +152,6 @@ jQuery(document).ready(function () {
                         <td>{{ $member->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $member->full_name }}</td>
                         <td>
-                            <a href="javascript:;" class="text-warning">
-                                <i class="la la-edit"></i> @lang('Edit')
-                            </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $member->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>

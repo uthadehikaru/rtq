@@ -56,13 +56,10 @@ jQuery(document).ready(function () {
 @endpush
 @section('breadcrumbs')
 <a href="{{ route('courses.index') }}" class="kt-subheader__breadcrumbs-link">
-@lang("Course") </a>
-<span class="kt-subheader__breadcrumbs-separator"></span>
-<a href="{{ route('courses.batches.index', $course->id) }}" class="kt-subheader__breadcrumbs-link">
-@lang("Batch") </a>
+@lang("Course") {{ $course->name }}</a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('New Batch')
+    @lang('Batch')
 </span>
 @endsection
 @section('content')
@@ -82,6 +79,10 @@ jQuery(document).ready(function () {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    <a href="{{ route('courses.index') }}" class="btn btn-warning btn-icon-sm">
+                        <i class="la la-arrow-left"></i>
+                        @lang('Back')
+                    </a>
                     <a href="{{ route('courses.batches.create', $course->id) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
                         @lang('New Batch')
