@@ -12,5 +12,6 @@ interface PaymentRepositoryInterface
     public function create(array $data);
     public function update($id, array $data);
     public function delete($id);
-    public function check($period_id, $batch_id, $member_id);
+    public function check($payment, $batch_id, $member_id);
+    public function createDetail(array $data);
 }

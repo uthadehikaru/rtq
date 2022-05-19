@@ -15,7 +15,7 @@ var KTSelect2 = function() {
                 {
 					id:'{{ $member->batch_id }}_{{ $member->member_id }}',
 					value : '{{ $member->full_name }}',
-					email : 'Halaqoh {{ $member->name }}',
+					email : '{{ $member->course }} Halaqoh {{ $member->batch }}',
 				}, 
 				@endforeach
 			],
@@ -47,7 +47,7 @@ var KTSelect2 = function() {
     // Private functions
     var demos = function() {
 		$('.kt-select-period').select2({
-			placeholder: "@lang('Select Period')"
+			placeholder: "@lang('Pilih Periode Pembayaran')"
 		});
 
 		function formatRepo(repo) {
@@ -59,45 +59,6 @@ var KTSelect2 = function() {
 	function formatRepoSelection(repo) {
 		return repo.full_name || repo.text;
 	}
-
-	$("#members").select2({
-		placeholder: "Search Member",
-		allowClear: true,
-        tags: true,
-        width: 'resolve',
-		ajax: {
-			url: "{{ route('api.batchmembers') }}",
-			dataType: 'json',
-			delay: 250,
-			data: function(params) {
-				return {
-					q: params.term, // search term
-					page: params.page
-				};
-			},
-			processResults: function(data, params) {
-				// parse the results into the format expected by Select2
-				// since we are using custom formatting functions we do not need to
-				// alter the remote JSON data, except to indicate that infinite
-				// scrolling can be used
-				params.page = params.page || 1;
-
-				return {
-					results: data.items,
-					pagination: {
-						more: (params.page * 30) < data.total_count
-					}
-				};
-			},
-			cache: true
-		},
-		escapeMarkup: function(markup) {
-			return markup;
-		}, // let our custom formatter work
-		minimumInputLength: 4,
-		templateResult: formatRepo, // omitted for brevity, see the source of this page
-		templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-	});
 
 	}
 	// Public functions
@@ -169,7 +130,13 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Peserta</label>
 												<div class="col-9">
-													<input id="kt_tagify_members" name='members' placeholder="Add users" value="">
+													<input id="kt_tagify_members" name='members' placeholder="@lang('Masukkan nama peserta')" value="">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-3 col-form-label">Total Transfer</label>
+												<div class="col-9">
+													<input class="form-control" id="total" type="number" name="total" value="0">
 												</div>
 											</div>
 											<div class="form-group row">

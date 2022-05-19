@@ -11,8 +11,6 @@ class Payment extends Model
 
     protected $fillable = [
         'period_id',
-        'batch_id',
-        'member_id',
         'amount',
         'paid_at',
         'attachment',
@@ -24,13 +22,8 @@ class Payment extends Model
         return $this->belongsTo(Period::class);
     }
     
-    public function member()
+    public function details()
     {
-        return $this->belongsTo(Member::class);
-    }
-    
-    public function batch()
-    {
-        return $this->belongsTo(Batch::class);
+        return $this->hasMany(PaymentDetail::class);
     }
 }

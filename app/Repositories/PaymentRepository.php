@@ -4,13 +4,14 @@ namespace App\Repositories;
 
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
+use App\Models\PaymentDetail;
 
 class PaymentRepository implements PaymentRepositoryInterface 
 {
 
     public function all() 
     {
-        return Payment::all();
+        return Payment::with(['details.member','details.batch'])->get();
     }
 
     public function count() 
@@ -48,12 +49,22 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::whereId($id)->update($data);
     }
 
-    public function check($period_id, $batch_id, $member_id) 
+    public function check($payment, $batch_id, $member_id) 
     {
-        return Payment::where([
-            'period_id'=>$period_id,
+        return PaymentDetail::where([
             'batch_id'=>$batch_id,
             'member_id'=>$member_id,
-        ])->first();
+        ])
+        ->whereExists(function($query) use($payment){
+            return $query->selectRaw("count(1)")
+            ->from('payments')->whereColumn('payments.id','payment_details.payment_id')
+            ->where('payments.period_id',$payment->period_id);
+        })
+        ->first();
+    }
+
+    public function createDetail(array $data) 
+    {
+        return PaymentDetail::create($data);
     }
 }

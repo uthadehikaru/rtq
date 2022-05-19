@@ -16,6 +16,11 @@
 			},
             columns: [
                 {
+					field: 'Confirmedat',
+					title: 'Confirmedat',
+                    autohide:true,
+                },
+                {
 					field: 'Status',
 					title: 'Status',
 					// callback function support for column rendering
@@ -153,7 +158,6 @@ jQuery(document).ready(function() {
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Period')</th>
                     <th title="Field #4">@lang('Member')</th>
-                    <th title="Field #3">@lang('Batch')</th>
                     <th title="Field #2">@lang('Amount')</th>
                     <th title="Field #4">@lang('Status')</th>
                     <th title="Field #3">@lang('Confirmed at')</th>
@@ -166,8 +170,11 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $payment->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $payment->period->name }}</td>
-                        <td>{{ $payment->member->full_name }}</td>
-                        <td>{{ $payment->batch->name }}</td>
+                        <td>
+                            @foreach($payment->details as $detail)
+                            <p>{{ $detail->member->full_name }} @lang('Batch') {{ $detail->batch->name }}</p>
+                            @endforeach
+                        </td>
                         <td>{{ $payment->amount }}</td>
                         <td>{{ $payment->status }}</td>
                         <td>{{ $payment->paid_at }}</td>

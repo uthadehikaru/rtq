@@ -42,26 +42,34 @@ class PaymentController extends Controller
         $data = $request->validate([
             'period_id'=>'required',
             'members'=>'required',
+            'total'=>'numeric',
             'attachment'=>'',
         ]);
         DB::beginTransaction();
 
         $members = json_decode($data['members'], true);
 
+        $path = null;
+        if($request->file('attachment'))
+            $path = $request->file('attachment')->storePublicly('attachments', 'public');
+
+        $payment = $paymentRepository->create([
+            'period_id'=>$data['period_id'],
+            'amount'=>$data['total'],
+            'attachment'=>$path,
+        ]);
+
         foreach($members as $member){
             $ids = explode('_',$member['id']);
             $batch_id = $ids[0];
             $member_id = $ids[1];
-            $payment = $paymentRepository->check($data['period_id'], $batch_id, $member_id);
-            if(!$payment){
+            $paymentDetail = $paymentRepository->check($payment, $batch_id, $member_id);
+            if(!$paymentDetail){
                 $batch = $batchRepository->find($batch_id);
-                $path = $request->file('attachment')->storePublicly('attachments', 'public');
-                $payment = $paymentRepository->create([
-                    'period_id'=>$data['period_id'],
-                    'batch_id'=>$batch_id,
+                $detail = $paymentRepository->createDetail([
                     'member_id'=>$member_id,
-                    'amount'=>$batch->course->fee,
-                    'attachment'=>$path,
+                    'batch_id'=>$batch_id,
+                    'payment_id'=>$payment->id,
                 ]);
             }else{
                 DB::rollBack();
