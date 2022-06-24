@@ -7,6 +7,7 @@ use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Interfaces\PeriodRepositoryInterface;
 use App\Interfaces\MemberRepositoryInterface;
+use App\Exports\PaymentsExport;
 use Carbon\Carbon;
 use DB;
 
@@ -85,5 +86,10 @@ class PaymentController extends Controller
         $status = $paymentRepository->delete($payment_id);
         $data['statusCode'] = 200;
         return response()->json($data);
+    }
+
+    public function export()
+    {
+        return (new PaymentsExport)->download('pembayaran per '.date('d M Y H.i').'.xlsx');
     }
 }

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('courses.batches.batchmembers', BatchMemberController::class);
     Route::resource('periods', PeriodController::class);
     Route::get('payments/{payment}/confirm', [PaymentController::class,'confirm'])->name('payments.confirm');
+    Route::get('payments/export', [PaymentController::class,'export'])->name('payments.export');
     Route::resource('payments', PaymentController::class);
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');

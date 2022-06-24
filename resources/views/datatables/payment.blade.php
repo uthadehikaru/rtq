@@ -101,14 +101,22 @@ jQuery(document).ready(function() {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{ route('periods.index') }}" class="btn btn-info btn-icon-sm">
-                        <i class="la la-list"></i>
-                        @lang('Periods')
-                    </a>
-                    <a href="{{ route('payment') }}" class="btn btn-warning btn-icon-sm">
-                        <i class="la la-plus"></i>
-                        @lang('New Payment')
-                    </a>
+                    <div class="btn-group" role="group">
+                        <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Aksi
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="action" style="">
+                            <a class="dropdown-item" href="{{ route('periods.index') }}">
+                                <i class="la la-list"></i> @lang('Periods')
+                            </a>
+                            <a class="dropdown-item" href="{{ route('payment') }}">
+                                <i class="la la-plus"></i> @lang('New Payment')
+                            </a>
+                            <a class="dropdown-item" href="{{ route('payments.export') }}">
+                                <i class="la la-share"></i> @lang('Export to Excel')
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
