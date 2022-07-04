@@ -78,6 +78,11 @@
                                             <span class="kt-menu__link-text">@lang('Dashboard')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teachers*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('teachers.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Teachers')</span>
+                                        </a>
+                                    </li>
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('members.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Members')</span>

@@ -1,4 +1,4 @@
-@extends('metronic')
+@extends('layouts.app')
 @section('breadcrumbs')
 <a href="{{ route('members.index') }}" class="kt-subheader__breadcrumbs-link">
 @lang("Members") </a>

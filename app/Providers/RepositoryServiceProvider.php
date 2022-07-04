@@ -9,12 +9,14 @@ use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\BatchMemberRepositoryInterface;
 use App\Interfaces\PeriodRepositoryInterface;
 use App\Interfaces\PaymentRepositoryInterface;
+use App\Interfaces\TeacherRepositoryInterface;
 use App\Repositories\MemberRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\BatchRepository;
 use App\Repositories\BatchMemberRepository;
 use App\Repositories\PeriodRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\TeacherRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BatchMemberRepositoryInterface::class, BatchMemberRepository::class);
         $this->app->bind(PeriodRepositoryInterface::class, PeriodRepository::class);
         $this->app->bind(PaymentRepositoryInterface::class, PaymentRepository::class);
+        $this->app->bind(TeacherRepositoryInterface::class, TeacherRepository::class);
     }
 
     /**

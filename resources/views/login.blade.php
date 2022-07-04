@@ -8,12 +8,12 @@
 						<div class="kt-login__container">
 							<div class="kt-login__logo">
 								<a href="#">
-									<img src="{{ asset('assets/media/logos/logo-5.png') }}">
+									<img src="{{ asset('assets/images/favicon.png') }}">
 								</a>
 							</div>
 							<div class="kt-login__signin">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">@lang('login.subtitle')</h3>
+									<h3 class="kt-login__title">@lang('login.subtitle',['app'=>config('app.name')])</h3>
 								</div>
                                 @if ($errors->any())
                                 <div class="alert alert-danger">

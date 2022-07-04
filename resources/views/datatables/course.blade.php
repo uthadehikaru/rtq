@@ -1,4 +1,4 @@
-@extends('metronic')
+@extends('layouts.app')
 @push('scripts')
 <script type="text/javascript">
 
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
-                    <th title="Field #2">@lang('Fee')</th>
+                    <th title="Field #2">@lang('Batches')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -123,7 +123,7 @@ jQuery(document).ready(function () {
                     <tr>
                         <td>{{ $course->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $course->name }}</td>
-                        <td>{{ $course->fee }}</td>
+                        <td>{{ $course->batches_count }} @lang('Batches')</td>
                         <td>
                             <a href="{{ route('courses.batches.index', $course->id) }}" class="text-primary">
                                 <i class="la la-list"></i> @lang('Detail')

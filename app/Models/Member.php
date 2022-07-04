@@ -17,10 +17,21 @@ class Member extends Model
         'gender',
         'address',
         'postcode',
+        'school',
+        'class',
+        'level',
     ];
     
     public function batches()
     {
         return $this->belongsToMany(Batch::class);
+    }
+
+    public function batchName()
+    {
+        $batch = $this->batches->first();
+
+        if($batch)
+            return $batch->course->name . ' '. __('Batch') . ' ' . $batch->name;
     }
 }

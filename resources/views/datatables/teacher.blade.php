@@ -14,6 +14,13 @@
 			search: {
 				input: $('#generalSearch'),
 			},
+            columns: [
+                {
+					field: 'Name',
+					title: 'Name',
+                    autohide:false,
+                }
+            ]
 		});
 
 	};
@@ -33,7 +40,7 @@ jQuery(document).ready(function() {
     $(document).on("click", ".delete", function() { 
         if(confirm("@lang('Are you sure?')")) {
             var id= $(this).data('id');
-            var url = "{{ route('periods.index') }}";
+            var url = "{{ route('teachers.index') }}";
             var dltUrl = url+"/"+id;
             $.ajax({
                 url: dltUrl,
@@ -56,7 +63,7 @@ jQuery(document).ready(function() {
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Periods')
+    @lang('Teachers')
 </span>
 @endsection
 @section('content')
@@ -70,45 +77,9 @@ jQuery(document).ready(function() {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Periods')
+                {{ $total }} @lang('Teachers')
             </h3>
         </div>
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    <a href="{{ route('payments.index') }}" class="btn btn-warning btn-icon-sm">
-                        <i class="la la-arrow-left"></i>
-                        @lang('Back')
-                    </a>
-                    <a href="{{ route('periods.create') }}" class="btn btn-primary btn-icon-sm">
-                        <i class="la la-plus"></i>
-                        @lang('New Period')
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="kt-portlet__body">
-
-        <!--begin: Search Form -->
-        <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-            <div class="row align-items-center">
-                <div class="col-xl-8 order-2 order-xl-1">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                            <div class="kt-input-icon kt-input-icon--left">
-                                <input type="text" class="form-control" placeholder="@lang('Search')..." id="generalSearch">
-                                <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                    <span><i class="la la-search"></i></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--end: Search Form -->
     </div>
     <div class="kt-portlet__body kt-portlet__body--fit">
 
@@ -118,23 +89,18 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
-                    <th title="Field #4">@lang('Start Date')</th>
-                    <th title="Field #3">@lang('End Date')</th>
+                    <th title="Field #2">@lang('Batches')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($periods as $period)
+                @foreach($teachers as $teacher)
                     <tr>
-                        <td>{{ $period->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $period->name }}</td>
-                        <td>{{ $period->start_date->format('d M Y') }}</td>
-                        <td>{{ $period->end_date->format('d M Y') }}</td>
+                        <td>{{ $teacher->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $teacher->name }}</td>
+                        <td>{{ $teacher->batches_count }} @lang('Batches')</td>
                         <td>
-                            <a href="{{ route('periods.edit', $period->id) }}" class="text-warning">
-                                <i class="la la-edit"></i> @lang('Edit')
-                            </a>
-                            <a href="javascript:;" class="text-danger delete" data-id="{{ $period->id }}">
+                            <a href="javascript:;" class="text-danger delete" data-id="{{ $teacher->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
                         </td>

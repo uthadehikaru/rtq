@@ -1,4 +1,4 @@
-@extends('metronic')
+@extends('layouts.app')
 @push('scripts')
 		<script type="text/javascript">
             var KTDatatable = function() {
@@ -114,12 +114,10 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Full Name')</th>
-                    <th title="Field #4">@lang('Short Name')</th>
-                    <th title="Field #3">@lang('Email')</th>
                     <th title="Field #4">@lang('Gender')</th>
-                    <th title="Field #4">@lang('Phone')</th>
-                    <th title="Field #4">@lang('Address')</th>
-                    <th title="Field #4">@lang('Post Code')</th>
+                    <th title="Field #4">@lang('School')</th>
+                    <th title="Field #4">@lang('Level')</th>
+                    <th title="Field #4">@lang('Batch')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -128,12 +126,10 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $member->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $member->full_name }}</td>
-                        <td>{{ $member->short_name }}</td>
-                        <td>{{ $member->email }}</td>
                         <td>@lang(Str::title($member->gender))</td>
-                        <td>{{ $member->phone }}</td>
-                        <td>{{ $member->address }}</td>
-                        <td>{{ $member->postcode }}</td>
+                        <td>{{ $member->school }} {{ $member->class }}</td>
+                        <td>{{ $member->level }}</td>
+                        <td>{{ $member->batchName() }}</td>
                         <td>
                             <a href="{{ route('members.edit', $member->id) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')

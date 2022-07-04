@@ -10,7 +10,7 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function all() 
     {
-        return Course::all();
+        return Course::withCount('batches')->get();
     }
 
     public function count() 

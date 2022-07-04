@@ -17,6 +17,7 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->string('type');
             $table->unsignedInteger('fee')->default(0);
         });
     }

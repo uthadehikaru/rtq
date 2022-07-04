@@ -22,7 +22,7 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function getByCourse($course_id) 
     {
-        return Batch::where('course_id', $course_id)->get();
+        return Batch::with('teacher')->withCount('members')->where('course_id', $course_id)->get();
     }
 
     public function countByCourse($course_id) 

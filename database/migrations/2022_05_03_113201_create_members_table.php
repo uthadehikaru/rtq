@@ -20,7 +20,10 @@ class CreateMembersTable extends Migration
             $table->string('short_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->enum('gender',['male','female']);
+            $table->string('school')->nullable();
+            $table->string('class')->nullable();
+            $table->string('level')->nullable();
+            $table->enum('gender',['male','female'])->nullable();
             $table->text('address')->nullable();
             $table->string('postcode')->nullable();
         });

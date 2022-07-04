@@ -49,7 +49,7 @@
 				</div>
 				<div class="kt-sc__bottom">
 					<h3 class="kt-sc__heading kt-heading kt-heading--center kt-heading--xxl kt-heading--medium">
-						Bahagia dan Mulia Bersama Al-Qur'an
+						Hidup Indah, Penuh Berkah Bersama Al-Qur'an
 					</h3>
 				</div>
 			</div>
@@ -150,13 +150,13 @@
 							<div class="kt-infobox__section">
 								<h3 class="kt-infobox__subtitle">Tentang Kami</h3>
 								<div class="kt-infobox__content">
-									Windows 10 automatically downloads and installs updates to make sure your device is secure and up to date. This means you receive the latest fixes and security updates, helping your device run efficiently and stay protected. In most cases, restarting your device completes the update. Make sure your device is plugged in when you know updates will be installed. <a href="#" class="kt-link">Read More</a>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget pellentesque mauris. Nullam vel dolor magna. Sed gravida enim mauris, id fringilla augue pellentesque id. Quisque pellentesque rhoncus massa quis pellentesque. Maecenas laoreet a est tincidunt viverra. Vestibulum placerat mi sed eleifend bibendum. Nulla ultricies laoreet ex placerat finibus. Mauris molestie, ligula a vehicula consectetur, orci lacus luctus quam, eu molestie lorem orci et eros. Phasellus hendrerit mi eget orci euismod fringilla. Duis at felis finibus, posuere urna id, sagittis magna. Integer augue leo, pulvinar id aliquet non, facilisis vel sem. Vestibulum egestas dapibus molestie.
 								</div>
 							</div>
 							<div class="kt-infobox__section">
 								<h3 class="kt-infobox__subtitle">Kontak</h3>
 								<div class="kt-infobox__content">
-									Windows 10 automatically downloads and installs updates to make sure your device is secure and up to date. This means you receive the latest fixes and security updates, helping your device run efficiently and stay protected. In most cases, restarting your device completes the update. Make sure your device is plugged in when you know updates will be installed. <a href="#" class="kt-link">Read More</a>
+								Pellentesque turpis elit, rutrum sed tempus non, finibus quis lectus. Proin vitae enim tincidunt, scelerisque eros ac, vulputate arcu. Sed auctor accumsan metus, et auctor orci. Donec eu ligula a elit rutrum posuere at in est. Curabitur urna purus, blandit sed porttitor a, posuere sit amet neque. Fusce ac feugiat neque. Cras fringilla lectus nec tortor faucibus blandit. Donec sollicitudin volutpat nibh non vestibulum. Duis quis fermentum tellus. Pellentesque ipsum est, accumsan nec augue a, finibus pharetra nunc. Curabitur condimentum metus id malesuada bibendum.
 								</div>
 							</div>
 						</div>
@@ -218,7 +218,6 @@
 					2022&nbsp;©&nbsp;{{ config('app.name') }}
 				</div>
 				<div class="kt-footer__menu">
-					<!-- <a href="http://keenthemes.com/metronic" target="_blank" class="kt-footer__menu-link kt-link">About</a> -->
 				</div>
 			</div>
 		</div>

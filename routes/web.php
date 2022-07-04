@@ -10,6 +10,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('payments/{payment}/confirm', [PaymentController::class,'confirm'])->name('payments.confirm');
     Route::get('payments/export', [PaymentController::class,'export'])->name('payments.export');
     Route::resource('payments', PaymentController::class);
+    Route::resource('teachers', TeacherController::class);
     
     Route::get('/logout', [LoginController::class,'logout'])->name('logout');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');

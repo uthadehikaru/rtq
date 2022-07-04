@@ -1,4 +1,4 @@
-@extends('metronic')
+@extends('layouts.app')
 @section('content')
 <div class="row">
     <div class="col-lg-4">
@@ -15,10 +15,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Courses')</a>
+                            <a class="kt-link" href="#">@lang('Payments')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $courses }} @lang('Data')
+                            {{ $payments }} @lang('Data')
                         </div>
                     </div>
                 </div>
