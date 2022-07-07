@@ -12,7 +12,7 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function all() 
     {
-        return Batch::all();
+        return Batch::with('teacher','course')->get();
     }
 
     public function count() 

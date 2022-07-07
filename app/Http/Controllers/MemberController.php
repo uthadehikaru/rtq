@@ -27,11 +27,14 @@ class MemberController extends Controller
         $data = $request->validate([
             'full_name'=>'required',
             'short_name'=>'',
-            'email'=>'required|email',
+            'email'=>'',
             'gender'=>'required',
             'phone'=>'',
             'address'=>'',
             'postcode'=>'',
+            'school'=>'',
+            'class'=>'',
+            'level'=>'',
         ]);
 
         $memberRepository->create($data);
@@ -50,11 +53,14 @@ class MemberController extends Controller
         $data = $request->validate([
             'full_name'=>'required',
             'short_name'=>'',
-            'email'=>'required|email',
+            'email'=>'',
             'gender'=>'required',
             'phone'=>'',
             'address'=>'',
             'postcode'=>'',
+            'school'=>'',
+            'class'=>'',
+            'level'=>'',
         ]);
 
         $memberRepository->update($member_id, $data);

@@ -93,6 +93,11 @@
                                             <span class="kt-menu__link-text">@lang('Courses')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('schedules*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('schedules.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Schedules')</span>
+                                        </a>
+                                    </li>
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('payments*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('payments.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Payments')</span>

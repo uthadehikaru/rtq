@@ -81,6 +81,25 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>@lang('School')</label>
+                            <input type="text" name="school" class="form-control" placeholder="@lang('Enter') @lang('School')"
+                            value="{{ old('school', $member?$member->school:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Class')</label>
+                            <input type="text" name="class" class="form-control" placeholder="@lang('Enter') @lang('Class')"
+                            value="{{ old('class', $member?$member->class:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Level')</label>
+                            <select name="level" class="form-control">
+                                <option value="Iqro" {{ $member && $member->level=='Iqro'?'selected':'' }}</option>}}>Iqro</option>
+                                <option value="Quran" {{ $member && $member->level=='Quran'?'selected':'' }}>Qur'an</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('Address')</label>
                             <input type="text" name="address" class="form-control" placeholder="@lang('Enter') @lang('Address')"
                             value="{{ old('address', $member?$member->address:'') }}"
