@@ -2,21 +2,31 @@
 
 namespace App\Imports;
 
+use App\Models\User;
 use App\Models\Teacher;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Str;
+use Hash;
 
-class TeacherImport implements ToModel, WithHeadingRow
+class TeacherImport implements ToCollection, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+    public function collection(Collection $rows)
     {
-        return new Teacher([
-            'name'=>$row['name'],
-        ]);
+        foreach ($rows as $row) 
+        {
+            $user = User::create([
+                'name' => $row['name'],
+                'email' => $row['name'].'@rtqmaisuro.id',
+                'password' => Hash::make('bismillah'),
+                'type'=> 'teacher',
+            ]);
+
+            $teacher = Teacher::create([
+                'name'=>$row['name'],
+                'user_id'=>$user->id,
+            ]);
+        }
     }
 }

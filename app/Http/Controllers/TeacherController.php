@@ -27,7 +27,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = __('New Teacher');
+        $data['teacher'] = null;
+        return view('forms.teacher', $data);
     }
 
     /**
@@ -36,9 +38,18 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(
+        Request $request,
+        TeacherRepositoryInterface $teacherRepository
+    )
     {
-        //
+        $data = $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+        ]);
+
+        $teacherRepository->create($data);
+        return redirect()->route('teachers.index')->with('message',__('Created Successfully'));
     }
 
     /**
@@ -58,9 +69,14 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(
+        TeacherRepositoryInterface $teacherRepository,
+        $id
+    )
     {
-        //
+        $data['title'] = __('Edit Teacher');
+        $data['teacher'] = $teacherRepository->find($id);
+        return view('forms.teacher', $data);
     }
 
     /**
@@ -70,9 +86,18 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(
+        Request $request, 
+        TeacherRepositoryInterface $teacherRepository,
+        $id)
     {
-        //
+        $data = $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+        ]);
+
+        $teacherRepository->update($id, $data);
+        return redirect()->route('teachers.index')->with('message',__('Updated Successfully'));
     }
 
     /**
@@ -81,8 +106,10 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TeacherRepositoryInterface $teacherRepository, $id)
     {
-        //
+        $status = $teacherRepository->delete($id);
+        $data['statusCode'] = 200;
+        return response()->json($data);
     }
 }

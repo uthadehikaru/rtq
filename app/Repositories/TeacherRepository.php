@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Interfaces\TeacherRepositoryInterface;
 use App\Models\Teacher;
+use App\Models\User;
+use Hash;
 
 class TeacherRepository implements TeacherRepositoryInterface 
 {
@@ -30,16 +32,31 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function delete($id) 
     {
-        Teacher::destroy($id);
+        $teacher = Teacher::find($id);
+        $teacher->user()->delete();
+        $teacher->delete($id);
     }
 
     public function create(array $data) 
     {
-        return Teacher::create($data);
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make('bismillah'),
+            'type'=> 'teacher',
+        ]);
+
+        return Teacher::create([
+            'name'=>$data['name'],
+            'user_id'=>$user->id,
+        ]);
     }
 
     public function update($id, array $data) 
     {
-        return Teacher::whereId($id)->update($data);
+        $teacher = Teacher::find($id);
+        $teacher->update(['name'=>$data['name']]);
+        $teacher->user()->update(['email'=>$data['email']]);
+        return $teacher;
     }
 }

@@ -80,6 +80,16 @@ jQuery(document).ready(function() {
                 {{ $total }} @lang('Teachers')
             </h3>
         </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <a href="{{ route('teachers.create') }}" class="btn btn-primary btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @lang('New Teacher')
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="kt-portlet__body kt-portlet__body--fit">
 
@@ -89,6 +99,7 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
+                    <th title="Field #2">@lang('Email')</th>
                     <th title="Field #2">@lang('Batches')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -98,8 +109,12 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $teacher->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $teacher->name }}</td>
+                        <td>{{ $teacher->user?->email }}</td>
                         <td>{{ $teacher->batches_count }} @lang('Batches')</td>
                         <td>
+                            <a href="{{ route('teachers.edit', $teacher->id) }}" class="text-warning">
+                                <i class="la la-edit"></i> @lang('Edit')
+                            </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $teacher->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
