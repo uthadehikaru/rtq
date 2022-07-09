@@ -7,7 +7,7 @@
 @lang("Present") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Edit Present') {{ $present->member->full_name }}
+    @lang('Edit Present') {{ $present->name() }}
 </span>
 @endsection
 @section('content')
@@ -51,13 +51,18 @@
                             <select class="form-control" name="status" required>
                                 <option value="">@lang('Select Status')</option>
                                 @foreach($statuses as $status)
-                                <option value="{{ $status }}" {{ $present && $present->status==$status?'selected':'' }}>{{ Str::title($status) }}</option>
+                                <option value="{{ $status }}" {{ $present && $present->status==$status?'selected':'' }}>@lang('app.present.status.'.$status)</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label>@lang('Description')</label>
                             <textarea class="form-control" name="description">{{ $present->description }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Attended At')</label>
+                            <input type="time" name="attended_at" class="form-control"
+                            value="{{ old('attended_at', $present?$present->attended_at:'') }}">
                         </div>
                     </div>
                 </div>

@@ -82,7 +82,7 @@ class PresentController extends Controller
         Present $present,
     )
     {
-        $data['title'] = __('Edit Present').' '.$present->member->full_name;
+        $data['title'] = __('Edit Present').' '.$present->name();
         $data['schedule'] = $schedule;
         $data['present'] = $present;
         $data['statuses'] = Present::STATUSES;
@@ -106,7 +106,11 @@ class PresentController extends Controller
         $data = $request->validate([
             'status'=>'required',
             'description'=>'',
+            'attended_at'=>'',
         ]);
+        if($data['status']!='present')
+            $data['attended_at'] = null;
+        
         $presentRepository->update($id, $data);
         return redirect()->route('schedules.presents.index', $schedule->id)->with('message',__('Updated Successfully'));
     }

@@ -19,7 +19,7 @@ class CreatePresentsTable extends Migration
             $table->foreignId('schedule_id');
             $table->foreignId('member_id')->nullable();
             $table->foreignId('teacher_id')->nullable();
-            $table->timestamp('attended_at')->nullable();
+            $table->time('attended_at')->nullable();
             $table->string('status')->default('present');
             $table->text('description')->nullable();
         });

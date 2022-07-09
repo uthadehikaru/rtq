@@ -7,7 +7,9 @@
     "Address":"Alamat",
     "All":"Semua",
     "Amount":"Nominal",
+    "at :time":"pada :time",
     "Attachment":"Lampiran",
+    "Attended At":"Jam Kehadiran",
 
     "B":"",
     "Back":"Kembali",
@@ -25,6 +27,7 @@
     "D":"",
     "Dashboard": "Beranda",
     "Delete":"Hapus",
+    "Description":"Deskripsi",
 
     "E":"",
     "Edit":"Ubah",

@@ -21,7 +21,7 @@ class Present extends Model
     ];
     
     protected $casts = [
-        'scheduled_at' => 'datetime',
+        'attended_at' => 'datetime',
     ];
 
     public function teacher()
@@ -37,5 +37,15 @@ class Present extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function name()
+    {
+        $name = "";
+        if($this->member_id)
+            $name = $this->member->full_name;
+        elseif($this->teacher_id)
+            $name = $this->teacher->name;
+        return $name;
     }
 }
