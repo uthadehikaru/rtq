@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Interfaces\BatchRepositoryInterface;
+use App\Interfaces\TeacherRepositoryInterface;
 
 use Illuminate\Http\Request;
 
@@ -17,10 +18,15 @@ class BatchController extends Controller
         return view('datatables.batch', $data);
     }
 
-    public function create(CourseRepositoryInterface $courseRepository, $course_id)
+    public function create(
+        CourseRepositoryInterface $courseRepository, 
+        TeacherRepositoryInterface $teacherRepository, 
+        $course_id
+    )
     {
         $data['title'] = __('New Batch');
         $data['course'] = $courseRepository->find($course_id);
+        $data['teachers'] = $teacherRepository->list();
         $data['batch'] = null;
         return view('forms.batch', $data);
     }
@@ -29,6 +35,7 @@ class BatchController extends Controller
     {
         $data = $request->validate([
             'name'=>'required',
+            'teacher_id'=>'required',
             'description'=>'',
         ]);
 
@@ -38,10 +45,16 @@ class BatchController extends Controller
         return redirect()->route('courses.batches.index', $course_id)->with('message',__('Created Successfully'));
     }
 
-    public function edit(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, Request $request, $course_id, $batch_id)
+    public function edit(
+        CourseRepositoryInterface $courseRepository, 
+        BatchRepositoryInterface $batchRepository, 
+        TeacherRepositoryInterface $teacherRepository, 
+        Request $request, 
+        $course_id, $batch_id)
     {
         $data['title'] = __('Edit Batch');
         $data['course'] = $courseRepository->find($course_id);
+        $data['teachers'] = $teacherRepository->list();
         $data['batch'] = $batchRepository->find($batch_id);
         return view('forms.batch', $data);
     }
@@ -50,6 +63,7 @@ class BatchController extends Controller
     {
         $data = $request->validate([
             'name'=>'required',
+            'teacher_id'=>'required',
             'description'=>'',
         ]);
 

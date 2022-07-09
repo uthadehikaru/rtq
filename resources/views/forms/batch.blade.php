@@ -58,6 +58,15 @@
                             value="{{ old('description', $batch?$batch->description:'') }}"
                             >
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Teacher')</label>
+                            <select name="teacher_id" class="form-control" required>
+                                <option value="">--- @lang('Select Teacher') ---</option>
+                                @foreach($teachers as $id=>$name)
+                                    <option value="{{ $id }}" {{ $batch && $batch->teacher_id==$id?'selected':''}}>{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">

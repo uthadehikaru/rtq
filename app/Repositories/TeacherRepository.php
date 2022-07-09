@@ -59,4 +59,9 @@ class TeacherRepository implements TeacherRepositoryInterface
         $teacher->user()->update(['email'=>$data['email']]);
         return $teacher;
     }
+
+    public function list()
+    {
+        return Teacher::all()->pluck('name','id');
+    }
 }
