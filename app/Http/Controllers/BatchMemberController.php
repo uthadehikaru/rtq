@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\MemberRepositoryInterface;
+use Illuminate\Http\Request;
 
 class BatchMemberController extends Controller
 {
@@ -15,6 +14,7 @@ class BatchMemberController extends Controller
         $data['batch'] = $batch;
         $data['total'] = $batch->members()->count();
         $data['members'] = $batchRepository->getAvailableMembers($batch_id);
+
         return view('datatables.batchmember', $data);
     }
 
@@ -23,19 +23,20 @@ class BatchMemberController extends Controller
         $batch = $batchRepository->find($batch_id);
 
         $data = $request->validate([
-            'member_id'=>'required',
+            'member_id' => 'required',
         ]);
 
         $batch->members()->attach($data['member_id']);
-        return back()->with('message','Added Successfully');
+
+        return back()->with('message', 'Added Successfully');
     }
 
     public function destroy(BatchRepositoryInterface $batchRepository, $course_id, $batch_id, $member_id)
     {
         $status = $batchRepository->removeMember($batch_id, $member_id);
         $data['statusCode'] = 200;
-        return response()->json($data);
 
+        return response()->json($data);
     }
 
     public function json(BatchRepositoryInterface $batchRepository, Request $request)
@@ -43,6 +44,7 @@ class BatchMemberController extends Controller
         $keyword = $request->get('q');
         $data['items'] = $batchRepository->getBatchMembers($keyword);
         $data['total_count'] = 10;
+
         return response()->json($data);
     }
 }

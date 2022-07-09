@@ -23,7 +23,7 @@ class CreateMembersTable extends Migration
             $table->string('school')->nullable();
             $table->string('class')->nullable();
             $table->string('level')->nullable();
-            $table->enum('gender',['male','female'])->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('address')->nullable();
             $table->string('postcode')->nullable();
         });

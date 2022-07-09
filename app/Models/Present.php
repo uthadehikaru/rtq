@@ -9,7 +9,7 @@ class Present extends Model
 {
     use HasFactory;
 
-    public const STATUSES = ['present','absent','sick','permit'];
+    public const STATUSES = ['present', 'absent', 'sick', 'permit'];
 
     protected $fillable = [
         'schedule_id',
@@ -19,7 +19,7 @@ class Present extends Model
         'status',
         'description',
     ];
-    
+
     protected $casts = [
         'attended_at' => 'datetime',
     ];
@@ -41,11 +41,13 @@ class Present extends Model
 
     public function name()
     {
-        $name = "";
-        if($this->member_id)
+        $name = '';
+        if ($this->member_id) {
             $name = $this->member->full_name;
-        elseif($this->teacher_id)
+        } elseif ($this->teacher_id) {
             $name = $this->teacher->name;
+        }
+
         return $name;
     }
 }

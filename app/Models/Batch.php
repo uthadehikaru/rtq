@@ -15,12 +15,12 @@ class Batch extends Model
         'course_id',
         'teacher_id',
     ];
-    
+
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
-    
+
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);

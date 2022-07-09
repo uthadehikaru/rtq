@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class BatchFactory extends Factory
 {
@@ -16,7 +15,7 @@ class BatchFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'description'=>$this->faker->sentence(),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

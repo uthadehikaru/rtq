@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Interfaces\PaymentRepositoryInterface;
 use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\MemberRepositoryInterface;
-use Auth;
+use App\Interfaces\PaymentRepositoryInterface;
 
 class HomeController extends Controller
 {
@@ -21,6 +19,7 @@ class HomeController extends Controller
         $data['payments'] = $paymentRepository->count();
         $data['batches'] = $batchRepository->count();
         $data['members'] = $memberRepository->count();
+
         return view('dashboard', $data);
     }
 }

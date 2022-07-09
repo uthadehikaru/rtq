@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Interfaces\TeacherRepositoryInterface;
+use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
@@ -17,6 +17,7 @@ class TeacherController extends Controller
         $data['title'] = __('Teachers');
         $data['teachers'] = $teacherRepository->all();
         $data['total'] = $teacherRepository->count();
+
         return view('datatables.teacher', $data);
     }
 
@@ -29,6 +30,7 @@ class TeacherController extends Controller
     {
         $data['title'] = __('New Teacher');
         $data['teacher'] = null;
+
         return view('forms.teacher', $data);
     }
 
@@ -41,15 +43,15 @@ class TeacherController extends Controller
     public function store(
         Request $request,
         TeacherRepositoryInterface $teacherRepository
-    )
-    {
+    ) {
         $data = $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
+            'name' => 'required',
+            'email' => 'required|email',
         ]);
 
         $teacherRepository->create($data);
-        return redirect()->route('teachers.index')->with('message',__('Created Successfully'));
+
+        return redirect()->route('teachers.index')->with('message', __('Created Successfully'));
     }
 
     /**
@@ -72,10 +74,10 @@ class TeacherController extends Controller
     public function edit(
         TeacherRepositoryInterface $teacherRepository,
         $id
-    )
-    {
+    ) {
         $data['title'] = __('Edit Teacher');
         $data['teacher'] = $teacherRepository->find($id);
+
         return view('forms.teacher', $data);
     }
 
@@ -87,17 +89,18 @@ class TeacherController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(
-        Request $request, 
+        Request $request,
         TeacherRepositoryInterface $teacherRepository,
         $id)
     {
         $data = $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
+            'name' => 'required',
+            'email' => 'required|email',
         ]);
 
         $teacherRepository->update($id, $data);
-        return redirect()->route('teachers.index')->with('message',__('Updated Successfully'));
+
+        return redirect()->route('teachers.index')->with('message', __('Updated Successfully'));
     }
 
     /**
@@ -110,6 +113,7 @@ class TeacherController extends Controller
     {
         $status = $teacherRepository->delete($id);
         $data['statusCode'] = 200;
+
         return response()->json($data);
     }
 }

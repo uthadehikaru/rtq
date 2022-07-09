@@ -2,11 +2,11 @@
 
 return [
     'present' => [
-        'status'=>[
-            'present'=>'Hadir',
-            'absent'=>'Tidak Hadir',
-            'sick'=>'Sakit',
-            'permit'=>'Izin',
-        ]
-    ]
+        'status' => [
+            'present' => 'Hadir',
+            'absent' => 'Tidak Hadir',
+            'sick' => 'Sakit',
+            'permit' => 'Izin',
+        ],
+    ],
 ];

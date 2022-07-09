@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Schedule;
-use App\Models\Present;
 use App\Interfaces\PresentRepositoryInterface;
+use App\Models\Present;
+use App\Models\Schedule;
+use Illuminate\Http\Request;
 
 class PresentController extends Controller
 {
@@ -17,13 +17,13 @@ class PresentController extends Controller
     public function index(
         PresentRepositoryInterface $presentRepository,
         Schedule $schedule,
-    )
-    {
+    ) {
         $data['title'] = __('Presents');
         $data['schedule'] = $schedule;
         $data['presents'] = $presentRepository->getBySchedule($schedule->id);
         $data['total'] = $presentRepository->count($schedule->id);
         $data['statuses'] = Present::STATUSES;
+
         return view('datatables.present', $data);
     }
 
@@ -32,10 +32,10 @@ class PresentController extends Controller
         Schedule $schedule,
         $id,
         $status,
-    )
-    {
-        $presentRepository->update($id, ['status'=>$status]);
-        return back()->with('message',__('Updated Successfully'));
+    ) {
+        $presentRepository->update($id, ['status' => $status]);
+
+        return back()->with('message', __('Updated Successfully'));
     }
 
     /**
@@ -80,12 +80,12 @@ class PresentController extends Controller
         PresentRepositoryInterface $presentRepository,
         Schedule $schedule,
         Present $present,
-    )
-    {
+    ) {
         $data['title'] = __('Edit Present').' '.$present->name();
         $data['schedule'] = $schedule;
         $data['present'] = $present;
         $data['statuses'] = Present::STATUSES;
+
         return view('forms.present', $data);
     }
 
@@ -101,18 +101,19 @@ class PresentController extends Controller
         PresentRepositoryInterface $presentRepository,
         Schedule $schedule,
         $id
-    )
-    {
+    ) {
         $data = $request->validate([
-            'status'=>'required',
-            'description'=>'',
-            'attended_at'=>'',
+            'status' => 'required',
+            'description' => '',
+            'attended_at' => '',
         ]);
-        if($data['status']!='present')
+        if ($data['status'] != 'present') {
             $data['attended_at'] = null;
-        
+        }
+
         $presentRepository->update($id, $data);
-        return redirect()->route('schedules.presents.index', $schedule->id)->with('message',__('Updated Successfully'));
+
+        return redirect()->route('schedules.presents.index', $schedule->id)->with('message', __('Updated Successfully'));
     }
 
     /**

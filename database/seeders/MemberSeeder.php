@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Member;
 use App\Models\Batch;
+use App\Models\Member;
+use Illuminate\Database\Seeder;
 
 class MemberSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class MemberSeeder extends Seeder
     public function run()
     {
         $batches = Batch::all();
-        
+
         Member::factory()
             ->count(50)
             ->hasAttached($batches)

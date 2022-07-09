@@ -14,12 +14,12 @@ class PaymentDetail extends Model
         'member_id',
         'batch_id',
     ];
-    
+
     public function member()
     {
         return $this->belongsTo(Member::class);
     }
-    
+
     public function batch()
     {
         return $this->belongsTo(Batch::class);

@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Interfaces\CourseRepositoryInterface;
 
+use App\Interfaces\CourseRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -12,6 +12,7 @@ class CourseController extends Controller
         $data['title'] = __('Courses');
         $data['courses'] = $courseRepository->all();
         $data['total'] = $courseRepository->count();
+
         return view('datatables.course', $data);
     }
 
@@ -19,43 +20,48 @@ class CourseController extends Controller
     {
         $data['title'] = __('New Course');
         $data['course'] = null;
+
         return view('forms.course', $data);
     }
 
     public function store(CourseRepositoryInterface $courseRepository, Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'fee'=>'numeric',
+            'name' => 'required',
+            'fee' => 'numeric',
         ]);
 
         $course = $request->all();
         $courseRepository->create($course);
-        return redirect()->route('courses.index')->with('message',__('Created Successfully'));
+
+        return redirect()->route('courses.index')->with('message', __('Created Successfully'));
     }
 
     public function edit(CourseRepositoryInterface $courseRepository, $course_id)
     {
         $data['title'] = __('Edit Course');
         $data['course'] = $courseRepository->find($course_id);
+
         return view('forms.course', $data);
     }
 
     public function update(CourseRepositoryInterface $courseRepository, Request $request, $course_id)
     {
         $data = $request->validate([
-            'name'=>'required',
-            'fee'=>'numeric',
+            'name' => 'required',
+            'fee' => 'numeric',
         ]);
 
         $courseRepository->update($course_id, $data);
-        return redirect()->route('courses.index')->with('message',__('Updated Successfully'));
+
+        return redirect()->route('courses.index')->with('message', __('Updated Successfully'));
     }
 
     public function destroy(CourseRepositoryInterface $courseRepository, $course_id)
     {
         $status = $courseRepository->delete($course_id);
         $data['statusCode'] = 200;
+
         return response()->json($data);
     }
 }

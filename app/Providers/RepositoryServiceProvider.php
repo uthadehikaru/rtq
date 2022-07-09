@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Interfaces;
 use App\Repositories;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -13,7 +13,7 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register() 
+    public function register()
     {
         $this->app->bind(Interfaces\MemberRepositoryInterface::class, Repositories\MemberRepository::class);
         $this->app->bind(Interfaces\CourseRepositoryInterface::class, Repositories\CourseRepository::class);

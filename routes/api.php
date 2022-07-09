@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BatchMemberController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +15,5 @@ use App\Http\Controllers\BatchMemberController;
 */
 
 Route::name('api.')->group(function () {
-    Route::get('/batchmembers', [BatchMemberController::class,'json'])->name('batchmembers');
+    Route::get('/batchmembers', [BatchMemberController::class, 'json'])->name('batchmembers');
 });

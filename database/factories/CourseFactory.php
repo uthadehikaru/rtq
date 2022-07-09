@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class CourseFactory extends Factory
 {
@@ -16,7 +15,7 @@ class CourseFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(2),
-            'fee'=> $this->faker->randomNumber(6, true),
+            'fee' => $this->faker->randomNumber(6, true),
         ];
     }
 }

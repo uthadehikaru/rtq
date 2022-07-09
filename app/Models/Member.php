@@ -21,7 +21,7 @@ class Member extends Model
         'class',
         'level',
     ];
-    
+
     public function batches()
     {
         return $this->belongsToMany(Batch::class);
@@ -31,7 +31,8 @@ class Member extends Model
     {
         $batch = $this->batches->first();
 
-        if($batch)
-            return $batch->course->name . ' '. __('Batch') . ' ' . $batch->name;
+        if ($batch) {
+            return $batch->course->name.' '.__('Batch').' '.$batch->name;
+        }
     }
 }

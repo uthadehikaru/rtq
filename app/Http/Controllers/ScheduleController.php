@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Schedule;
-use App\Interfaces\ScheduleRepositoryInterface;
 use App\Interfaces\BatchRepositoryInterface;
+use App\Interfaces\ScheduleRepositoryInterface;
 use App\Interfaces\TeacherRepositoryInterface;
+use App\Models\Schedule;
+use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
@@ -20,6 +20,7 @@ class ScheduleController extends Controller
         $data['title'] = __('Schedules');
         $data['schedules'] = $scheduleRepository->all();
         $data['total'] = $scheduleRepository->count();
+
         return view('datatables.schedule', $data);
     }
 
@@ -31,12 +32,12 @@ class ScheduleController extends Controller
     public function create(
         BatchRepositoryInterface $batchRepository,
         TeacherRepositoryInterface $teacherRepository,
-    )
-    {
+    ) {
         $data['title'] = __('New Schedule');
         $data['schedule'] = null;
         $data['batches'] = $batchRepository->all();
         $data['teachers'] = $teacherRepository->all();
+
         return view('forms.schedule', $data);
     }
 
@@ -49,16 +50,16 @@ class ScheduleController extends Controller
     public function store(
         Request $request,
         ScheduleRepositoryInterface $scheduleRepository
-    )
-    {
+    ) {
         $request->validate([
-            'scheduled_at'=>'required',
-            'batch_id'=>'required',
+            'scheduled_at' => 'required',
+            'batch_id' => 'required',
         ]);
 
         $schedule = $request->all();
         $scheduleRepository->create($schedule);
-        return redirect()->route('schedules.index')->with('message',__('Created Successfully'));
+
+        return redirect()->route('schedules.index')->with('message', __('Created Successfully'));
     }
 
     /**
@@ -82,12 +83,12 @@ class ScheduleController extends Controller
         BatchRepositoryInterface $batchRepository,
         TeacherRepositoryInterface $teacherRepository,
         Schedule $schedule
-    )
-    {
+    ) {
         $data['title'] = __('Edit Schedule');
         $data['schedule'] = $schedule;
         $data['batches'] = $batchRepository->all();
         $data['teachers'] = $teacherRepository->all();
+
         return view('forms.schedule', $data);
     }
 
@@ -98,18 +99,18 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, 
+    public function update(Request $request,
         ScheduleRepositoryInterface $scheduleRepository,
         $id,
-    )
-    {
+    ) {
         $schedule = $request->validate([
-            'scheduled_at'=>'required',
-            'batch_id'=>'required',
-            'teacher_id'=>'',
+            'scheduled_at' => 'required',
+            'batch_id' => 'required',
+            'teacher_id' => '',
         ]);
         $scheduleRepository->update($id, $schedule);
-        return redirect()->route('schedules.index')->with('message',__('Updated Successfully'));
+
+        return redirect()->route('schedules.index')->with('message', __('Updated Successfully'));
     }
 
     /**
@@ -121,10 +122,10 @@ class ScheduleController extends Controller
     public function destroy(
         ScheduleRepositoryInterface $scheduleRepository,
         $id
-    )
-    {
+    ) {
         $status = $scheduleRepository->delete($id);
         $data['statusCode'] = 200;
+
         return response()->json($data);
     }
 }

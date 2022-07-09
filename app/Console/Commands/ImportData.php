@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\RTQImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\RTQImport;
 
 class ImportData extends Command
 {

@@ -14,7 +14,7 @@ class Schedule extends Model
         'teacher_id',
         'batch_id',
     ];
-    
+
     protected $casts = [
         'scheduled_at' => 'datetime',
     ];

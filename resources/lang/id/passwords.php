@@ -17,6 +17,6 @@ return [
     'sent' => 'Kami telah mengirimkan tautan untuk menset ulang kata sandi anda!',
     'throttled' => 'Mohon tunggu sebelum mencoba kembali.',
     'token' => 'Token untuk set ulang kata sandi tidak sesuai.',
-    'user' => "Kami tidak menemukan data yang cocok dengan alamat email anda.",
+    'user' => 'Kami tidak menemukan data yang cocok dengan alamat email anda.',
 
 ];

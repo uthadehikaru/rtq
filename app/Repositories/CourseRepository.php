@@ -5,40 +5,39 @@ namespace App\Repositories;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Models\Course;
 
-class CourseRepository implements CourseRepositoryInterface 
+class CourseRepository implements CourseRepositoryInterface
 {
-
-    public function all() 
+    public function all()
     {
         return Course::withCount('batches')->get();
     }
 
-    public function count() 
+    public function count()
     {
         return Course::count();
     }
-    
-    public function getLatest($limit=10) 
+
+    public function getLatest($limit = 10)
     {
         return Course::latest()->paginate($limit);
     }
 
-    public function find($id) 
+    public function find($id)
     {
         return Course::findOrFail($id);
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
         Course::destroy($id);
     }
 
-    public function create(array $data) 
+    public function create(array $data)
     {
         return Course::create($data);
     }
 
-    public function update($id, array $data) 
+    public function update($id, array $data)
     {
         return Course::whereId($id)->update($data);
     }

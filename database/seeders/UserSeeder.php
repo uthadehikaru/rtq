@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Hash;
 use Illuminate\Database\Seeder;
 use Str;
-use Hash;
 
 class UserSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('bismillah'),
             'remember_token' => Str::random(10),
-            'type'=> 'admin',
+            'type' => 'admin',
         ]);
     }
 }

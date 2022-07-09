@@ -16,12 +16,12 @@ class Payment extends Model
         'attachment',
         'status',
     ];
-    
+
     public function period()
     {
         return $this->belongsTo(Period::class);
     }
-    
+
     public function details()
     {
         return $this->hasMany(PaymentDetail::class);

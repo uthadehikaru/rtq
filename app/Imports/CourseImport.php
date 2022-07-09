@@ -9,16 +9,15 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class CourseImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param  array  $row
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new Course([
-            'name'=>$row['name'],
-            'type'=>$row['type'],
-            'fee'=>$row['fee'],
+            'name' => $row['name'],
+            'type' => $row['type'],
+            'fee' => $row['fee'],
         ]);
     }
 }
