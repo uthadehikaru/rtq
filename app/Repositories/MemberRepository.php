@@ -9,7 +9,7 @@ class MemberRepository implements MemberRepositoryInterface
 {
     public function all()
     {
-        return Member::with('batches', 'batches.course')->get();
+        return Member::with('batches', 'batches.course')->orderBy('full_name')->get();
     }
 
     public function count()

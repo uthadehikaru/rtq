@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Actions;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\CourseController;
@@ -32,6 +33,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', 'dashboard')->name('dashboard');
     });
     Route::resource('users', UserController::class);
+    Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
+    Route::post('members/{id}/change', Actions\ChangeBatch::class);
+    Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');
+    Route::post('members/{id}/switch', Actions\SwitchBatch::class);
+    Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
     Route::resource('members', MemberController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('courses.batches', BatchController::class);

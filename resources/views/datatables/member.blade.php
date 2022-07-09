@@ -131,6 +131,15 @@ jQuery(document).ready(function() {
                         <td>{{ $member->level }}</td>
                         <td>{{ $member->batchName() }}</td>
                         <td>
+                            <a href="{{ route('members.change', $member->id) }}" class="text-info">
+                                <i class="la la-refresh"></i> @lang('Change :name',['name'=>__('Batch')])
+                            </a>
+                            <a href="{{ route('members.switch', $member->id) }}" class="text-info">
+                                <i class="la la-user"></i> @lang('Switch Member')
+                            </a>
+                            <a href="{{ route('members.leave', $member->id) }}" class="text-info" onclick="return confirm('Anda yakin?')">
+                                <i class="la la-share"></i> @lang('Leave')
+                            </a>
                             <a href="{{ route('members.edit', $member->id) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>

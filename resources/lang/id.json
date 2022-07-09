@@ -18,6 +18,7 @@
 
     "C":"",
     "Cancel":"Batal",
+    "Change :name":"Ganti :name",
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
     "Confirmed at":"Dikonfirmasi pada",
@@ -54,6 +55,8 @@
     "Integration to":"Integrasi ke",
 
     "L":"",
+    "Leave":"Keluar Halaqoh",
+    "Left Successfully":"Berhasil dikeluarkan",
     "Login":"Masuk",
     "login.title": "Masuk",
     "login.subtitle": "Selamat Datang di :app",
@@ -102,7 +105,9 @@
     "Save":"Simpan",
     "Search":"Pencarian",
     "Schedule":"Jadwal",
+    "Scheduled at":"Jadwal Kelas",
     "Schedules":"Jadwal",
+    "Select :name":"Pilih :name",
     "Select a member":"Pilih anggota",
     "Select Batch":"Pilih Halaqoh",
     "Select Teacher":"Pilih Pengajar",
@@ -110,9 +115,11 @@
     "Sign Out":"Keluar",
     "Status":"Status",
     "Submit":"Simpan",
+    "Switch Member":"tukar anggota",
     "Switch Teacher":"Guru Pengganti",
     "Sync":"Sinkronisasi",
     "Synced at":"Disinkronkan pada",
+    "Switched Successfully":"Berhasil ditukar",
     
     "T":"",
     "Teacher" : "Pengajar",
@@ -120,6 +127,7 @@
     
     "U":"",
     "Unit Business":"Unit Bisnis",
+    "Updated Successfully":"Berhasil diperbaharui",
     "Users":"Pengguna",   
 
     "V":"",

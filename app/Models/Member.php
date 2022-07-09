@@ -27,9 +27,14 @@ class Member extends Model
         return $this->belongsToMany(Batch::class);
     }
 
+    public function batch()
+    {
+        return $this->batches->first();
+    }
+
     public function batchName()
     {
-        $batch = $this->batches->first();
+        $batch = $this->batch();
 
         if ($batch) {
             return $batch->course->name.' '.__('Batch').' '.$batch->name;

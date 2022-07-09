@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\MemberRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -86,5 +87,28 @@ class MemberController extends Controller
         $data['total_count'] = 10;
 
         return response()->json($data);
+    }
+
+    public function change(MemberRepositoryInterface $memberRepository,
+        BatchRepositoryInterface $batchRepository,
+        $member_id)
+    {
+        $data['title'] = __('Change :name', ['name' => __('Batch')]);
+        $data['member'] = $memberRepository->find($member_id);
+        $data['batches'] = $batchRepository->all();
+
+        return view('forms.member-change', $data);
+    }
+
+    public function switch(MemberRepositoryInterface $memberRepository,
+        BatchRepositoryInterface $batchRepository,
+        $member_id)
+    {
+        $member = $memberRepository->find($member_id);
+        $data['title'] = __('Switch Member').' '.$member->full_name.' - '.$member->batchName();
+        $data['member'] = $member;
+        $data['members'] = $memberRepository->all();
+
+        return view('forms.member-switch', $data);
     }
 }

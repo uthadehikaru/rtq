@@ -86,4 +86,9 @@ class BatchRepository implements BatchRepositoryInterface
     {
         return Batch::whereId($id)->update($data);
     }
+
+    public function list()
+    {
+        return Batch::all()->pluck('name', 'id');
+    }
 }
