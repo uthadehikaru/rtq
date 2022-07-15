@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\BatchRepositoryInterface;
 use App\Models\Batch;
 use App\Models\Member;
+use App\Models\Teacher;
 use DB;
 
 class BatchRepository implements BatchRepositoryInterface
@@ -90,5 +91,16 @@ class BatchRepository implements BatchRepositoryInterface
     public function list()
     {
         return Batch::all()->pluck('name', 'id');
+    }
+
+    public function getByUser($user_id)
+    {
+        $teacher = Teacher::where('user_id',$user_id)->first();
+        if($teacher)
+            return Batch::with('teacher','course')
+            ->withCount('members')
+            ->where('teacher_id',$teacher->id)
+            ->orderBy('name')
+            ->get();
     }
 }

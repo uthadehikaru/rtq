@@ -17,4 +17,6 @@ interface ScheduleRepositoryInterface
     public function update($id, array $data);
 
     public function delete($id);
+
+    public function getByTeacher($teacher_id);
 }

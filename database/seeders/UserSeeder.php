@@ -15,13 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::create([
+        $user = \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@rtqmaisuro.id',
             'email_verified_at' => now(),
             'password' => Hash::make('bismillah'),
             'remember_token' => Str::random(10),
-            'type' => 'admin',
         ]);
+
+        $user->assignRole('administrator');
     }
 }

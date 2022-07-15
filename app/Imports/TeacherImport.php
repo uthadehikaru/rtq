@@ -14,17 +14,24 @@ class TeacherImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
+            $email = $row['name'].'@rtqmaisuro.id';
+            if($row['email'])
+                $email = $row['email'];
+            
             $user = User::create([
                 'name' => $row['name'],
-                'email' => $row['name'].'@rtqmaisuro.id',
+                'email' => $email,
                 'password' => Hash::make('bismillah'),
                 'type' => 'teacher',
             ]);
 
+            $user->assignRole('teacher');
+            
             $teacher = Teacher::create([
                 'name' => $row['name'],
                 'user_id' => $user->id,
             ]);
+
         }
     }
 }

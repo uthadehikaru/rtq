@@ -31,4 +31,6 @@ interface BatchRepositoryInterface
     public function delete($id);
 
     public function list();
+
+    public function getByUser($user_id);
 }

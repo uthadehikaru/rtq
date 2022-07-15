@@ -4,6 +4,7 @@ use App\Http\Controllers\Actions;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
@@ -29,30 +30,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::group(['middleware' => ['role:administrator']], function () {
+        Route::resource('users', UserController::class);
+        Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
+        Route::post('members/{id}/change', Actions\ChangeBatch::class);
+        Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');
+        Route::post('members/{id}/switch', Actions\SwitchBatch::class);
+        Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
+        Route::resource('members', MemberController::class);
+        Route::resource('courses', CourseController::class);
+        Route::resource('courses.batches', BatchController::class);
+        Route::resource('courses.batches.batchmembers', BatchMemberController::class);
+        Route::resource('periods', PeriodController::class);
+        Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
+        Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
+        Route::resource('payments', PaymentController::class);
+        Route::resource('teachers', TeacherController::class);
+        Route::resource('schedules', ScheduleController::class);
+        Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
+        Route::resource('schedules.presents', PresentController::class);
+        Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
-    Route::resource('users', UserController::class);
-    Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
-    Route::post('members/{id}/change', Actions\ChangeBatch::class);
-    Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');
-    Route::post('members/{id}/switch', Actions\SwitchBatch::class);
-    Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
-    Route::resource('members', MemberController::class);
-    Route::resource('courses', CourseController::class);
-    Route::resource('courses.batches', BatchController::class);
-    Route::resource('courses.batches.batchmembers', BatchMemberController::class);
-    Route::resource('periods', PeriodController::class);
-    Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
-    Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
-    Route::resource('payments', PaymentController::class);
-    Route::resource('teachers', TeacherController::class);
-    Route::resource('schedules', ScheduleController::class);
-    Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
-    Route::resource('schedules.presents', PresentController::class);
+    Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {
+        Route::post('schedules/create', Actions\CreateSchedule::class)->name('schedules.create');
+        Route::get('schedule/{schedule}', Actions\ScheduleDetail::class)->name('schedules.detail');
+    });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
 });
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');

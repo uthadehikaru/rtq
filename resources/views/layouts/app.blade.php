@@ -78,6 +78,7 @@
                                             <span class="kt-menu__link-text">@lang('Dashboard')</span>
                                         </a>
                                     </li>
+									@role('administrator')
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teachers*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('teachers.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Teachers')</span>
@@ -103,6 +104,9 @@
                                             <span class="kt-menu__link-text">@lang('Payments')</span>
                                         </a>
                                     </li>
+									@endrole
+									@role('teacher')
+									@endrole
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Sign Out')</span>
@@ -207,7 +211,9 @@
 								2022&nbsp;&copy;&nbsp;<a href="{{ url('/') }}" target="_blank" class="kt-link">{{ config('app.name') }}</a>
 							</div>
 							<div class="kt-footer__menu">
+								@role('administrator')
 								<a href="{{ route('logs') }}" target="_blank" class="kt-footer__menu-link kt-link">Logs</a>
+								@endrole
 							</div>
 						</div>
 					</div>
