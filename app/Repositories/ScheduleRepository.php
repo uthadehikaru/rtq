@@ -27,7 +27,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function find($id)
     {
-        return Schedule::with('presents','presents.member','presents.teacher')->findOrFail($id);
+        return Schedule::with('presents', 'presents.member', 'presents.teacher')->findOrFail($id);
     }
 
     public function delete($id)
@@ -72,13 +72,13 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function getByTeacher($teacher_id)
     {
-        return Schedule::with('teacher','batch')
-            ->where('teacher_id',$teacher_id)
-            ->orWhereHas('batch', function($query) use($teacher_id){
-                return $query->where('teacher_id',$teacher_id);
+        return Schedule::with('teacher', 'batch')
+        ->withCount('presents')
+            ->where('teacher_id', $teacher_id)
+            ->orWhereHas('batch', function ($query) use ($teacher_id) {
+                return $query->where('teacher_id', $teacher_id);
             })
-            ->orderBy('scheduled_at','desc')
-            ->take(20)
-            ->get();
+            ->orderBy('scheduled_at', 'desc')
+            ->paginate(20);
     }
 }

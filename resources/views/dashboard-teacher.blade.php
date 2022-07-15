@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>@lang('Switch Teacher')</label>
-                                    <select class="form-control" name="teacher_id" required>
+                                    <select class="form-control" name="teacher_id">
                                         <option value="">Tidak digantikan</option>
                                         @foreach($teachers as $teacher)
                                         @if($teacher->user_id==Auth::id())
@@ -125,7 +125,6 @@
                                         {{ $batch->course->name }}
                                     </p>
                                 </div>
-                                <a href="#" class="btn btn-sm btn-label-brand btn-bold">@lang('Detail')</a>
                             </div>
                             @endforeach
                         </div>

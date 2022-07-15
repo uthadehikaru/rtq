@@ -15,9 +15,10 @@ class TeacherImport implements ToCollection, WithHeadingRow
     {
         foreach ($rows as $row) {
             $email = $row['name'].'@rtqmaisuro.id';
-            if($row['email'])
+            if ($row['email']) {
                 $email = $row['email'];
-            
+            }
+
             $user = User::create([
                 'name' => $row['name'],
                 'email' => $email,
@@ -26,12 +27,11 @@ class TeacherImport implements ToCollection, WithHeadingRow
             ]);
 
             $user->assignRole('teacher');
-            
+
             $teacher = Teacher::create([
                 'name' => $row['name'],
                 'user_id' => $user->id,
             ]);
-
         }
     }
 }

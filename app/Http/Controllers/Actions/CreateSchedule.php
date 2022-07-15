@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Interfaces\ScheduleRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CreateSchedule extends Controller
 {
@@ -17,15 +17,15 @@ class CreateSchedule extends Controller
     public function __invoke(Request $request,
     ScheduleRepositoryInterface $scheduleRepository)
     {
-        
         $request->validate([
             'scheduled_at' => 'required',
             'batch_id' => 'required',
-            'teacher_id'=>'',
+            'teacher_id' => '',
         ]);
 
         $schedule = $request->all();
         $scheduleRepository->create($schedule);
-        return back()->with('message','Jadwal berhasil disimpan');
+
+        return back()->with('message', 'Jadwal berhasil disimpan');
     }
 }

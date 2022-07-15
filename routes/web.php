@@ -13,6 +13,7 @@ use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,8 +54,11 @@ Route::middleware('auth')->group(function () {
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
     Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {
+        Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
         Route::post('schedules/create', Actions\CreateSchedule::class)->name('schedules.create');
         Route::get('schedule/{schedule}', Actions\ScheduleDetail::class)->name('schedules.detail');
+        Route::post('schedule/{schedule}', Actions\UpdateSchedule::class)->name('schedules.update');
+        Route::get('presents', Teacher\PresentList::class)->name('presents.index');
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

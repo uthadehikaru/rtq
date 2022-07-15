@@ -106,6 +106,16 @@
                                     </li>
 									@endrole
 									@role('teacher')
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teacher/schedules*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('teacher.schedules.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Schedules')</span>
+                                        </a>
+                                    </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teacher/presents*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('teacher.presents.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Kehadiran')</span>
+                                        </a>
+                                    </li>
 									@endrole
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">

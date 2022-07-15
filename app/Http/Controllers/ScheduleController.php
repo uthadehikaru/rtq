@@ -7,6 +7,7 @@ use App\Interfaces\ScheduleRepositoryInterface;
 use App\Interfaces\TeacherRepositoryInterface;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Auth;
 
 class ScheduleController extends Controller
 {
@@ -18,8 +19,10 @@ class ScheduleController extends Controller
     public function index(ScheduleRepositoryInterface $scheduleRepository)
     {
         $data['title'] = __('Schedules');
-        $data['schedules'] = $scheduleRepository->all();
-        $data['total'] = $scheduleRepository->count();
+        if(Auth::user()->hasRole('administrator'))
+            $data['schedules'] = $scheduleRepository->all();
+        else
+            $data['schedules'] = $scheduleRepository->getByTeacher(Auth::user()->teacher->id);
 
         return view('datatables.schedule', $data);
     }

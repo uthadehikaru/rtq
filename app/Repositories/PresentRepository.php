@@ -14,6 +14,14 @@ class PresentRepository implements PresentRepositoryInterface
         ->get();
     }
 
+    public function getByTeacher($teacher_id)
+    {
+        return Present::with('schedule', 'teacher', 'schedule.batch')
+        ->where('teacher_id', $teacher_id)
+        ->latest()
+        ->get();
+    }
+
     public function count($schedule_id)
     {
         return Present::where('schedule_id', $schedule_id)->count();

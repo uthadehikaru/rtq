@@ -14,8 +14,27 @@ class UpdateSchedule extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    \App\Interfaces\ScheduleRepositoryInterface $scheduleRepository,)
+    \App\Interfaces\ScheduleRepositoryInterface $scheduleRepository, 
+    $schedule_id)
     {
-        
+        $statuses = $request->get('status');
+        $descriptions = $request->get('description');
+        $attended_ats = $request->get('attended_at');
+        $schedule = $scheduleRepository->find($schedule_id);
+
+        foreach($schedule->presents as $present){
+            if(isset($statuses[$present->id])){
+                $status = $statuses[$present->id];
+                $present->status = $status;
+                if($status=='present' && isset($attended_ats[$present->id])){
+                    $present->attended_at = $attended_ats[$present->id];
+                }
+                $present->description = $descriptions[$present->id];
+                if($present->isDirty())
+                    $present->save();
+            }
+        }
+
+        return back()->with('message','Berhasil diperbaharui');
     }
 }

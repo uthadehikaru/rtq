@@ -17,8 +17,8 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->timestamp('scheduled_at')->nullable();
-            $table->foreignId('batch_id');
-            $table->foreignId('teacher_id');
+            $table->foreignId('batch_id')->constrained();
+            $table->foreignId('teacher_id')->nullable()->constrained();
         });
     }
 

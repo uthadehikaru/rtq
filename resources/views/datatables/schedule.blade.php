@@ -70,16 +70,18 @@ jQuery(document).ready(function() {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Schedules')
+                @lang('Schedules')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    @role('administrator')
                     <a href="{{ route('schedules.create') }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
                         @lang('New Schedule')
                     </a>
+                    @endrole
                 </div>
             </div>
         </div>
@@ -124,9 +126,10 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $schedule->scheduled_at->format('d/m/y h:i') }}</td>
                         <td>{{ $schedule->batch->course->name }} {{ $schedule->batch->name }} {{ $schedule->batch->teacher->name }}</td>
-                        <td>{{ $schedule->teacher->name }}</td>
+                        <td>{{ $schedule->teacher?->name }}</td>
                         <td>{{ $schedule->presents_count }}</td>
                         <td>
+                            @role('administrator')
                             <a href="{{ route('schedules.presents.index', $schedule->id) }}" class="text-info">
                                 <i class="la la-list"></i> @lang('Detail')
                             </a>
@@ -136,6 +139,12 @@ jQuery(document).ready(function() {
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $schedule->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
+                            @endrole
+                            @role('teacher')
+                            <a href="{{ route('teacher.schedules.detail', $schedule->id) }}" class="text-info">
+                                <i class="la la-list"></i> @lang('Detail')
+                            </a>
+                            @endrole
                         </td>
                     </tr>
                 @endforeach

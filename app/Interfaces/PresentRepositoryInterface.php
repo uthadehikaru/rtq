@@ -5,6 +5,8 @@ namespace App\Interfaces;
 interface PresentRepositoryInterface
 {
     public function getBySchedule($schedule_id);
+    
+    public function getByTeacher($teacher_id);
 
     public function count($schedule_id);
 
