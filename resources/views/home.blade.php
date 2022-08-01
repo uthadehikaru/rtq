@@ -150,13 +150,13 @@
 							<div class="kt-infobox__section">
 								<h3 class="kt-infobox__subtitle">Tentang Kami</h3>
 								<div class="kt-infobox__content">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget pellentesque mauris. Nullam vel dolor magna. Sed gravida enim mauris, id fringilla augue pellentesque id. Quisque pellentesque rhoncus massa quis pellentesque. Maecenas laoreet a est tincidunt viverra. Vestibulum placerat mi sed eleifend bibendum. Nulla ultricies laoreet ex placerat finibus. Mauris molestie, ligula a vehicula consectetur, orci lacus luctus quam, eu molestie lorem orci et eros. Phasellus hendrerit mi eget orci euismod fringilla. Duis at felis finibus, posuere urna id, sagittis magna. Integer augue leo, pulvinar id aliquet non, facilisis vel sem. Vestibulum egestas dapibus molestie.
+								Kami adalah RTQ Maisuro
 								</div>
 							</div>
 							<div class="kt-infobox__section">
 								<h3 class="kt-infobox__subtitle">Kontak</h3>
 								<div class="kt-infobox__content">
-								Pellentesque turpis elit, rutrum sed tempus non, finibus quis lectus. Proin vitae enim tincidunt, scelerisque eros ac, vulputate arcu. Sed auctor accumsan metus, et auctor orci. Donec eu ligula a elit rutrum posuere at in est. Curabitur urna purus, blandit sed porttitor a, posuere sit amet neque. Fusce ac feugiat neque. Cras fringilla lectus nec tortor faucibus blandit. Donec sollicitudin volutpat nibh non vestibulum. Duis quis fermentum tellus. Pellentesque ipsum est, accumsan nec augue a, finibus pharetra nunc. Curabitur condimentum metus id malesuada bibendum.
+								Hubungi kami melalui instagram maupun whatsapp pada link dibawah ini.
 								</div>
 							</div>
 						</div>
