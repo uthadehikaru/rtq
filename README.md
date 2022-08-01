@@ -3,7 +3,7 @@
 ## About
 
 builded above laravel 8 framework
- 
+  
 ## System Requirement
 
 - Web Server (Apache or Nginx)
