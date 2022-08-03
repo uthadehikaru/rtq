@@ -18,6 +18,7 @@
 
     "C":"",
     "Cancel":"Batal",
+    "Calculate":"Hitung",
     "Change :name":"Ganti :name",
     "Created at":"Dibuat pada",
     "Customer":"Pelanggan",
@@ -77,6 +78,7 @@
     "New Course":"Tambah Kelas",
     "New Member":"Tambah Anggota",
     "New Payment":"Tambah Pembayaran",
+    "New Salary":"Tambah Bisyaroh",
     "New Schedule":"Tambah Jadwal",
     "Not Active":"Tidak aktif",
 
@@ -104,6 +106,7 @@
     "Registered":"Terdaftar",
 
     "S":"",
+    "Salaries":"Bisyaroh",
     "Save":"Simpan",
     "Search":"Pencarian",
     "Schedule":"Jadwal",

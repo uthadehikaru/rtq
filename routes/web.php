@@ -11,6 +11,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PresentController;
+use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\SalaryDetailController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\Teacher;
@@ -51,6 +53,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('schedules', ScheduleController::class);
         Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
         Route::resource('schedules.presents', PresentController::class);
+        Route::get('salaries/{id}/calculate', Actions\CalculateSalary::class)->name('salaries.calculate');
+        Route::resource('salaries', SalaryController::class);
+        Route::resource('salaries.details', SalaryDetailController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
     Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {

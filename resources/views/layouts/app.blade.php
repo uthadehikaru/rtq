@@ -104,6 +104,11 @@
                                             <span class="kt-menu__link-text">@lang('Payments')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('salaries*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('salaries.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Salaries')</span>
+                                        </a>
+                                    </li>
 									@endrole
 									@role('teacher')
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teacher/schedules*')?'kt-menu__item--active':'' }}">
