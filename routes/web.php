@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('schedules', ScheduleController::class);
         Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
         Route::resource('schedules.presents', PresentController::class);
+        Route::get('salaries/{id}/report', Actions\ReportSalary::class)->name('salaries.report');
         Route::get('salaries/{id}/calculate', Actions\CalculateSalary::class)->name('salaries.calculate');
         Route::resource('salaries', SalaryController::class);
         Route::resource('salaries.details', SalaryDetailController::class);

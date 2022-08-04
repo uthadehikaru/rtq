@@ -1,10 +1,13 @@
 @extends('layouts.app')
 @section('breadcrumbs')
 <a href="{{ route('salaries.index') }}" class="kt-subheader__breadcrumbs-link">
-@lang("Salaries") </a>
+@lang("Salaries")</a>
+<span class="kt-subheader__breadcrumbs-separator"></span>
+<a href="{{ route('salaries.details.index', $detail->salary_id) }}" class="kt-subheader__breadcrumbs-link">
+@lang("Details")</a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('New Salary')
+    {{ $title }}
 </span>
 @endsection
 @section('content')
@@ -24,7 +27,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{ route('salaries.index') }}" class="btn btn-default btn-icon-sm">
+                            <a href="{{ route('salaries.details.index', $detail->salary_id) }}" class="btn btn-warning btn-icon-sm">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
@@ -34,34 +37,20 @@
             </div>
 
             <!--begin::Form-->
-            @if($salary)
-            <form class="kt-form" method="POST" action="{{ route('salaries.update', $salary->id) }}">
+            @if($detail)
+            <form class="kt-form" method="POST" action="{{ route('salaries.details.update', [$detail->salary_id, $detail->id]) }}">
                 <input type="hidden" name="_method" value="PUT" />
             @else
-            <form class="kt-form" method="POST" action="{{ route('salaries.store') }}">
+            <form class="kt-form" method="POST" action="{{ route('salaries.details.store', $detail->salary_id) }}">
             @endif
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
-                            <label>@lang('Name')</label>
-                            <input type="text" name="name" class="form-control" placeholder="@lang('Period Name')"
-                            value="{{ old('name', $salary?$salary->name:'') }}"
+                            <label>@lang('Amount')</label>
+                            <input type="number" name="amount" class="form-control"
+                            value="{{ old('amount', $detail?$detail->amount:'') }}"
                             required>
-                        </div>
-                        <div class="form-group">
-                            <label>@lang('Start Date')</label>
-                            <div class="input-group">
-                                <input type="date" name="start_date" class="form-control"
-                                value="{{ old('start_date', $salary?$salary->start_date->format('Y-m-d'):'') }}" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>@lang('End Date')</label>
-                            <div class="input-group">
-                                <input type="date" name="end_date" class="form-control"
-                                value="{{ old('end_date', $salary?$salary->end_date->format('Y-m-d'):'') }}" required>
-                            </div>
                         </div>
                     </div>
                 </div>

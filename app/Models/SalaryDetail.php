@@ -13,6 +13,11 @@ class SalaryDetail extends Model
         'salary_id',
         'teacher_id',
         'amount',
+        'summary',
+    ];
+    
+    protected $casts = [
+        'summary' => 'array',
     ];
 
     public function salary()

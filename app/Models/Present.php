@@ -9,7 +9,7 @@ class Present extends Model
 {
     use HasFactory;
 
-    public const STATUSES = ['present', 'absent', 'sick', 'permit'];
+    public const STATUSES = ['present', 'absent'];
 
     public const STATUS_PRESENT = 'present';
     public const STATUS_ABSENT = 'absent';

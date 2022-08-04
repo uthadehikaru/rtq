@@ -24,4 +24,9 @@ class Salary extends Model
     {
         return $this->hasMany(SalaryDetail::class);
     }
+
+    public function period()
+    {
+        return $this->start_date->format('d M Y').' - '.$this->end_date->format('d M Y');
+    }
 }

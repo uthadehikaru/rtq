@@ -87,6 +87,10 @@ jQuery(document).ready(function () {
                         <i class="la la-refresh"></i>
                         @lang('Calculate')
                     </a>
+                    <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm">
+                        <i class="la la-file"></i>
+                        @lang('Report')
+                    </a>
                 </div>
             </div>
         </div>
