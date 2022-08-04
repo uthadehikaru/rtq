@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Switch Teacher')</label>
-                            <select class="form-control" name="teacher_id" required>
+                            <select class="form-control" name="teacher_id">
                                 <option value="">Tidak ada pengganti</option>
                                 @foreach($teachers as $teacher)
                                 <option value="{{ $teacher->id }}" {{ $schedule && $schedule->teacher_id==$teacher->id?'selected':'' }}>{{ $teacher->name }}</option>
