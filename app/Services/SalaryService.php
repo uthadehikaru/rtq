@@ -124,16 +124,29 @@ class SalaryService
         DB::commit();
     }
 
-    public function getPresentOfSalary($salary_id)
+    public function getPresentOfSalary($salary_id, $teacher_id=0)
     {
-        return Present::with('teacher','schedule')
+        $presents = Present::with('teacher','schedule')
         ->where('salary_id',$salary_id)
         ->whereNotNull('teacher_id')
+        ->when($teacher_id>0,function($query) use ($teacher_id){
+            return $query->where('teacher_id',$teacher_id);
+        })
         ->orderBy('teacher_id')
         ->latest()
         ->get()
         ->groupBy(function ($present, $key) {
             return $present->teacher_id;
         });
+
+        return $presents;
+    }
+
+    public function getTeacherSalaries($teacher_id)
+    {
+        return SalaryDetail::with('salary')
+        ->where('teacher_id', $teacher_id)
+        ->latest()
+        ->get();
     }
 }

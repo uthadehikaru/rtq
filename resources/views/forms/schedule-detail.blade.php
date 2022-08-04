@@ -5,6 +5,9 @@
 </span>
 @endsection
 @section('content')
+@if(session()->has('message'))
+<x-alert type="success">{{ session()->get('message') }}</x-alert>
+@endif
 <div class="row">
     <div class="col">
 
@@ -48,7 +51,7 @@
                         <div class="col">
                             <label>Jam Kehadiran (diisi jika hadir)</label>
                             <input type="time" class="form-control"
-                            name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at->format('H:i') }}" />
+                            name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}" />
                         </div>
                         <div class="col">
                             <label>Keterangan</label>

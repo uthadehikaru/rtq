@@ -9,8 +9,9 @@
                 <h3>@lang('Salaries') {{ $salary->name }}</h3>
                 <p>Periode {{ $salary->period() }}</p>
                 
-                @foreach($salary->details as $detail)
+                @foreach($details as $detail)
                 <h5>@lang('Teacher') {{ $detail->teacher->name }}</h5>
+                <p>Nominal : <x-money :amount="$detail->amount" /></p>
                 <!--begin: Datatable -->
                 <table class="table border" id="html_table" width="100%">
                     <thead>
@@ -34,7 +35,7 @@
                                 </td>
                                 <td width="15%">
                                     <span class="text-{{ $present->status=='present'?'primary':'danger' }}">
-                                        {{ $present->status }}
+                                        @lang('app.present.status.'.$present->status)
                                     </span>
                                 </td>
                                 <td>{{ $present->status=='present'?$present->attended_at->format('H:i:s'):$present->description }}</td>

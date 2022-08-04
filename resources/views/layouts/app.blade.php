@@ -121,6 +121,11 @@
                                             <span class="kt-menu__link-text">@lang('Kehadiran')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teacher/salaries*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('teacher.salaries.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Salaries')</span>
+                                        </a>
+                                    </li>
 									@endrole
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">

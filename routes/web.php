@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
         Route::get('schedule/{schedule}', Actions\ScheduleDetail::class)->name('schedules.detail');
         Route::post('schedule/{schedule}', Actions\UpdateSchedule::class)->name('schedules.update');
         Route::get('presents', Teacher\PresentList::class)->name('presents.index');
+        Route::get('salaries', [Teacher\Salary::class, 'index'])->name('salaries.index');
+        Route::get('salaries/{detail_id}', [Teacher\Salary::class, 'report'])->name('salaries.report');
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
