@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\models\Present;
+use App\Models\Present;
 use App\Models\Salary;
 use App\Models\SalaryDetail;
-use App\models\Schedule;
+use App\Models\Schedule;
 use DB;
 
 class SalaryService
