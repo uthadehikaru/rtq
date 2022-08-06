@@ -1,0 +1,20 @@
+@servers(['hosting'=> 'root@example -p 22'])
+
+@setup
+    $now = date('d M Y H:i:s');
+    $botId ='xxx:yyyy';
+    $chatId = 'xxx';
+    $url = 'https://web.example';
+@endsetup
+
+@task('deploy', ['on' => 'hosting'])
+    cd /home/root/web
+    git pull origin master
+    composer install
+    php artisan migrate
+    php artisan optimize
+@endtask
+
+@finished
+    @telegram($botId,$chatId,'[Website]('.$url.') Has Been Updated at '.$now,['parse_mode'=>'MarkdownV2'])
+@endfinished
