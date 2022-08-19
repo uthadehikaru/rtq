@@ -24,8 +24,8 @@ class CreateSchedule extends Controller
         ]);
 
         $schedule = $request->all();
-        $scheduleRepository->create($schedule);
+        $schedule = $scheduleRepository->create($schedule);
 
-        return back()->with('message', 'Jadwal berhasil disimpan');
+        return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');
     }
 }

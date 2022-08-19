@@ -9,7 +9,7 @@
                 <h3>@lang('Salaries') {{ $salary->name }}</h3>
                 <p>Periode {{ $salary->period() }}</p>
                 
-                @foreach($details as $detail)
+                @foreach($salary->details as $detail)
                 <h5>@lang('Teacher') {{ $detail->teacher->name }}</h5>
                 <p>Nominal : <x-money :amount="$detail->amount" /></p>
                 <!--begin: Datatable -->

@@ -59,6 +59,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             Present::create([
                 'schedule_id' => $schedule->id,
                 'member_id' => $member->id,
+                'status' => 'absent',
             ]);
         }
 

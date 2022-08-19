@@ -19,10 +19,7 @@ class ReportSalary extends Controller
     {
         $title ="Laporan";
         $salary = (new SalaryService())->findDetails($salary_id);
-        if($request->has('detail')){
-            $teacherPresents = (new SalaryService())->getPresentOfSalary($salary_id);
-            return view('reports.salary-detail', compact('title','salary','teacherPresents'));
-        }
-        return view('reports.salary', compact('title','salary'));
+        $teacherPresents = (new SalaryService())->getPresentOfSalary($salary_id);
+        return view('reports.salary-detail', compact('title','salary','teacherPresents'));
     }
 }

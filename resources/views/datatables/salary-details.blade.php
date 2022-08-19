@@ -125,7 +125,12 @@ jQuery(document).ready(function () {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Teacher')</th>
-                    <th title="Field #2">@lang('Amount')</th>
+                    <th title="Field #2">@lang('Jadwal')</th>
+                    <th title="Field #2">@lang('Badal')</th>
+                    <th title="Field #2">@lang('Hadir')</th>
+                    <th title="Field #2">@lang('Telat')</th>
+                    <th title="Field #2">@lang('Absen')</th>
+                    <th title="Field #2">@lang('Izin/Sakit')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -134,7 +139,12 @@ jQuery(document).ready(function () {
                     <tr>
                         <td>{{ $detail->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $detail->teacher->name }}</td>
-                        <td>{{ $detail->amount }}</td>
+                        <td>{{ $detail->summary['own'] }}</td>
+                        <td>{{ $detail->summary['switch'] }}</td>
+                        <td>{{ $detail->summary['present'] }}</td>
+                        <td>{{ $detail->summary['late'] }}</td>
+                        <td>{{ $detail->summary['absent'] }}</td>
+                        <td>{{ $detail->summary['permit'] }}</td>
                         <td>
                             <a href="{{ route('salaries.details.edit', [$salary->id,$detail->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
