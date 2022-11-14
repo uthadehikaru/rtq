@@ -12,7 +12,7 @@ class BatchRepository implements BatchRepositoryInterface
 {
     public function all()
     {
-        return Batch::with('teacher', 'course')->get();
+        return Batch::with('teachers', 'course','members')->get();
     }
 
     public function count()
@@ -22,7 +22,9 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function getByCourse($course_id)
     {
-        return Batch::with('teacher')->withCount('members')->where('course_id', $course_id)->get();
+        return Batch::with(['teachers'=>function($query){
+            $query->wherePivot('is_backup',false);
+        }])->withCount('members')->where('course_id', $course_id)->get();
     }
 
     public function countByCourse($course_id)

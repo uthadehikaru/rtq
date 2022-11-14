@@ -13,7 +13,6 @@ class Batch extends Model
         'name',
         'description',
         'course_id',
-        'teacher_id',
     ];
 
     public function course()
@@ -21,13 +20,13 @@ class Batch extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class);
-    }
-
     public function members()
     {
         return $this->belongsToMany(Member::class);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class);
     }
 }

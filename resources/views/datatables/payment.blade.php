@@ -164,7 +164,6 @@ jQuery(document).ready(function() {
             <thead>
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
-                    <th title="Field #2">@lang('Period')</th>
                     <th title="Field #4">@lang('Member')</th>
                     <th title="Field #2">@lang('Amount')</th>
                     <th title="Field #4">@lang('Status')</th>
@@ -177,10 +176,9 @@ jQuery(document).ready(function() {
                 @foreach($payments as $payment)
                     <tr>
                         <td>{{ $payment->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $payment->period->name }}</td>
                         <td>
                             @foreach($payment->details as $detail)
-                            <p>{{ $detail->member->full_name }} @lang('Batch') {{ $detail->batch->name }}</p>
+                            <p>{{ $detail->member->full_name }} @lang('Batch') {{ $detail->batch->name }} periode {{ $detail->period->name }}</p>
                             @endforeach
                         </td>
                         <td>{{ $payment->amount }}</td>

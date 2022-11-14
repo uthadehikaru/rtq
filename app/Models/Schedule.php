@@ -11,18 +11,12 @@ class Schedule extends Model
 
     protected $fillable = [
         'scheduled_at',
-        'teacher_id',
         'batch_id',
     ];
 
     protected $casts = [
         'scheduled_at' => 'datetime',
     ];
-
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class);
-    }
 
     public function batch()
     {

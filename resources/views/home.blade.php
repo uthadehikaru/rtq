@@ -211,16 +211,6 @@
 
 		<!-- end:: Content -->
 		</div>
-
-		<div class="kt-footer  kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop" id="kt_footer">
-			<div class="kt-container  kt-container--fluid ">
-				<div class="kt-footer__copyright">
-					2022&nbsp;©&nbsp;{{ config('app.name') }}
-				</div>
-				<div class="kt-footer__menu">
-				</div>
-			</div>
-		</div>
 @endsection
 @push('styles')
 <link href="{{ asset('assets/css/pages/support-center/home-1.css') }}" rel="stylesheet" type="text/css">

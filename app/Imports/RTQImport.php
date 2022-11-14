@@ -13,6 +13,7 @@ class RTQImport implements WithMultipleSheets
             new CourseImport(),
             new BatchImport(),
             new MemberImport(),
+            new ScheduleImport(),
         ];
     }
 }

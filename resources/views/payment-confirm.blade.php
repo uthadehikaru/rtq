@@ -119,7 +119,7 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">@lang('Period')</label>
 												<div class="col-9">
-													<select class="form-control kt-select-period" name="period_id">
+													<select class="form-control kt-select-period" name="period_ids[]" multiple>
 														<option></option>
 														@foreach($periods as $period)
 														<option value="{{ $period->id }}" {{ $period->id==$period_id?'selected':'' }}>{{ $period->name }}</option>

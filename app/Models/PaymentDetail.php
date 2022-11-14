@@ -13,6 +13,7 @@ class PaymentDetail extends Model
         'payment_id',
         'member_id',
         'batch_id',
+        'period_id',
     ];
 
     public function member()
@@ -23,5 +24,15 @@ class PaymentDetail extends Model
     public function batch()
     {
         return $this->belongsTo(Batch::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function period()
+    {
+        return $this->belongsTo(Period::class);
     }
 }

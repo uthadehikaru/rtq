@@ -120,9 +120,9 @@ jQuery(document).ready(function () {
             <thead>
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
-                    <th title="Field #2">@lang('Teacher')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Schedule')</th>
+                    <th title="Field #2">@lang('Teacher')</th>
                     <th title="Field #2">@lang('Members')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -131,9 +131,11 @@ jQuery(document).ready(function () {
                 @foreach($batches as $batch)
                     <tr>
                         <td>{{ $batch->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $batch->teacher->name }}</td>
                         <td>{{ $batch->name }}</td>
                         <td>{{ $batch->description }}</td>
+                        <td>
+                            {{ $batch->teachers->implode('name', ' , ') }}
+                        </td>
                         <td>{{ $batch->members_count }} @lang('Members')</td>
                         <td>
                             <a href="{{ route('courses.batches.batchmembers.index', [$batch->course_id, $batch->id]) }}" class="text-primary">

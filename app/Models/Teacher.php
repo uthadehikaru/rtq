@@ -16,7 +16,7 @@ class Teacher extends Model
 
     public function batches()
     {
-        return $this->hasMany(Batch::class);
+        return $this->belongsToMany(Batch::class, 'batch_teacher');
     }
 
     public function user()
