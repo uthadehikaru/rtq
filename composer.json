@@ -59,6 +59,9 @@
         ],
         "deploy": [
             "./vendor/bin/envoy run deploy"
+        ],
+        "test": [
+            "@php artisan test"
         ]
     },
     "extra": {
