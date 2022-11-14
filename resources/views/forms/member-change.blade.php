@@ -46,7 +46,7 @@
                                     @if($member->batch() && $batch->id==$member->batch()->id)
                                         @continue
                                     @endif
-                                    <option value="{{ $batch->id }}">{{ $batch->course->name }} @lang('Batch') {{ $batch->name }} {{ $batch->teacher->name }}</option>
+                                    <option value="{{ $batch->id }}">{{ $batch->course->name }} @lang('Batch') {{ $batch->name }} : {{ $batch->members->count() }} peserta</option>
                                 @endforeach
                             </select>
                         </div>

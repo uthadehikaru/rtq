@@ -4,8 +4,8 @@ namespace App\Imports;
 
 use App\Models\Teacher;
 use App\Models\User;
-use Hash;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -19,8 +19,9 @@ class TeacherImport implements ToCollection, WithHeadingRow
                 $email = $row['email'];
             }
 
-            $user = User::create([
+            $user = User::firstOrCreate([
                 'name' => $row['name'],
+            ],[
                 'email' => $email,
                 'password' => Hash::make('bismillah'),
                 'type' => 'teacher',
@@ -28,7 +29,7 @@ class TeacherImport implements ToCollection, WithHeadingRow
 
             $user->assignRole('teacher');
 
-            $teacher = Teacher::create([
+            Teacher::firstOrCreate([
                 'name' => $row['name'],
                 'user_id' => $user->id,
             ]);

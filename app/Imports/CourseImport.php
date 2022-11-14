@@ -14,8 +14,9 @@ class CourseImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new Course([
+        return Course::firstOrCreate([
             'name' => $row['name'],
+        ],[
             'type' => $row['type'],
             'fee' => $row['fee'],
         ]);

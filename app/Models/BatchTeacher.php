@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class BatchMember extends Pivot
+class BatchTeacher extends Pivot
 {
-    protected $table = 'batch_member';
+    protected $table = 'batch_teacher';
 }

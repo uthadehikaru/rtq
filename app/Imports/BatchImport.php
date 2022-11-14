@@ -16,14 +16,13 @@ class BatchImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $teacher = Teacher::where('name', $row['teacher'])->first();
         $course = course::where('name', $row['course'])->first();
 
-        return new Batch([
+        return Batch::firstOrCreate([
             'name' => $row['name'],
-            'description' => $row['description'],
-            'teacher_id' => $teacher->id,
             'course_id' => $course->id,
+        ],[
+            'description' => $row['description'],
         ]);
     }
 }

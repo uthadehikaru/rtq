@@ -13,8 +13,8 @@ class Present extends Model
 
     protected $fillable = [
         'schedule_id',
-        'teacher_id',
-        'member_id',
+        'type',
+        'user_id',
         'attended_at',
         'status',
         'description',
@@ -24,14 +24,9 @@ class Present extends Model
         'attended_at' => 'datetime',
     ];
 
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(Teacher::class);
-    }
-
-    public function member()
-    {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(User::class);
     }
 
     public function schedule()
@@ -41,13 +36,6 @@ class Present extends Model
 
     public function name()
     {
-        $name = '';
-        if ($this->member_id) {
-            $name = $this->member->full_name;
-        } elseif ($this->teacher_id) {
-            $name = $this->teacher->name;
-        }
-
-        return $name;
+        return $this->user?->name;
     }
 }

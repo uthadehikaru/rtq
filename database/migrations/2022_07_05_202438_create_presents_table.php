@@ -16,7 +16,7 @@ class CreatePresentsTable extends Migration
         Schema::create('presents', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('schedule_id')->constrained()->cascadeOnDelete();;
+            $table->foreignId('schedule_id')->constrained()->cascadeOnDelete();
             $table->foreignId('member_id')->nullable()->constrained();
             $table->foreignId('teacher_id')->nullable()->constrained();
             $table->time('attended_at')->nullable();
