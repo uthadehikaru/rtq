@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use Illuminate\Database\Query\Builder;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {
@@ -48,17 +49,13 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::whereId($id)->update($data);
     }
 
-    public function check($payment, $batch_id, $member_id)
+    public function check($payment, $batch_id, $member_id, $period_id)
     {
         return PaymentDetail::where([
             'batch_id' => $batch_id,
             'member_id' => $member_id,
+            'period_id' => $period_id,
         ])
-        ->whereExists(function ($query) use ($payment) {
-            return $query->selectRaw('count(1)')
-            ->from('payments')->whereColumn('payments.id', 'payment_details.payment_id')
-            ->where('payments.period_id', $payment->period_id);
-        })
         ->first();
     }
 

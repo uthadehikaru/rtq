@@ -10,17 +10,11 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'period_id',
         'amount',
         'paid_at',
         'attachment',
         'status',
     ];
-
-    public function period()
-    {
-        return $this->belongsTo(Period::class);
-    }
 
     public function details()
     {

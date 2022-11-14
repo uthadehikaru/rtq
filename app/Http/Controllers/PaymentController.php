@@ -7,8 +7,9 @@ use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\MemberRepositoryInterface;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Interfaces\PeriodRepositoryInterface;
+use App\Models\Period;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -44,7 +45,7 @@ class PaymentController extends Controller
     public function store(BatchRepositoryInterface $batchRepository, MemberRepositoryInterface $memberRepository, PaymentRepositoryInterface $paymentRepository, Request $request)
     {
         $data = $request->validate([
-            'period_id' => 'required',
+            'period_ids' => 'required',
             'members' => 'required',
             'total' => 'numeric',
             'attachment' => '',
@@ -59,32 +60,35 @@ class PaymentController extends Controller
         }
 
         $payment = $paymentRepository->create([
-            'period_id' => $data['period_id'],
             'amount' => $data['total'],
             'attachment' => $path,
         ]);
 
-        foreach ($members as $member) {
-            $ids = explode('_', $member['id']);
-            $batch_id = $ids[0];
-            $member_id = $ids[1];
-            $paymentDetail = $paymentRepository->check($payment, $batch_id, $member_id);
-            if (! $paymentDetail) {
-                $batch = $batchRepository->find($batch_id);
-                $detail = $paymentRepository->createDetail([
-                    'member_id' => $member_id,
-                    'batch_id' => $batch_id,
-                    'payment_id' => $payment->id,
-                ]);
-            } else {
-                DB::rollBack();
+        foreach($data['period_ids'] as $period_id){
+            $period = Period::find($period_id);
 
-                return back()->with('error', 'Payment already exists. '.$member['value'].' '.$member['email']);
+            foreach ($members as $member) {
+                $ids = explode('_', $member['id']);
+                $batch_id = $ids[0];
+                $member_id = $ids[1];
+                $paymentDetail = $paymentRepository->check($payment, $batch_id, $member_id, $period_id);
+                if (! $paymentDetail) {
+                    $paymentRepository->createDetail([
+                        'member_id' => $member_id,
+                        'batch_id' => $batch_id,
+                        'period_id' => $period_id,
+                        'payment_id' => $payment->id,
+                    ]);
+                } else {
+                    DB::rollBack();
+
+                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member['value'].' '.$member['email'] . ' periode '. $period['name']);
+                }
             }
         }
         DB::commit();
 
-        return back()->with('message', 'Payment Confirmation Added, Thank You');
+        return back()->with('message', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
     }
 
     public function destroy(PaymentRepositoryInterface $paymentRepository, $payment_id)
