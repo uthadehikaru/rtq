@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Actions;
 use App\Http\Controllers\Controller;
 use App\Models\Present;
 use Illuminate\Http\Request;
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleDetail extends Controller
 {
@@ -17,14 +17,14 @@ class ScheduleDetail extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    \App\Interfaces\ScheduleRepositoryInterface $scheduleRepository,
+    \App\Repositories\ScheduleRepository $scheduleRepository,
     $schedule_id)
     {
         $schedule = $scheduleRepository->find($schedule_id);
         $data['schedule'] = $schedule;
         $data['statuses'] = Present::STATUSES;
-        $data['teacherPresent'] = $schedule->presents->where('teacher_id',Auth::user()->teacher->id)->first();
-        $data['canUpdate'] = Carbon::now()->between($schedule->scheduled_at, $schedule->scheduled_at->addDay());
+        $data['teacherPresent'] = $schedule->presents->where('user_id',Auth::id())->first();
+        $data['canUpdate'] = true; //Carbon::now()->between($schedule->scheduled_at, $schedule->scheduled_at->addDay());
         return view('forms.schedule-detail', $data);
     }
 }

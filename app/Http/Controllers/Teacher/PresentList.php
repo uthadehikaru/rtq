@@ -20,7 +20,7 @@ class PresentList extends Controller
     {
         
         $data['title'] = __('Kehadiran');
-        $data['presents'] = $presentRepository->getByTeacher(Auth::user()->teacher->id);
+        $data['presents'] = $presentRepository->getByTeacher(Auth::id());
         return view('datatables.teacher-present', $data);
     }
 }

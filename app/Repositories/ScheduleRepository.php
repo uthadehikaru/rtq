@@ -5,6 +5,11 @@ namespace App\Repositories;
 use App\Interfaces\ScheduleRepositoryInterface;
 use App\Models\Present;
 use App\Models\Schedule;
+use App\Models\Teacher;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleRepository implements ScheduleRepositoryInterface
 {
@@ -27,7 +32,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function find($id)
     {
-        return Schedule::with('presents', 'presents.member', 'presents.teacher')->findOrFail($id);
+        return Schedule::with('presents', 'presents.user')->findOrFail($id);
     }
 
     public function delete($id)
@@ -37,31 +42,46 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function create(array $data)
     {
+        DB::beginTransaction();
+
+        $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::parse($data['scheduled_at'])->startOfDay())
+        ->where('batch_id',$data['batch_id'])
+        ->first();
+        
+        if($schedule)
+            throw new Exception("Jadwal halaqoh ".$schedule->batch->name." untuk tanggal ".$schedule->scheduled_at->format('d M Y')." sudah ada");
+        
         $schedule = Schedule::create($data);
 
         Present::updateOrCreate([
             'schedule_id' => $schedule->id,
-            'teacher_id' => $schedule->batch->teacher_id,
+            'user_id' => Auth::id(),
         ], [
             'status' => 'absent',
+            'type'=>'teacher',
         ]);
 
-        if ($schedule->teacher_id) {
+        if ($data['teacher_id']) {
+            $teacher = Teacher::findOrFail($data['teacher_id']);
             Present::updateOrCreate([
                 'schedule_id' => $schedule->id,
-                'teacher_id' => $schedule->teacher_id,
+                'user_id' => $teacher->user_id,
             ], [
                 'status' => 'absent',
+                'type'=>'teacher',
             ]);
         }
 
         foreach ($schedule->batch->members as $member) {
             Present::create([
                 'schedule_id' => $schedule->id,
-                'member_id' => $member->id,
+                'user_id' => $member->user_id,
                 'status' => 'absent',
+                'type'=>'member',
             ]);
-        }
+        } 
+
+        DB::commit();
 
         return $schedule;
     }
@@ -71,14 +91,13 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         return Schedule::whereId($id)->update($data);
     }
 
-    public function getByTeacher($teacher_id)
+    public function getByTeacher($user_id)
     {
-        return Schedule::with('teacher', 'batch')
-        ->withCount('presents')
-            ->where('teacher_id', $teacher_id)
-            ->orWhereHas('batch', function ($query) use ($teacher_id) {
-                return $query->where('teacher_id', $teacher_id);
-            })
+        return Schedule::with('batch')
+            ->withCount(['presents'=>function($query){
+                $query->where('type','member');
+            }])
+            ->whereRelation('presents','user_id', $user_id)
             ->orderBy('scheduled_at', 'desc')
             ->paginate(20);
     }

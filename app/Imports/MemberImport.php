@@ -6,6 +6,7 @@ use App\Models\Batch;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -22,10 +23,21 @@ class MemberImport implements ToCollection, WithHeadingRow
 
             if(!$row['name'])
                 continue;
+
+            $email = $row['name'].'@rtqmaisuro.id';
+            $user = User::firstOrCreate([
+                'name' => $row['name'],
+            ],[
+                'email' => $email,
+                'password' => Hash::make(Str::random(8)),
+            ]);
+
+            $user->assignRole('member');
             
             $member = Member::firstOrCreate([
                 'full_name' => $row['name'],
             ],[
+                'user_id'=>$user->id,
                 'school' => $row['school'],
                 'class' => $row['class'],
                 'phone' => $row['phone'],

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\ScheduleRepositoryInterface;
-use App\Interfaces\TeacherRepositoryInterface;
+use App\Repositories\ScheduleRepository;
 use App\Models\Schedule;
+use App\Repositories\BatchRepository;
+use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
@@ -16,13 +16,13 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ScheduleRepositoryInterface $scheduleRepository)
+    public function index(ScheduleRepository $scheduleRepository)
     {
         $data['title'] = __('Schedules');
         if(Auth::user()->hasRole('administrator'))
             $data['schedules'] = $scheduleRepository->all();
         else
-            $data['schedules'] = $scheduleRepository->getByTeacher(Auth::user()->teacher->id);
+            $data['schedules'] = $scheduleRepository->getByTeacher(Auth::id());
 
         return view('datatables.schedule', $data);
     }
@@ -33,8 +33,8 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(
-        BatchRepositoryInterface $batchRepository,
-        TeacherRepositoryInterface $teacherRepository,
+        BatchRepository $batchRepository,
+        TeacherRepository $teacherRepository,
     ) {
         $data['title'] = __('New Schedule');
         $data['schedule'] = null;
@@ -52,7 +52,7 @@ class ScheduleController extends Controller
      */
     public function store(
         Request $request,
-        ScheduleRepositoryInterface $scheduleRepository
+        ScheduleRepository $scheduleRepository
     ) {
         $request->validate([
             'scheduled_at' => 'required',
@@ -83,8 +83,8 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(
-        BatchRepositoryInterface $batchRepository,
-        TeacherRepositoryInterface $teacherRepository,
+        BatchRepository $batchRepository,
+        TeacherRepository $teacherRepository,
         Schedule $schedule
     ) {
         $data['title'] = __('Edit Schedule');
@@ -103,7 +103,7 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,
-        ScheduleRepositoryInterface $scheduleRepository,
+        ScheduleRepository $scheduleRepository,
         $id,
     ) {
         $schedule = $request->validate([
@@ -123,7 +123,7 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(
-        ScheduleRepositoryInterface $scheduleRepository,
+        ScheduleRepository $scheduleRepository,
         $id
     ) {
         $status = $scheduleRepository->delete($id);

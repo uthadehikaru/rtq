@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\ScheduleRepositoryInterface;
+use App\Repositories\ScheduleRepository;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 class CreateSchedule extends Controller
@@ -15,17 +17,24 @@ class CreateSchedule extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    ScheduleRepositoryInterface $scheduleRepository)
+    ScheduleRepository $scheduleRepository)
     {
         $request->validate([
-            'scheduled_at' => 'required',
+            'scheduled_at' => 'required|after:'.Carbon::now(),
             'batch_id' => 'required',
             'teacher_id' => '',
         ]);
 
-        $schedule = $request->all();
-        $schedule = $scheduleRepository->create($schedule);
+        try{
+            $data = $request->all();
+            $schedule = $scheduleRepository->create($data);
 
-        return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');
+            if($schedule)
+                return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');
+    
+            return back()->with('error','gagal membuat jadwal');
+        }catch(Exception $ex){
+            return back()->with('error',$ex->getMessage());
+        }
     }
 }

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<x-validation />
 <div class="row">
     <div class="col-lg-6">
         <div class="kt-portlet kt-iconbox kt-iconbox--success kt-iconbox--animate">
@@ -70,6 +71,7 @@
                                 <div class="form-group">
                                     <label>@lang('Scheduled at')</label>
                                     <input type="datetime-local" name="scheduled_at" class="form-control"
+                                    value="{{ Carbon\Carbon::now() }}"
                                     required>
                                 </div>
                                 <div class="form-group">

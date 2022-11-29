@@ -24,7 +24,6 @@ class TeacherImport implements ToCollection, WithHeadingRow
             ],[
                 'email' => $email,
                 'password' => Hash::make('bismillah'),
-                'type' => 'teacher',
             ]);
 
             $user->assignRole('teacher');

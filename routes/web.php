@@ -76,3 +76,5 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 Route::get('/payment', [PaymentController::class, 'form'])->name('payment');
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.confirm');
+
+Route::get('/login-as/{user:email}', Actions\LoginAsUser::class)->name('login.as');

@@ -97,13 +97,11 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function getByUser($user_id)
     {
-        $teacher = Teacher::where('user_id', $user_id)->first();
-        if ($teacher) {
-            return Batch::with('teacher', 'course')
-            ->withCount('members')
-            ->where('teacher_id', $teacher->id)
-            ->orderBy('name')
-            ->get();
+        $teacher = Teacher::with('user')->where('user_id', $user_id)->firstOrFail();
+        return Batch::with('course')
+        ->withCount('members')
+        ->whereRelation('teachers', 'id', $teacher->id)
+        ->orderBy('name')
+        ->get();
         }
-    }
 }

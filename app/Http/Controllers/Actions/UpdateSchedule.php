@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class UpdateSchedule extends Controller
@@ -26,7 +27,9 @@ class UpdateSchedule extends Controller
             if(isset($statuses[$present->id])){
                 $status = $statuses[$present->id];
                 $present->status = $status;
-                if($status=='present' && isset($attended_ats[$present->id])){
+                if($status=='present' && $present->type=='teacher' && !isset($attended_ats[$present->id])){
+                    return back()->with('error','Jam kehadiran wajib diisi jika pengajar hadir');
+                }elseif($status=='present'){
                     $present->attended_at = $attended_ats[$present->id];
                 }
                 $present->description = $descriptions[$present->id];

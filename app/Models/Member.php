@@ -20,11 +20,17 @@ class Member extends Model
         'school',
         'class',
         'level',
+        'user_id',
     ];
 
     public function batches()
     {
         return $this->belongsToMany(Batch::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function batch()

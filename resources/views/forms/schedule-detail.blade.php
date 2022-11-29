@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col">
 
-        <x-validation/>
+        <x-validation />
 
         <!--begin::Portlet-->
         <div class="kt-portlet">
@@ -24,7 +24,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{ route('teacher.schedules.index') }}" class="btn btn-default btn-icon-sm">
+                            <a href="{{ route('teacher.schedules.index') }}" class="btn btn-warning btn-icon-sm">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
@@ -82,7 +82,7 @@
                         </thead>
                         <tbody>
                             @foreach($schedule->presents as $present)
-                                @if($present->member_id==0)
+                                @if($present->type=='teacher')
                                 @continue
                                 @endif
                                 <tr>

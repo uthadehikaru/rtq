@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-class CourseFactory extends Factory
+class TeacherFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,9 +15,8 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence(2),
-            'fee' => $this->faker->randomNumber(6, true),
-            'type'=>$this->faker->word(),
+            'name' => $this->faker->name(),
+            'user_id'=>1,
         ];
     }
 }

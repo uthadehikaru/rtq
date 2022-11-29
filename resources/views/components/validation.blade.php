@@ -7,3 +7,6 @@
         </ul>
     </x-alert>
 @endif
+@if(session()->has('error'))
+<x-alert type="danger">{{ session('error') }}</x-alert>
+@endif

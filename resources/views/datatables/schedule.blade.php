@@ -116,8 +116,7 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Scheduled at')</th>
                     <th title="Field #2">@lang('Batch')</th>
-                    <th title="Field #4">@lang('Switch Teacher')</th>
-                    <th title="Field #4">@lang('Daftar Hadir')</th>
+                    <th title="Field #4">@lang('Daftar Peserta')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -125,8 +124,7 @@ jQuery(document).ready(function() {
                 @foreach($schedules as $schedule)
                     <tr>
                         <td>{{ $schedule->scheduled_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $schedule->batch->course->name }} {{ $schedule->batch->name }} {{ $schedule->batch->teacher->name }}</td>
-                        <td>{{ $schedule->teacher?->name }}</td>
+                        <td>{{ $schedule->batch->course->name }} {{ $schedule->batch->name }}</td>
                         <td>{{ $schedule->presents_count }}</td>
                         <td>
                             @role('administrator')

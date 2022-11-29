@@ -62,8 +62,8 @@ class DashboardController extends Controller
         $teacher = Auth::user()->teacher;
         $data['batches'] = $batchRepository->getByUser($teacher->user_id);
         $data['teachers'] = $teacherRepository->all();
-        $data['schedules'] = $scheduleRepository->getByTeacher($teacher->id);
-        $data['presents'] = $presentRepository->getByTeacher($teacher->id)->groupBy('status');
+        $data['schedules'] = $scheduleRepository->getByTeacher($teacher->user_id);
+        $data['presents'] = $presentRepository->getByTeacher($teacher->user_id)->groupBy('status');
 
         return $data;
     }
