@@ -12,10 +12,14 @@ class Schedule extends Model
     protected $fillable = [
         'scheduled_at',
         'batch_id',
+        'start_at',
+        'end_at',
     ];
 
     protected $casts = [
         'scheduled_at' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
     ];
 
     public function batch()

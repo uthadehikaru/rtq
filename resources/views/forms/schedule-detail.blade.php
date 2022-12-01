@@ -37,10 +37,22 @@
             <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
                 @csrf
                 <div class="kt-portlet__body">
+                <div class="row">
+                        <div class="col-12 col-md-4">
+                            <label>Mulai Kelas</label>
+                            <input type="time" class="form-control"
+                            name="start_at"  value="{{ $schedule->start_at }}" />
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label>Selesai Kelas</label>
+                            <input type="time" class="form-control"
+                            name="end_at"  value="{{ $schedule->end_at }}" />
+                        </div>
+                    </div>
                     <h3>{{Auth::user()->name}}</h3>
                     @if($canUpdate)
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-md-4">
                             <label>Status</label>
                             <select class="form-control" name="status[{{$teacherPresent->id}}]">
                                 @foreach($statuses as $status)
@@ -48,12 +60,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-md-4">
                             <label>Jam Kehadiran (diisi jika hadir)</label>
                             <input type="time" class="form-control"
                             name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}" />
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-md-4">
                             <label>Keterangan</label>
                             <input type="text" class="form-control"
                             placeholder="Masukkan keterangan"

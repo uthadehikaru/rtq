@@ -15,7 +15,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 {
     public function all()
     {
-        return Schedule::with('batch', 'teacher', 'batch.course', 'batch.teacher')
+        return Schedule::with('batch', 'batch.course')
         ->withCount('presents')
         ->get();
     }

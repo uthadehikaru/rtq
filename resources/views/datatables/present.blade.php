@@ -122,7 +122,7 @@ jQuery(document).ready(function() {
                 @foreach($presents as $present)
                     <tr>
                         <td>{{ $present->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $present->member?$present->member->full_name:($present->teacher?$present->teacher->name:'-') }}</td>
+                        <td>{{ $present->user->name }} - {{ $present->type }}</td>
                         <td>@lang('app.present.status.'.$present->status) {{ $present->status=='present' && $present->attended_at?__('at :time', ['time'=>$present->attended_at?->format('H:i')]):'' }}</td>
                         <td>{{ $present->description }}</td>
                         <td>

@@ -54,7 +54,7 @@
                             <select class="form-control" name="batch_id" required>
                                 <option value="">@lang('Select Batch')</option>
                                 @foreach($batches as $batch)
-                                <option value="{{ $batch->id }}" {{ $schedule && $schedule->batch_id==$batch->id?'selected':'' }}>{{ $batch->course->name }} {{ $batch->name }} {{ $batch->teacher->name }}</option>
+                                <option value="{{ $batch->id }}" {{ $schedule && $schedule->batch_id==$batch->id?'selected':'' }}>{{ $batch->course->name }} {{ $batch->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -63,9 +63,19 @@
                             <select class="form-control" name="teacher_id">
                                 <option value="">Tidak ada pengganti</option>
                                 @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}" {{ $schedule && $schedule->teacher_id==$teacher->id?'selected':'' }}>{{ $teacher->name }}</option>
+                                <option value="{{ $teacher->user_id }}" {{ $schedule && $schedule->teacher_id==$teacher->id?'selected':'' }}>{{ $teacher->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Start At')</label>
+                            <input type="time" name="start_at" class="form-control"
+                            value="{{ old('start_at', $schedule?$schedule->start_at:'') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('End At')</label>
+                            <input type="time" name="end_at" class="form-control"
+                            value="{{ old('start_at', $schedule?$schedule->end_at:'') }}">
                         </div>
                     </div>
                 </div>
