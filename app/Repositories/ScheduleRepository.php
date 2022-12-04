@@ -53,24 +53,13 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         
         $schedule = Schedule::create($data);
 
-        Present::updateOrCreate([
+        Present::create([
             'schedule_id' => $schedule->id,
             'user_id' => Auth::id(),
-        ], [
-            'status' => 'absent',
+            'status' => 'present',
             'type'=>'teacher',
+            'attended_at'=>Carbon::now()->format('H:i'),
         ]);
-
-        if ($data['teacher_id']) {
-            $teacher = Teacher::findOrFail($data['teacher_id']);
-            Present::updateOrCreate([
-                'schedule_id' => $schedule->id,
-                'user_id' => $teacher->user_id,
-            ], [
-                'status' => 'absent',
-                'type'=>'teacher',
-            ]);
-        }
 
         foreach ($schedule->batch->members as $member) {
             Present::create([

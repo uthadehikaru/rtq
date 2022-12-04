@@ -60,20 +60,19 @@
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
-                                @lang('Buat Jadwal')
+                                @lang('Mulai Kelas')
                             </h3>
                         </div>
                     </div>
                     <form class="kt-form" action="{{ route('teacher.schedules.create') }}" method="post">
                         @csrf
                         <div class="kt-portlet__body">
+                            <div class="alert alert-primary" role="alert">
+                                <p>Saat menekan tombol "Mulai", kelas akan otomatis tercatat dimulai saat ini
+                                    dan waktu hadir pengajar mengikut waktu mulai kelas. 
+                                    pastikan memulai kelas sesuai jadwal yang telah ditentukan</p>
+                            </div>
                             <div class="kt-section kt-section--first">
-                                <div class="form-group">
-                                    <label>@lang('Scheduled at')</label>
-                                    <input type="datetime-local" name="scheduled_at" class="form-control"
-                                    value="{{ Carbon\Carbon::now() }}"
-                                    required>
-                                </div>
                                 <div class="form-group">
                                     <label>@lang('Batch')</label>
                                     <select class="form-control" name="batch_id" required>
@@ -83,54 +82,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>@lang('Switch Teacher')</label>
-                                    <select class="form-control" name="teacher_id">
-                                        <option value="">Tidak digantikan</option>
-                                        @foreach($teachers as $teacher)
-                                        @if($teacher->user_id==Auth::id())
-                                            @continue
-                                        @endif
-                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
                         </div>
                         <div class="kt-portlet__foot">
                             <div class="kt-form__actions">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Mulai</button>
+                                <button type="reset" class="btn btn-secondary">Batal</button>
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                {{ $batches->count() }} @lang('Batches')
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget4">
-                            @foreach($batches as $batch)
-                            <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                    <a href="#" class="kt-widget4__username">
-                                        {{ $batch->name }}
-                                    </a>
-                                    <p class="kt-widget4__text">
-                                        {{ $batch->course->name }}
-                                    </p>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

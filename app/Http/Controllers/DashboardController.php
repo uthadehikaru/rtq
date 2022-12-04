@@ -8,7 +8,7 @@ use App\Interfaces\PaymentRepositoryInterface;
 use App\Interfaces\ScheduleRepositoryInterface;
 use App\Interfaces\TeacherRepositoryInterface;
 use App\Interfaces\PresentRepositoryInterface;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -61,7 +61,6 @@ class DashboardController extends Controller
     {
         $teacher = Auth::user()->teacher;
         $data['batches'] = $batchRepository->all();
-        $data['teachers'] = $teacherRepository->all();
         $data['schedules'] = $scheduleRepository->getByTeacher($teacher->user_id);
         $data['presents'] = $presentRepository->getByTeacher($teacher->user_id)->groupBy('status');
 

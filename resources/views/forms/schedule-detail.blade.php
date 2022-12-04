@@ -41,12 +41,12 @@
                         <div class="col-12 col-md-4">
                             <label>Mulai Kelas</label>
                             <input type="time" class="form-control"
-                            name="start_at"  value="{{ $schedule->start_at }}" />
+                            name="start_at"  value="{{ $schedule->start_at?->format("H:i") }}"  disabled="disabled" />
                         </div>
                         <div class="col-12 col-md-4">
                             <label>Selesai Kelas</label>
                             <input type="time" class="form-control"
-                            name="end_at"  value="{{ $schedule->end_at }}" />
+                            name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}" />
                         </div>
                     </div>
                     <h3>{{Auth::user()->name}}</h3>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <label>Status</label>
-                            <select class="form-control" name="status[{{$teacherPresent->id}}]">
+                            <select class="form-control" name="status[{{$teacherPresent->id}}]" disabled="disabled">
                                 @foreach($statuses as $status)
                                 <option value="{{ $status }}" @selected($status==$teacherPresent->status)>@lang('app.present.status.'.$status)</option>
                                 @endforeach
@@ -63,13 +63,13 @@
                         <div class="col-12 col-md-4">
                             <label>Jam Kehadiran (diisi jika hadir)</label>
                             <input type="time" class="form-control"
-                            name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}" />
+                            name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}"  disabled="disabled" />
                         </div>
                         <div class="col-12 col-md-4">
                             <label>Keterangan</label>
                             <input type="text" class="form-control"
                             placeholder="Masukkan keterangan"
-                            name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}" />
+                            name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}"  disabled="disabled" />
                         </div>
                     </div>
                     @else

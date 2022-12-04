@@ -20,14 +20,18 @@ class CreateSchedule extends Controller
     ScheduleRepository $scheduleRepository)
     {
         $request->validate([
-            'scheduled_at' => 'required|after:'.Carbon::now(),
             'batch_id' => 'required',
-            'teacher_id' => '',
         ]);
 
         try{
-            $data = $request->all();
+            $schedule_at = Carbon::now();
+            $data = [
+                'scheduled_at'=>$schedule_at,
+                'start_at'=>$schedule_at->format('H:i'),
+                'batch_id'=>$request->get('batch_id'),
+            ];
             $schedule = $scheduleRepository->create($data);
+
 
             if($schedule)
                 return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');
