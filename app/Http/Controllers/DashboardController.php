@@ -60,7 +60,7 @@ class DashboardController extends Controller
         PresentRepositoryInterface $presentRepository)
     {
         $teacher = Auth::user()->teacher;
-        $data['batches'] = $batchRepository->getByUser($teacher->user_id);
+        $data['batches'] = $batchRepository->all();
         $data['teachers'] = $teacherRepository->all();
         $data['schedules'] = $scheduleRepository->getByTeacher($teacher->user_id);
         $data['presents'] = $presentRepository->getByTeacher($teacher->user_id)->groupBy('status');
