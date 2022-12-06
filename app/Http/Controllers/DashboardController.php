@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\MemberRepositoryInterface;
-use App\Interfaces\PaymentRepositoryInterface;
-use App\Interfaces\ScheduleRepositoryInterface;
-use App\Interfaces\TeacherRepositoryInterface;
-use App\Interfaces\PresentRepositoryInterface;
+use App\Repositories\BatchRepository;
+use App\Repositories\MemberRepository;
+use App\Repositories\PaymentRepository;
+use App\Repositories\ScheduleRepository;
+use App\Repositories\TeacherRepository;
+use App\Repositories\PresentRepository;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function dashboard(
-        PaymentRepositoryInterface $paymentRepository,
-        BatchRepositoryInterface $batchRepository,
-        MemberRepositoryInterface $memberRepository,
-        TeacherRepositoryInterface $teacherRepository,
-        ScheduleRepositoryInterface $scheduleRepository,
-        PresentRepositoryInterface $presentRepository)
+        PaymentRepository $paymentRepository,
+        BatchRepository $batchRepository,
+        MemberRepository $memberRepository,
+        TeacherRepository $teacherRepository,
+        ScheduleRepository $scheduleRepository,
+        PresentRepository $presentRepository)
     {
         $data['title'] = __('Dashboard');
 
@@ -42,22 +42,22 @@ class DashboardController extends Controller
         return to_route('home');
     }
 
-    public function admin(PaymentRepositoryInterface $paymentRepository,
-    BatchRepositoryInterface $batchRepository,
-    MemberRepositoryInterface $memberRepository)
+    public function admin(PaymentRepository $paymentRepository,
+    BatchRepository $batchRepository,
+    MemberRepository $memberRepository)
     {
         $data['payments'] = $paymentRepository->count();
         $data['batches'] = $batchRepository->count();
-        $data['members'] = $memberRepository->count();
+        $data['members'] = $memberRepository->countActiveMembers();
 
         return $data;
     }
 
     public function teacher(
-        BatchRepositoryInterface $batchRepository,
-        TeacherRepositoryInterface $teacherRepository,
-        ScheduleRepositoryInterface $scheduleRepository,
-        PresentRepositoryInterface $presentRepository)
+        BatchRepository $batchRepository,
+        TeacherRepository $teacherRepository,
+        ScheduleRepository $scheduleRepository,
+        PresentRepository $presentRepository)
     {
         $teacher = Auth::user()->teacher;
         $data['batches'] = $batchRepository->all();

@@ -41,4 +41,9 @@ class MemberRepository implements MemberRepositoryInterface
     {
         return Member::whereId($id)->update($data);
     }
+
+    public function countActiveMembers():int
+    {
+        return Member::has('batches')->count();
+    }
 }

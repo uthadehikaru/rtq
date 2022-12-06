@@ -64,7 +64,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Members')</a>
+                            <a class="kt-link" href="#">@lang('Active Members')</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $members }} @lang('Data')
