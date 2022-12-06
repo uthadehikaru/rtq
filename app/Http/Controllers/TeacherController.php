@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\TeacherRepositoryInterface;
+use App\Repositories\BatchRepository;
+use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -12,7 +13,7 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TeacherRepositoryInterface $teacherRepository)
+    public function index(TeacherRepository $teacherRepository)
     {
         $data['title'] = __('Teachers');
         $data['teachers'] = $teacherRepository->all();
@@ -26,9 +27,10 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(BatchRepository $batchRepository)
     {
         $data['title'] = __('New Teacher');
+        $data['batches'] = $batchRepository->all();
         $data['teacher'] = null;
 
         return view('forms.teacher', $data);
@@ -42,11 +44,12 @@ class TeacherController extends Controller
      */
     public function store(
         Request $request,
-        TeacherRepositoryInterface $teacherRepository
+        TeacherRepository $teacherRepository
     ) {
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
+            'batch_ids'=>'',
         ]);
 
         $teacherRepository->create($data);
@@ -72,10 +75,12 @@ class TeacherController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(
-        TeacherRepositoryInterface $teacherRepository,
+        TeacherRepository $teacherRepository,
+        BatchRepository $batchRepository,
         $id
     ) {
         $data['title'] = __('Edit Teacher');
+        $data['batches'] = $batchRepository->all();
         $data['teacher'] = $teacherRepository->find($id);
 
         return view('forms.teacher', $data);
@@ -90,12 +95,13 @@ class TeacherController extends Controller
      */
     public function update(
         Request $request,
-        TeacherRepositoryInterface $teacherRepository,
+        TeacherRepository $teacherRepository,
         $id)
     {
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
+            'batch_ids'=>'',
         ]);
 
         $teacherRepository->update($id, $data);
@@ -109,7 +115,7 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TeacherRepositoryInterface $teacherRepository, $id)
+    public function destroy(TeacherRepository $teacherRepository, $id)
     {
         $status = $teacherRepository->delete($id);
         $data['statusCode'] = 200;

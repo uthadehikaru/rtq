@@ -55,6 +55,14 @@
                             value="{{ old('email', $teacher?$teacher->user->email:'') }}"
                             >
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Batches')</label>
+                            <select class="form-control" id="batch" name="batch_ids[]" multiple>
+                                @foreach ($batches as $batch)
+                                    <option value="{{ $batch->id }}" {{ $teacher && $teacher->batches->contains($batch->id)?'selected':'' }}>{{ $batch->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">
@@ -72,3 +80,29 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        // Class definition
+        var KTSelect2 = function() {
+            // Private functions
+            var demos = function() {
+                // multi select
+                $('#batch').select2({
+                    placeholder: 'Pilih Halaqoh',
+                });
+            }
+
+            // Public functions
+            return {
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function() {
+            KTSelect2.init();
+        });
+    </script>
+@endpush
