@@ -47,7 +47,7 @@ class PaymentController extends Controller
         $data = $request->validate([
             'period_ids' => 'required',
             'members' => 'required',
-            'total' => 'numeric',
+            'total' => 'numeric|min:1',
             'attachment' => '',
         ]);
         DB::beginTransaction();

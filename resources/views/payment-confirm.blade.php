@@ -89,6 +89,7 @@ jQuery(document).ready(function () {
 				@if(session()->has('error'))
 				<x-alert type="warning">{{ session()->get('error') }}</x-alert>
 				@endif
+				<x-validation />
 
 				<!--begin::Portlet-->
 				<form class="kt-form" id="kt_form" method="POST" action="" enctype="multipart/form-data">
