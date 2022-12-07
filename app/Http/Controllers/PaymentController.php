@@ -68,6 +68,8 @@ class PaymentController extends Controller
             $period = Period::find($period_id);
 
             foreach ($members as $member) {
+                if(!isset($member['id']))
+                    return back()->with('error', 'Tidak ada peserta atas nama '.$member['value']);
                 $ids = explode('_', $member['id']);
                 $batch_id = $ids[0];
                 $member_id = $ids[1];
