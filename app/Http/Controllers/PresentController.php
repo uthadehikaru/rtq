@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\PresentRepositoryInterface;
+use App\Repositories\PresentRepository;
 use App\Models\Present;
 use App\Models\Schedule;
+use App\Models\User;
+use App\Repositories\MemberRepository;
+use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
 
 class PresentController extends Controller
@@ -15,7 +18,7 @@ class PresentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(
-        PresentRepositoryInterface $presentRepository,
+        PresentRepository $presentRepository,
         Schedule $schedule,
     ) {
         $data['title'] = __('Presents');
@@ -28,7 +31,7 @@ class PresentController extends Controller
     }
 
     public function change(
-        PresentRepositoryInterface $presentRepository,
+        PresentRepository $presentRepository,
         Schedule $schedule,
         $id,
         $status,
@@ -43,9 +46,16 @@ class PresentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(
+        Schedule $schedule,
+    ){
+        $data['title'] = __('Tambah Absensi');
+        $data['schedule'] = $schedule;
+        $data['present'] = null;
+        $data['teachers'] = User::role('teacher')->orderBy('name')->pluck('name','id');
+        $data['statuses'] = Present::STATUSES;
+
+        return view('forms.present', $data);
     }
 
     /**
@@ -54,9 +64,33 @@ class PresentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(
+        Request $request,
+        PresentRepository $presentRepository,
+        Schedule $schedule,
+    )
     {
-        //
+        $data = $request->validate([
+            'user_id'=>'required',
+            'status' => 'required',
+            'description' => '',
+            'attended_at' => '',
+        ]);
+        if ($data['status'] != 'present') {
+            $data['attended_at'] = null;
+        }
+        $data['schedule_id'] = $schedule->id;
+
+        $present = Present::where([
+            'schedule_id'=>$schedule->id,
+            'user_id'=>$data['user_id']
+        ])->first();
+        if($present)
+            return back()->with('error', __('Data pengajar sudah pernah diinput'));
+
+        $presentRepository->create($data);
+
+        return redirect()->route('schedules.presents.index', $schedule->id)->with('message', __('Inserted Successfully'));
     }
 
     /**
@@ -77,7 +111,6 @@ class PresentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(
-        PresentRepositoryInterface $presentRepository,
         Schedule $schedule,
         Present $present,
     ) {
@@ -98,7 +131,7 @@ class PresentController extends Controller
      */
     public function update(
         Request $request,
-        PresentRepositoryInterface $presentRepository,
+        PresentRepository $presentRepository,
         Schedule $schedule,
         $id
     ) {
@@ -122,8 +155,11 @@ class PresentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($schedule_id, $id)
     {
-        //
+        Present::find($id)->delete();
+        $data['statusCode'] = 200;
+
+        return response()->json($data);
     }
 }

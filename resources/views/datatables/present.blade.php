@@ -79,6 +79,12 @@ jQuery(document).ready(function() {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    @role('administrator')
+                    <a href="{{ route('schedules.presents.create', $schedule->id) }}" class="btn btn-primary btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @lang('Tambah Absensi Pengajar')
+                    </a>
+                    @endrole
                 </div>
             </div>
         </div>
@@ -114,7 +120,7 @@ jQuery(document).ready(function() {
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #4">@lang('Status')</th>
-                    <th title="Field #4">@lang('Description')</th>
+                    <th title="Field #4">@lang('Keterangan')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -137,6 +143,9 @@ jQuery(document).ready(function() {
                                 <i class="la la-check"></i> @lang($status)
                             </a>
                             @endforeach
+                            <a href="javascript:;" class="text-danger delete" data-id="{{ $present->id }}">
+                                <i class="la la-trash"></i> @lang('Delete')
+                            </a>
                         </td>
                     </tr>
                 @endforeach

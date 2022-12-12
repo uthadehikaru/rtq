@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PresentRepositoryInterface;
 use App\Models\Present;
+use Laravel\Ui\Presets\Preset;
 
 class PresentRepository implements PresentRepositoryInterface
 {
@@ -11,6 +12,7 @@ class PresentRepository implements PresentRepositoryInterface
     {
         return Present::with('schedule', 'user')
         ->where('schedule_id', $schedule_id)
+        ->latest()
         ->get();
     }
 

@@ -3,11 +3,11 @@
 <a href="{{ route('schedules.index') }}" class="kt-subheader__breadcrumbs-link">
 @lang("Schedule") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
-<a href="{{ route('schedules.presents.index', $present->schedule_id) }}" class="kt-subheader__breadcrumbs-link">
+<a href="{{ route('schedules.presents.index', $schedule->id) }}" class="kt-subheader__breadcrumbs-link">
 @lang("Present") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Edit Present') {{ $present->name() }}
+    {{ $present?'Ubah':'Tambah'}} Absensi
 </span>
 @endsection
 @section('content')
@@ -27,7 +27,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{ route('schedules.presents.index', $present->schedule_id) }}" class="btn btn-default btn-icon-sm">
+                            <a href="{{ route('schedules.presents.index', $schedule->id) }}" class="btn btn-default btn-icon-sm">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
@@ -41,11 +41,22 @@
             <form class="kt-form" method="POST" action="{{ route('schedules.presents.update', [$present->schedule_id,$present->id]) }}">
                 <input type="hidden" name="_method" value="PUT" />
             @else
-            <form class="kt-form" method="POST" action="{{ route('schedules.presents.store', $present->schedule_id) }}">
+            <form class="kt-form" method="POST" action="{{ route('schedules.presents.store', $schedule->id) }}">
             @endif
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
+                        @if(!$present)
+                        <div class="form-group">
+                            <label>@lang('Anggota')</label>
+                            <select class="form-control" name="user_id" required>
+                                <option value="">@lang('Pilih Pengajar')</option>
+                                @foreach($teachers as $id=>$name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                         <div class="form-group">
                             <label>@lang('Status')</label>
                             <select class="form-control" name="status" required>
@@ -57,10 +68,10 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Description')</label>
-                            <textarea class="form-control" name="description">{{ $present->description }}</textarea>
+                            <textarea class="form-control" name="description" placeholder="isi keterangan jika dibutuhkan">{{ $present?->description }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label>@lang('Attended At')</label>
+                            <label>@lang('Attended At') (Isi jika status hadir)</label>
                             <input type="time" name="attended_at" class="form-control"
                             value="{{ old('attended_at', $present?$present->attended_at:'') }}">
                         </div>
