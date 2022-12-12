@@ -33,10 +33,10 @@
                 </div>
             </div>
 
-            <!--begin::Form-->
-            <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
-                @csrf
-                <div class="kt-portlet__body">
+            <div class="kt-portlet__body">
+                <!--begin::Form-->
+                <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
+                    @csrf
                 <div class="row">
                         <div class="col-12 col-md-4">
                             <label>Mulai Kelas</label>
@@ -98,7 +98,12 @@
                                 @continue
                                 @endif
                                 <tr>
-                                    <td>{{ $present->name() }}</td>
+                                    <td>
+                                        {{ $present->name() }}
+                                        <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
+                                        onclick="return confirm('Yakin ingin menghapus?')"
+                                        class="text-danger">(hapus)</a>
+                                    </td>
                                     <td>
                                         <select class="form-control" name="status[{{$present->id}}]">
                                             @foreach($statuses as $status)
@@ -121,13 +126,64 @@
                         <button type="submit" class="btn btn-primary">@lang('Submit')</button>
                         <button type="reset" class="btn btn-secondary">@lang('Cancel')</button>
                     </div>
-                </div>
-            </form>
+                </form>
 
-            <!--end::Form-->
+                <!--end::Form-->
+            </div>
         </div>
+        
 
-        <!--end::Portlet-->
+        <form class="kt-form" method="POST" action="{{ route('teacher.schedules.presents.add', $schedule->id) }}">
+        @csrf
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Oper Santri
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            <button class="btn btn-primary btn-icon-sm">
+                                <i class="la la-plus"></i>
+                                @lang('Tambah')
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <label>Peserta</label>
+                            <select class="form-control" name="user_id">
+                                <option value="">Pilih Peserta</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->member->batch()->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label>Status</label>
+                            <select class="form-control" name="status">
+                                @foreach($statuses as $status)
+                                <option value="{{ $status }}">@lang('app.present.status.'.$status)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label>Keterangan</label>
+                            <input type="text" class="form-control"
+                            placeholder="Masukkan keterangan"
+                            name="description" />
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </form>
+
     </div>
 </div>
 @endsection

@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
         Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
         Route::post('schedules/create', Actions\CreateSchedule::class)->name('schedules.create');
         Route::get('schedule/{schedule}', Actions\ScheduleDetail::class)->name('schedules.detail');
+        Route::post('schedule/{schedule}/presents/add', Actions\AddMemberToSchedule::class)->name('schedules.presents.add');
+        Route::get('schedule/{schedule}/presents/remove/{present}', Actions\RemoveMemberFromSchedule::class)->name('schedules.presents.remove');
         Route::post('schedule/{schedule}', Actions\UpdateSchedule::class)->name('schedules.update');
         Route::get('presents', Teacher\PresentList::class)->name('presents.index');
         Route::get('salaries', [Teacher\Salary::class, 'index'])->name('salaries.index');
