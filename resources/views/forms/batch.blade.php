@@ -59,11 +59,10 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Teacher')</label>
-                            <select name="teacher_id" class="form-control" required>
-                                <option value="">--- @lang('Select Teacher') ---</option>
-                                @foreach($teachers as $id=>$name)
-                                    <option value="{{ $id }}" {{ $batch && $batch->teacher_id==$id?'selected':''}}>{{ $name }}</option>
+                            <label>@lang('Pengajar')</label>
+                            <select class="form-control" id="teacher" name="teacher_ids[]" multiple>
+                                @foreach ($teachers as $id=>$name)
+                                    <option value="{{ $id }}" {{ $batch && $batch->teachers->contains($id)?'selected':'' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -84,3 +83,29 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        // Class definition
+        var KTSelect2 = function() {
+            // Private functions
+            var demos = function() {
+                // multi select
+                $('#teacher').select2({
+                    placeholder: 'Pilih Halaqoh',
+                });
+            }
+
+            // Public functions
+            return {
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function() {
+            KTSelect2.init();
+        });
+    </script>
+@endpush

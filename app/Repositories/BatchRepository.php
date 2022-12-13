@@ -84,12 +84,22 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function create(array $data)
     {
-        return Batch::create($data);
+        $batch = Batch::create([
+            'course_id'=>$data['course_id'],
+            'name'=>$data['name'],
+            'description'=>$data['description'],
+        ]);
+
+        $batch->teachers()->sync($data['teacher_ids']);
+        return $batch;
     }
 
     public function update($id, array $data)
     {
-        return Batch::whereId($id)->update($data);
+        $batch = Batch::find($id);
+        $batch->update($data);
+        $batch->teachers()->sync($data['teacher_ids']);
+        return $batch;
     }
 
     public function list()

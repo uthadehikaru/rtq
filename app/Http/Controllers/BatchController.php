@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\CourseRepositoryInterface;
-use App\Interfaces\TeacherRepositoryInterface;
+use App\Repositories\BatchRepository;
+use App\Repositories\CourseRepository;
+use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
 {
-    public function index(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, $course_id)
+    public function index(CourseRepository $courseRepository, BatchRepository $batchRepository, $course_id)
     {
         $data['title'] = __('Batches');
         $data['course'] = $courseRepository->find($course_id);
@@ -20,8 +20,8 @@ class BatchController extends Controller
     }
 
     public function create(
-        CourseRepositoryInterface $courseRepository,
-        TeacherRepositoryInterface $teacherRepository,
+        CourseRepository $courseRepository,
+        TeacherRepository $teacherRepository,
         $course_id
     ) {
         $data['title'] = __('New Batch');
@@ -32,12 +32,12 @@ class BatchController extends Controller
         return view('forms.batch', $data);
     }
 
-    public function store(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, Request $request, $course_id)
+    public function store(BatchRepository $batchRepository, Request $request, $course_id)
     {
         $data = $request->validate([
             'name' => 'required',
-            'teacher_id' => 'required',
             'description' => '',
+            'teacher_ids'=>'required',
         ]);
 
         $data['course_id'] = $course_id;
@@ -48,9 +48,9 @@ class BatchController extends Controller
     }
 
     public function edit(
-        CourseRepositoryInterface $courseRepository,
-        BatchRepositoryInterface $batchRepository,
-        TeacherRepositoryInterface $teacherRepository,
+        CourseRepository $courseRepository,
+        BatchRepository $batchRepository,
+        TeacherRepository $teacherRepository,
         Request $request,
         $course_id, $batch_id)
     {
@@ -62,12 +62,12 @@ class BatchController extends Controller
         return view('forms.batch', $data);
     }
 
-    public function update(CourseRepositoryInterface $courseRepository, BatchRepositoryInterface $batchRepository, Request $request, $course_id, $batch_id)
+    public function update(CourseRepository $courseRepository, BatchRepository $batchRepository, Request $request, $course_id, $batch_id)
     {
         $data = $request->validate([
             'name' => 'required',
-            'teacher_id' => 'required',
             'description' => '',
+            'teacher_ids'=>'required',
         ]);
 
         $batchRepository->update($batch_id, $data);
@@ -75,7 +75,7 @@ class BatchController extends Controller
         return redirect()->route('courses.batches.index', $course_id)->with('message', __('Updated Successfully'));
     }
 
-    public function destroy(BatchRepositoryInterface $batchRepository, $course_id, $batch_id)
+    public function destroy(BatchRepository $batchRepository, $course_id, $batch_id)
     {
         $status = $batchRepository->delete($batch_id);
         $data['statusCode'] = 200;
