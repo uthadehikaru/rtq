@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\BatchRepositoryInterface;
 use App\Interfaces\MemberRepositoryInterface;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -11,8 +12,8 @@ class MemberController extends Controller
     public function index(MemberRepositoryInterface $memberRepository)
     {
         $data['title'] = __('Members');
-        $data['members'] = $memberRepository->all();
-        $data['total'] = $memberRepository->count();
+        $data['members'] = Member::whereHas('batches')->orderBy('full_name')->get();
+        $data['total'] = $data['members']->count();
 
         return view('datatables.member', $data);
     }
