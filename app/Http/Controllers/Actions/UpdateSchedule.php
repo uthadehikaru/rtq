@@ -29,11 +29,6 @@ class UpdateSchedule extends Controller
             if(isset($statuses[$present->id])){
                 $status = $statuses[$present->id];
                 $present->status = $status;
-                if($status=='present' && $present->type=='teacher' && !isset($attended_ats[$present->id])){
-                    return back()->with('error','Jam kehadiran wajib diisi jika pengajar hadir');
-                }elseif($status=='present'){
-                    $present->attended_at = $attended_ats[$present->id];
-                }
                 $present->description = $descriptions[$present->id];
                 if($present->isDirty())
                     $present->save();

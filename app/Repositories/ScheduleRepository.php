@@ -17,6 +17,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     {
         return Schedule::with('batch', 'batch.course')
         ->withCount('presents')
+        ->latest('scheduled_at')
         ->get();
     }
 
@@ -59,6 +60,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             'status' => 'present',
             'type'=>'teacher',
             'attended_at'=>Carbon::now()->format('H:i'),
+            'is_badal'=>$data['is_badal'],
         ]);
 
         foreach ($schedule->batch->members as $member) {
@@ -87,7 +89,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                 $query->where('type','member');
             }])
             ->whereRelation('presents','user_id', $user_id)
-            ->orderBy('scheduled_at', 'desc')
+            ->latest('scheduled_at')
             ->paginate(20);
     }
 }

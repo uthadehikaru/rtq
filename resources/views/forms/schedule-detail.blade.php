@@ -49,12 +49,12 @@
                             name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}" />
                         </div>
                     </div>
-                    <h3>{{Auth::user()->name}}</h3>
+                    <h3 class="mt-2">{{Auth::user()->name}} {{ $teacherPresent->is_badal?'(Guru Pengganti)':'' }}</h3>
                     @if($canUpdate)
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <label>Status</label>
-                            <select class="form-control" name="status[{{$teacherPresent->id}}]" disabled="disabled">
+                            <select class="form-control" name="status[{{$teacherPresent->id}}]">
                                 @foreach($statuses as $status)
                                 <option value="{{ $status }}" @selected($status==$teacherPresent->status)>@lang('app.present.status.'.$status)</option>
                                 @endforeach
@@ -69,7 +69,7 @@
                             <label>Keterangan</label>
                             <input type="text" class="form-control"
                             placeholder="Masukkan keterangan"
-                            name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}"  disabled="disabled" />
+                            name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}" />
                         </div>
                     </div>
                     @else

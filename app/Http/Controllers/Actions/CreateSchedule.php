@@ -21,6 +21,7 @@ class CreateSchedule extends Controller
     {
         $request->validate([
             'batch_id' => 'required',
+            'badal'=>'required',
         ]);
 
         try{
@@ -29,6 +30,7 @@ class CreateSchedule extends Controller
                 'scheduled_at'=>$schedule_at,
                 'start_at'=>$schedule_at->format('H:i'),
                 'batch_id'=>$request->get('batch_id'),
+                'is_badal'=>$request->get('badal'),
             ];
             $schedule = $scheduleRepository->create($data);
 

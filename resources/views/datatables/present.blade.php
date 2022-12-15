@@ -130,7 +130,9 @@ jQuery(document).ready(function() {
                         <td>{{ $present->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $present->user->name }} - {{ $present->type }}</td>
                         <td>@lang('app.present.status.'.$present->status) {{ $present->status=='present' && $present->attended_at?__('at :time', ['time'=>$present->attended_at?->format('H:i')]):'' }}</td>
-                        <td>{{ $present->description }}</td>
+                        <td>
+                        {{ $present->type=='teacher' && $present->is_badal?'(Badal)':'' }}
+                        {{ $present->description }}</td>
                         <td>
                             <a href="{{ route('schedules.presents.edit', [$schedule->id,$present->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
