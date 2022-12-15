@@ -38,7 +38,7 @@
 
             <!--begin::Form-->
             @if($present)
-            <form class="kt-form" method="POST" action="{{ route('schedules.presents.update', [$present->schedule_id,$present->id]) }}">
+            <form class="kt-form" method="POST" action="{{ route('schedules.presents.update', [$present->schedule_id,$present->id]) }}{{ request()->has('redirect')?'?redirect='.request()->get('redirect'):'' }}">
                 <input type="hidden" name="_method" value="PUT" />
             @else
             <form class="kt-form" method="POST" action="{{ route('schedules.presents.store', $schedule->id) }}">
@@ -70,11 +70,24 @@
                             <label>@lang('Description')</label>
                             <textarea class="form-control" name="description" placeholder="isi keterangan jika dibutuhkan">{{ $present?->description }}</textarea>
                         </div>
+                        @if($present->type=='teacher')
                         <div class="form-group">
                             <label>@lang('Attended At') (Isi jika status hadir)</label>
                             <input type="time" name="attended_at" class="form-control"
-                            value="{{ old('attended_at', $present?$present->attended_at:'') }}">
+                            value="{{ old('attended_at', $present?$present->attended_at->format('H:i'):'') }}">
                         </div>
+                        <div class="form-group">
+                            <label>Guru Pengganti</label>
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" value="1" name="is_badal" @checked($present->is_badal)>
+                                Ya</label>
+                                <label class="radio">
+                                <input type="radio" value="0" name="is_badal" @checked(!$present->is_badal)>
+                                Tidak</label>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="kt-portlet__foot">

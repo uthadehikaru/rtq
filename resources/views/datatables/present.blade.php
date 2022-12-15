@@ -142,7 +142,7 @@ jQuery(document).ready(function() {
                                 @continue
                             @endif
                             <a href="{{ route('schedules.presents.change', [$schedule->id,$present->id,$status]) }}" class="text-danger">
-                                <i class="la la-check"></i> @lang($status)
+                            <i class="la la-check"></i> @lang('app.present.status.'.$status)
                             </a>
                             @endforeach
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $present->id }}">

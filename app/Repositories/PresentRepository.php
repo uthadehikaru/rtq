@@ -8,6 +8,11 @@ use Laravel\Ui\Presets\Preset;
 
 class PresentRepository implements PresentRepositoryInterface
 {
+    public function all()
+    {
+        return Present::with('schedule','user','schedule.batch')->latest()->get();
+    }
+
     public function getBySchedule($schedule_id)
     {
         return Present::with('schedule', 'user')

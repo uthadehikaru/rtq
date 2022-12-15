@@ -8,5 +8,9 @@ return [
             'sick' => 'Sakit',
             'permit' => 'Izin',
         ],
+        'type' => [
+            'teacher' => 'Pengajar',
+            'member' => 'Anggota',
+        ]
     ],
 ];

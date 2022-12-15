@@ -77,6 +77,10 @@ jQuery(document).ready(function() {
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
                     @role('administrator')
+                    <a href="{{ route('schedules.report') }}" class="btn btn-success btn-icon-sm">
+                        <i class="la la-file"></i>
+                        @lang('Laporan')
+                    </a>
                     <a href="{{ route('schedules.create') }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
                         @lang('New Schedule')

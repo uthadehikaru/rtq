@@ -139,6 +139,7 @@ class PresentController extends Controller
             'status' => 'required',
             'description' => '',
             'attended_at' => '',
+            'is_badal'=>''
         ]);
         if ($data['status'] != 'present') {
             $data['attended_at'] = null;
@@ -146,6 +147,8 @@ class PresentController extends Controller
 
         $presentRepository->update($id, $data);
 
+        if($request->get('redirect'))
+            return redirect($request->get('redirect'))->with('message', __('Updated Successfully'));    
         return redirect()->route('schedules.presents.index', $schedule->id)->with('message', __('Updated Successfully'));
     }
 

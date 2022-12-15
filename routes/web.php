@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Actions;
+use App\Http\Controllers\Schedule;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\CourseController;
@@ -50,7 +51,9 @@ Route::middleware('auth')->group(function () {
         Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
         Route::resource('payments', PaymentController::class);
         Route::resource('teachers', TeacherController::class);
-        Route::resource('schedules', ScheduleController::class);
+        Route::resource('schedules', ScheduleController::class)->except(['show']);
+        Route::get('schedules/reports', Schedule\Report::class)->name('schedules.report');
+        Route::get('schedules/export', Schedule\Export::class)->name('schedules.export');
         Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
         Route::resource('schedules.presents', PresentController::class);
         Route::get('salaries/{id}/report', Actions\ReportSalary::class)->name('salaries.report');
