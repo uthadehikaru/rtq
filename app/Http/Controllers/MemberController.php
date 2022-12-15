@@ -2,31 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\MemberRepositoryInterface;
+use App\Models\Batch;
 use App\Models\Member;
+use App\Repositories\MemberRepository;
+use App\Repositories\BatchRepository;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index(MemberRepositoryInterface $memberRepository)
+    public function index()
     {
         $data['title'] = __('Members');
-        $data['members'] = Member::whereHas('batches')->orderBy('full_name')->get();
-        $data['total'] = $data['members']->count();
+        $data['members'] = Member::with(['batches','batches.course'])->latest()->get();
+        $data['total'] = Member::whereHas('batches')->count();
 
         return view('datatables.member', $data);
     }
 
-    public function create()
+    public function create(BatchRepository $batchRepository)
     {
         $data['title'] = __('New Member');
         $data['member'] = null;
+        $data['batches'] = $batchRepository->allWithTotalMembers();
 
         return view('forms.member', $data);
     }
 
-    public function store(MemberRepositoryInterface $memberRepository, Request $request)
+    public function store(MemberRepository $memberRepository, Request $request)
     {
         $data = $request->validate([
             'full_name' => 'required',
@@ -39,6 +41,7 @@ class MemberController extends Controller
             'school' => '',
             'class' => '',
             'level' => '',
+            'batch_id'=>'',
         ]);
 
         $memberRepository->create($data);
@@ -46,15 +49,18 @@ class MemberController extends Controller
         return redirect()->route('members.index')->with('message', __('Created Successfully'));
     }
 
-    public function edit(MemberRepositoryInterface $memberRepository, $member_id)
+    public function edit(MemberRepository $memberRepository, 
+        BatchRepository $batchRepository,
+        $member_id)
     {
         $data['title'] = __('Edit Member');
         $data['member'] = $memberRepository->find($member_id);
+        $data['batches'] = $batchRepository->allWithTotalMembers();
 
         return view('forms.member', $data);
     }
 
-    public function update(MemberRepositoryInterface $memberRepository, Request $request, $member_id)
+    public function update(MemberRepository $memberRepository, Request $request, $member_id)
     {
         $data = $request->validate([
             'full_name' => 'required',
@@ -67,6 +73,7 @@ class MemberController extends Controller
             'school' => '',
             'class' => '',
             'level' => '',
+            'batch_id'=>'',
         ]);
 
         $memberRepository->update($member_id, $data);
@@ -74,7 +81,7 @@ class MemberController extends Controller
         return redirect()->route('members.index')->with('message', __('Updated Successfully'));
     }
 
-    public function destroy(MemberRepositoryInterface $memberRepository, $member_id)
+    public function destroy(MemberRepository $memberRepository, $member_id)
     {
         $status = $memberRepository->delete($member_id);
         $data['statusCode'] = 200;
@@ -82,7 +89,7 @@ class MemberController extends Controller
         return response()->json($data);
     }
 
-    public function json(MemberRepositoryInterface $memberRepository)
+    public function json(MemberRepository $memberRepository)
     {
         $data['items'] = $memberRepository->all();
         $data['total_count'] = 10;
@@ -90,8 +97,8 @@ class MemberController extends Controller
         return response()->json($data);
     }
 
-    public function change(MemberRepositoryInterface $memberRepository,
-        BatchRepositoryInterface $batchRepository,
+    public function change(MemberRepository $memberRepository,
+        BatchRepository $batchRepository,
         $member_id)
     {
         $data['title'] = __('Change :name', ['name' => __('Batch')]);
@@ -101,8 +108,7 @@ class MemberController extends Controller
         return view('forms.member-change', $data);
     }
 
-    public function switch(MemberRepositoryInterface $memberRepository,
-        BatchRepositoryInterface $batchRepository,
+    public function switch(MemberRepository $memberRepository,
         $member_id)
     {
         $member = $memberRepository->find($member_id);

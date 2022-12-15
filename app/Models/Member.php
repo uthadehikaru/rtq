@@ -35,7 +35,7 @@ class Member extends Model
 
     public function batch()
     {
-        return $this->batches()->first();
+        return $this->batches->first();
     }
 
     public function batchName()

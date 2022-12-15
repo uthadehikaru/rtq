@@ -6,13 +6,24 @@ use App\Interfaces\BatchRepositoryInterface;
 use App\Models\Batch;
 use App\Models\Member;
 use App\Models\Teacher;
-use DB;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class BatchRepository implements BatchRepositoryInterface
 {
     public function all()
     {
         return Batch::with('teachers', 'course','members')
+        ->orderBy('name')
+        ->get();
+    }
+
+    public function allWithTotalMembers()
+    {
+        return Batch::with('course')
+        ->withCount('members')
         ->orderBy('name')
         ->get();
     }
@@ -84,14 +95,16 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function create(array $data)
     {
-        $batch = Batch::create([
-            'course_id'=>$data['course_id'],
-            'name'=>$data['name'],
-            'description'=>$data['description'],
-        ]);
+        return DB::transaction(function() use($data){
+            $batch = Batch::create([
+                'course_id'=>$data['course_id'],
+                'name'=>$data['name'],
+                'description'=>$data['description'],
+            ]);
 
-        $batch->teachers()->sync($data['teacher_ids']);
-        return $batch;
+            $batch->teachers()->sync($data['teacher_ids']);
+            return $batch;         
+        });
     }
 
     public function update($id, array $data)

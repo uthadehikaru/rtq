@@ -44,38 +44,55 @@
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
-                            <label>@lang('Full Name')</label>
+                            <label>@lang('Halaqoh')</label>
+                            <select name="batch_id" class="form-control">
+                                <option value="">-- Inaktif --</option>
+                                @foreach ($batches as $batch)
+                                    <option value="{{ $batch->id }}" @selected($member && $member->batch() && $member->batch()->id==$batch->id)>{{ $batch->course->name }} - {{ $batch->name }} ({{ $batch->members_count }} anggota)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Full Name')<span class="text-danger">*</span></label>
                             <input type="text" name="full_name" class="form-control" placeholder="@lang('Enter') @lang('Full Name')"
                             value="{{ old('full_name', $member?$member->full_name:'') }}"
-                            required>
+                            required
+                            >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Short Name')</label>
-                            <input type="text" name="short_name" class="form-control" placeholder="@lang('Enter') @lang('Short Name')"
+                            <label>@lang('Short Name')<span class="text-danger">*</span></label>
+                            <input type="text" name="short_name" class="form-control" 
+                            placeholder="@lang('Enter') @lang('Short Name')"
                             value="{{ old('short_name', $member?$member->short_name:'') }}"
+                            required
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Email')</label>
-                            <input type="email" name="email" class="form-control" placeholder="@lang('Enter') @lang('Email')"
-                            value="{{ old('email', $member?$member->email:'') }}"
+                            <label>@lang('Email')<span class="text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control" 
+                            placeholder="@lang('Enter') @lang('Email')"
+                            value="{{ old('email', $member?$member->email:(Str::random(8).'@rtqmaisuro.id')) }}"
+                            required
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Phone')</label>
+                            <label>@lang('Phone')<span class="text-danger">*</span></label>
                             <input type="text" name="phone" class="form-control" placeholder="@lang('Enter') @lang('Phone')"
                             value="{{ old('phone', $member?$member->phone:'') }}"
+                            required
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Gender')</label>
+                            <label>@lang('Gender')<span class="text-danger">*</span></label>
                             <div class="kt-radio-inline">
                                 <label class="kt-radio">
-                                    <input type="radio" value="male" {{ $member && $member->gender=='male'?'checked="checked"':'' }} name="gender"> @lang('Male')
+                                    <input type="radio" value="male" {{ $member && $member->gender=='male'?'checked="checked"':'' }} name="gender"
+                                    required> @lang('Male')
                                     <span></span>
                                 </label>
                                 <label class="kt-radio">
-                                    <input type="radio" value="female" {{ $member && $member->gender=='female'?'checked="checked"':'' }} name="gender"> @lang('Female')
+                                    <input type="radio" value="female" {{ $member && $member->gender=='female'?'checked="checked"':'' }} name="gender"
+                                    required> @lang('Female')
                                     <span></span>
                                 </label>
                             </div>
@@ -93,11 +110,19 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Level')</label>
-                            <select name="level" class="form-control">
-                                <option value="Iqro" {{ $member && $member->level=='Iqro'?'selected':'' }}</option>}}>Iqro</option>
-                                <option value="Quran" {{ $member && $member->level=='Quran'?'selected':'' }}>Qur'an</option>
-                            </select>
+                            <label>@lang('Level')<span class="text-danger">*</span></label>
+                            <div class="kt-radio-inline">
+                                <label class="kt-radio">
+                                    <input type="radio" value="Iqro" {{ $member && $member->level=='Iqro'?'checked="checked"':'' }} name="level"
+                                    required> Iqro'
+                                    <span></span>
+                                </label>
+                                <label class="kt-radio">
+                                    <input type="radio" value="Quran" {{ $member && $member->level=='Quran'?'checked="checked"':'' }} name="level"
+                                    required> Qur'an
+                                    <span></span>
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>@lang('Address')</label>
