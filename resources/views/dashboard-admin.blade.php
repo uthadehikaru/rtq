@@ -15,10 +15,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Payments')</a>
+                            <a class="kt-link" href="{{ route('payments.index') }}">@lang('Payments')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $payments }} @lang('Data')
+                            {{ $payments }} @lang('Pembayaran')
                         </div>
                     </div>
                 </div>
@@ -40,10 +40,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Batches')</a>
+                            <a class="kt-link" href="{{ route('courses.index') }}">@lang('Batches')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $batches }} @lang('Data')
+                            {{ $batches }} @lang('Halaqoh')
                         </div>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Active Members')</a>
+                            <a class="kt-link" href="{{ route('members.index') }}">@lang('Peserta Tahsin')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $members }} @lang('Data')
+                            {{ $members }} @lang('Peserta')
                         </div>
                     </div>
                 </div>
