@@ -157,9 +157,8 @@
             <div class="kt-portlet__body">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <label>Peserta</label>
-                            <select class="form-control" name="user_id">
-                                <option value="">Pilih Peserta</option>
+                            <label>Peserta (bisa lebih dari satu)</label>
+                            <select class="form-control select2" id="kt-select2-user" name="user_id[]" multiple required>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->member->batch()->name }}</option>
                                 @endforeach
@@ -167,9 +166,9 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <label>Status</label>
-                            <select class="form-control" name="status">
+                            <select class="form-control" name="status" required>
                                 @foreach($statuses as $status)
-                                <option value="{{ $status }}">@lang('app.present.status.'.$status)</option>
+                                <option value="{{ $status }}" @selected($status=='present')>@lang('app.present.status.'.$status)</option>
                                 @endforeach
                             </select>
                         </div>
@@ -187,3 +186,12 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    $('#kt-select2-user').select2({
+        placeholder: 'Pilih Peserta',
+    });
+});
+</script>
+@endpush

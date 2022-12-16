@@ -16,17 +16,21 @@ class AddMemberToSchedule extends Controller
             'description'=>'',
         ]);
 
-        $present = Present::where([
-            'schedule_id'=>$schedule_id,
-            'user_id'=>$data['user_id'],
-        ])->first();
+        foreach($data['user_id'] as $user_id){
+            $present = Present::where([
+                'schedule_id'=>$schedule_id,
+                'user_id'=>$user_id,
+            ])->first();
 
-        if($present)
-            return back()->with('error','Peserta sudah ada didaftar hadir');
+            if($present)
+                continue;
 
-        $data['schedule_id'] = $schedule_id;
-        $data['type']='member';
-        $present = Present::create($data);
+            $present = Present::create([
+                'schedule_id'=>$schedule_id,
+                'type'=>'member',
+                'user_id'=>$user_id,
+            ]);
+        }
         return back()->with('message','Peserta berhasil ditambahkan');
     }
 }
