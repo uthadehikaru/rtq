@@ -47,6 +47,9 @@ jQuery(document).ready(function() {
                         alert('@lang('Deleted Successfully')');
                         location.reload(true);
                     }
+                },
+                error: function(data){
+                    alert('gagal menghapus periode');
                 }
             });
         }
@@ -131,9 +134,6 @@ jQuery(document).ready(function() {
                         <td>{{ $period->start_date->format('d M Y') }}</td>
                         <td>{{ $period->end_date->format('d M Y') }}</td>
                         <td>
-                            <a href="{{ route('periods.edit', $period->id) }}" class="text-warning">
-                                <i class="la la-edit"></i> @lang('Edit')
-                            </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $period->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
