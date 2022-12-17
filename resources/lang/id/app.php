@@ -13,4 +13,10 @@ return [
             'member' => 'Anggota',
         ]
     ],
+    'payment' => [
+        'status' => [
+            'new' => 'Belum dikonfirmasi',
+            'paid' => 'Lunas',
+        ]
+    ]
 ];
