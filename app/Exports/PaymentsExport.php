@@ -36,7 +36,6 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
     {
         return [
             'Tanggal',
-            'Periode',
             'Anggota',
             'Nominal',
             'Status',
@@ -52,15 +51,14 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
     {
         $members = [];
         foreach ($payment->details as $detail) {
-            $members[] = $detail->member->full_name.' Halaqoh '.$detail->batch->name;
+            $members[] = $detail->member->full_name.' Halaqoh '.$detail->batch->name.' Periode '.$detail->period->name;
         }
 
         return [
             $payment->created_at,
-            $payment->period->name,
             implode(', ', $members),
             $payment->amount,
-            $payment->status,
+            __('app.payment.status.'.$payment->status),
             $payment->paid_at,
             asset('storage/'.$payment->attachment),
 
@@ -72,6 +70,6 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
      */
     public function collection()
     {
-        return Payment::with('details', 'details.member', 'details.batch')->orderBy('created_at')->get();
+        return Payment::with('details', 'details.member', 'details.batch','details.period')->latest()->get();
     }
 }
