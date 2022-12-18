@@ -43,12 +43,12 @@ class SettingSeeder extends Seeder
             'tagline'=>"Hidup Indah, Penuh Berkah Bersama Al-Qur'an",
             'about'=>'Tentang kami',
         ];
-        foreach($homepage as $value){
+        foreach($homepage as $name => $value){
             Setting::firstOrCreate([
                 'group'=>'homepage',
-                'name'=>$value,
+                'name'=>$name,
             ],[
-                'payload'=>'',
+                'payload'=>$value,
             ]);
         }
     }
