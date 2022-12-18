@@ -76,6 +76,10 @@ jQuery(document).ready(function() {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    <a href="{{ route('members.index', ['action'=>'export']) }}" class="btn btn-success btn-icon-sm">
+                        <i class="la la-download"></i>
+                        @lang('Export (.xls)')
+                    </a>
                     <a href="{{ route('members.create') }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
                         @lang('New Member')

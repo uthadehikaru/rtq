@@ -80,6 +80,10 @@ jQuery(document).ready(function () {
                         <i class="la la-plus"></i>
                         @lang('New Salary')
                     </a>
+                    <a href="{{ route('salaries.config') }}" class="btn btn-warning btn-icon-sm">
+                        <i class="la la-cog"></i>
+                        @lang('Konfigurasi')
+                    </a>
                 </div>
             </div>
         </div>

@@ -5,8 +5,9 @@ namespace App\Services;
 use App\Models\Present;
 use App\Models\Salary;
 use App\Models\SalaryDetail;
-use App\Models\Schedule;
-use DB;
+use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SalaryService
 {
@@ -59,6 +60,8 @@ class SalaryService
     {
         DB::beginTransaction();
 
+        $settings = Setting::group('salary')->pluck('payload','name');
+
         $salary = $this->find($salary_id);
 
         $presents = Present::with('schedule','schedule.batch','schedule.batch.course')
@@ -66,14 +69,14 @@ class SalaryService
             return $query
             ->where('scheduled_at','>',$salary->start_date)
             ->where('scheduled_at','<',$salary->end_date);
-        })->whereNotNull('teacher_id')
+        })->where('type','teacher')
         ->get();
 
         $teacherPresents = $presents->groupBy(function ($present, $key) {
-            return $present->teacher_id;
+            return $present->user_id;
         });
 
-        foreach($teacherPresents as $teacher_id=>$presents)
+        foreach($teacherPresents as $user_id=>$presents)
         {
             $amount = 0;
             $summary = [
@@ -83,38 +86,50 @@ class SalaryService
                 'late'=>0,
                 'absent'=>0,
                 'permit'=>0,
+                'base'=>0,
+                'oper_santri'=>0,
+                'transportasi'=>0,
+                'tunjangan'=>0,
+                'potongan_telat'=>0,
             ];
 
             foreach($presents as $present)
             {
                 if($present->status==Present::STATUS_PRESENT){
-                    $amount += 10000; // TODO::create config for salary per present
+                    $summary['base'] += $settings[Str::snake($present->schedule->batch->course->type)];
+                    $amount += $settings[Str::snake($present->schedule->batch->course->type)]; // TODO::create config for salary per present
                     $summary[Present::STATUS_PRESENT]++;
                     $scheduled_at = $present->schedule->scheduled_at;
                     $attended_at = $present->schedule->scheduled_at;
                     $attended_at->setTimeFromTimeString($present->attended_at->format('H:i:s'));
                     $diff = $attended_at->diffInMinutes($scheduled_at);
+                    $summary['transportasi'] = $settings['transportasi'];
+                    $amount += $summary['transportasi'];
                     if($diff>15) // TODO::create config for late time
                         $summary['late']++;
-                }elseif($present->status==Present::STATUS_ABSENT && $present->description){
+                }elseif(in_array($present->status,[Present::STATUS_SICK,Present::STATUS_permit])){
                     $summary['permit']++;
                 }else{
                     $summary[Present::STATUS_ABSENT]++;
                 }
 
-                if($present->schedule->batch->teacher_id==$teacher_id)
-                    $summary['own']++;
-                else
+                if($present->is_badal)
                     $summary['switch']++;
 
-                
+                $summary['own']++;
+
                 $present->salary_id = $salary->id;
                 $present->save();
             }
 
+            if($summary['present']>0){
+                $summary['tunjangan'] = $settings['tunjangan'];
+                $amount += $summary['tunjangan'];
+            }
+
             SalaryDetail::updateOrCreate([
                 'salary_id'=>$salary->id,
-                'teacher_id'=>$teacher_id,
+                'teacher_id'=>$user_id,
             ],[
                 'amount'=>$amount,
                 'summary'=>$summary,
@@ -126,17 +141,17 @@ class SalaryService
 
     public function getPresentOfSalary($salary_id, $teacher_id=0)
     {
-        $presents = Present::with('teacher','schedule')
+        $presents = Present::with('user','schedule')
         ->where('salary_id',$salary_id)
-        ->whereNotNull('teacher_id')
+        ->where('type','teacher')
         ->when($teacher_id>0,function($query) use ($teacher_id){
-            return $query->where('teacher_id',$teacher_id);
+            return $query->where('user_id',$teacher_id);
         })
-        ->orderBy('teacher_id')
+        ->orderBy('user_id')
         ->latest()
         ->get()
         ->groupBy(function ($present, $key) {
-            return $present->teacher_id;
+            return $present->user_id;
         });
 
         return $presents;

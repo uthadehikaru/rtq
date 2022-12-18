@@ -87,7 +87,7 @@ jQuery(document).ready(function () {
                         <i class="la la-refresh"></i>
                         @lang('Calculate')
                     </a>
-                    <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm">
+                    <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm" target="_BLANK">
                         <i class="la la-file"></i>
                         @lang('Report')
                     </a>
@@ -131,6 +131,7 @@ jQuery(document).ready(function () {
                     <th title="Field #2">@lang('Telat')</th>
                     <th title="Field #2">@lang('Absen')</th>
                     <th title="Field #2">@lang('Izin/Sakit')</th>
+                    <th title="Field #2">@lang('Nominal')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -145,6 +146,7 @@ jQuery(document).ready(function () {
                         <td>{{ $detail->summary['late'] }}</td>
                         <td>{{ $detail->summary['absent'] }}</td>
                         <td>{{ $detail->summary['permit'] }}</td>
+                        <td>{{ $detail->amount }}</td>
                         <td>
                             <a href="{{ route('salaries.details.edit', [$salary->id,$detail->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
