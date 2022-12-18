@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MemberExport;
 use App\Models\Batch;
 use App\Models\Member;
 use App\Repositories\MemberRepository;
@@ -10,8 +11,11 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->get('action')=='export')
+            return (new MemberExport())->download('Data Anggota per '.date('d M Y H.i').'.xlsx');
+
         $data['title'] = __('Members');
         $data['members'] = Member::with(['batches','batches.course'])->latest()->get();
         $data['total'] = Member::whereHas('batches')->count();

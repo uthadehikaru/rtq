@@ -18,5 +18,9 @@ return [
             'new' => 'Belum dikonfirmasi',
             'paid' => 'Lunas',
         ]
+    ],
+    'gender' => [
+        'male' => 'Laki-laki',
+        'female' => 'Perempuan',
     ]
 ];
