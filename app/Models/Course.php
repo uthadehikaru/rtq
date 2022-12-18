@@ -20,9 +20,7 @@ class Course extends Model
         'type',
         'fee',
     ];
-
-    public const TYPES = ['Tahsin Anak', 'Tahsin Dewasa', 'Tahsin Balita'];
-
+    
     public function batches()
     {
         return $this->hasMany(Batch::class);
