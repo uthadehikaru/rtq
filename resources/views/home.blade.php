@@ -1,3 +1,4 @@
+@inject('settings', 'App\Services\SettingService')
 @extends('layouts.guest')
 @section('content')
 <div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
@@ -49,7 +50,7 @@
 				</div>
 				<div class="kt-sc__bottom">
 					<h3 class="kt-sc__heading kt-heading kt-heading--center kt-heading--xxl kt-heading--medium">
-						Hidup Indah, Penuh Berkah Bersama Al-Qur'an
+						{{ $settings->value('tagline') }}
 					</h3>
 				</div>
 			</div>
@@ -147,18 +148,7 @@
 							<h2 class="kt-infobox__title">{{ config('app.name') }}</h2>
 						</div>
 						<div class="kt-infobox__body">
-							<div class="kt-infobox__section">
-								<h3 class="kt-infobox__subtitle">Tentang Kami</h3>
-								<div class="kt-infobox__content">
-								Kami adalah RTQ Maisuro
-								</div>
-							</div>
-							<div class="kt-infobox__section">
-								<h3 class="kt-infobox__subtitle">Kontak</h3>
-								<div class="kt-infobox__content">
-								Hubungi kami melalui instagram maupun whatsapp pada link dibawah ini.
-								</div>
-							</div>
+							{!! $settings->value('about') !!}
 						</div>
 					</div>
 				</div>

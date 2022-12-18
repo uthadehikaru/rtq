@@ -16,6 +16,7 @@ use App\Http\Controllers\Salary\ConfigSalary;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SalaryDetailController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\Teacher;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/upload', Actions\UploadImage::class)->name('upload');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -63,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('salaries/{id}/calculate', Actions\CalculateSalary::class)->name('salaries.calculate');
         Route::resource('salaries', SalaryController::class);
         Route::resource('salaries.details', SalaryDetailController::class);
+        Route::resource('settings', SettingController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
     Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {

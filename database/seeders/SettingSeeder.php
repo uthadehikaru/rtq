@@ -38,5 +38,18 @@ class SettingSeeder extends Seeder
                 'payload'=>0,
             ]);
         }
+
+        $homepage = [
+            'tagline'=>"Hidup Indah, Penuh Berkah Bersama Al-Qur'an",
+            'about'=>'Tentang kami',
+        ];
+        foreach($homepage as $value){
+            Setting::firstOrCreate([
+                'group'=>'homepage',
+                'name'=>$value,
+            ],[
+                'payload'=>'',
+            ]);
+        }
     }
 }
