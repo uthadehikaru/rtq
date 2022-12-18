@@ -91,7 +91,7 @@
             var demos = function() {
                 // multi select
                 $('#teacher').select2({
-                    placeholder: 'Pilih Halaqoh',
+                    placeholder: 'Pilih Pengajar',
                 });
             }
 

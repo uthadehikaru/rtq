@@ -50,11 +50,13 @@
                             required>
                         </div>
                         <div class="form-group">
-                            <label>@lang('Fee')</label>
+                            <label>@lang('Tipe')</label>
                             <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text" id="basic-addon2">Rp</span></div>
-                                <input type="number" name="fee" class="form-control"
-                                value="{{ old('fee', $course?$course->fee:0) }}">
+                                <select class="form-control" name="type" required>
+                                    @foreach ($types as $type)
+                                    <option value='{{ $type }}'>{{ $type }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

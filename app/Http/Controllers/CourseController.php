@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\CourseRepositoryInterface;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -19,6 +20,7 @@ class CourseController extends Controller
     public function create(Request $request)
     {
         $data['title'] = __('New Course');
+        $data['types'] = Course::TYPES;
         $data['course'] = null;
 
         return view('forms.course', $data);
@@ -28,7 +30,7 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'fee' => 'numeric',
+            'type' => 'required',
         ]);
 
         $course = $request->all();
@@ -40,6 +42,7 @@ class CourseController extends Controller
     public function edit(CourseRepositoryInterface $courseRepository, $course_id)
     {
         $data['title'] = __('Edit Course');
+        $data['types'] = Course::TYPES;
         $data['course'] = $courseRepository->find($course_id);
 
         return view('forms.course', $data);
@@ -49,7 +52,7 @@ class CourseController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'fee' => 'numeric',
+            'type' => 'required',
         ]);
 
         $courseRepository->update($course_id, $data);

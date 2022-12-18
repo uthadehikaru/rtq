@@ -9,6 +9,12 @@ class Course extends Model
 {
     use HasFactory;
 
+    public const TYPES = [
+        'Tahsin Anak',
+        'Tahsin Dewasa',
+        'Tahsin Balita',
+    ];
+
     protected $fillable = [
         'name',
         'type',

@@ -114,6 +114,7 @@ jQuery(document).ready(function () {
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
+                    <th title="Field #2">@lang('Tipe')</th>
                     <th title="Field #2">@lang('Batches')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -123,6 +124,7 @@ jQuery(document).ready(function () {
                     <tr>
                         <td>{{ $course->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $course->name }}</td>
+                        <td>{{ $course->type }}</td>
                         <td>{{ $course->batches_count }} @lang('Batches')</td>
                         <td>
                             <a href="{{ route('courses.batches.index', $course->id) }}" class="text-primary">
