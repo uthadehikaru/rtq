@@ -29,7 +29,7 @@
                                 <td width="25%">{{ $present->schedule->scheduled_at->format('d M Y H:i:s') }}</td>
                                 <td width="15%">{{ $present->schedule->batch->course->name }}</td>
                                 <td width="15%">
-                                    <span class="text-{{ $present->schedule->batch->teacher_id==$present->teacher_id?'success':'warning' }}">
+                                    <span class="text-{{ $present->schedule->batch->teachers->contains($present->user_id)?'success':'warning' }}">
                                         {{ $present->schedule->batch->name }}
                                     </span>
                                 </td>
