@@ -30,7 +30,7 @@
 		<link href="{{ asset('assets/css/skins/aside/dark.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 	</head>
 
 	<!-- end::Head -->

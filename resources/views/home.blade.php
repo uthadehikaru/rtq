@@ -6,11 +6,11 @@
 		<!-- begin:: Content -->
 
 		<!-- begin:: Hero -->
-		<div class="kt-sc" style="background-image: url('assets/images/bg.jpg')">
+		<div class="kt-sc" style="background-image: url('{{$settings->value('banner','assets/images/bg.jpg') }}')">
 			<div class="kt-container ">
 				<div class="kt-sc__top">
 					<h3 class="kt-sc__title">
-						{{ config('app.name') }}
+						<img src="{{ asset('assets/images/favicon.png') }}" /> {{ config('app.name') }}
 					</h3>
 					<div class="kt-sc__nav">
 						<div class="d-sm-only d-md-none">
@@ -18,7 +18,7 @@
 								<button type="button" class="btn btn-clean btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<i class="flaticon-more text-info"></i>
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" style="">
+								<div class="dropdown-menu dropdown-menu-right">
 									<ul class="kt-nav">
 										<li class="kt-nav__item">
 											@guest
@@ -171,7 +171,7 @@
 									</p>
 								</div>
 								<div class="kt-callout__action">
-									<a href="https://instagram.com/rumahtartilquran_mahmud" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm btn-primary">@lang('Follow Us')</a>
+									<a href="{{ $settings->value('instagram') }}" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm btn-primary">@lang('Follow Us')</a>
 								</div>
 							</div>
 						</div>
@@ -188,7 +188,9 @@
 									</p>
 								</div>
 								<div class="kt-callout__action">
-									<a href="https://wa.me/6281293297936" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">+62 812-9329-7936</a>
+									<a href="https://wa.me/{{ $settings->value('whatsapp') }}" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">
+										{{ $settings->value('whatsapp') }}
+									</a>
 								</div>
 							</div>
 						</div>

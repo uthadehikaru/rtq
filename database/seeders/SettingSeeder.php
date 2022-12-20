@@ -40,8 +40,11 @@ class SettingSeeder extends Seeder
         }
 
         $homepage = [
+            'banner'=>'',
             'tagline'=>"Hidup Indah, Penuh Berkah Bersama Al-Qur'an",
             'about'=>'Tentang kami',
+            'instagram'=>'https://instagram.com/rumahtartilquran_mahmud',
+            'whatsapp'=>'',
         ];
         foreach($homepage as $name => $value){
             Setting::firstOrCreate([

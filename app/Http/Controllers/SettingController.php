@@ -37,8 +37,11 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'banner'=>'',
             'tagline' => '',
             'about' => '',
+            'instagram' => '',
+            'whatsapp' => '',
         ]);
 
         foreach($data as $name=>$value)

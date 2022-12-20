@@ -23,6 +23,15 @@
                 <div class="tab-pane fade show active" id="homepage" role="tabpanel" aria-labelledby="homepage">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
+                            <label>Banner</label>
+                            <div class="dropzone dropzone-default" id="banner">
+                                <div class="dropzone-msg dz-message needsclick">
+                                    <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                                    <span class="dropzone-msg-desc">File yang diperbolehkan maks. 2 mb berekstensi .jpg/.png</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Tagline</label>
                             <input type="text" name="tagline" class="form-control" value="{{ $homepage['tagline']->payload }}">
                         </div>
@@ -31,6 +40,14 @@
                             <textarea name="about" id="about" class="form-control">
                             {{ $homepage['about']->payload }}
                             </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="text" name="instagram" class="form-control" value="{{ $homepage['instagram']->payload }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Whatsapp</label>
+                            <input type="text" name="whatsapp" class="form-control" value="{{ $homepage['whatsapp']->payload }}">
                         </div>
                     </div>
                 </div>
@@ -53,6 +70,48 @@
 CKEDITOR.replace( 'about' , {
     filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token() ]) }}",
     filebrowserUploadMethod: 'form',
+});
+KTUtil.ready(function() {
+    $('#banner').dropzone({
+            url: "{{ route('dropzone') }}",
+            paramName: "file",
+            maxFiles: 1,
+            maxFilesize: 2, // MB
+            addRemoveLinks: true,
+            init: function() {
+                @if(isset($homepage['banner']))
+                var thisDropzone = this;
+                var mockFile = { name: 'Banner', size: 12345, type: 'image/jpeg' };
+                thisDropzone.emit("addedfile", mockFile);
+                thisDropzone.emit("thumbnail", mockFile, "{{ $homepage['banner']->payload }}")
+                thisDropzone.emit("success", mockFile);
+                @endif
+                this.on("maxfilesexceeded", function(file){
+                    this.removeFile(file);
+                    alert("No more files please!");
+                });
+            }, 
+            sending: function(file, xhr, formData) {
+                formData.append("_token", "{{ csrf_token() }}");
+            },
+            accept: function(file, done) {
+                done();
+            },
+            removedfile: function(file) {
+                var name = file.name; 
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('dropzone') }}',
+                    data: {name: 'banner', _token: '{{ csrf_token() }}'},
+                    sucess: function(data){
+                        console.log('success: ' + data);
+                    }
+                });
+                var _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+            }
+        });
 });
 </script>
 @endpush

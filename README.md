@@ -2,12 +2,12 @@
 
 ## About
 
-builded above laravel 8 framework
+builded above laravel 9 framework
   
 ## System Requirement
 
 - Web Server (Apache or Nginx)
-- PHP (min ver 7.4)
+- PHP (min ver 8.0)
 - MySQL Database
 - composer
 

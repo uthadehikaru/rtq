@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/upload', Actions\UploadImage::class)->name('upload');
+Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
