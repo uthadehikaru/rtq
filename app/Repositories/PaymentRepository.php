@@ -49,10 +49,9 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::whereId($id)->update($data);
     }
 
-    public function check($payment, $batch_id, $member_id, $period_id)
+    public function check($payment, $member_id, $period_id)
     {
         return PaymentDetail::where([
-            'batch_id' => $batch_id,
             'member_id' => $member_id,
             'period_id' => $period_id,
         ])

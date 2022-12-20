@@ -178,7 +178,7 @@ jQuery(document).ready(function() {
                         <td>{{ $payment->created_at->format('d/m/y h:i') }}</td>
                         <td>
                             @foreach($payment->details as $detail)
-                            <p>{{ $detail->member->full_name }} @lang('Batch') {{ $detail->batch->name }} periode {{ $detail->period->name }}</p>
+                            <p>{{ $detail->member->full_name }} periode {{ $detail->period->name }}</p>
                             @endforeach
                         </td>
                         <td>{{ $payment->amount }}</td>

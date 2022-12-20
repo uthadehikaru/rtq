@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PaymentsExport;
-use App\Interfaces\BatchRepositoryInterface;
-use App\Interfaces\MemberRepositoryInterface;
-use App\Interfaces\PaymentRepositoryInterface;
-use App\Interfaces\PeriodRepositoryInterface;
+use App\Repositories\BatchRepository;
+use App\Repositories\MemberRepository;
+use App\Repositories\PaymentRepository;
+use App\Repositories\PeriodRepository;
 use App\Models\Period;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function index(PeriodRepositoryInterface $periodRepository, PaymentRepositoryInterface $paymentRepository)
+    public function index(PaymentRepository $paymentRepository)
     {
         $data['title'] = __('Payments');
         $data['payments'] = $paymentRepository->all();
@@ -23,7 +23,7 @@ class PaymentController extends Controller
         return view('datatables.payment', $data);
     }
 
-    public function form(BatchRepositoryInterface $batchRepository, PeriodRepositoryInterface $periodRepository, Request $request)
+    public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)
     {
         $data['members'] = $batchRepository->getBatchMembers();
         $data['periods'] = $periodRepository->all();
@@ -32,7 +32,7 @@ class PaymentController extends Controller
         return view('payment-confirm', $data);
     }
 
-    public function confirm(PaymentRepositoryInterface $paymentRepository, $payment_id)
+    public function confirm(PaymentRepository $paymentRepository, $payment_id)
     {
         $payment = $paymentRepository->find($payment_id);
         $payment->status = 'paid';
@@ -42,7 +42,7 @@ class PaymentController extends Controller
         return back()->with('message', __('Payment Confirmed'));
     }
 
-    public function store(BatchRepositoryInterface $batchRepository, MemberRepositoryInterface $memberRepository, PaymentRepositoryInterface $paymentRepository, Request $request)
+    public function store(PaymentRepository $paymentRepository, Request $request)
     {
         $data = $request->validate([
             'period_ids' => 'required',
@@ -70,14 +70,11 @@ class PaymentController extends Controller
             foreach ($members as $member) {
                 if(!isset($member['id']))
                     return back()->with('error', 'Tidak ada peserta atas nama '.$member['value']);
-                $ids = explode('_', $member['id']);
-                $batch_id = $ids[0];
-                $member_id = $ids[1];
-                $paymentDetail = $paymentRepository->check($payment, $batch_id, $member_id, $period_id);
+                $member_id = $member['id'];
+                $paymentDetail = $paymentRepository->check($payment, $member_id, $period_id);
                 if (! $paymentDetail) {
                     $paymentRepository->createDetail([
                         'member_id' => $member_id,
-                        'batch_id' => $batch_id,
                         'period_id' => $period_id,
                         'payment_id' => $payment->id,
                     ]);
@@ -93,7 +90,7 @@ class PaymentController extends Controller
         return back()->with('message', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
     }
 
-    public function destroy(PaymentRepositoryInterface $paymentRepository, $payment_id)
+    public function destroy(PaymentRepository $paymentRepository, $payment_id)
     {
         $status = $paymentRepository->delete($payment_id);
         $data['statusCode'] = 200;

@@ -58,11 +58,12 @@ class BatchRepository implements BatchRepositoryInterface
     public function getBatchMembers($keyword = '')
     {
         return DB::table('batch_member')
-        ->select('members.full_name', 'courses.name as course', 'batches.name as batch', 'batch_member.member_id', 'batch_member.batch_id')
+        ->selectRaw("members.id as member_id, members.full_name, GROUP_CONCAT(DISTINCT batches.name SEPARATOR ' , ') as batch")
         ->join('batches', 'batch_member.batch_id', 'batches.id')
         ->join('courses', 'batches.course_id', 'courses.id')
         ->join('members', 'batch_member.member_id', 'members.id')
         ->where('members.full_name', 'LIKE', '%'.$keyword.'%')
+        ->groupBy('members.full_name','members.id')
         ->orderBy('members.full_name')->get();
     }
 

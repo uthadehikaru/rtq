@@ -8,14 +8,12 @@ var KTSelect2 = function() {
         var toEl = document.getElementById('kt_tagify_members');
         var tagifyTo = new Tagify(toEl, {
             delimiters: ", ", // add new tags when a comma or a space character is entered
-            maxTags: 10,
-            keepInvalidTags: true, // do not remove invalid tags (but keep them marked as invalid)
             whitelist: [
 				@foreach($members as $member)
                 {
-					id:'{{ $member->batch_id }}_{{ $member->member_id }}',
+					id:'{{ $member->member_id }}',
 					value : '{{ $member->full_name }}',
-					email : '{{ $member->course }} Halaqoh {{ $member->batch }}',
+					email : 'Halaqoh {{ $member->batch }}',
 				}, 
 				@endforeach
 			],
@@ -40,7 +38,7 @@ var KTSelect2 = function() {
             dropdown : {
                 classname : "color-blue",
                 enabled   : 1,
-                maxItems  : 5
+                maxItems  : 10
             }
         });
     }
@@ -85,9 +83,6 @@ jQuery(document).ready(function () {
 			<div class="col">
 				@if(session()->has('message'))
 				<x-alert type="success">{{ session()->get('message') }}</x-alert>
-				@endif
-				@if(session()->has('error'))
-				<x-alert type="warning">{{ session()->get('error') }}</x-alert>
 				@endif
 				<x-validation />
 

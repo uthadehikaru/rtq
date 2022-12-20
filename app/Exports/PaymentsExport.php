@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Payment;
+use App\Models\PaymentDetail;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
@@ -36,7 +37,9 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
     {
         return [
             'Tanggal',
+            'Periode',
             'Anggota',
+            'Halaqoh',
             'Nominal',
             'Status',
             'Dikonfirmasi pada',
@@ -47,20 +50,17 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
     /**
      * @var Payment
      */
-    public function map($payment): array
+    public function map($paymentDetail): array
     {
-        $members = [];
-        foreach ($payment->details as $detail) {
-            $members[] = $detail->member->full_name.' Halaqoh '.$detail->batch->name.' Periode '.$detail->period->name;
-        }
-
         return [
-            $payment->created_at,
-            implode(', ', $members),
-            $payment->amount,
-            __('app.payment.status.'.$payment->status),
-            $payment->paid_at,
-            asset('storage/'.$payment->attachment),
+            $paymentDetail->created_at,
+            $paymentDetail->period->name,
+            $paymentDetail->member->full_name,
+            $paymentDetail->member->batches()->pluck('name')->join(','),
+            $paymentDetail->payment->amount,
+            __('app.payment.status.'.$paymentDetail->payment->status),
+            $paymentDetail->payment->paid_at,
+            asset('storage/'.$paymentDetail->payment->attachment),
 
         ];
     }
@@ -70,6 +70,6 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
      */
     public function collection()
     {
-        return Payment::with('details', 'details.member', 'details.batch','details.period')->latest()->get();
+        return PaymentDetail::with('payment', 'member','member.batches','period')->orderByDesc('period_id')->get();
     }
 }

@@ -8,5 +8,5 @@
     </x-alert>
 @endif
 @if(session()->has('error'))
-<x-alert type="danger">{{ session('error') }}</x-alert>
+<x-alert type="danger" icon="flaticon-warning">{{ session('error') }}</x-alert>
 @endif
