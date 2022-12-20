@@ -6,7 +6,7 @@
 		<!-- begin:: Content -->
 
 		<!-- begin:: Hero -->
-		<div class="kt-sc" style="background-image: url('{{$settings->value('banner','assets/images/bg.jpg') }}')">
+		<div class="kt-sc" style="background: white">
 			<div class="kt-container ">
 				<div class="kt-sc__top">
 					<h3 class="kt-sc__title">
@@ -48,17 +48,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="kt-sc__bottom">
-					<h3 class="kt-sc__heading kt-heading kt-heading--center kt-heading--xxl kt-heading--medium">
-						{{ $settings->value('tagline') }}
-					</h3>
-				</div>
 			</div>
 		</div>
 
 		<!-- end:: Hero -->
 
 		<!-- begin:: Section -->
+		@if($settings->value('banner'))
+		<img src="{{ $settings->value('banner') }}" width="100%" class="mb-4" />
+		@endif
 		<div class="kt-container ">
 			<div class="row">
 				<div class="col-lg-4">
