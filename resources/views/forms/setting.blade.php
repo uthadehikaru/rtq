@@ -48,11 +48,11 @@
 </form>
 @endsection
 @push('scripts')
-<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}?v=4.1"></script>
 <script>
 CKEDITOR.replace( 'about' , {
     filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token() ]) }}",
-    filebrowserUploadMethod: 'form'
+    filebrowserUploadMethod: 'form',
 });
 </script>
 @endpush
