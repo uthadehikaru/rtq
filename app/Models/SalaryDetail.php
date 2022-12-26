@@ -15,7 +15,7 @@ class SalaryDetail extends Model
         'amount',
         'summary',
     ];
-    
+
     protected $casts = [
         'summary' => 'array',
     ];

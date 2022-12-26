@@ -10,6 +10,7 @@ class RemoveMemberFromSchedule extends Controller
     public function __invoke($schedule_id, $present_id)
     {
         Present::find($present_id)->delete();
-        return back()->with('message','Peserta berhasil dihapus');
+
+        return back()->with('message', 'Peserta berhasil dihapus');
     }
 }

@@ -16,7 +16,7 @@ class CourseFactory extends Factory
         return [
             'name' => $this->faker->sentence(2),
             'fee' => $this->faker->randomNumber(6, true),
-            'type'=>$this->faker->word(),
+            'type' => $this->faker->word(),
         ];
     }
 }

@@ -11,12 +11,11 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
 {
-
     use Exportable;
 
-    public function title():string
+    public function title(): string
     {
-        return "Anggota";
+        return 'Anggota';
     }
 
     public function query()
@@ -25,7 +24,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
         ->orderBy('full_name');
     }
 
-    public function headings():array
+    public function headings(): array
     {
         return [
             'id',
@@ -37,9 +36,8 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             'halaqoh',
         ];
     }
-    
 
-    public function map($member):array
+    public function map($member): array
     {
         return [
             $member->id,
@@ -48,7 +46,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             __('app.gender.'.$member->gender),
             $member->level,
             $member->school,
-            $member->batch()?$member->batch()->name:'Inaktif',
+            $member->batch() ? $member->batch()->name : 'Inaktif',
         ];
     }
 }

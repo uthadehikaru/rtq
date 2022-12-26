@@ -11,26 +11,28 @@ class AddMemberToSchedule extends Controller
     public function __invoke(Request $request, $schedule_id)
     {
         $data = $request->validate([
-            'user_id'=>'required',
-            'status'=>'required',
-            'description'=>'',
+            'user_id' => 'required',
+            'status' => 'required',
+            'description' => '',
         ]);
 
-        foreach($data['user_id'] as $user_id){
+        foreach ($data['user_id'] as $user_id) {
             $present = Present::where([
-                'schedule_id'=>$schedule_id,
-                'user_id'=>$user_id,
+                'schedule_id' => $schedule_id,
+                'user_id' => $user_id,
             ])->first();
 
-            if($present)
+            if ($present) {
                 continue;
+            }
 
             $present = Present::create([
-                'schedule_id'=>$schedule_id,
-                'type'=>'member',
-                'user_id'=>$user_id,
+                'schedule_id' => $schedule_id,
+                'type' => 'member',
+                'user_id' => $user_id,
             ]);
         }
-        return back()->with('message','Peserta berhasil ditambahkan');
+
+        return back()->with('message', 'Peserta berhasil ditambahkan');
     }
 }

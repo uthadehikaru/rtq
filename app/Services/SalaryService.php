@@ -38,20 +38,20 @@ class SalaryService
 
     public function findDetails($id)
     {
-        return Salary::with('details','details.teacher')->find($id);
+        return Salary::with('details', 'details.teacher')->find($id);
     }
 
     public function findDetail($id)
     {
-        return SalaryDetail::with('teacher','salary')->find($id);
+        return SalaryDetail::with('teacher', 'salary')->find($id);
     }
 
     public function deleteDetail($id)
     {
         $detail = SalaryDetail::find($id);
-        Present::where('salary_id',$detail->salary_id)
-        ->where('teacher_id',$detail->teacher_id)
-        ->update(['salary_id'=>null]);
+        Present::where('salary_id', $detail->salary_id)
+        ->where('teacher_id', $detail->teacher_id)
+        ->update(['salary_id' => null]);
 
         return $detail->delete();
     }
@@ -60,42 +60,40 @@ class SalaryService
     {
         DB::beginTransaction();
 
-        $settings = Setting::group('salary')->pluck('payload','name');
+        $settings = Setting::group('salary')->pluck('payload', 'name');
 
         $salary = $this->find($salary_id);
 
-        $presents = Present::with('schedule','schedule.batch','schedule.batch.course')
-        ->whereHas('schedule', function($query) use ($salary){
+        $presents = Present::with('schedule', 'schedule.batch', 'schedule.batch.course')
+        ->whereHas('schedule', function ($query) use ($salary) {
             return $query
-            ->where('scheduled_at','>',$salary->start_date)
-            ->where('scheduled_at','<',$salary->end_date);
-        })->where('type','teacher')
+            ->where('scheduled_at', '>', $salary->start_date)
+            ->where('scheduled_at', '<', $salary->end_date);
+        })->where('type', 'teacher')
         ->get();
 
         $teacherPresents = $presents->groupBy(function ($present, $key) {
             return $present->user_id;
         });
 
-        foreach($teacherPresents as $user_id=>$presents)
-        {
+        foreach ($teacherPresents as $user_id => $presents) {
             $amount = 0;
             $summary = [
-                'own'=>0,
-                'switch'=>0,
-                'present'=>0,
-                'late'=>0,
-                'absent'=>0,
-                'permit'=>0,
-                'base'=>0,
-                'oper_santri'=>0,
-                'transportasi'=>0,
-                'tunjangan'=>0,
-                'potongan_telat'=>0,
+                'own' => 0,
+                'switch' => 0,
+                'present' => 0,
+                'late' => 0,
+                'absent' => 0,
+                'permit' => 0,
+                'base' => 0,
+                'oper_santri' => 0,
+                'transportasi' => 0,
+                'tunjangan' => 0,
+                'potongan_telat' => 0,
             ];
 
-            foreach($presents as $present)
-            {
-                if($present->status==Present::STATUS_PRESENT){
+            foreach ($presents as $present) {
+                if ($present->status == Present::STATUS_PRESENT) {
                     $summary['base'] += $settings[Str::snake($present->schedule->batch->course->type)];
                     $amount += $settings[Str::snake($present->schedule->batch->course->type)]; // TODO::create config for salary per present
                     $summary[Present::STATUS_PRESENT]++;
@@ -105,16 +103,18 @@ class SalaryService
                     $diff = $attended_at->diffInMinutes($scheduled_at);
                     $summary['transportasi'] = $settings['transportasi'];
                     $amount += $summary['transportasi'];
-                    if($diff>15) // TODO::create config for late time
+                    if ($diff > 15) { // TODO::create config for late time
                         $summary['late']++;
-                }elseif(in_array($present->status,[Present::STATUS_SICK,Present::STATUS_permit])){
+                    }
+                } elseif (in_array($present->status, [Present::STATUS_SICK, Present::STATUS_permit])) {
                     $summary['permit']++;
-                }else{
+                } else {
                     $summary[Present::STATUS_ABSENT]++;
                 }
 
-                if($present->is_badal)
+                if ($present->is_badal) {
                     $summary['switch']++;
+                }
 
                 $summary['own']++;
 
@@ -122,30 +122,30 @@ class SalaryService
                 $present->save();
             }
 
-            if($summary['present']>0){
+            if ($summary['present'] > 0) {
                 $summary['tunjangan'] = $settings['tunjangan'];
                 $amount += $summary['tunjangan'];
             }
 
             SalaryDetail::updateOrCreate([
-                'salary_id'=>$salary->id,
-                'teacher_id'=>$user_id,
-            ],[
-                'amount'=>$amount,
-                'summary'=>$summary,
+                'salary_id' => $salary->id,
+                'teacher_id' => $user_id,
+            ], [
+                'amount' => $amount,
+                'summary' => $summary,
             ]);
         }
-        
+
         DB::commit();
     }
 
-    public function getPresentOfSalary($salary_id, $teacher_id=0)
+    public function getPresentOfSalary($salary_id, $teacher_id = 0)
     {
-        $presents = Present::with('user','schedule')
-        ->where('salary_id',$salary_id)
-        ->where('type','teacher')
-        ->when($teacher_id>0,function($query) use ($teacher_id){
-            return $query->where('user_id',$teacher_id);
+        $presents = Present::with('user', 'schedule')
+        ->where('salary_id', $salary_id)
+        ->where('type', 'teacher')
+        ->when($teacher_id > 0, function ($query) use ($teacher_id) {
+            return $query->where('user_id', $teacher_id);
         })
         ->orderBy('user_id')
         ->latest()

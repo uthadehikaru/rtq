@@ -9,11 +9,14 @@ class Present extends Model
 {
     use HasFactory;
 
-    public const STATUSES = ['present', 'absent','sick','permit'];
+    public const STATUSES = ['present', 'absent', 'sick', 'permit'];
 
     public const STATUS_PRESENT = 'present';
+
     public const STATUS_ABSENT = 'absent';
+
     public const STATUS_SICK = 'sick';
+
     public const STATUS_permit = 'permit';
 
     protected $fillable = [

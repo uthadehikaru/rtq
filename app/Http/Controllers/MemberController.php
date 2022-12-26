@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Exports\MemberExport;
-use App\Models\Batch;
 use App\Models\Member;
-use App\Repositories\MemberRepository;
 use App\Repositories\BatchRepository;
+use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->get('action')=='export')
+        if ($request->get('action') == 'export') {
             return (new MemberExport())->download('Data Anggota per '.date('d M Y H.i').'.xlsx');
+        }
 
         $data['title'] = __('Members');
-        $data['members'] = Member::with(['batches','batches.course'])->latest()->get();
+        $data['members'] = Member::with(['batches', 'batches.course'])->latest()->get();
         $data['total'] = Member::whereHas('batches')->count();
 
         return view('datatables.member', $data);
@@ -45,7 +45,7 @@ class MemberController extends Controller
             'school' => '',
             'class' => '',
             'level' => '',
-            'batch_id'=>'',
+            'batch_id' => '',
         ]);
 
         $memberRepository->create($data);
@@ -53,7 +53,7 @@ class MemberController extends Controller
         return redirect()->route('members.index')->with('message', __('Created Successfully'));
     }
 
-    public function edit(MemberRepository $memberRepository, 
+    public function edit(MemberRepository $memberRepository,
         BatchRepository $batchRepository,
         $member_id)
     {
@@ -77,7 +77,7 @@ class MemberController extends Controller
             'school' => '',
             'class' => '',
             'level' => '',
-            'batch_id'=>'',
+            'batch_id' => '',
         ]);
 
         $memberRepository->update($member_id, $data);

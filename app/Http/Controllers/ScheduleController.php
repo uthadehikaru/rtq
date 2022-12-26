@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Present;
-use App\Repositories\ScheduleRepository;
 use App\Models\Schedule;
 use App\Repositories\BatchRepository;
+use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +20,11 @@ class ScheduleController extends Controller
     public function index(ScheduleRepository $scheduleRepository)
     {
         $data['title'] = __('Schedules');
-        if(Auth::user()->hasRole('administrator'))
+        if (Auth::user()->hasRole('administrator')) {
             $data['schedules'] = $scheduleRepository->all();
-        else
+        } else {
             $data['schedules'] = $scheduleRepository->getByTeacher(Auth::id());
+        }
 
         return view('datatables.schedule', $data);
     }
@@ -110,18 +111,18 @@ class ScheduleController extends Controller
         $data = $request->validate([
             'scheduled_at' => 'required',
             'batch_id' => 'required',
-            'start_at'=>'',
-            'end_at'=>'',
+            'start_at' => '',
+            'end_at' => '',
         ]);
         $schedule = $scheduleRepository->find($id);
         $schedule->update($data);
 
-        if($request->get('teacher_id')>0){
+        if ($request->get('teacher_id') > 0) {
             Present::firstOrCreate([
-                'user_id'=>$request->get('teacher_id'),
-                'schedule_id'=>$schedule->id,
-            ],[
-                'status'=>'absent',
+                'user_id' => $request->get('teacher_id'),
+                'schedule_id' => $schedule->id,
+            ], [
+                'status' => 'absent',
             ]);
         }
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Services\SalaryService;
-use App\Models\Present;
 use Illuminate\Http\Request;
 
 class ReportSalary extends Controller
@@ -17,9 +16,10 @@ class ReportSalary extends Controller
      */
     public function __invoke(Request $request, $salary_id)
     {
-        $title ="Laporan";
+        $title = 'Laporan';
         $salary = (new SalaryService())->findDetails($salary_id);
         $teacherPresents = (new SalaryService())->getPresentOfSalary($salary_id);
-        return view('reports.salary-detail', compact('title','salary','teacherPresents'));
+
+        return view('reports.salary-detail', compact('title', 'salary', 'teacherPresents'));
     }
 }

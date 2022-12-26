@@ -18,6 +18,7 @@ class CalculateSalary extends Controller
     {
         $service = new SalaryService();
         $service->calculate($salary_id);
+
         return to_route('salaries.details.index', $salary_id)->with('message', __('Calculated'));
     }
 }

@@ -10,12 +10,15 @@ class SettingService
     {
         return Setting::where('name', $name)->first();
     }
-    public function value($name, $default=null)
+
+    public function value($name, $default = null)
     {
         $value = $default;
         $setting = $this->get($name);
-        if($setting && $setting->payload)
+        if ($setting && $setting->payload) {
             $value = $setting->payload;
+        }
+
         return $value;
     }
 }

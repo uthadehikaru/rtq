@@ -49,7 +49,7 @@ class TeacherController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'batch_ids'=>'',
+            'batch_ids' => '',
         ]);
 
         $teacherRepository->create($data);
@@ -101,7 +101,7 @@ class TeacherController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'batch_ids'=>'',
+            'batch_ids' => '',
         ]);
 
         $teacherRepository->update($id, $data);

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\ScheduleRepositoryInterface;
 use App\Models\Present;
 use App\Models\Schedule;
-use App\Models\Teacher;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -46,21 +45,22 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         DB::beginTransaction();
 
         $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::parse($data['scheduled_at'])->startOfDay())
-        ->where('batch_id',$data['batch_id'])
+        ->where('batch_id', $data['batch_id'])
         ->first();
-        
-        if($schedule)
-            throw new Exception("Jadwal halaqoh ".$schedule->batch->name." untuk tanggal ".$schedule->scheduled_at->format('d M Y')." sudah ada");
-        
+
+        if ($schedule) {
+            throw new Exception('Jadwal halaqoh '.$schedule->batch->name.' untuk tanggal '.$schedule->scheduled_at->format('d M Y').' sudah ada');
+        }
+
         $schedule = Schedule::create($data);
 
         Present::create([
             'schedule_id' => $schedule->id,
             'user_id' => Auth::id(),
             'status' => 'present',
-            'type'=>'teacher',
-            'attended_at'=>Carbon::now()->format('H:i'),
-            'is_badal'=>$data['is_badal'],
+            'type' => 'teacher',
+            'attended_at' => Carbon::now()->format('H:i'),
+            'is_badal' => $data['is_badal'],
         ]);
 
         foreach ($schedule->batch->members as $member) {
@@ -68,9 +68,9 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                 'schedule_id' => $schedule->id,
                 'user_id' => $member->user_id,
                 'status' => 'absent',
-                'type'=>'member',
+                'type' => 'member',
             ]);
-        } 
+        }
 
         DB::commit();
 
@@ -85,10 +85,10 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     public function getByTeacher($user_id)
     {
         return Schedule::with('batch')
-            ->withCount(['presents'=>function($query){
-                $query->where('type','member');
+            ->withCount(['presents' => function ($query) {
+                $query->where('type', 'member');
             }])
-            ->whereRelation('presents','user_id', $user_id)
+            ->whereRelation('presents', 'user_id', $user_id)
             ->latest('scheduled_at')
             ->paginate(20);
     }

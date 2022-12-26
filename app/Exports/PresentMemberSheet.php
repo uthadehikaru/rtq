@@ -20,8 +20,8 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
 
     public function query()
     {
-        return Present::with(['schedule','user','schedule.batch'])
-        ->where('type','member')
+        return Present::with(['schedule', 'user', 'schedule.batch'])
+        ->where('type', 'member')
         ->latest();
     }
 

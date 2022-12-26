@@ -40,8 +40,9 @@ class ImportData extends Command
      */
     public function handle()
     {
-        if(!Storage::disk('local')->exists('import.xlsx'))
+        if (! Storage::disk('local')->exists('import.xlsx')) {
             return $this->info('No File Import Exist');
+        }
 
         Excel::import(new RTQImport, storage_path('app/import.xlsx'));
         $this->info('Imported');

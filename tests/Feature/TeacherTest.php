@@ -3,11 +3,10 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Exception;
 
 uses()->group('teacher');
 
-test('teacher can access dashboard', function(){
+test('teacher can access dashboard', function () {
     $user = createTeacher();
     $batch = createBatch($user);
     actingAs($user)
@@ -17,28 +16,29 @@ test('teacher can access dashboard', function(){
     ->assertSee($batch->name);
 });
 
-test('teacher can create their schedule', function(){
+test('teacher can create their schedule', function () {
     $user = createTeacher();
     $batch = createBatch($user);
 
     $data = [
-        'batch_id'=>$batch->id,
-        'scheduled_at'=>Carbon::now()->addHour(),
-        'teacher_id'=>'',
+        'batch_id' => $batch->id,
+        'scheduled_at' => Carbon::now()->addHour(),
+        'teacher_id' => '',
+        'badal' => 0,
     ];
     actingAs($user)
     ->post(route('teacher.schedules.create'), $data)
     ->assertSessionHas('message');
 });
 
-test('teacher cannot create past schedule', function(){
+test('teacher cannot create past schedule', function () {
     $user = createTeacher();
     $batch = createBatch($user);
 
     $data = [
-        'batch_id'=>$batch->id,
-        'scheduled_at'=>Carbon::now()->subHour(),
-        'teacher_id'=>'',
+        'batch_id' => $batch->id,
+        'scheduled_at' => Carbon::now()->subHour(),
+        'teacher_id' => '',
     ];
     actingAs($user)
     ->post(route('teacher.schedules.create'), $data)

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Actions;
-use App\Http\Controllers\Schedule;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\CourseController;
@@ -15,10 +14,11 @@ use App\Http\Controllers\PresentController;
 use App\Http\Controllers\Salary\ConfigSalary;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SalaryDetailController;
+use App\Http\Controllers\Schedule;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\Teacher;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('courses', CourseController::class);
         Route::resource('courses.batches', BatchController::class);
         Route::resource('courses.batches.batchmembers', BatchMemberController::class);
+        Route::get('periods/export/{id?}', [PeriodController::class, 'export'])->name('periods.export');
         Route::resource('periods', PeriodController::class);
         Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
         Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');

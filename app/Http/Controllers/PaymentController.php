@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PaymentsExport;
+use App\Models\Period;
 use App\Repositories\BatchRepository;
-use App\Repositories\MemberRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\PeriodRepository;
-use App\Models\Period;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -64,12 +63,13 @@ class PaymentController extends Controller
             'attachment' => $path,
         ]);
 
-        foreach($data['period_ids'] as $period_id){
+        foreach ($data['period_ids'] as $period_id) {
             $period = Period::find($period_id);
 
             foreach ($members as $member) {
-                if(!isset($member['id']))
+                if (! isset($member['id'])) {
                     return back()->with('error', 'Tidak ada peserta atas nama '.$member['value']);
+                }
                 $member_id = $member['id'];
                 $paymentDetail = $paymentRepository->check($payment, $member_id, $period_id);
                 if (! $paymentDetail) {
@@ -81,7 +81,7 @@ class PaymentController extends Controller
                 } else {
                     DB::rollBack();
 
-                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member['value'].' '.$member['email'] . ' periode '. $period['name']);
+                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member['value'].' '.$member['email'].' periode '.$period['name']);
                 }
             }
         }

@@ -53,10 +53,11 @@ function actingAs(Authenticatable $user, string $driver = null)
 
 function createTeacher()
 {
-    $role = Role::create(['name'=>'teacher']);
+    $role = Role::create(['name' => 'teacher']);
     $user = User::factory()->has(Teacher::factory())
     ->create();
     $user->assignRole($role);
+
     return $user;
 }
 
@@ -66,5 +67,6 @@ function createBatch($user)
     ->create();
 
     $batch->teachers()->attach($user->teacher->id);
+
     return $batch;
 }

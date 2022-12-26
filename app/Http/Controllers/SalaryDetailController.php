@@ -19,7 +19,7 @@ class SalaryDetailController extends Controller
         return view('datatables.salary-details', $data);
     }
 
-    public function create($salary_id) 
+    public function create($salary_id)
     {
         $data['title'] = __('New Salary');
         $data['salary'] = null;
@@ -27,11 +27,11 @@ class SalaryDetailController extends Controller
         return view('forms.salary', $data);
     }
 
-    public function store(Request $request, $salary_id) 
+    public function store(Request $request, $salary_id)
     {
         (new SalaryService())->store($request->all());
 
-        return redirect()->route('salaries.index')->with('message','Created');
+        return redirect()->route('salaries.index')->with('message', 'Created');
     }
 
     public function edit($salary_id, $id)
@@ -43,16 +43,16 @@ class SalaryDetailController extends Controller
         return view('forms.salary-detail', $data);
     }
 
-    public function update(Request $request, $salary_id, $id) 
+    public function update(Request $request, $salary_id, $id)
     {
         $detail = (new SalaryService())->findDetail($id);
         $detail->amount = $request->amount;
         $detail->save();
 
-        return redirect()->route('salaries.details.index', $detail->salary_id)->with('message','Updated');
+        return redirect()->route('salaries.details.index', $detail->salary_id)->with('message', 'Updated');
     }
 
-    public function destroy($salary_id, $id) 
+    public function destroy($salary_id, $id)
     {
         (new SalaryService())->deleteDetail($id);
 

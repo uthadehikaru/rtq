@@ -15,5 +15,5 @@ class PresentsExport implements WithMultipleSheets
             new PresentTeacherSheet(),
             new PresentMemberSheet(),
         ];
-    }    
+    }
 }

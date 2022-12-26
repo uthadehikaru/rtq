@@ -28,6 +28,11 @@ class Member extends Model
         return $this->belongsToMany(Batch::class);
     }
 
+    public function paymentDetails()
+    {
+        return $this->hasMany(PaymentDetail::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

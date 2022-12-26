@@ -20,7 +20,7 @@ class Course extends Model
         'type',
         'fee',
     ];
-    
+
     public function batches()
     {
         return $this->hasMany(Batch::class);

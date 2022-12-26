@@ -14,41 +14,42 @@ class ConfigSalary extends Controller
     {
         $data['course_types'] = Course::TYPES;
         $data['courses'] = Course::orderBy('name')->get();
-        $data['settings'] = Setting::group('salary')->pluck('payload','name');
+        $data['settings'] = Setting::group('salary')->pluck('payload', 'name');
+
         return view('forms.salary-config', $data);
     }
 
     public function save(Request $request)
     {
         $validations = [
-            'oper_santri'=>'required',
-            'transportasi'=>'required',
-            'tunjangan'=>'required',
-            'telat_tanpa_konfirmasi'=>'required',
-            'maks_telat_dengan_konfirmasi'=>'required',
-            'pengurangan_tunjangan_per_izin'=>'required',
-            'maks_izin'=>'required',
+            'oper_santri' => 'required',
+            'transportasi' => 'required',
+            'tunjangan' => 'required',
+            'telat_tanpa_konfirmasi' => 'required',
+            'maks_telat_dengan_konfirmasi' => 'required',
+            'pengurangan_tunjangan_per_izin' => 'required',
+            'maks_izin' => 'required',
         ];
 
-        foreach(Course::TYPES as $type){
+        foreach (Course::TYPES as $type) {
             $validations[Str::snake($type)] = 'required';
         }
 
         $data = $request->validate($validations);
-        foreach($data as $name=>$value){
+        foreach ($data as $name => $value) {
             $setting = [
-                'name'=>$name,
-                'payload'=>$value,
+                'name' => $name,
+                'payload' => $value,
             ];
 
             Setting::updateOrCreate([
-                'group'=>'salary',
-                'name'=>$name,
-            ],[
+                'group' => 'salary',
+                'name' => $name,
+            ], [
                 'payload' => $value,
             ]);
         }
 
-        return back()->with('message','Konfigurasi Tersimpan');
+        return back()->with('message', 'Konfigurasi Tersimpan');
     }
 }

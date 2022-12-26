@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class TeacherFactory extends Factory
 {
@@ -16,7 +15,7 @@ class TeacherFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'user_id'=>1,
+            'user_id' => 1,
         ];
     }
 }

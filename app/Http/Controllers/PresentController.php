@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PresentRepository;
 use App\Models\Present;
 use App\Models\Schedule;
 use App\Models\User;
-use App\Repositories\MemberRepository;
-use App\Repositories\TeacherRepository;
+use App\Repositories\PresentRepository;
 use Illuminate\Http\Request;
 
 class PresentController extends Controller
@@ -48,11 +46,11 @@ class PresentController extends Controller
      */
     public function create(
         Schedule $schedule,
-    ){
+    ) {
         $data['title'] = __('Tambah Absensi');
         $data['schedule'] = $schedule;
         $data['present'] = null;
-        $data['teachers'] = User::role('teacher')->orderBy('name')->pluck('name','id');
+        $data['teachers'] = User::role('teacher')->orderBy('name')->pluck('name', 'id');
         $data['statuses'] = Present::STATUSES;
 
         return view('forms.present', $data);
@@ -68,10 +66,9 @@ class PresentController extends Controller
         Request $request,
         PresentRepository $presentRepository,
         Schedule $schedule,
-    )
-    {
+    ) {
         $data = $request->validate([
-            'user_id'=>'required',
+            'user_id' => 'required',
             'status' => 'required',
             'description' => '',
             'attended_at' => '',
@@ -82,11 +79,12 @@ class PresentController extends Controller
         $data['schedule_id'] = $schedule->id;
 
         $present = Present::where([
-            'schedule_id'=>$schedule->id,
-            'user_id'=>$data['user_id']
+            'schedule_id' => $schedule->id,
+            'user_id' => $data['user_id'],
         ])->first();
-        if($present)
+        if ($present) {
             return back()->with('error', __('Data pengajar sudah pernah diinput'));
+        }
 
         $presentRepository->create($data);
 
@@ -139,7 +137,7 @@ class PresentController extends Controller
             'status' => 'required',
             'description' => '',
             'attended_at' => '',
-            'is_badal'=>''
+            'is_badal' => '',
         ]);
         if ($data['status'] != 'present') {
             $data['attended_at'] = null;
@@ -147,8 +145,10 @@ class PresentController extends Controller
 
         $presentRepository->update($id, $data);
 
-        if($request->get('redirect'))
-            return redirect($request->get('redirect'))->with('message', __('Updated Successfully'));    
+        if ($request->get('redirect')) {
+            return redirect($request->get('redirect'))->with('message', __('Updated Successfully'));
+        }
+
         return redirect()->route('schedules.presents.index', $schedule->id)->with('message', __('Updated Successfully'));
     }
 

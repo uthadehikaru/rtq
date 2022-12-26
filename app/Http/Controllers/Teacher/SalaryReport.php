@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Services\SalaryService;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
 
 class SalaryReport extends Controller
 {
@@ -17,10 +17,11 @@ class SalaryReport extends Controller
      */
     public function __invoke(Request $request, $detail_id)
     {
-        $title ="Laporan";
+        $title = 'Laporan';
         $detail = (new SalaryService())->findDetail($detail_id);
         $salary = $detail->salary;
         $teacherPresents = (new SalaryService())->getPresentOfSalary($salary_id, Auth::user()->teacher->id);
-        return view('reports.salary-detail', compact('title','salary','teacherPresents'));
+
+        return view('reports.salary-detail', compact('title', 'salary', 'teacherPresents'));
     }
 }

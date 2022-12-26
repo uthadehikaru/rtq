@@ -38,41 +38,41 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function create(array $data)
     {
-        return DB::transaction(function() use ($data){
+        return DB::transaction(function () use ($data) {
             $user = User::create([
-                'email'=>$data['email'],
-                'name'=>$data['full_name'],
-                'password'=>Hash::make(Str::random(8)),
+                'email' => $data['email'],
+                'name' => $data['full_name'],
+                'password' => Hash::make(Str::random(8)),
             ]);
 
             $data['user_id'] = $user->id;
             $member = Member::create($data);
 
             $member->batches()->sync($data['batch_id']);
+
             return $member;
         });
     }
 
     public function update($id, array $data)
     {
-        return DB::transaction(function() use ($id, $data){
+        return DB::transaction(function () use ($id, $data) {
             $member = Member::with('user')->find($id);
 
-
-            if($member->user){
+            if ($member->user) {
                 $member->user()->update([
-                    'name'=>$data['full_name'],
-                    'email'=>$data['email'],
+                    'name' => $data['full_name'],
+                    'email' => $data['email'],
                 ]);
-            }else{
+            } else {
                 $user = User::create([
-                    'email'=>$data['email'],
-                    'name'=>$data['full_name'],
-                    'password'=>Hash::make(Str::random(8)),
+                    'email' => $data['email'],
+                    'name' => $data['full_name'],
+                    'password' => Hash::make(Str::random(8)),
                 ]);
                 $data['user_id'] = $user->id;
             }
-            
+
             $member->update($data);
 
             $member->batches()->sync($data['batch_id']);
@@ -81,7 +81,7 @@ class MemberRepository implements MemberRepositoryInterface
         });
     }
 
-    public function countActiveMembers():int
+    public function countActiveMembers(): int
     {
         return Member::has('batches')->count();
     }

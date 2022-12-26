@@ -21,6 +21,7 @@ class Report extends Controller
         $data['presents'] = $presentRepository->all();
         $data['batches'] = $batchRepository->all();
         $data['statuses'] = Present::STATUSES;
+
         return view('datatables.schedule-report', $data);
     }
 }

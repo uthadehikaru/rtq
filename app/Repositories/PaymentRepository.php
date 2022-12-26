@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
-use Illuminate\Database\Query\Builder;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {

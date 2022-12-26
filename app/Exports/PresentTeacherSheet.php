@@ -20,8 +20,8 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function query()
     {
-        return Present::with(['schedule','user','schedule.batch'])
-        ->where('type','teacher')
+        return Present::with(['schedule', 'user', 'schedule.batch'])
+        ->where('type', 'teacher')
         ->latest();
     }
 
@@ -41,9 +41,10 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function map($present): array
     {
-        $isBadal = "";
-        if($present->type=='teacher')
-            $isBadal = $present->is_badal?'Ya':'Tidak';
+        $isBadal = '';
+        if ($present->type == 'teacher') {
+            $isBadal = $present->is_badal ? 'Ya' : 'Tidak';
+        }
 
         return [
             $present->schedule->scheduled_at->format('Y-m-d H:i'),

@@ -21,26 +21,26 @@ class CreateSchedule extends Controller
     {
         $request->validate([
             'batch_id' => 'required',
-            'badal'=>'required',
+            'badal' => 'required',
         ]);
 
-        try{
+        try {
             $schedule_at = Carbon::now();
             $data = [
-                'scheduled_at'=>$schedule_at,
-                'start_at'=>$schedule_at->format('H:i'),
-                'batch_id'=>$request->get('batch_id'),
-                'is_badal'=>$request->get('badal'),
+                'scheduled_at' => $schedule_at,
+                'start_at' => $schedule_at->format('H:i'),
+                'batch_id' => $request->get('batch_id'),
+                'is_badal' => $request->get('badal'),
             ];
             $schedule = $scheduleRepository->create($data);
 
-
-            if($schedule)
+            if ($schedule) {
                 return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');
-    
-            return back()->with('error','gagal membuat jadwal');
-        }catch(Exception $ex){
-            return back()->with('error',$ex->getMessage());
+            }
+
+            return back()->with('error', 'gagal membuat jadwal');
+        } catch(Exception $ex) {
+            return back()->with('error', $ex->getMessage());
         }
     }
 }

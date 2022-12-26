@@ -115,6 +115,9 @@ jQuery(document).ready(function() {
                             <a class="dropdown-item" href="{{ route('payments.export') }}">
                                 <i class="la la-share"></i> @lang('Export to Excel')
                             </a>
+                            <a class="dropdown-item" href="{{ route('periods.export') }}">
+                                <i class="la la-download"></i> @lang('Export Per Period')
+                            </a>
                         </div>
                     </div>
                 </div>

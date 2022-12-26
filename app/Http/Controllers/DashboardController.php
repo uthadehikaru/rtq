@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Repositories\BatchRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\PresentRepository;
 use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
-use App\Repositories\PresentRepository;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -28,10 +28,10 @@ class DashboardController extends Controller
             $data = array_merge($data, $this->admin($paymentRepository, $batchRepository, $memberRepository));
             $view = 'dashboard-admin';
         } elseif ($user->hasRole('teacher')) {
-            $data = array_merge($data, $this->teacher($batchRepository, 
-            $teacherRepository, 
-            $scheduleRepository,
-            $presentRepository));
+            $data = array_merge($data, $this->teacher($batchRepository,
+                $teacherRepository,
+                $scheduleRepository,
+                $presentRepository));
             $view = 'dashboard-teacher';
         }
 

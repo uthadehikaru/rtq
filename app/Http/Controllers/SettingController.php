@@ -14,7 +14,8 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $data['homepage'] = Setting::where('group','homepage')->get()->keyBy('name');
+        $data['homepage'] = Setting::where('group', 'homepage')->get()->keyBy('name');
+
         return view('forms.setting', $data);
     }
 
@@ -37,19 +38,18 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'banner'=>'',
+            'banner' => '',
             'tagline' => '',
             'about' => '',
             'instagram' => '',
             'whatsapp' => '',
         ]);
 
-        foreach($data as $name=>$value)
-        {
-            Setting::where('name',$name)->update(['payload'=>json_encode($value)]);
+        foreach ($data as $name => $value) {
+            Setting::where('name', $name)->update(['payload' => json_encode($value)]);
         }
 
-        return back()->with('message','Pengaturan disimpan');
+        return back()->with('message', 'Pengaturan disimpan');
     }
 
     /**

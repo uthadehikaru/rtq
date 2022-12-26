@@ -37,7 +37,7 @@ class BatchController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'description' => '',
-            'teacher_ids'=>'required',
+            'teacher_ids' => 'required',
         ]);
 
         $data['course_id'] = $course_id;
@@ -67,7 +67,7 @@ class BatchController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'description' => '',
-            'teacher_ids'=>'required',
+            'teacher_ids' => 'required',
         ]);
 
         $batchRepository->update($batch_id, $data);

@@ -4,13 +4,12 @@ namespace App\Repositories;
 
 use App\Interfaces\PresentRepositoryInterface;
 use App\Models\Present;
-use Laravel\Ui\Presets\Preset;
 
 class PresentRepository implements PresentRepositoryInterface
 {
     public function all()
     {
-        return Present::with('schedule','user','schedule.batch')->latest()->get();
+        return Present::with('schedule', 'user', 'schedule.batch')->latest()->get();
     }
 
     public function getBySchedule($schedule_id)

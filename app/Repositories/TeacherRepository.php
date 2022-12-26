@@ -54,6 +54,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
         $teacher->batches()->sync($data['batch_ids']);
         DB::commit();
+
         return $teacher;
     }
 
@@ -65,6 +66,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         $teacher->user()->update(['email' => $data['email']]);
         $teacher->batches()->sync($data['batch_ids']);
         DB::commit();
+
         return $teacher;
     }
 

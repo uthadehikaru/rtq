@@ -25,7 +25,7 @@ return new class extends Migration
             $table->dropColumn(['member_id']);
 
             $table->foreignId('user_id')->constrained();
-            $table->enum('type',['teacher','member']);
+            $table->enum('type', ['teacher', 'member']);
         });
     }
 };

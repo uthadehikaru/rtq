@@ -26,32 +26,32 @@ class SettingSeeder extends Seeder
             'maks_izin',
         ];
 
-        foreach(Course::TYPES as $type){
+        foreach (Course::TYPES as $type) {
             $settings[] = Str::snake($type);
         }
 
-        foreach($settings as $setting){
+        foreach ($settings as $setting) {
             Setting::firstOrCreate([
-                'group'=>'salary',
-                'name'=>$setting,
-            ],[
-                'payload'=>0,
+                'group' => 'salary',
+                'name' => $setting,
+            ], [
+                'payload' => 0,
             ]);
         }
 
         $homepage = [
-            'banner'=>'',
-            'tagline'=>"Hidup Indah, Penuh Berkah Bersama Al-Qur'an",
-            'about'=>'Tentang kami',
-            'instagram'=>'https://instagram.com/rumahtartilquran_mahmud',
-            'whatsapp'=>'',
+            'banner' => '',
+            'tagline' => "Hidup Indah, Penuh Berkah Bersama Al-Qur'an",
+            'about' => 'Tentang kami',
+            'instagram' => 'https://instagram.com/rumahtartilquran_mahmud',
+            'whatsapp' => '',
         ];
-        foreach($homepage as $name => $value){
+        foreach ($homepage as $name => $value) {
             Setting::firstOrCreate([
-                'group'=>'homepage',
-                'name'=>$name,
-            ],[
-                'payload'=>$value,
+                'group' => 'homepage',
+                'name' => $name,
+            ], [
+                'payload' => $value,
             ]);
         }
     }

@@ -21,6 +21,6 @@ class Setting extends Model
 
     public function scopeGroup($query, $group)
     {
-        return $query->where('group',$group);
+        return $query->where('group', $group);
     }
 }

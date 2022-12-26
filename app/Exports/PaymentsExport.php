@@ -70,6 +70,6 @@ class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithE
      */
     public function collection()
     {
-        return PaymentDetail::with('payment', 'member','member.batches','period')->orderByDesc('period_id')->get();
+        return PaymentDetail::with('payment', 'member', 'member.batches', 'period')->orderByDesc('period_id')->get();
     }
 }

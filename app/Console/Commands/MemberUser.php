@@ -34,17 +34,17 @@ class MemberUser extends Command
         $members = Member::all();
         $count = 0;
         $bar = $this->output->createProgressBar($members->count());
- 
+
         $bar->start();
-        foreach($members as $member){
-            if(!$member->user){
+        foreach ($members as $member) {
+            if (! $member->user) {
                 $user = User::firstOrCreate([
-                    'name'=>$member->full_name,
-                ],[
-                    'email'=>$member->full_name.'@rtqmaisuro.id',
-                    'password'=>Hash::make(Str::random(8)),
+                    'name' => $member->full_name,
+                ], [
+                    'email' => $member->full_name.'@rtqmaisuro.id',
+                    'password' => Hash::make(Str::random(8)),
                 ]);
-                $member->update(['user_id'=>$user->id]);
+                $member->update(['user_id' => $user->id]);
                 $user->assignRole('member');
                 $count++;
                 $bar->advance();
@@ -52,6 +52,7 @@ class MemberUser extends Command
         }
         $bar->finish();
         $this->info('Created '.$count.' of '.$members->count());
+
         return Command::SUCCESS;
     }
 }

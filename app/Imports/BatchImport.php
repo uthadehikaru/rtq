@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Batch;
 use App\Models\Course;
-use App\Models\Teacher;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -21,7 +20,7 @@ class BatchImport implements ToModel, WithHeadingRow
         return Batch::firstOrCreate([
             'name' => $row['name'],
             'course_id' => $course->id,
-        ],[
+        ], [
             'description' => $row['description'],
         ]);
     }

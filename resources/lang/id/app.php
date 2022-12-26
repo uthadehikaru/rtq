@@ -11,16 +11,16 @@ return [
         'type' => [
             'teacher' => 'Pengajar',
             'member' => 'Anggota',
-        ]
+        ],
     ],
     'payment' => [
         'status' => [
             'new' => 'Belum dikonfirmasi',
             'paid' => 'Lunas',
-        ]
+        ],
     ],
     'gender' => [
         'male' => 'Laki-laki',
         'female' => 'Perempuan',
-    ]
+    ],
 ];

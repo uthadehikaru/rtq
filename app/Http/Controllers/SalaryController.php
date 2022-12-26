@@ -17,7 +17,7 @@ class SalaryController extends Controller
         return view('datatables.salary', $data);
     }
 
-    public function create() 
+    public function create()
     {
         $data['title'] = __('New Salary');
         $data['salary'] = null;
@@ -25,11 +25,11 @@ class SalaryController extends Controller
         return view('forms.salary', $data);
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         (new SalaryService())->store($request->all());
 
-        return redirect()->route('salaries.index')->with('message','Created');
+        return redirect()->route('salaries.index')->with('message', 'Created');
     }
 
     public function edit($id)
@@ -40,14 +40,14 @@ class SalaryController extends Controller
         return view('forms.salary', $data);
     }
 
-    public function update(Request $request, $id) 
+    public function update(Request $request, $id)
     {
         (new SalaryService())->update($id, $request->all());
 
-        return redirect()->route('salaries.index')->with('message','Updated');
+        return redirect()->route('salaries.index')->with('message', 'Updated');
     }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         (new SalaryService())->delete($id);
 
