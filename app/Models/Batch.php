@@ -13,6 +13,12 @@ class Batch extends Model
         'name',
         'description',
         'course_id',
+        'start_time',
+        'place',
+    ];
+
+    protected $casts = [
+        'start_time'=>'datetime',
     ];
 
     public function course()

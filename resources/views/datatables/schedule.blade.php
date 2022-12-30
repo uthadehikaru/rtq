@@ -120,7 +120,8 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Scheduled at')</th>
                     <th title="Field #2">@lang('Batch')</th>
-                    <th title="Field #2">@lang('Durasi')</th>
+                    <th title="Field #2">@lang('Pengajar')</th>
+                    <th title="Field #2">@lang('Waktu & Tempat')</th>
                     <th title="Field #4">@lang('Daftar Peserta')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -130,7 +131,8 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $schedule->scheduled_at->format('d/m/y h:i') }}</td>
                         <td>{{ $schedule->batch->course->name }} {{ $schedule->batch->name }}</td>
-                        <td>{{ $schedule->start_at?->format('H:i') }} - {{ $schedule->end_at?->format('H:i') }}</td>
+                        <td>{{ $schedule->teachers()?->pluck('name')->join(', ') }}</td>
+                        <td>{{ $schedule->start_at?->format('H:i') }} - {{ $schedule->end_at?->format('H:i') }} @ {{ $schedule->place }}</td>
                         <td>{{ $schedule->presents_count }}</td>
                         <td>
                             @role('administrator')

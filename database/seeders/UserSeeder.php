@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Hash;
 use Illuminate\Database\Seeder;
-use Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::create([
+        $user = \App\Models\User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@rtqmaisuro.id',
+        ],[
             'email_verified_at' => now(),
             'password' => Hash::make('bismillah'),
             'remember_token' => Str::random(10),

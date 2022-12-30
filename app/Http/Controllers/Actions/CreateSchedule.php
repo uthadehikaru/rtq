@@ -25,10 +25,7 @@ class CreateSchedule extends Controller
         ]);
 
         try {
-            $schedule_at = Carbon::now();
             $data = [
-                'scheduled_at' => $schedule_at,
-                'start_at' => $schedule_at->format('H:i'),
                 'batch_id' => $request->get('batch_id'),
                 'is_badal' => $request->get('badal'),
             ];

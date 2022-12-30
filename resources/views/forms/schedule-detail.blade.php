@@ -14,6 +14,9 @@
         <x-validation />
 
         <!--begin::Portlet-->
+        <!--begin::Form-->
+        <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
+        @csrf
         <div class="kt-portlet">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
@@ -28,15 +31,13 @@
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
+                            <button type="submit" class="btn btn-primary">@lang('Submit')</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="kt-portlet__body">
-                <!--begin::Form-->
-                <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
-                    @csrf
                 <div class="row">
                         <div class="col-12 col-md-4">
                             <label>Mulai Kelas</label>
@@ -48,13 +49,18 @@
                             <input type="time" class="form-control"
                             name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}" />
                         </div>
+                        <div class="col-12 col-md-4">
+                            <label>Tempat</label>
+                            <input type="text" class="form-control"
+                            name="place"  value="{{ $schedule->place }}" />
+                        </div>
                     </div>
                     <h3 class="mt-2">{{Auth::user()->name}} {{ $teacherPresent->is_badal?'(Guru Pengganti)':'' }}</h3>
                     @if($canUpdate)
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <label>Status</label>
-                            <select class="form-control" name="status[{{$teacherPresent->id}}]">
+                            <select class="form-control" name="status[{{$teacherPresent->id}}]" disabled>
                                 @foreach($statuses as $status)
                                 <option value="{{ $status }}" @selected($status==$teacherPresent->status)>@lang('app.present.status.'.$status)</option>
                                 @endforeach
@@ -126,11 +132,11 @@
                         <button type="submit" class="btn btn-primary">@lang('Submit')</button>
                         <button type="reset" class="btn btn-secondary">@lang('Cancel')</button>
                     </div>
-                </form>
-
-                <!--end::Form-->
             </div>
         </div>
+        </form>
+
+        <!--end::Form-->
         
 
         <form class="kt-form" method="POST" action="{{ route('teacher.schedules.presents.add', $schedule->id) }}">

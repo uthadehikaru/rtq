@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\ScheduleRepositoryInterface;
+use App\Models\Batch;
 use App\Models\Present;
 use App\Models\Schedule;
 use Carbon\Carbon;
@@ -44,15 +45,27 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     {
         DB::beginTransaction();
 
-        $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::parse($data['scheduled_at'])->startOfDay())
+        $batch = Batch::find($data['batch_id']);
+
+        $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::now()->startOfDay())
         ->where('batch_id', $data['batch_id'])
         ->first();
 
-        if ($schedule) {
-            throw new Exception('Jadwal halaqoh '.$schedule->batch->name.' untuk tanggal '.$schedule->scheduled_at->format('d M Y').' sudah ada');
-        }
+        if(!$schedule){
+            $data['scheduled_at'] = Carbon::now()->startOfDay();
+            $data['start_at'] = $batch->start_time;
+            $data['place'] = $batch->place;
+            $schedule = Schedule::create($data);
 
-        $schedule = Schedule::create($data);
+            foreach ($schedule->batch->members as $member) {
+                Present::create([
+                    'schedule_id' => $schedule->id,
+                    'user_id' => $member->user_id,
+                    'status' => 'absent',
+                    'type' => 'member',
+                ]);
+            }
+        }
 
         Present::create([
             'schedule_id' => $schedule->id,
@@ -62,15 +75,6 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             'attended_at' => Carbon::now()->format('H:i'),
             'is_badal' => $data['is_badal'],
         ]);
-
-        foreach ($schedule->batch->members as $member) {
-            Present::create([
-                'schedule_id' => $schedule->id,
-                'user_id' => $member->user_id,
-                'status' => 'absent',
-                'type' => 'member',
-            ]);
-        }
 
         DB::commit();
 

@@ -36,6 +36,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
                 $query->orderBy('name');
             },
         ])
+        ->whereHas('batches')
         ->orderBy('full_name');
     }
 

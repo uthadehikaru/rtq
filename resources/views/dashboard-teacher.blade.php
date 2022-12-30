@@ -72,7 +72,7 @@
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">
-                                @lang('Mulai Kelas')
+                                @lang('Absen Kelas')
                             </h3>
                         </div>
                     </div>
@@ -81,18 +81,18 @@
                         @csrf
                         <div class="kt-portlet__body">
                             <div class="alert alert-primary" role="alert">
-                                <p>Saat menekan tombol "Mulai", kelas akan otomatis tercatat dimulai saat ini
-                                    dan waktu hadir pengajar mengikut waktu mulai kelas.
-                                    pastikan memulai kelas sesuai jadwal yang telah ditentukan</p>
+                                <p>PERHATIAN : Jam mulai kelas mengikuti jadwal yang sudah ditentukan.
+                                    Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai setelah kelas selesai.
+                                </p>
                             </div>
                             <div class="kt-section kt-section--first">
                                 <div class="form-group">
                                     <label>@lang('Batch')</label>
-                                    <select class="form-control" name="batch_id" required>
+                                    <select class="form-control kt-select2" name="batch_id" required>
                                         <option value="">@lang('Select Batch')</option>
                                         @foreach($batches as $batch)
                                             <option value="{{ $batch->id }}">{{ $batch->course->name }}
-                                                {{ $batch->name }}</option>
+                                                {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} - {{ $batch->place }})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -169,3 +169,12 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function () {    
+    $('.kt-select2').select2({
+        placeholder: "@lang('Pilih Halaqoh')"
+    });
+});
+</script>
+@endpush
