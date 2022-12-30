@@ -37,6 +37,8 @@ class BatchController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'description' => '',
+            'start_time' => '',
+            'place' => '',
             'teacher_ids' => 'required',
         ]);
 
@@ -67,6 +69,8 @@ class BatchController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'description' => '',
+            'start_time' => '',
+            'place' => '',
             'teacher_ids' => 'required',
         ]);
 

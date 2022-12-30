@@ -122,6 +122,7 @@ jQuery(document).ready(function () {
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Schedule')</th>
+                    <th title="Field #2">@lang('Waktu & Tempat')</th>
                     <th title="Field #2">@lang('Teacher')</th>
                     <th title="Field #2">@lang('Members')</th>
                     <th title="Field #2">@lang('Action')</th>
@@ -133,6 +134,7 @@ jQuery(document).ready(function () {
                         <td>{{ $batch->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $batch->name }}</td>
                         <td>{{ $batch->description }}</td>
+                        <td>{{ $batch->start_time?->format('H:i') }} - {{ $batch->place }}</td>
                         <td>
                             {{ $batch->teachers->implode('name', ' , ') }}
                         </td>

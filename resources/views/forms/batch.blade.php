@@ -59,6 +59,18 @@
                             >
                         </div>
                         <div class="form-group">
+                            <label>@lang('Jam Mulai')</label>
+                            <input type="time" name="start_time" class="form-control"
+                            value="{{ old('start_time', $batch?$batch->start_time?->format('H:i:s'):'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Tempat')</label>
+                            <input type="text" name="place" class="form-control" placeholder="@lang('Nama Tempat')"
+                            value="{{ old('place', $batch?$batch->place:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
                             <label>@lang('Pengajar')</label>
                             <select class="form-control" id="teacher" name="teacher_ids[]" multiple>
                                 @foreach ($teachers as $id=>$name)

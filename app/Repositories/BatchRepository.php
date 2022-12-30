@@ -98,6 +98,8 @@ class BatchRepository implements BatchRepositoryInterface
                 'course_id' => $data['course_id'],
                 'name' => $data['name'],
                 'description' => $data['description'],
+                'start_time' => $data['start_time'],
+                'place' => $data['place'],
             ]);
 
             $batch->teachers()->sync($data['teacher_ids']);
