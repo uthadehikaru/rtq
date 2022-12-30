@@ -45,7 +45,7 @@
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
                             <label>@lang('Halaqoh')</label>
-                            <select name="batch_id" class="form-control">
+                            <select name="batch_id[]" class="form-control kt-select2" multiple>
                                 <option value="">-- Inaktif --</option>
                                 @foreach ($batches as $batch)
                                     <option value="{{ $batch->id }}" @selected($member && $member->batch() && $member->batch()->id==$batch->id)>{{ $batch->course->name }} - {{ $batch->name }} ({{ $batch->members_count }} anggota)</option>
@@ -153,3 +153,12 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function () {    
+    $('.kt-select2').select2({
+        placeholder: "@lang('Pilih Halaqoh')"
+    });
+});
+</script>
+@endpush

@@ -133,12 +133,9 @@ jQuery(document).ready(function() {
                         <td>@lang(Str::title($member->gender))</td>
                         <td>{{ $member->school }} {{ $member->class }}</td>
                         <td>{{ $member->level }}</td>
-                        <td>{{ $member->batch()?$member->batch()->name:'Inaktif' }}</td>
+                        <td>{{ $member->batches->count()?$member->batches->pluck('name')->join(', '):'Inaktif' }}</td>
                         <td>
                             @if($member->batch())
-                            <a href="{{ route('members.change', $member->id) }}" class="text-info">
-                                <i class="la la-refresh"></i> @lang('Change :name',['name'=>__('Batch')])
-                            </a>
                             <a href="{{ route('members.switch', $member->id) }}" class="text-info">
                                 <i class="la la-user"></i> @lang('Switch Member')
                             </a>

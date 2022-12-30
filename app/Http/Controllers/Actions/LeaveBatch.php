@@ -19,13 +19,7 @@ class LeaveBatch extends Controller
         MemberRepositoryInterface $memberRepository, $id)
     {
         $member = $memberRepository->find($id);
-        $batch = $member->batch();
-        if ($batch) {
-            $member->batches()->detach($batch->id);
-
-            return to_route('members.index')->with('message', __('Left Successfully'));
-        }
-
-        return back();
+        $member->batches()->detach();
+        return to_route('members.index')->with('message', __('Left Successfully'));
     }
 }

@@ -40,7 +40,7 @@
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
                             <label>@lang('Member')</label>
-                            <select name="member_id" class="form-control" required>
+                            <select name="member_id" class="form-control kt-select2" required>
                                 <option value="">--- @lang('Select :name',['name'=>__('Member')]) ---</option>
                                 @foreach($members as $otherMember)
                                     @if($otherMember->id==$member->id)
@@ -67,3 +67,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function () {    
+    $('.kt-select2').select2({
+        placeholder: "@lang('Pilih Anggota')"
+    });
+});
+</script>
+@endpush

@@ -40,7 +40,7 @@
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
                             <label>@lang('Batch')</label>
-                            <select name="batch_id" class="form-control" required>
+                            <select name="batch_id" class="form-control kt-select2" required>
                                 <option value="">--- @lang('Select :name',['name'=>__('Batch')]) ---</option>
                                 @foreach($batches as $batch)
                                     @if($member->batch() && $batch->id==$member->batch()->id)
@@ -67,3 +67,12 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function () {    
+    $('.kt-select2').select2({
+        placeholder: "@lang('Pilih Halaqoh')"
+    });
+});
+</script>
+@endpush

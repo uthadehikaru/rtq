@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Actions;
 use App\Http\Controllers\Controller;
 use App\Interfaces\MemberRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SwitchBatch extends Controller
 {
@@ -19,11 +20,16 @@ class SwitchBatch extends Controller
         MemberRepositoryInterface $memberRepository, $id)
     {
         $member = $memberRepository->find($id);
-        $batch_id = $member->batch()->id;
         $otherMember = $memberRepository->find($request->member_id);
-        $otherBatch_id = $otherMember->batch()->id;
-        $member->batches()->sync($otherBatch_id);
-        $otherMember->batches()->sync($batch_id);
+        $otherBatch = $otherMember->batch();
+        $memberBatch = $member->batch();
+        
+        DB::beginTransaction();
+        $member->batches()->detach($memberBatch);
+        $member->batches()->attach($otherBatch);
+        $otherMember->batches()->detach($otherBatch);
+        $otherMember->batches()->attach($memberBatch);
+        DB::commit();
 
         return to_route('members.index')->with('message', __('Switched Successfully'));
     }
