@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PeriodRepositoryInterface;
 use App\Models\Period;
+use Illuminate\Support\Collection;
 
 class PeriodRepository implements PeriodRepositoryInterface
 {
@@ -40,5 +41,17 @@ class PeriodRepository implements PeriodRepositoryInterface
     public function update($id, array $data)
     {
         return Period::whereId($id)->update($data);
+    }
+
+    public function PaymentPerPeriod():Collection
+    {
+        return Period::latest('start_date')
+        ->take(12)
+        ->whereHas('paymentDetails')
+        ->withCount(['paymentDetails as lunas_count'=>function($query){
+            $query->whereRelation('payment','status','paid');
+        },'paymentDetails as new_count'=>function($query){
+            $query->whereRelation('payment','status','new');
+        }])->get();
     }
 }

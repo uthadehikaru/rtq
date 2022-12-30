@@ -74,5 +74,194 @@
             </div>
         </div>
     </div>
+    <div class="col-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-widget14">
+                <div class="kt-widget14__header kt-margin-b-30">
+                    <h3 class="kt-widget14__title">
+                        Pembayaran 12 periode terakhir
+                    </h3>
+                    <span class="kt-widget14__desc">
+                    <span class="kt-bg-success px-2 text-white">lunas</span>
+                    <span class="kt-bg-primary px-2 text-white">baru</span>
+                    </span>
+                </div>
+                <div class="kt-widget14__chart" style="height:120px;">
+                    <canvas id="kt_chart_period_payment"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-widget14">
+                <div class="kt-widget14__header">
+                    <h3 class="kt-widget14__title">
+                        Presentase Peserta Halaqoh
+                    </h3>
+                    <span class="kt-widget14__desc">
+                        {{ config('app.name') }}
+                    </span>
+                </div>
+                <div class="kt-widget14__content">
+                    <div class="kt-widget14__chart">
+                        <div class="kt-widget14__stat">{{ $members }}</div>
+                        <canvas id="kt_chart_batch_member" style="height: 140px; width: 140px;"></canvas>
+                    </div>
+                    <div class="kt-widget14__legends">
+                        @foreach($types as $color=>$type)
+                        <div class="kt-widget14__legend">
+                            <span class="kt-widget14__bullet kt-bg-{{$color}}"></span>
+                            <span class="kt-widget14__stats">{{ round($courses[$type]/$members*100) }}% {{ $type }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--end:: Widgets/Profit Share-->
+    </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+jQuery(document).ready(function() {
+    
+    var chartContainer = KTUtil.getByID('kt_chart_period_payment');
+
+    if (!chartContainer) {
+        return;
+    }
+
+    var chartData = {
+        labels: [
+                @foreach ($periods as $period)
+                    "{{ $period->name }}",
+                @endforeach],
+        datasets: [{
+            //label: 'Dataset 1',
+            backgroundColor: KTApp.getStateColor('success'),
+            data: [
+                @foreach ($periods as $period)
+                    "{{ $period->lunas_count }}",
+                @endforeach
+            ]
+        }, {
+            //label: 'Dataset 2',
+            backgroundColor: KTApp.getStateColor('primary'),
+            data: [
+                @foreach ($periods as $period)
+                    "{{ $period->new_count }}",
+                @endforeach
+            ]
+        }]
+    };
+
+    var chart = new Chart(chartContainer, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            title: {
+                display: false,
+            },
+            tooltips: {
+                intersect: false,
+                mode: 'nearest',
+                xPadding: 10,
+                yPadding: 10,
+                caretPadding: 10
+            },
+            legend: {
+                display: false
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            barRadius: 4,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    gridLines: false,
+                    stacked: true
+                }],
+                yAxes: [{
+                    display: false,
+                    stacked: true,
+                    gridLines: false
+                }]
+            },
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+
+    var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+    };
+
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    @foreach ($courses as $type=>$total)
+                        {{ round($total/$members*100) }},
+                    @endforeach
+                ],
+                backgroundColor: [
+                    KTApp.getStateColor('success'),
+                    KTApp.getStateColor('danger'),
+                    KTApp.getStateColor('primary')
+                ]
+            }],
+            labels: [
+                'Tahsin Anak',
+                'Tahsin Dewasa',
+                'Tahsin Balita'
+            ]
+        },
+        options: {
+            cutoutPercentage: 75,
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false,
+                position: 'top',
+            },
+            title: {
+                display: false,
+                text: 'Technology'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            tooltips: {
+                enabled: true,
+                intersect: false,
+                mode: 'nearest',
+                bodySpacing: 5,
+                yPadding: 10,
+                xPadding: 10, 
+                caretPadding: 0,
+                displayColors: false,
+                backgroundColor: KTApp.getStateColor('brand'),
+                titleFontColor: '#ffffff', 
+                cornerRadius: 4,
+                footerSpacing: 0,
+                titleSpacing: 0
+            }
+        }
+    };
+
+    var ctx = KTUtil.getByID('kt_chart_batch_member').getContext('2d');
+    var myDoughnut = new Chart(ctx, config);
+});
+</script>
+@endpush

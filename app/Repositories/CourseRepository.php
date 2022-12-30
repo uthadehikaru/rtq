@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CourseRepositoryInterface;
 use App\Models\Course;
+use App\Models\Member;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -40,5 +41,17 @@ class CourseRepository implements CourseRepositoryInterface
     public function update($id, array $data)
     {
         return Course::whereId($id)->update($data);
+    }
+
+    public function membersPerType($types)
+    {
+        $data = [];
+        foreach($types as $type){
+            $count = Member::whereHas('batches', function($query)use($type){
+                $query->whereRelation('course','type',$type);
+            })->count();
+            $data[$type] = $count;
+        }
+        return $data;
     }
 }
