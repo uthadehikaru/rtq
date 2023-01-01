@@ -31,8 +31,13 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             'nama lengkap',
             'nama panggilan',
             'jenis kelamin',
+            'email',
+            'notelp',
             'level',
             'sekolah',
+            'kelas',
+            'alamat',
+            'kodepos',
             'halaqoh',
         ];
     }
@@ -44,9 +49,14 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             $member->full_name,
             $member->short_name,
             __('app.gender.'.$member->gender),
+            $member->email,
+            $member->phone,
             $member->level,
             $member->school,
-            $member->batch() ? $member->batch()->name : 'Inaktif',
+            $member->class,
+            $member->address,
+            $member->postcode,
+            $member->batches->count() ? $member->batches->pluck('name')->join(',') : 'Inaktif',
         ];
     }
 }
