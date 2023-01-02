@@ -73,7 +73,7 @@ jQuery(document).ready(function() {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $total }} @lang('Presents') - @lang('Schedule') {{ $schedule->batch->name }} {{ $schedule->scheduled_at->format('d M Y H:i') }}
+                {{ $total }} @lang('Presents') - @lang('Schedule') {{ $schedule->batch->name }} {{ $schedule->scheduled_at->format('d M Y') }} {{ $schedule->start_at->format('H:i') }}
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
