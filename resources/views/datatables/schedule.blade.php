@@ -129,7 +129,7 @@ jQuery(document).ready(function() {
             <tbody>
                 @foreach($schedules as $schedule)
                     <tr>
-                        <td>{{ $schedule->scheduled_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $schedule->scheduled_at->format('d M Y') }} {{ $schedule->start_at?->format('H:i') }}</td>
                         <td>{{ $schedule->batch->course->name }} {{ $schedule->batch->name }}</td>
                         <td>{{ $schedule->teachers()?->pluck('name')->join(', ') }}</td>
                         <td>{{ $schedule->start_at?->format('H:i') }} - {{ $schedule->end_at?->format('H:i') }} @ {{ $schedule->place }}</td>

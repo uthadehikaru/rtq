@@ -20,6 +20,7 @@ class LeaveBatch extends Controller
     {
         $member = $memberRepository->find($id);
         $member->batches()->detach();
+
         return to_route('members.index')->with('message', __('Left Successfully'));
     }
 }

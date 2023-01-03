@@ -18,7 +18,7 @@ class Batch extends Model
     ];
 
     protected $casts = [
-        'start_time'=>'datetime',
+        'start_time' => 'datetime',
     ];
 
     public function course()

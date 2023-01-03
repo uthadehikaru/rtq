@@ -22,7 +22,7 @@ class UpdateSchedule extends Controller
         $attended_ats = $request->get('attended_at');
         $schedule = $scheduleRepository->find($schedule_id);
 
-        $schedule->update($request->only(['end_at','place']));
+        $schedule->update($request->only(['end_at', 'place']));
 
         foreach ($schedule->presents as $present) {
             if (isset($statuses[$present->id])) {

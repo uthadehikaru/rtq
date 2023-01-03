@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Present;
 use App\Models\Schedule;
 use App\Repositories\BatchRepository;
 use App\Repositories\ScheduleRepository;
@@ -57,8 +56,11 @@ class ScheduleController extends Controller
         ScheduleRepository $scheduleRepository
     ) {
         $request->validate([
-            'scheduled_at' => 'required',
+            'scheduled_at' => 'required|date',
             'batch_id' => 'required',
+            'start_at' => 'required',
+            'teacher_ids' => 'required',
+            'place' => 'required',
         ]);
 
         $schedule = $request->all();
@@ -109,22 +111,14 @@ class ScheduleController extends Controller
         $id,
     ) {
         $data = $request->validate([
-            'scheduled_at' => 'required',
+            'scheduled_at' => 'required|date',
             'batch_id' => 'required',
-            'start_at' => '',
+            'start_at' => 'required',
             'end_at' => '',
+            'place' => 'required',
         ]);
         $schedule = $scheduleRepository->find($id);
         $schedule->update($data);
-
-        if ($request->get('teacher_id') > 0) {
-            Present::firstOrCreate([
-                'user_id' => $request->get('teacher_id'),
-                'schedule_id' => $schedule->id,
-            ], [
-                'status' => 'absent',
-            ]);
-        }
 
         return redirect()->route('schedules.index')->with('message', __('Updated Successfully'));
     }

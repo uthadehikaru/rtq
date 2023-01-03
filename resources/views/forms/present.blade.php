@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label>@lang('Attended At') (Isi jika status hadir)</label>
                             <input type="time" name="attended_at" class="form-control"
-                            value="{{ old('attended_at', $present?$present->attended_at->format('H:i'):'') }}">
+                            value="{{ old('attended_at', $present?$present->attended_at?->format('H:i'):'') }}">
                         </div>
                         <div class="form-group">
                             <label>Guru Pengganti</label>

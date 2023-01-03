@@ -43,15 +43,15 @@ class PeriodRepository implements PeriodRepositoryInterface
         return Period::whereId($id)->update($data);
     }
 
-    public function PaymentPerPeriod():Collection
+    public function PaymentPerPeriod(): Collection
     {
         return Period::latest('start_date')
         ->take(12)
         ->whereHas('paymentDetails')
-        ->withCount(['paymentDetails as lunas_count'=>function($query){
-            $query->whereRelation('payment','status','paid');
-        },'paymentDetails as new_count'=>function($query){
-            $query->whereRelation('payment','status','new');
+        ->withCount(['paymentDetails as lunas_count' => function ($query) {
+            $query->whereRelation('payment', 'status', 'paid');
+        }, 'paymentDetails as new_count' => function ($query) {
+            $query->whereRelation('payment', 'status', 'new');
         }])->get();
     }
 }

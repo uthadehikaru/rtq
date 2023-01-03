@@ -52,7 +52,7 @@ class DashboardController extends Controller
         $data['batches'] = $batchRepository->count();
         $data['members'] = $memberRepository->countActiveMembers();
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
-        $data['types'] = ['success'=>'Tahsin Anak', 'danger'=>'Tahsin Dewasa', 'primary'=>'Tahsin Balita'];
+        $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];
         $data['courses'] = (new CourseRepository)->membersPerType($data['types']);
         //dd($data);
 

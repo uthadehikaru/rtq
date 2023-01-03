@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         $user = \App\Models\User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@rtqmaisuro.id',
-        ],[
+        ], [
             'email_verified_at' => now(),
             'password' => Hash::make('bismillah'),
             'remember_token' => Str::random(10),

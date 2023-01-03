@@ -25,6 +25,7 @@ class MemberFactory extends Factory
             'gender' => $gender,
             'address' => $this->faker->address(),
             'postcode' => $this->faker->postcode(),
+            'user_id' => 0,
         ];
     }
 }

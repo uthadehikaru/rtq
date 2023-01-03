@@ -23,7 +23,7 @@ class SwitchBatch extends Controller
         $otherMember = $memberRepository->find($request->member_id);
         $otherBatch = $otherMember->batch();
         $memberBatch = $member->batch();
-        
+
         DB::beginTransaction();
         $member->batches()->detach($memberBatch);
         $member->batches()->attach($otherBatch);

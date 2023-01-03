@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->string('place')->nullable();
         });
-        
+
         Schema::table('schedules', function (Blueprint $table) {
             $table->string('place')->nullable();
         });
@@ -31,9 +31,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('batches', function (Blueprint $table) {
-            $table->dropColumn(['start_time','place']);
+            $table->dropColumn(['start_time', 'place']);
         });
-        
+
         Schema::table('schedules', function (Blueprint $table) {
             $table->dropColumn(['place']);
         });

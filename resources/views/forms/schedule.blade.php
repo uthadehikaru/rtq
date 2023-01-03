@@ -45,8 +45,8 @@
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
                             <label>@lang('Scheduled At')</label>
-                            <input type="datetime-local" name="scheduled_at" class="form-control"
-                            value="{{ old('scheduled_at', $schedule?$schedule->scheduled_at:'') }}"
+                            <input type="date" name="scheduled_at" class="form-control"
+                            value="{{ old('scheduled_at', $schedule?$schedule->scheduled_at->format('Y-m-d'):'') }}"
                             required>
                         </div>
                         <div class="form-group">
@@ -54,28 +54,32 @@
                             <select class="form-control" name="batch_id" required>
                                 <option value="">@lang('Select Batch')</option>
                                 @foreach($batches as $batch)
-                                <option value="{{ $batch->id }}" {{ $schedule && $schedule->batch_id==$batch->id?'selected':'' }}>{{ $batch->course->name }} {{ $batch->name }}</option>
+                                <option value="{{ $batch->id }}" {{ $schedule && $schedule->batch_id==$batch->id?'selected':'' }}>{{ $batch->course->name }} {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>@lang('Switch Teacher')</label>
-                            <select class="form-control" name="teacher_id">
-                                <option value="">Tidak ada pengganti</option>
+                            <label>@lang('Teacher')</label>
+                            <select class="form-control kt-select2" name="teacher_ids[]" multiple>
                                 @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->user_id }}" {{ $schedule && $schedule->teacher_id==$teacher->id?'selected':'' }}>{{ $teacher->name }}</option>
+                                <option value="{{ $teacher->user_id }}" {{ $schedule && $schedule->teachers()->find($teacher->id)?'selected':'' }}>{{ $teacher->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>@lang('Start At')</label>
+                            <label>@lang('Mulai')</label>
                             <input type="time" name="start_at" class="form-control"
-                            value="{{ old('start_at', $schedule?$schedule->start_at:'') }}">
+                            value="{{ old('start_at', $schedule?$schedule->start_at?->format('H:i'):'') }}">
                         </div>
                         <div class="form-group">
-                            <label>@lang('End At')</label>
+                            <label>@lang('Selesai')</label>
                             <input type="time" name="end_at" class="form-control"
-                            value="{{ old('start_at', $schedule?$schedule->end_at:'') }}">
+                            value="{{ old('start_at', $schedule?$schedule->end_at?->format('H:i'):'') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Tempat')</label>
+                            <input type="text" name="place" class="form-control"
+                            value="{{ old('place', $schedule?$schedule->place:'') }}">
                         </div>
                     </div>
                 </div>
@@ -94,3 +98,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    $('.kt-select2').select2({
+        placeholder: 'Pilih Pengajar',
+    });
+});
+</script>
+@endpush

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\ScheduleRepository;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -29,7 +28,7 @@ class CreateSchedule extends Controller
                 'batch_id' => $request->get('batch_id'),
                 'is_badal' => $request->get('badal'),
             ];
-            $schedule = $scheduleRepository->create($data);
+            $schedule = $scheduleRepository->createByTeacher($data);
 
             if ($schedule) {
                 return to_route('teacher.schedules.detail', $schedule->id)->with('message', 'Jadwal berhasil disimpan');

@@ -7,7 +7,6 @@ use App\Models\Batch;
 use App\Models\Present;
 use App\Models\Schedule;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -45,13 +44,48 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     {
         DB::beginTransaction();
 
+        $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::now()->startOfDay())
+        ->where('batch_id', $data['batch_id'])
+        ->first();
+
+        if (! $schedule) {
+            $schedule = Schedule::create($data);
+
+            foreach ($schedule->batch->members as $member) {
+                Present::create([
+                    'schedule_id' => $schedule->id,
+                    'user_id' => $member->user_id,
+                    'status' => 'absent',
+                    'type' => 'member',
+                ]);
+            }
+        }
+
+        foreach ($data['teacher_ids'] as $teacher_id) {
+            Present::create([
+                'schedule_id' => $schedule->id,
+                'user_id' => $teacher_id,
+                'status' => 'present',
+                'type' => 'teacher',
+            ]);
+        }
+
+        DB::commit();
+
+        return $schedule;
+    }
+
+    public function createByTeacher(array $data)
+    {
+        DB::beginTransaction();
+
         $batch = Batch::find($data['batch_id']);
 
         $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::now()->startOfDay())
         ->where('batch_id', $data['batch_id'])
         ->first();
 
-        if(!$schedule){
+        if (! $schedule) {
             $data['scheduled_at'] = Carbon::now()->startOfDay();
             $data['start_at'] = $batch->start_time;
             $data['place'] = $batch->place;

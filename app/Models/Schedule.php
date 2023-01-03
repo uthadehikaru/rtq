@@ -34,12 +34,12 @@ class Schedule extends Model
         return $this->hasMany(Present::class);
     }
 
-    public function teachers():Collection
+    public function teachers(): Collection
     {
-        $teachers = $this->presents->filter(function($present,$key){
-            return $present->type=='teacher';
+        $teachers = $this->presents->filter(function ($present, $key) {
+            return $present->type == 'teacher';
         });
-        
+
         $users = $teachers->pluck('user_id');
 
         return User::whereIn('id', $users)->get();

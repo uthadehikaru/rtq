@@ -19,7 +19,7 @@ class PeriodSeeder extends Seeder
         while ($date->year == 2022) {
             Period::firstOrCreate([
                 'name' => $date->format('M Y'),
-            ],[
+            ], [
                 'start_date' => $date->startOfMonth()->format('Y-m-d'),
                 'end_date' => $date->endOfMonth()->format('Y-m-d'),
             ]);
