@@ -20,6 +20,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Teacher;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViolationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('salaries', SalaryController::class);
         Route::resource('salaries.details', SalaryDetailController::class);
         Route::resource('settings', SettingController::class);
+        Route::resource('violations', ViolationController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
     Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {

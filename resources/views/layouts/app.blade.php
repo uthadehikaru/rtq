@@ -109,6 +109,11 @@
                                             <span class="kt-menu__link-text">@lang('Salaries')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('violations*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('violations.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Pelanggaran')</span>
+                                        </a>
+                                    </li>
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('setting*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('settings.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Pengaturan')</span>
