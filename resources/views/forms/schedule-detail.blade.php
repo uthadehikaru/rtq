@@ -31,7 +31,12 @@
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
-                            <button type="submit" class="btn btn-primary">@lang('Submit')</button>
+                            @if(!$schedule->end_at)
+                            <a href="{{ route('teacher.schedules.close', $schedule->id) }}" class="btn btn-success btn-icon-sm"
+                            onclick="return confirm('Apakah anda yakin ingin menutup kelas?')">
+                                tutup Kelas
+                            </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -47,7 +52,10 @@
                         <div class="col-12 col-md-4">
                             <label>Selesai Kelas</label>
                             <input type="time" class="form-control"
-                            name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}" />
+                            name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}"  disabled="disabled" />
+                            @if(!$schedule->end_at)
+                            <span class="text-help">Saat "Tutup Kelas", Jam selesai akan otomatis tercatat</span>
+                            @endif
                         </div>
                         <div class="col-12 col-md-4">
                             <label>Tempat</label>
