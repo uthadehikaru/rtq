@@ -47,6 +47,12 @@
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
+                            <label>@lang('Kode')</label>
+                            <input type="text" name="code" class="form-control" placeholder="@lang('Masukkan kode kelas')"
+                            value="{{ old('code', $batch?$batch->code:'') }}"
+                            required>
+                        </div>
+                        <div class="form-group">
                             <label>@lang('Name')</label>
                             <input type="text" name="name" class="form-control" placeholder="@lang('Enter Batch Name')"
                             value="{{ old('name', $batch?$batch->name:'') }}"

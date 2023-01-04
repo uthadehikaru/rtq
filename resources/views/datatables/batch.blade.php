@@ -120,6 +120,7 @@ jQuery(document).ready(function () {
             <thead>
                 <tr>
                     <th title="Field #1">@lang('Created at')</th>
+                    <th title="Field #2">@lang('Kode')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Schedule')</th>
                     <th title="Field #2">@lang('Waktu & Tempat')</th>
@@ -132,6 +133,7 @@ jQuery(document).ready(function () {
                 @foreach($batches as $batch)
                     <tr>
                         <td>{{ $batch->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $batch->code }}</td>
                         <td>{{ $batch->name }}</td>
                         <td>{{ $batch->description }}</td>
                         <td>{{ $batch->start_time?->format('H:i') }} - {{ $batch->place }}</td>

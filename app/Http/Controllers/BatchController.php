@@ -35,6 +35,7 @@ class BatchController extends Controller
     public function store(BatchRepository $batchRepository, Request $request, $course_id)
     {
         $data = $request->validate([
+            'code' => 'required',
             'name' => 'required',
             'description' => '',
             'start_time' => '',
@@ -67,6 +68,7 @@ class BatchController extends Controller
     public function update(CourseRepository $courseRepository, BatchRepository $batchRepository, Request $request, $course_id, $batch_id)
     {
         $data = $request->validate([
+            'code' => 'required',
             'name' => 'required',
             'description' => '',
             'start_time' => '',

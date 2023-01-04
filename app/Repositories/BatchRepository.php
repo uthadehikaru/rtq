@@ -96,6 +96,7 @@ class BatchRepository implements BatchRepositoryInterface
         return DB::transaction(function () use ($data) {
             $batch = Batch::create([
                 'course_id' => $data['course_id'],
+                'code' => $data['code'],
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'start_time' => $data['start_time'],

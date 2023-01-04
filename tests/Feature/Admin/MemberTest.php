@@ -17,7 +17,7 @@ beforeEach(function () {
         UserSeeder::class,
     ]);
 
-    Member::factory(10)->has(User::factory());
+    Member::factory(10)->for(User::factory())->create();
 });
 
 it('admin can see member', function () {
@@ -30,10 +30,10 @@ it('admin can see member', function () {
 
 it('admin can create member', function () {
     $admin = User::find(1);
-    $batches = Batch::factory(2)->has(Course::factory());
+    $batch = Batch::factory()->for(Course::factory())->create();
     actingAs($admin);
     $data = [
-        'batch_id' => $batches->pluck('id'),
+        'batch_id' => $batch->id,
         'full_name' => 'MEmber 1',
         'short_name' => 'member',
         'email' => 'member@gmail.com',
@@ -47,5 +47,6 @@ it('admin can create member', function () {
     ];
 
     $response = $this->post(route('members.store'), $data);
+    $response->assertStatus(302)->assertSessionHas('message');
     $response->assertRedirect(route('members.index'));
 });
