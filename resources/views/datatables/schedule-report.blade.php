@@ -150,7 +150,7 @@
                             <tr>
                                 <td>{{ $present->schedule->scheduled_at->format('d/m/y h:i') }}
                                 </td>
-                                <td>{{ $present->schedule->batch->name }}</td>
+                                <td>{{ $present->schedule->batch->code }} - {{ $present->schedule->batch->name }}</td>
                                 <td>{{ $present->user->name }}</td>
                                 <td>@lang('app.present.type.'.$present->type)</td>
                                 <td>@lang('app.present.status.'.$present->status)

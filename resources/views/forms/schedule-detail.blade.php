@@ -60,7 +60,7 @@
                         <div class="col-12 col-md-4">
                             <label>Tempat</label>
                             <input type="text" class="form-control"
-                            name="place"  value="{{ $schedule->place }}" />
+                            name="place"  value="{{ $schedule->place }}" required />
                         </div>
                     </div>
                     <h3 class="mt-2">{{Auth::user()->name}} {{ $teacherPresent->is_badal?'(Guru Pengganti)':'' }}</h3>
@@ -75,7 +75,7 @@
                             </select>
                         </div>
                         <div class="col-12 col-md-4">
-                            <label>Jam Kehadiran (diisi jika hadir)</label>
+                            <label>Jam Kehadiran</label>
                             <input type="time" class="form-control"
                             name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}"  disabled="disabled" />
                         </div>

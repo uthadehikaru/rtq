@@ -29,6 +29,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
     {
         return [
             'tanggal',
+            'kode',
             'halaqoh',
             'durasi',
             'nama',
@@ -36,18 +37,17 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
             'Jam Kehadiran',
             'keterangan',
             'badal',
+            'pengajar halaqoh',
         ];
     }
 
     public function map($present): array
     {
-        $isBadal = '';
-        if ($present->type == 'teacher') {
-            $isBadal = $present->is_badal ? 'Ya' : 'Tidak';
-        }
+        $isBadal = $present->is_badal ? 'Ya' : 'Tidak';
 
         return [
             $present->schedule->scheduled_at->format('Y-m-d H:i'),
+            $present->schedule->batch->code,
             $present->schedule->batch->name,
             $present->schedule->start_at?->format('H:i').' - '.$present->schedule->end_at?->format('H:i'),
             $present->user->name,
@@ -55,6 +55,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $present->attended_at?->format('H:i'),
             $present->description,
             $isBadal,
+            $present->is_badal?$present->schedule->batch->teachers->pluck('name')->join(', '):'',
         ];
     }
 }

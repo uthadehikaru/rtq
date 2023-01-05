@@ -29,6 +29,7 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
     {
         return [
             'tanggal',
+            'kode',
             'halaqoh',
             'durasi',
             'nama',
@@ -41,6 +42,7 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
     {
         return [
             $present->schedule->scheduled_at->format('Y-m-d H:i'),
+            $present->schedule->batch->kode,
             $present->schedule->batch->name,
             $present->schedule->start_at?->format('H:i').' - '.$present->schedule->end_at?->format('H:i'),
             $present->user->name,

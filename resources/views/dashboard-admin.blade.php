@@ -112,7 +112,7 @@
                         @foreach($types as $color=>$type)
                         <div class="kt-widget14__legend">
                             <span class="kt-widget14__bullet kt-bg-{{$color}}"></span>
-                            <span class="kt-widget14__stats">{{ round($courses[$type]/$members*100) }}% {{ $type }}</span>
+                            <span class="kt-widget14__stats">{{ $courses[$type] }} {{ $type }}</span>
                         </div>
                         @endforeach
                     </div>
@@ -221,9 +221,9 @@ jQuery(document).ready(function() {
                 ]
             }],
             labels: [
-                'Tahsin Anak',
-                'Tahsin Dewasa',
-                'Tahsin Balita'
+                'Tahsin Anak (%)',
+                'Tahsin Dewasa (%)',
+                'Tahsin Balita (%)'
             ]
         },
         options: {
