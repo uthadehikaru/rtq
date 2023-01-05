@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
 use App\Repositories\ScheduleRepository;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -22,6 +24,11 @@ class CreateSchedule extends Controller
             'batch_id' => 'required',
             'badal' => 'required',
         ]);
+
+        $batch = Batch::find($request->get('batch_id'));
+        if(Carbon::now()->lessThan($batch->start_time->subMinutes(5)))
+            return back()->with('error', 'Absen halaqoh '.$batch->name.' hanya bisa dilakukan 5 menit sebelum jam '.$batch->start_time->format('H:i'));
+
 
         try {
             $data = [

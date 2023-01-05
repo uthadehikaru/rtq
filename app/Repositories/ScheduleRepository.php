@@ -7,6 +7,7 @@ use App\Models\Batch;
 use App\Models\Present;
 use App\Models\Schedule;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -86,7 +87,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         ->first();
 
         if (! $schedule) {
-            $data['scheduled_at'] = Carbon::now()->startOfDay();
+            $data['scheduled_at'] = CarbonImmutable::now()->setTime($batch->start_time->hour,$batch->start_time->minute,0);
             $data['start_at'] = $batch->start_time;
             $data['place'] = $batch->place;
             $schedule = Schedule::create($data);
@@ -106,7 +107,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             'user_id' => Auth::id(),
             'status' => 'present',
             'type' => 'teacher',
-            'attended_at' => Carbon::now()->format('H:i'),
+            'attended_at' => CarbonImmutable::now()->format('H:i'),
             'is_badal' => $data['is_badal'],
         ]);
 

@@ -81,8 +81,13 @@
                         @csrf
                         <div class="kt-portlet__body">
                             <div class="alert alert-primary" role="alert">
-                                <p>PERHATIAN : Jam mulai kelas mengikuti jadwal yang sudah ditentukan.
-                                    Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai setelah kelas selesai.
+                                <p>PERHATIAN </p>
+                                <ul>
+                                    <li>Absen hanya bisa dilakukan 5 menit sebelum kelas dimulai.</li>
+                                    <li>Toleransi telat maksimal 5 menit setelah kelas dimulai kecuali sudah konfirmasi</li>
+                                    <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
+                                    <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>
+                                </ul>
                                 </p>
                             </div>
                             <div class="kt-section kt-section--first">
@@ -92,7 +97,7 @@
                                         <option value="">@lang('Select Batch')</option>
                                         @foreach($batches as $batch)
                                             <option value="{{ $batch->id }}">{{ $batch->course->name }}
-                                                {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} - {{ $batch->place }})</option>
+                                                {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
                                         @endforeach
                                     </select>
                                 </div>
