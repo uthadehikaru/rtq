@@ -46,6 +46,8 @@ class MemberController extends Controller
             'class' => '',
             'level' => '',
             'batch_id' => '',
+            'registration_date'=>'',
+            'status'=>'',
         ]);
 
         $memberRepository->create($data);
@@ -78,6 +80,8 @@ class MemberController extends Controller
             'class' => '',
             'level' => '',
             'batch_id' => '',
+            'registration_date'=>'',
+            'status'=>'',
         ]);
 
         $memberRepository->update($member_id, $data);

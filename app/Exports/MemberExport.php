@@ -28,6 +28,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
     {
         return [
             'id',
+            'tgl masuk',
             'nama lengkap',
             'nama panggilan',
             'jenis kelamin',
@@ -36,6 +37,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             'level',
             'sekolah',
             'kelas',
+            'status',
             'alamat',
             'kodepos',
             'halaqoh',
@@ -46,6 +48,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
     {
         return [
             $member->id,
+            $member->registration_date?->format('Y-m-d'),
             $member->full_name,
             $member->short_name,
             __('app.gender.'.$member->gender),
@@ -54,6 +57,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             $member->level,
             $member->school,
             $member->class,
+            $member->status,
             $member->address,
             $member->postcode,
             $member->batches->count() ? $member->batches->pluck('name')->join(',') : 'Inaktif',

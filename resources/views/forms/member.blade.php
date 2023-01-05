@@ -44,6 +44,12 @@
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
+                            <label>@lang('Tanggal Masuk')</label>
+                            <input type="date" name="registration_date" class="form-control"
+                            value="{{ old('registration_date', $member?$member->registration_date?->format('Y-m-d'):'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
                             <label>@lang('Halaqoh')</label>
                             <select name="batch_id[]" class="form-control kt-select2" multiple>
                                 <option value="">-- Inaktif --</option>
@@ -123,6 +129,12 @@
                                     <span></span>
                                 </label>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Status Bebas SPP')</label>
+                            <input type="text" name="status" class="form-control"
+                            value="{{ old('status', $member?$member->status:'') }}"
+                            >
                         </div>
                         <div class="form-group">
                             <label>@lang('Address')</label>

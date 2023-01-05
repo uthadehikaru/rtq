@@ -122,6 +122,8 @@ jQuery(document).ready(function() {
                     <th title="Field #4">@lang('School')</th>
                     <th title="Field #4">@lang('Level')</th>
                     <th title="Field #4">@lang('Batch')</th>
+                    <th title="Field #4">@lang('Tgl Masuk')</th>
+                    <th title="Field #4">@lang('Status')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -134,6 +136,8 @@ jQuery(document).ready(function() {
                         <td>{{ $member->school }} {{ $member->class }}</td>
                         <td>{{ $member->level }}</td>
                         <td>{{ $member->batches->count()?$member->batches->pluck('name')->join(', '):'Inaktif' }}</td>
+                        <td>{{ $member->registration_date?->format('d M Y') }}</td>
+                        <td>{{ $member->status }}</td>
                         <td>
                             @if($member->batch())
                             <a href="{{ route('members.switch', $member->id) }}" class="text-info">

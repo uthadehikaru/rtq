@@ -21,6 +21,12 @@ class Member extends Model
         'class',
         'level',
         'user_id',
+        'registration_date',
+        'status',
+    ];
+
+    protected $casts = [
+        'registration_date'=>'date',
     ];
 
     public function batches()
