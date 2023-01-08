@@ -198,6 +198,9 @@ jQuery(document).ready(function() {
                                 <i class="la la-check"></i> @lang('Confirm')
                             </a>
                             @endif
+                            <a href="{{ route('payments.edit', $payment->id) }}" class="text-warning">
+                                <i class="la la-pencil"></i> @lang('Edit')
+                            </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $payment->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>

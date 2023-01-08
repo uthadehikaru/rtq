@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PaymentsExport;
+use App\Models\Payment;
 use App\Models\Period;
 use App\Repositories\BatchRepository;
 use App\Repositories\PaymentRepository;
@@ -88,6 +89,35 @@ class PaymentController extends Controller
         DB::commit();
 
         return back()->with('message', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $data['payment'] = Payment::findOrFail($id);
+        return view('forms.payment', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'amount'=>'required|numeric',
+        ]);
+
+        Payment::find($id)->update($data);
+        return to_route('payments.index')->with('message','Data pembayaran berhasil dipernaharui');
     }
 
     public function destroy(PaymentRepository $paymentRepository, $payment_id)
