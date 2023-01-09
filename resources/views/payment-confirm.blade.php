@@ -1,22 +1,15 @@
 @extends('layouts.guest')
 @push('scripts')
-<script src="{{ asset('assets/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('assets/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script> -->
 <script type="text/javascript">
+
 var KTSelect2 = function() {
 	var tagify = function() {
         // Init autocompletes
         var toEl = document.getElementById('kt_tagify_members');
         var tagifyTo = new Tagify(toEl, {
             delimiters: ", ", // add new tags when a comma or a space character is entered
-            whitelist: [
-				@foreach($members as $member)
-                {
-					id:'{{ $member->member_id }}',
-					value : '{{ $member->full_name }}',
-					email : 'Halaqoh {{ $member->batch }}',
-				}, 
-				@endforeach
-			],
+    		userInput: false,
             templates: {
                 dropdownItem : function(tagData){
                     try{
@@ -39,24 +32,54 @@ var KTSelect2 = function() {
                 classname : "color-blue",
                 enabled   : 1,
                 maxItems  : 10
-            }
+            },
+			callbacks: {
+    			"add": (e) => {
+					var members = $('tag').length
+					var periods = $('.kt-select-period').select2('data').length
+					$('#total').val(members*periods*120000)
+				},
+    			"remove": (e) => {
+					var members = $('tag').length
+					var periods = $('.kt-select-period').select2('data').length
+					$('#total').val(members*periods*120000)
+				},
+			},
+            whitelist: [
+				@foreach($members as $member)
+                {
+					id:'{{ $member->member_id }}',
+					value : '{{ $member->full_name }}',
+					email : 'Halaqoh {{ $member->batch }}',
+				}, 
+				@endforeach
+			],
         });
+
     }
+
+
     // Private functions
     var demos = function() {
 		$('.kt-select-period').select2({
 			placeholder: "@lang('Pilih Periode Pembayaran')"
 		});
 
-		function formatRepo(repo) {
-		if (repo.loading) return repo.text;
-		var markup = repo.full_name+" Halaqoh "+repo.name;
-		return markup;
-	}
+		$('select').on('select2:close', function (evt) {
+			var members = $('tag').length
+			var periods = $(this).select2('data').length
+			$('#total').val(members*periods*120000)
+		});
 
-	function formatRepoSelection(repo) {
-		return repo.full_name || repo.text;
-	}
+		function formatRepo(repo) {
+			if (repo.loading) return repo.text;
+			var markup = repo.full_name+" Halaqoh "+repo.name;
+			return markup;
+		}
+
+		function formatRepoSelection(repo) {
+			return repo.full_name || repo.text;
+		}
 
 	}
 	// Public functions
@@ -132,7 +155,7 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Total Transfer</label>
 												<div class="col-9">
-													<input class="form-control" id="total" type="number" name="total" value="0">
+													<input class="form-control" id="total" type="number" name="total" value="{{ old('total', 0) }}">
 												</div>
 											</div>
 											<div class="form-group row">

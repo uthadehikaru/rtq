@@ -47,9 +47,14 @@ class PaymentController extends Controller
         $data = $request->validate([
             'period_ids' => 'required',
             'members' => 'required',
-            'total' => 'numeric|min:1',
+            'total' => 'numeric|min:120000',
             'attachment' => '',
         ]);
+
+        $total = $paymentRepository->calculate($data);
+        if($data['total']<$total)
+            return back()->with('error', 'Minimal nominal pembayaran '.$total);
+
         DB::beginTransaction();
 
         $members = json_decode($data['members'], true);
