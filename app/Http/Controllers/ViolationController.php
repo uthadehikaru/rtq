@@ -24,10 +24,13 @@ class ViolationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $data['violation'] = null;
-        $data['users'] = User::role('member')->orderBy('name')->get();
+        $data['type'] = $request->get('type', 'member');
+        $data['users'] = User::role($data['type'])
+        ->orderBy('name')
+        ->get();
         return view('forms.violation', $data);
     }
 
@@ -43,6 +46,7 @@ class ViolationController extends Controller
             'violated_date'=>'required|date',
             'user_id'=>'required|exists:users,id',
             'description'=>'required',
+            'type'=>'required',
             'amount'=>'',
             'paid_at'=>'',
         ]);
@@ -71,7 +75,8 @@ class ViolationController extends Controller
     public function edit($id)
     {
         $data['violation'] = Violation::findOrFail($id);
-        $data['users'] = User::role('member')->orderBy('name')->get();
+        $data['type'] = $data['violation']->type;
+        $data['users'] = User::role($data['violation']->type)->orderBy('name')->get();
         return view('forms.violation', $data);
     }
 
@@ -90,6 +95,7 @@ class ViolationController extends Controller
             'description'=>'required',
             'amount'=>'',
             'paid_at'=>'',
+            'type'=>'required',
         ]);
 
         Violation::find($id)->update($data);

@@ -16,6 +16,7 @@ class Violation extends Model
         'description',
         'amount',
         'paid_at',
+        'type',
     ];
 
     protected $casts = [

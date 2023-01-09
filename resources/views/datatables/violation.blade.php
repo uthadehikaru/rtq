@@ -73,9 +73,13 @@ jQuery(document).ready(function() {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{ route('violations.create') }}" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('violations.create', ['type'=>'member']) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
-                        @lang('Tambah Data')
+                        @lang('Anggota')
+                    </a>
+                    <a href="{{ route('violations.create', ['type'=>'teacher']) }}" class="btn btn-primary btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @lang('Pengajar')
                     </a>
                 </div>
             </div>
@@ -111,6 +115,7 @@ jQuery(document).ready(function() {
                 <tr>
                     <th title="Field #1">@lang('Tanggal')</th>
                     <th title="Field #2">@lang('Nama')</th>
+                    <th title="Field #2">@lang('Status')</th>
                     <th title="Field #3">@lang('Pelanggaran')</th>
                     <th title="Field #4">@lang('Iqob')</th>
                     <th title="Field #5">@lang('Diselesaikan')</th>
@@ -122,6 +127,7 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $violation->violated_date->format('d M Y') }}</td>
                         <td>{{ $violation->user->name }}</td>
+                        <td>@lang($violation->type)</td>
                         <td>{{ $violation->description }}</td>
                         <td>{{ $violation->amount }}</td>
                         <td>{{ $violation->paid_at?->format('d M Y') }}</td>
