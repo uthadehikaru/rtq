@@ -10,7 +10,7 @@ class PaymentRepository implements PaymentRepositoryInterface
 {
     public function all()
     {
-        return Payment::with(['details.member', 'details.batch'])->get();
+        return Payment::latest()->with(['details.member', 'details.batch'])->get();
     }
 
     public function count()

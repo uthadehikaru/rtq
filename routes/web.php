@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PresentController;
 use App\Http\Controllers\Salary\ConfigSalary;
@@ -56,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
         Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
         Route::resource('payments', PaymentController::class);
+        Route::resource('payments.details', PaymentDetailController::class)->only(['index','destroy']);
         Route::resource('teachers', TeacherController::class);
         Route::get('schedules/reports', Schedule\Report::class)->name('schedules.report');
         Route::get('schedules/export', Schedule\Export::class)->name('schedules.export');

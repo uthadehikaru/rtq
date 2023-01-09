@@ -7,6 +7,7 @@
     "Address":"Alamat",
     "All":"Semua",
     "Amount":"Nominal",
+    "Are you sure?":"Apakah anda yakin?",
     "at :time":"pada :time",
     "Attachment":"Lampiran",
     "Attended At":"Jam Kehadiran",
@@ -29,6 +30,7 @@
     "D":"",
     "Dashboard": "Beranda",
     "Delete":"Hapus",
+    "Deleted Successfully":"Berhasil dihapus",
     "Description":"Deskripsi",
 
     "E":"",

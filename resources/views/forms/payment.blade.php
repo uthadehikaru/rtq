@@ -49,6 +49,24 @@
                             value="{{ old('amount', $payment?$payment->amount:0) }}"
                             required>
                         </div>
+                        <table class="table">
+                            <tr>
+                                <th>Period</th>
+                                <th>Member</th>
+                                <th>Aksi</th>
+                            </tr>
+                            @foreach ($payment->details as $detail)
+                                <tr>
+                                    <td>{{ $detail->period->name }}</td>
+                                    <td>{{ $detail->member->full_name }}</td>
+                                    <td>
+                                        <a href="javascript:;" class="text-danger delete" data-id="{{ $detail->id }}">
+                                            <i class="la la-trash"></i> @lang('Delete')
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">
@@ -72,6 +90,28 @@ jQuery(document).ready(function () {
     $('.kt-select2').select2({
         placeholder: "@lang('Pilih Anggota')"
     });
+
+    $(document).on("click", ".delete", function() { 
+        if(confirm("@lang('Are you sure?')")) {
+            var id= $(this).data('id');
+            var url = "{{ route('payments.details.index', $payment->id) }}";
+            var dltUrl = url+"/"+id;
+            $.ajax({
+                url: dltUrl,
+                type: "DELETE",
+                cache: false,
+                data:{
+                    _token:'{{ csrf_token() }}'
+                },
+                success: function(dataResult){
+                    if(dataResult.statusCode==200){
+                        alert('@lang('Deleted Successfully')');
+                        location.reload(true);
+                    }
+                }
+            });
+        }
+	});
 });
 </script>
 @endpush
