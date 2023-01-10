@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@rtqmaisuro.id',
         ], [
-            'id'=>1,
+            'id' => 1,
             'email_verified_at' => now(),
             'password' => Hash::make('bismillah'),
             'remember_token' => Str::random(10),

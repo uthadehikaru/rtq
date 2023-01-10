@@ -26,7 +26,7 @@ class Member extends Model
     ];
 
     protected $casts = [
-        'registration_date'=>'date',
+        'registration_date' => 'date',
     ];
 
     public function batches()

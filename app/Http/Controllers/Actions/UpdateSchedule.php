@@ -25,9 +25,10 @@ class UpdateSchedule extends Controller
         $schedule->update($request->only(['end_at', 'place']));
 
         foreach ($schedule->presents as $present) {
-            if (isset($statuses[$present->id]) || $present->user_id==Auth::id()) {
-                if(isset($statuses[$present->id]))
+            if (isset($statuses[$present->id]) || $present->user_id == Auth::id()) {
+                if (isset($statuses[$present->id])) {
                     $present->status = $statuses[$present->id];
+                }
                 $present->description = $descriptions[$present->id];
                 if ($present->isDirty()) {
                     $present->save();

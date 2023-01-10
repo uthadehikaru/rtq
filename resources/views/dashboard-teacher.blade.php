@@ -83,7 +83,7 @@
                             <div class="alert alert-primary" role="alert">
                                 <p>PERHATIAN </p>
                                 <ul>
-                                    <li>Absen hanya bisa dilakukan 5 menit sebelum kelas dimulai.</li>
+                                    <li>Absen hanya bisa dilakukan saat jam kelas dimulai.</li>
                                     <li>Toleransi telat maksimal 5 menit setelah kelas dimulai kecuali sudah konfirmasi</li>
                                     <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
                                     <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>

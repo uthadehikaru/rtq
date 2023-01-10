@@ -55,7 +55,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $present->attended_at?->format('H:i'),
             $present->description,
             $isBadal,
-            $present->is_badal?$present->schedule->batch->teachers->pluck('name')->join(', '):'',
+            $present->is_badal ? $present->schedule->batch->teachers->pluck('name')->join(', ') : '',
         ];
     }
 }

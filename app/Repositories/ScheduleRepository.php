@@ -87,7 +87,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         ->first();
 
         if (! $schedule) {
-            $data['scheduled_at'] = CarbonImmutable::now()->setTime($batch->start_time->hour,$batch->start_time->minute,0);
+            $data['scheduled_at'] = CarbonImmutable::now()->setTime($batch->start_time->hour, $batch->start_time->minute, 0);
             $data['start_at'] = $batch->start_time;
             $data['place'] = $batch->place;
             $schedule = Schedule::create($data);

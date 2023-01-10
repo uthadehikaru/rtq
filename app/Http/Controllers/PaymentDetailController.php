@@ -15,7 +15,6 @@ class PaymentDetailController extends Controller
      */
     public function index(Payment $payment)
     {
-        
     }
 
     /**

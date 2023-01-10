@@ -52,8 +52,9 @@ class PaymentController extends Controller
         ]);
 
         $total = $paymentRepository->calculate($data);
-        if($data['total']<$total)
+        if ($data['total'] < $total) {
             return back()->with('error', 'Minimal nominal pembayaran '.$total);
+        }
 
         DB::beginTransaction();
 
@@ -105,6 +106,7 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $data['payment'] = Payment::findOrFail($id);
+
         return view('forms.payment', $data);
     }
 
@@ -118,11 +120,12 @@ class PaymentController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'amount'=>'required|numeric',
+            'amount' => 'required|numeric',
         ]);
 
         Payment::find($id)->update($data);
-        return to_route('payments.index')->with('message','Data pembayaran berhasil dipernaharui');
+
+        return to_route('payments.index')->with('message', 'Data pembayaran berhasil dipernaharui');
     }
 
     public function destroy(PaymentRepository $paymentRepository, $payment_id)

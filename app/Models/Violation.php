@@ -20,11 +20,11 @@ class Violation extends Model
     ];
 
     protected $casts = [
-        'violated_date'=>'date',
-        'paid_at'=>'date',
+        'violated_date' => 'date',
+        'paid_at' => 'date',
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

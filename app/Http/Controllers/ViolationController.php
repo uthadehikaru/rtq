@@ -16,6 +16,7 @@ class ViolationController extends Controller
     public function index()
     {
         $data['violations'] = Violation::latest('violated_date')->get();
+
         return view('datatables.violation', $data);
     }
 
@@ -31,6 +32,7 @@ class ViolationController extends Controller
         $data['users'] = User::role($data['type'])
         ->orderBy('name')
         ->get();
+
         return view('forms.violation', $data);
     }
 
@@ -43,16 +45,17 @@ class ViolationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'violated_date'=>'required|date',
-            'user_id'=>'required|exists:users,id',
-            'description'=>'required',
-            'type'=>'required',
-            'amount'=>'',
-            'paid_at'=>'',
+            'violated_date' => 'required|date',
+            'user_id' => 'required|exists:users,id',
+            'description' => 'required',
+            'type' => 'required',
+            'amount' => '',
+            'paid_at' => '',
         ]);
 
         Violation::create($data);
-        return to_route('violations.index')->with('message','Data pelanggaran berhasil ditambahkan');
+
+        return to_route('violations.index')->with('message', 'Data pelanggaran berhasil ditambahkan');
     }
 
     /**
@@ -77,6 +80,7 @@ class ViolationController extends Controller
         $data['violation'] = Violation::findOrFail($id);
         $data['type'] = $data['violation']->type;
         $data['users'] = User::role($data['violation']->type)->orderBy('name')->get();
+
         return view('forms.violation', $data);
     }
 
@@ -90,16 +94,17 @@ class ViolationController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'violated_date'=>'required|date',
-            'user_id'=>'required|exists:users,id',
-            'description'=>'required',
-            'amount'=>'',
-            'paid_at'=>'',
-            'type'=>'required',
+            'violated_date' => 'required|date',
+            'user_id' => 'required|exists:users,id',
+            'description' => 'required',
+            'amount' => '',
+            'paid_at' => '',
+            'type' => 'required',
         ]);
 
         Violation::find($id)->update($data);
-        return to_route('violations.index')->with('message','Data pelanggaran berhasil dipernaharui');
+
+        return to_route('violations.index')->with('message', 'Data pelanggaran berhasil dipernaharui');
     }
 
     /**

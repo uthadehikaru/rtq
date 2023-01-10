@@ -48,8 +48,9 @@ class MemberRepository implements MemberRepositoryInterface
             $data['user_id'] = $user->id;
             $member = Member::create($data);
 
-            if(isset($data['batch_id']))
+            if (isset($data['batch_id'])) {
                 $member->batches()->sync($data['batch_id']);
+            }
 
             return $member;
         });
@@ -76,8 +77,9 @@ class MemberRepository implements MemberRepositoryInterface
 
             $member->update($data);
 
-            if(isset($data['batch_id']))
+            if (isset($data['batch_id'])) {
                 $member->batches()->sync($data['batch_id']);
+            }
 
             return $member;
         });

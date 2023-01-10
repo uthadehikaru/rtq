@@ -4,7 +4,6 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Batch;
 use App\Models\Course;
-use App\Models\Member;
 use App\Models\Teacher;
 use App\Models\User;
 use Database\Seeders\PermissionSeeder;
@@ -37,10 +36,10 @@ test('admin can create batch', function () {
         'course_id' => $course->id,
         'code' => 'test',
         'name' => 'Test',
-        'description'=>'Desc',
-        'start_time'=>'07:00',
-        'place'=>'somewhere',
-        'teacher_ids'=>[$teacher->id],
+        'description' => 'Desc',
+        'start_time' => '07:00',
+        'place' => 'somewhere',
+        'teacher_ids' => [$teacher->id],
     ];
 
     $response = $this->post(route('courses.batches.store', $course->id), $data);

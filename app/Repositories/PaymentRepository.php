@@ -62,7 +62,7 @@ class PaymentRepository implements PaymentRepositoryInterface
         return PaymentDetail::create($data);
     }
 
-    public function calculate($data):int
+    public function calculate($data): int
     {
         $total = 0;
         $members = json_decode($data['members'], true);
