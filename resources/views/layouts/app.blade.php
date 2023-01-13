@@ -26,6 +26,8 @@
 		<link href="{{ asset('assets/css/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/skins/brand/light.css') }}" rel="stylesheet" type="text/css" />
 
+		@stack('styles')
+
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
 	</head>
@@ -79,41 +81,64 @@
                                         </a>
                                     </li>
 									@role('administrator')
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teachers*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('teachers.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Teachers')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('members.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Members')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('course*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('courses.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Courses')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('schedules*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('schedules.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Schedules')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('payments*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('payments.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Payments')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('salaries*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('salaries.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Salaries')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('violations*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('violations.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Pelanggaran')</span>
-                                        </a>
-                                    </li>
+									<li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel  {{ \Request::is('educations*')?'kt-menu__item--active':'' }} kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+										<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+											<span class="kt-menu__link-text">Pendidikan</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+										</a>
+										<div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+											<ul class="kt-menu__subnav">
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('teachers.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Pengajar</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('members.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Anggota</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('courses.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Kelas</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('schedules.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Jadwal</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel  {{ \Request::is('finances*')?'kt-menu__item--active':'' }} kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+										<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+											<span class="kt-menu__link-text">Keuangan</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+										</a>
+										<div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+											<ul class="kt-menu__subnav">
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('payments.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Pembayaran</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('salaries.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Bisyaroh</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('violations.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Pelanggaran</span>
+													</a>
+												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('transactions.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Uang Kas</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</li>
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('setting*')?'kt-menu__item--active':'' }}">
                                         <a href="{{ route('settings.index') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Pengaturan')</span>
