@@ -70,7 +70,16 @@
                             <div class="kt-form__section kt-form__section--first">
                                 <div class="kt-wizard-v1__form">
 									<div class="row">
-										<div class="col-md-8">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>NIK</label>
+												<input type="text" class="form-control" name="nik"
+													placeholder="Nomor induk kependudukan"
+													aria-describedby="nik-error">
+												<span class="form-text text-muted">Mohon masukkan nomor induk kependudukan anda/anak anda.</span>
+											</div>
+										</div>
+										<div class="col-md-4">
 											<div class="form-group">
 												<label>Nama Lengkap</label>
 												<input type="text" class="form-control" name="full_name"
@@ -388,6 +397,9 @@
 			// Validation rules
 			rules: {
 				//= Step 1
+				nik: {
+					required: true
+				},
 				full_name: {
 					required: true
 				},

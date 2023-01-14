@@ -92,7 +92,7 @@ class RegistrationsDataTable extends DataTable
                   ->addClass('text-center'),
             Column::make('created_at'),
             Column::make('type'),
-            Column::make('registration_no'),
+            Column::make('nik'),
             Column::make('full_name'),
             Column::make('gender'),
             Column::make('birth_date'),

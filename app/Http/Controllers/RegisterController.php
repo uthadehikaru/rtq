@@ -19,6 +19,7 @@ class RegisterController extends Controller
     public function submit(Request $request, $type)
     {
         $data = $request->validate([
+            'nik'=>'required|size:16',
             'full_name'=>'required|max:255',
             'short_name'=>'required|max:255',
             'gender'=>'required|in:male,female',
@@ -40,6 +41,10 @@ class RegisterController extends Controller
             'reference_schedule'=>'max:255',
             'term_condition'=>'required',
         ]);
+
+        $exists = Registration::where('nik',$data['nik'])->first();
+        if($exists)
+            return response()->json(['success'=>false,'message'=>'NIK sudah terdaftar'], 500);
 
         $last = Registration::whereYear('created_at',Carbon::now()->format('Y'))
         ->whereMonth('created_at',Carbon::now()->format('m'))
