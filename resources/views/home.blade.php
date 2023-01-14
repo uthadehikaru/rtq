@@ -5,53 +5,7 @@
 
 		<!-- begin:: Content -->
 
-		<!-- begin:: Hero -->
-		<div class="kt-sc" style="background: white">
-			<div class="kt-container ">
-				<div class="kt-sc__top">
-					<h3 class="kt-sc__title">
-						<img src="{{ asset('assets/images/favicon.png') }}" /> {{ config('app.name') }}
-					</h3>
-					<div class="kt-sc__nav">
-						<div class="d-sm-only d-md-none">
-							<div class="dropdown dropdown-inline">
-								<button type="button" class="btn btn-clean btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="flaticon-more text-info"></i>
-								</button>
-								<div class="dropdown-menu dropdown-menu-right">
-									<ul class="kt-nav">
-										<li class="kt-nav__item">
-											@guest
-											<a href="{{ route('login') }}" class="kt-nav__link">
-												<span class="kt-nav__link-text">@lang('Login')</span>
-											</a>
-											@else
-											<a href="{{ route('dashboard') }}" class="kt-nav__link">
-												<span class="kt-nav__link-text">@lang('Dashboard')</span>
-											</a>
-											@endif
-											<a href="{{ route('payment') }}" class="kt-nav__link">
-												<span class="kt-nav__link-text">@lang('Payment Confirm')</span>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="d-none d-md-block">
-							@guest
-							<a href="{{ route('login') }}" class="kt-link kt-font-bold text-info">@lang('Login')</a>
-							@else
-							<a href="{{ route('dashboard') }}" class="kt-link kt-font-bold text-info">@lang('Dashboard')</a>
-							@endif
-							<a href="{{ route('payment') }}" class="kt-link kt-font-bold text-info">@lang('Payment Confirm')</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- end:: Hero -->
+		<x-header />
 
 		<!-- begin:: Section -->
 		@if($settings->value('banner'))
@@ -60,7 +14,7 @@
 		<div class="kt-container ">
 			<div class="row">
 				<div class="col-lg-4">
-					<a href="#" class="kt-portlet kt-iconbox kt-iconbox--animate-slow">
+					<a href="{{ route('register', 'balita') }}" class="kt-portlet kt-iconbox kt-iconbox--animate-slow">
 						<div class="kt-portlet__body">
 							<div class="kt-iconbox__body">
 								<div class="kt-iconbox__icon">
@@ -78,13 +32,19 @@
 									<div class="kt-iconbox__content">
 										Tahsin Balita
 									</div>
+									<p class="mt-2 font-weight-bold">
+										Pendaftaran Tahsin Balita
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
+										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
+										</svg>
+									</p>
 								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 				<div class="col-lg-4">
-					<a href="#" class="kt-portlet kt-iconbox kt-iconbox--animate">
+					<a href="{{ route('register', 'anak') }}" class="kt-portlet kt-iconbox kt-iconbox--animate">
 						<div class="kt-portlet__body">
 							<div class="kt-iconbox__body">
 								<div class="kt-iconbox__icon">
@@ -103,13 +63,19 @@
 									<div class="kt-iconbox__content">
 										SD, SMP, SMA sederajat
 									</div>
+									<p class="mt-2 font-weight-bold">
+										Pendaftaran Tahsin Anak
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
+										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
+										</svg>
+									</p>
 								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 				<div class="col-lg-4">
-					<a href="#" class="kt-portlet kt-iconbox kt-iconbox--animate-fast">
+					<a href="{{ route('register', 'dewasa') }}" class="kt-portlet kt-iconbox kt-iconbox--animate-fast">
 						<div class="kt-portlet__body">
 							<div class="kt-iconbox__body">
 								<div class="kt-iconbox__icon">
@@ -127,6 +93,12 @@
 									<div class="kt-iconbox__content">
 										Ikhwan dan Akhwat
 									</div>
+									<p class="mt-2 font-weight-bold">
+										Pendaftaran Tahsin Dewasa
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
+										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
+										</svg>
+									</p>
 								</div>
 							</div>
 						</div>

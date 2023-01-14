@@ -12,6 +12,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PresentController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Salary\ConfigSalary;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SalaryDetailController;
@@ -60,6 +62,7 @@ Route::middleware('auth')->group(function () {
             Route::get('schedules/{schedule}/presents/{present}/change/{status}', [PresentController::class, 'change'])->name('schedules.presents.change');
             Route::resource('schedules', ScheduleController::class)->except(['show']);
             Route::resource('schedules.presents', PresentController::class);
+            Route::resource('registrations', RegistrationController::class);
         });
         Route::prefix('finances')->group(function(){
             Route::get('salaries/config', [ConfigSalary::class, 'index'])->name('salaries.config');
@@ -97,6 +100,9 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+
+Route::get('/register/{type}', [RegisterController::class, 'index'])->name('register');
+Route::post('/register/{type}', [RegisterController::class, 'submit']);
 
 Route::get('/payment', [PaymentController::class, 'form'])->name('payment');
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.confirm');

@@ -107,6 +107,11 @@
 														<span class="kt-menu__link-text">Jadwal</span>
 													</a>
 												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('registrations.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Pendaftaran</span>
+													</a>
+												</li>
 											</ul>
 										</div>
 									</li>
