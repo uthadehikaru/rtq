@@ -31,7 +31,7 @@ class CreateSchedule extends Controller
             'badal'=>'required',
         ]);
         $batch = Batch::find($data['batch_id']);
-        $file = 'uploads/'.Auth::user()->name.' '.$batch->name.' '.Carbon::now()->format('d-M-Y H-i').'.jpg';
+        $file = 'jadwal/'.Auth::user()->name.' '.$batch->name.' '.Carbon::now()->format('d-M-Y H-i').'.jpg';
         Storage::disk('public')->put($file, file_get_contents($data['photo']));
         $image = Image::make(Storage::disk('public')->get($file));
         $y = 10;
@@ -51,8 +51,6 @@ class CreateSchedule extends Controller
             $y += 20;
         }
         $image->save(storage_path('app/public/'.$file));
-        $result['error'] = null;
-        $result['path'] = asset('storage/'.$file);
 
         if (Carbon::now()->lessThan($batch->start_time)) {
             return response(['error'=>'Absen halaqoh '.$batch->name.' hanya bisa dilakukan pada jam '.$batch->start_time->format('H:i')]);
@@ -67,6 +65,9 @@ class CreateSchedule extends Controller
             $schedule = $scheduleRepository->createByTeacher($data);
 
             if ($schedule) {
+                $result['error'] = null;
+                $result['schedule_id'] = $schedule->id;
+                $result['path'] = asset('storage/'.$file);
                 return response()->json($result);
             }
 

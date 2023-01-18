@@ -131,6 +131,9 @@ jQuery(document).ready(function() {
                         <td>{{ $present->user->name }} - {{ $present->type }}</td>
                         <td>@lang('app.present.status.'.$present->status) {{ $present->status=='present' && $present->attended_at?__('at :time', ['time'=>$present->attended_at?->format('H:i')]):'' }}</td>
                         <td>
+                        @if($present->photo)
+                        <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto</a>
+                        @endif
                         {{ $present->type=='teacher' && $present->is_badal?'(Badal)':'' }}
                         {{ $present->description }}</td>
                         <td>

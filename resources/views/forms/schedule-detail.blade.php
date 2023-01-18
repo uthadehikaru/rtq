@@ -64,6 +64,9 @@
                         </div>
                     </div>
                     <h3 class="mt-2">{{Auth::user()->name}} {{ $teacherPresent->is_badal?'(Guru Pengganti)':'' }}</h3>
+                    @if($teacherPresent->photo)
+                    <a href="{{ asset('storage/'.$teacherPresent->photo) }}" target="_blank">Bukti Foto</a>
+                    @endif
                     @if($canUpdate)
                     <div class="row">
                         <div class="col-12 col-md-4">

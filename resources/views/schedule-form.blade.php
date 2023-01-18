@@ -117,9 +117,7 @@ jQuery(document).ready(function() {
                 if(data.error)
                     alert(data.error);
                 else{
-                    $('#photo').attr('src', data.path);
-                    alert('Berhasil');
-                    $('#capture').addClass('d-none');
+                    window.location.href = '{{ url('teacher/schedule') }}/'+data.schedule_id;
                 }
             },
             error: function(errMsg) {

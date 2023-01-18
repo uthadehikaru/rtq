@@ -109,6 +109,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             'type' => 'teacher',
             'attended_at' => CarbonImmutable::now()->format('H:i'),
             'is_badal' => $data['is_badal'],
+            'photo'=>$data['photo'],
         ]);
 
         DB::commit();
