@@ -28,6 +28,7 @@ class Present extends Model
         'description',
         'salary_id',
         'is_badal',
+        'photo',
     ];
 
     protected $casts = [
