@@ -30,8 +30,7 @@ class DashboardController extends Controller
             $data = array_merge($data, $this->admin($paymentRepository, $batchRepository, $memberRepository));
             $view = 'dashboard-admin';
         } elseif ($user->hasRole('teacher')) {
-            $data = array_merge($data, $this->teacher($batchRepository,
-                $teacherRepository,
+            $data = array_merge($data, $this->teacher(
                 $scheduleRepository,
                 $presentRepository));
             $view = 'dashboard-teacher';
@@ -60,13 +59,11 @@ class DashboardController extends Controller
     }
 
     public function teacher(
-        BatchRepository $batchRepository,
-        TeacherRepository $teacherRepository,
         ScheduleRepository $scheduleRepository,
         PresentRepository $presentRepository)
     {
         $teacher = Auth::user()->teacher;
-        $data['batches'] = $batchRepository->all();
+        $data['batches'] = (new BatchRepository)->teacherBatches(Auth::id());
         $data['schedules'] = $scheduleRepository->getByTeacher($teacher->user_id);
         $data['presents'] = $presentRepository->getByTeacher($teacher->user_id)->groupBy('status');
 

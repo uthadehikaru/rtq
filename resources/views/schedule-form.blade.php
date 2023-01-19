@@ -1,13 +1,28 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
+        <div class="alert alert-primary" role="alert">
+            <p>PERHATIAN </p>
+            <ul>
+                <li class="font-bold">Pastikan telah memberikan akses untuk mendapatkan lokasi dan kamera</li>
+                <li>Diwajibkan mengambil foto ruang kelas beserta peserta tahsin yang sudah hadir saat kelas dimulai</li>
+                <li>Sistem akan mencatat lokasi, tanggal, dan jam absensi ke dalam foto</li>
+                <li>Absen hanya bisa dilakukan saat jam kelas dimulai.</li>
+                <li>Toleransi telat maksimal 5 menit setelah kelas dimulai kecuali sudah konfirmasi</li>
+                <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
+                <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>
+            </ul>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-6">
     <video id="webcam" autoplay playsinline></video>
     <img id="photo" download="selfie.png" class="d-none" />
     <canvas id="canvas" class="d-none"></canvas>
     <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
     <div class="form-group">
         <label>@lang('Batch')</label>
         <select class="form-control kt-select2" name="batch_id" id="batch" required>
@@ -48,6 +63,12 @@ jQuery(document).ready(function() {
     const snapSoundElement = document.getElementById('snapSound');
     const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(locationSuccess);
+    } else {
+        $("#locationData").html('Your browser does not support location data retrieval.');
+    }
+    
     $('.kt-select2').select2({
         placeholder: "@lang('Pilih Halaqoh')"
     });
@@ -85,24 +106,24 @@ jQuery(document).ready(function() {
     }
     toggle();
     $('#capture').text('Prosessing...');
+    sendData();
    });
 
+   var latitude = 0;
+   var longitude = 0;
+
    function locationSuccess(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
         $("#locationData").html("Latitude: " + latitude + "<br>Longitude: " + longitude);
-        if(latitude!=0 && longitude!=0)
-            sendData(latitude, longitude);
-        else
-            alert('Gagal mengambil posisi, pastikan akses lokasi diberikan');
     }
 
-    function sendData(lat, long){
+    function sendData(){
         var data = {
             '_token': $('meta[name=csrf-token]').attr('content'),
             photo: $('#photo').attr('src'),
-            lat: lat,
-            long: long,
+            lat: latitude,
+            long: longitude,
             batch_id: $('#batch').val(),
             badal: $('input[name="badal"]:checked').val(),
         };

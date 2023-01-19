@@ -21,7 +21,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Batches')</a>
+                            <a class="kt-link" href="#">@lang('Batches') Yang Diajar</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $batches->count() }} @lang('Data')
@@ -53,7 +53,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@lang('Schedules')</a>
+                            <a class="kt-link" href="#">@lang('Schedules') Pengajar</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $schedules->count() }} @lang('Data')
@@ -76,53 +76,9 @@
                             </h3>
                         </div>
                     </div>
-                    <form class="kt-form" action="{{ route('teacher.schedules.create') }}"
-                        method="post">
-                        @csrf
-                        <div class="kt-portlet__body">
-                            <div class="alert alert-primary" role="alert">
-                                <p>PERHATIAN </p>
-                                <ul>
-                                    <li>Absen hanya bisa dilakukan saat jam kelas dimulai.</li>
-                                    <li>Toleransi telat maksimal 5 menit setelah kelas dimulai kecuali sudah konfirmasi</li>
-                                    <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
-                                    <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>
-                                </ul>
-                                </p>
-                            </div>
-                            <div class="kt-section kt-section--first">
-                                <div class="form-group">
-                                    <label>@lang('Batch')</label>
-                                    <select class="form-control kt-select2" name="batch_id" required>
-                                        <option value="">@lang('Select Batch')</option>
-                                        @foreach($batches as $batch)
-                                            <option value="{{ $batch->id }}">{{ $batch->course->name }}
-                                                {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-3 col-form-label">Guru Pengganti</label>
-                                    <div class="col-9 col-form-label">
-                                        <div class="radio-inline">
-                                            <label class="radio radio-outline radio-success">
-                                                <input type="radio" name="badal" value="1" required>
-                                                <span></span>Ya</label>
-                                            <label class="radio radio-outline radio-success">
-                                                <input type="radio" name="badal" checked="checked" value="0" required>
-                                                <span></span>Tidak</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-portlet__foot">
-                            <div class="kt-form__actions">
-                                <button type="submit" class="btn btn-primary">Mulai</button>
-                                <button type="reset" class="btn btn-secondary">Batal</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="kt-portlet__body">
+                        <a href="{{ route('teacher.schedules.create') }}" class="btn btn-primary">FORM ABSEN</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -123,6 +123,15 @@ class BatchRepository implements BatchRepositoryInterface
         return Batch::all()->pluck('name', 'id');
     }
 
+    public function teacherBatches($user_id)
+    {
+        $teacher = Teacher::with('user')->where('user_id', $user_id)->firstOrFail();
+
+        return Batch::whereRelation('teachers', 'id', $teacher->id)
+        ->orderBy('name')
+        ->get();
+    }
+
     public function getByUser($user_id)
     {
         $teacher = Teacher::with('user')->where('user_id', $user_id)->firstOrFail();
