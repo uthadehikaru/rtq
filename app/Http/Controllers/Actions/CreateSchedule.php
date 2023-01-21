@@ -79,8 +79,8 @@ class CreateSchedule extends Controller
 
     private function calculateDistance($data)
     {
-        $lat = -6.2213427;
-        $long = 106.7714233;
+        $lat = setting('latitude');
+        $long = setting('longitude');
         //Converting to radians
         $longi1 = deg2rad($data['long']); 
         $longi2 = deg2rad($long); 

@@ -51,7 +51,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general">General</div>
+                <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general">
+                    <div class="kt-section kt-section--first">
+                        <div class="form-group">
+                            <label>Latitude</label>
+                            <input type="text" name="latitude" class="form-control" value="{{ $general['latitude']->payload }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="text" name="longitude" class="form-control" value="{{ $general['longitude']->payload }}">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="kt-portlet__foot">

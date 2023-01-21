@@ -15,6 +15,7 @@ class SettingController extends Controller
     public function index()
     {
         $data['homepage'] = Setting::where('group', 'homepage')->get()->keyBy('name');
+        $data['general'] = Setting::where('group', 'general')->get()->keyBy('name');
 
         return view('forms.setting', $data);
     }
@@ -43,6 +44,8 @@ class SettingController extends Controller
             'about' => '',
             'instagram' => '',
             'whatsapp' => '',
+            'latitude' => '',
+            'longitude' => '',
         ]);
 
         foreach ($data as $name => $value) {

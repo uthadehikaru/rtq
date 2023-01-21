@@ -97,6 +97,10 @@ jQuery(document).ready(function() {
 
 
    $('#capture').click(function(){
+    let batch_id = $('#batch').val();
+    if(batch_id=="")
+        return alert('Halaqoh harus diisi');
+    
     let picture = webcam.snap();
     $("#photo").attr("src",picture);
     if (navigator.geolocation) {
@@ -142,9 +146,9 @@ jQuery(document).ready(function() {
                 }
             },
             error: function(errMsg) {
-                alert('Errpr : '+errMsg);
                 $('#capture').addClass('d-none');
                 $('#reset').removeClass('d-none');
+                alert('Errpr : '+errMsg);
             }
         });
     }

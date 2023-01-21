@@ -16,6 +16,19 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
+        $general = [
+            'latitude' => '-6.2214295',
+            'longitude' => '106.7737958',
+        ];
+        foreach ($general as $name => $value) {
+            Setting::firstOrCreate([
+                'group' => 'general',
+                'name' => $name,
+            ], [
+                'payload' => $value,
+            ]);
+        }
+
         $settings = [
             'oper_santri',
             'transportasi',
