@@ -3,9 +3,9 @@
 <div class="row">
     <div class="col-12">
         <div class="alert alert-primary" role="alert">
-            <p>PERHATIAN </p>
+            <h4 class="alert-heading">Perhatian!</h4>
             <ul>
-                <li class="font-bold">Pastikan telah memberikan akses untuk mendapatkan lokasi dan kamera</li>
+                <li>Pastikan telah memberikan akses untuk mendapatkan lokasi dan kamera</li>
                 <li>Diwajibkan mengambil foto ruang kelas beserta peserta tahsin yang sudah hadir saat kelas dimulai</li>
                 <li>Sistem akan mencatat lokasi, tanggal, dan jam absensi ke dalam foto</li>
                 <li>Absen hanya bisa dilakukan saat jam kelas dimulai.</li>
@@ -13,28 +13,21 @@
                 <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
                 <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>
             </ul>
-            </p>
         </div>
     </div>
-    <div class="col-md-4">
-    <video id="webcam" autoplay playsinline width="400" height="600"></video>
-    <img id="photo" download="selfie.png" class="d-none" />
-    <canvas id="canvas" class="d-none"></canvas>
-    <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
-    </div>
     <div class="col-md-8">
-    <div class="form-group">
-        <label>@lang('Batch')</label>
-        <select class="form-control kt-select2" name="batch_id" id="batch" required>
-            <option value="">@lang('Select Batch')</option>
-            @foreach($batches as $batch)
-                <option value="{{ $batch->id }}">{{ $batch->course->name }}
-                    {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label class="col-3 col-form-label">Guru Pengganti</label>
+        <div class="form-group">
+            <label>@lang('Batch')</label>
+            <select class="form-control kt-select2" name="batch_id" id="batch" required>
+                <option value="">@lang('Select Batch')</option>
+                @foreach($batches as $batch)
+                    <option value="{{ $batch->id }}">{{ $batch->course->name }}
+                        {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="col-3 col-form-label">Guru Pengganti</label>
             <div class="col-9 col-form-label">
                 <div class="radio-inline">
                     <label class="radio radio-outline radio-success">
@@ -47,6 +40,12 @@
             </div>
         </div>
         <p id="locationData"></p>
+    </div>
+    <div class="col-md-4">
+        <video id="webcam" autoplay playsinline width="400" height="600"></video>
+        <img id="photo" download="selfie.png" class="d-none" />
+        <canvas id="canvas" class="d-none"></canvas>
+        <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
         <button id="flip" class="d-none btn btn-warning">Ganti Kamera</button>
         <button id="capture" class="btn btn-primary">Absen</button>
         <button id="reset" class="d-none btn btn-danger">Reset</button>
