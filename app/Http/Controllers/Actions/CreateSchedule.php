@@ -34,6 +34,10 @@ class CreateSchedule extends Controller
         $file = 'jadwal/'.Auth::user()->name.' '.$batch->name.' '.Carbon::now()->format('d-M-Y H-i').'.jpg';
         Storage::disk('public')->put($file, file_get_contents($data['photo']));
         $image = Image::make(Storage::disk('public')->get($file));
+        $image->rectangle(5, 5, 250, 150, function ($draw) {
+            $draw->background('rgba(255, 255, 255, 0.5)');
+            $draw->border(2, '#000');
+        });
         $y = 10;
         $texts = $request->only(['lat','long']);
         $texts['Tanggal, jam'] = Carbon::now()->format('d M Y, H:i');

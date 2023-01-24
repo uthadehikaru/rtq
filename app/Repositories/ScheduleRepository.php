@@ -56,7 +56,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                 Present::create([
                     'schedule_id' => $schedule->id,
                     'user_id' => $member->user_id,
-                    'status' => 'absent',
+                    'status' => 'present',
                     'type' => 'member',
                 ]);
             }
@@ -96,7 +96,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                 Present::create([
                     'schedule_id' => $schedule->id,
                     'user_id' => $member->user_id,
-                    'status' => 'absent',
+                    'status' => 'present',
                     'type' => 'member',
                 ]);
             }

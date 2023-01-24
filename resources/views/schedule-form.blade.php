@@ -16,13 +16,13 @@
             </p>
         </div>
     </div>
-    <div class="col-md-6">
-    <video id="webcam" autoplay playsinline></video>
+    <div class="col-md-4">
+    <video id="webcam" autoplay playsinline width="400" height="600"></video>
     <img id="photo" download="selfie.png" class="d-none" />
     <canvas id="canvas" class="d-none"></canvas>
     <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
     <div class="form-group">
         <label>@lang('Batch')</label>
         <select class="form-control kt-select2" name="batch_id" id="batch" required>
@@ -76,6 +76,7 @@ jQuery(document).ready(function() {
     webcam.start()
    .then(result =>{
       console.log("webcam started");
+    checkCamera();
       if(webcam.webcamCount>1)
         $('#flip').removeClass('d-none');
    })
@@ -92,9 +93,8 @@ jQuery(document).ready(function() {
    $('#flip').click(function(){
         webcam.flip();
         webcam.start();
+        checkCamera();
    });
-
-
 
    $('#capture').click(function(){
     let batch_id = $('#batch').val();
@@ -120,6 +120,15 @@ jQuery(document).ready(function() {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
         $("#locationData").html("Latitude: " + latitude + "<br>Longitude: " + longitude);
+    }
+
+    function checkCamera()
+    {
+        console.log(webcam.facingMode);
+        if(webcam.facingMode=="user")
+            $('#flip').text('Kamera Belakang');
+        else
+            $('#flip').text('Kamera Depan');
     }
 
     function sendData(){
