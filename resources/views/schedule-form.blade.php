@@ -3,8 +3,8 @@
 <div class="row">
     <div class="col-12">
         <div class="alert alert-primary" role="alert">
-            <h4 class="alert-heading">Perhatian!</h4>
             <ul>
+                <li class="list-unstyled"><h3>PERHATIAN!</h3></li>
                 <li>Pastikan telah memberikan akses untuk mendapatkan lokasi dan kamera</li>
                 <li>Diwajibkan mengambil foto ruang kelas beserta peserta tahsin yang sudah hadir saat kelas dimulai</li>
                 <li>Sistem akan mencatat lokasi, tanggal, dan jam absensi ke dalam foto</li>
@@ -42,7 +42,7 @@
         <p id="locationData"></p>
     </div>
     <div class="col-md-4">
-        <video id="webcam" autoplay playsinline width="400" height="600"></video>
+        <video id="webcam" autoplay playsinline width="400"></video>
         <img id="photo" download="selfie.png" class="d-none" />
         <canvas id="canvas" class="d-none"></canvas>
         <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
