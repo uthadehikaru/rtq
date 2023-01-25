@@ -42,7 +42,7 @@
         <p id="locationData"></p>
     </div>
     <div class="col-md-4">
-        <video id="webcam" autoplay playsinline height="640" width="480"></video>
+        <video id="webcam" autoplay playsinline width="640" height="480"></video>
         <img id="photo" download="selfie.png" class="d-none" />
         <canvas id="canvas" class="d-none"></canvas>
         <audio id="snapSound" src="{{ asset('assets/snap.wav') }}" preload = "auto"></audio>
