@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
             Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
             Route::resource('members', MemberController::class);
             Route::resource('courses', CourseController::class);
+            Route::get('courses/{course_id}/batches/export', Actions\ExportBatch::class)->name('courses.batches.export');
             Route::resource('courses.batches', BatchController::class);
             Route::resource('courses.batches.batchmembers', BatchMemberController::class);
             Route::resource('teachers', TeacherController::class);

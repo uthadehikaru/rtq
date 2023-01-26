@@ -83,6 +83,10 @@ jQuery(document).ready(function () {
                         <i class="la la-arrow-left"></i>
                         @lang('Back')
                     </a>
+                    <a href="{{ route('courses.batches.export', $course->id) }}" class="btn btn-success btn-icon-sm">
+                        <i class="la la-download"></i>
+                        @lang('Export (.xls)')
+                    </a>
                     <a href="{{ route('courses.batches.create', $course->id) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
                         @lang('New Batch')
