@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Schedule;
 
+use App\DataTables\PresentsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Present;
 use App\Repositories\BatchRepository;
@@ -15,13 +16,18 @@ class Report extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(PresentRepository $presentRepository,
-        BatchRepository $batchRepository)
+    public function __invoke(PresentsDataTable $dataTable, BatchRepository $batchRepository)
     {
-        $data['presents'] = $presentRepository->all();
+        $data['title'] = 'Laporan';
         $data['batches'] = $batchRepository->all();
         $data['statuses'] = Present::STATUSES;
+        $data['buttons'] = '
+            <a href="'.route('schedules.export').'" class="btn btn-primary btn-icon-sm">
+                <i class="la la-download"></i>
+                Export (.xls)
+            </a>
+        ';
 
-        return view('datatables.schedule-report', $data);
+        return $dataTable->render('datatables.datatable',$data);
     }
 }

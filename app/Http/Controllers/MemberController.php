@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\MembersDataTable;
 use App\Exports\MemberExport;
 use App\Models\Member;
 use App\Repositories\BatchRepository;
@@ -10,17 +11,23 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, MembersDataTable $dataTable)
     {
         if ($request->get('action') == 'export') {
             return (new MemberExport())->download('Data Anggota per '.date('d M Y H.i').'.xlsx');
         }
 
-        $data['title'] = __('Members');
-        $data['members'] = Member::with(['batches', 'batches.course'])->latest()->get();
-        $data['total'] = Member::whereHas('batches')->count();
-
-        return view('datatables.member', $data);
+        $total = Member::whereHas('batches')->count();
+        $data['title'] = $total.' '.__('Members');
+        $data['buttons'] = '<a href="'.route('members.index', ['action'=>'export']).'" class="btn btn-success btn-icon-sm">
+            <i class="la la-download"></i>
+            Export (.xls)
+        </a>
+        <a href="'.route('members.create').'" class="btn btn-primary btn-icon-sm">
+            <i class="la la-plus"></i>
+            New Member
+        </a>';
+        return $dataTable->render('datatables.datatable', $data);
     }
 
     public function create(BatchRepository $batchRepository)

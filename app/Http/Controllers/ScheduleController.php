@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\SchedulesDataTable;
 use App\Models\Schedule;
 use App\Repositories\BatchRepository;
 use App\Repositories\ScheduleRepository;
@@ -16,16 +17,23 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ScheduleRepository $scheduleRepository)
+    public function index(SchedulesDataTable $dataTable)
     {
         $data['title'] = __('Schedules');
         if (Auth::user()->hasRole('administrator')) {
-            $data['schedules'] = $scheduleRepository->all();
-        } else {
-            $data['schedules'] = $scheduleRepository->getByTeacher(Auth::id());
+            $data['buttons'] = '<a href="'.route('schedules.report').'" class="btn btn-success btn-icon-sm">
+                <i class="la la-file"></i>
+                Laporan
+            </a>
+            <a href="'.route('schedules.create').'" class="btn btn-primary btn-icon-sm">
+                <i class="la la-plus"></i>
+                Tambah Jadwal
+            </a>';
+        }else{
+            $dataTable->setUserId(Auth::id());
         }
 
-        return view('datatables.schedule', $data);
+        return $dataTable->render('datatables.datatable', $data);
     }
 
     /**
