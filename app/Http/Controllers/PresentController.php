@@ -138,6 +138,7 @@ class PresentController extends Controller
             'description' => '',
             'attended_at' => '',
             'is_badal' => '',
+            'is_transfer' => '',
         ]);
         if ($data['status'] != 'present') {
             $data['attended_at'] = null;

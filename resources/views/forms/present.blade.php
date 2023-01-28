@@ -87,6 +87,18 @@
                                 Tidak</label>
                             </div>
                         </div>
+                        @else
+                        <div class="form-group">
+                            <label>Operan Santri</label>
+                            <div class="radio-inline">
+                                <label class="radio">
+                                <input type="radio" value="1" name="is_transfer" @checked($present->is_transfer)>
+                                Ya</label>
+                                <label class="radio">
+                                <input type="radio" value="0" name="is_transfer" @checked(!$present->is_transfer)>
+                                Tidak</label>
+                            </div>
+                        </div>
                         @endif
                     </div>
                 </div>

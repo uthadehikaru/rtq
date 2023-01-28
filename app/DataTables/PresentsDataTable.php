@@ -46,6 +46,7 @@ class PresentsDataTable extends DataTable
                 if($row->photo)
                     $description .= '<a href="'.asset('storage/'.$row->photo).'" target="_blank">Bukti Foto</a>';
                 $description .= $row->type=='teacher' && $row->is_badal?'(Badal)':'';
+                $description .= $row->type=='member' && $row->is_transfer?'(Operan)':'';
                 return $description;
             })
             ->rawColumns(['description'])

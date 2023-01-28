@@ -161,6 +161,7 @@
                                     <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto</a>
                                     @endif
                                     {{ $present->type=='teacher' && $present->is_badal?'(Badal)':'' }}
+                                    {{ $present->type=='member' && $present->is_transfer?'(Operan)':'' }}
                                     {{ $present->description }}</td>
                                 <td>
                                     <a href="{{ route('schedules.presents.edit', [$present->schedule_id,$present->id]) }}?redirect={{ url()->current() }}" class="text-warning">
