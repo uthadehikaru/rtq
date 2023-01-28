@@ -66,7 +66,12 @@
                                         @lang('app.present.status.'.$present->status)
                                         @if($present->status=='present')
                                             pada {{ $present->attended_at?->format('H:i') }}
-                                            @php $late = $present->attended_at->diffInMinutes($present->schedule->start_at); @endphp
+                                            @php 
+                                            $attended_at = $present->attended_at;
+                                            if(!$attended_at)
+                                                $attended_at = $present->created_at;
+                                            $late = $attended_at->diffInMinutes($present->schedule->start_at); 
+                                            @endphp
                                             {{ $late>$detail->summary['maks_waktu_telat']?'(Telat '.$late.' menit)':'' }}
                                         @endif
                                     </span>
