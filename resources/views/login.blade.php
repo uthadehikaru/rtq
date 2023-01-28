@@ -27,8 +27,8 @@
 								@env('local')
 									<div class="text-center">
 										<p><a href="{{ route('login.as', 'admin@rtqmaisuro.id') }}">Login as Admin</a></p>
-										<p><a href="{{ route('login.as', 'Ust.Muslim@rtqmaisuro.id') }}">Login as Ust. Muslim</a></p>
-										<p><a href="{{ route('login.as', 'Ust.Apriansyah@rtqmaisuro.id') }}">Login as Ust. Apriansyah</a></p>
+										<p><a href="{{ route('login.as', 'ibnumahmud7941@gmail.com') }}">Login as Ust. Muslim</a></p>
+										<p><a href="{{ route('login.as', 'apriansyah762@gmail.com') }}">Login as Ust. Apriansyah</a></p>
 									</div>
 								@endenv
 								<form class="kt-form" action="{{ route('login') }}" method="post">

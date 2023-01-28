@@ -29,6 +29,7 @@ class ConfigSalary extends Controller
             'maks_telat_dengan_konfirmasi' => 'required',
             'pengurangan_tunjangan_per_izin' => 'required',
             'maks_izin' => 'required',
+            'maks_waktu_telat' => 'required',
         ];
 
         foreach (Course::TYPES as $type) {

@@ -139,7 +139,7 @@ jQuery(document).ready(function () {
                 @foreach($details as $detail)
                     <tr>
                         <td>{{ $detail->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $detail->teacher->name }}</td>
+                        <td>{{ $detail->user->name }}</td>
                         <td>{{ $detail->summary['own'] }}</td>
                         <td>{{ $detail->summary['switch'] }}</td>
                         <td>{{ $detail->summary['present'] }}</td>
@@ -148,6 +148,9 @@ jQuery(document).ready(function () {
                         <td>{{ $detail->summary['permit'] }}</td>
                         <td>{{ $detail->amount }}</td>
                         <td>
+                            <a href="{{ route('salaries.report', [$salary->id,$detail->user_id]) }}" class="text-info" target="_blank">
+                                <i class="la la-file"></i> @lang('Report')
+                            </a>
                             <a href="{{ route('salaries.details.edit', [$salary->id,$detail->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>

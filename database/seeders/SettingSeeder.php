@@ -37,6 +37,7 @@ class SettingSeeder extends Seeder
             'maks_telat_dengan_konfirmasi',
             'pengurangan_tunjangan_per_izin',
             'maks_izin',
+            'maks_waktu_telat',
         ];
 
         foreach (Course::TYPES as $type) {

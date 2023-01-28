@@ -11,7 +11,7 @@ class SalaryDetail extends Model
 
     protected $fillable = [
         'salary_id',
-        'teacher_id',
+        'user_id',
         'amount',
         'summary',
     ];
@@ -25,8 +25,8 @@ class SalaryDetail extends Model
         return $this->belongsTo(Salary::class);
     }
 
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'teacher_id');
+        return $this->belongsTo(User::class);
     }
 }

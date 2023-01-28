@@ -131,6 +131,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Maksimal Waktu Telat (Menit)</label>
+                            <div class="input-group">
+                                <input type="number" name="maks_waktu_telat" class="form-control"
+                                value="{{ old('maks_waktu_telat', $settings['maks_waktu_telat']) }}"
+                                required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Menit</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">

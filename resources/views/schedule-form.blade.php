@@ -9,7 +9,7 @@
                 <li>Diwajibkan mengambil foto ruang kelas beserta peserta tahsin yang sudah hadir saat kelas dimulai</li>
                 <li>Sistem akan mencatat lokasi, tanggal, dan jam absensi ke dalam foto</li>
                 <li>Absen hanya bisa dilakukan saat jam kelas dimulai.</li>
-                <li>Toleransi telat maksimal 5 menit setelah kelas dimulai kecuali sudah konfirmasi</li>
+                <li>Toleransi telat maksimal {{ setting('maks_waktu_telat') }} menit setelah kelas dimulai kecuali sudah konfirmasi</li>
                 <li>Jam mulai kelas mengikuti jadwal yang sudah ditentukan.</li>
                 <li>Jika kelas tidak sesuai jadwal, mohon konfirmasi ke admin untuk perubahan jam mulai sebelum memulai kelas.</li>
             </ul>
