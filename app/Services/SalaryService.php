@@ -184,7 +184,10 @@ class SalaryService
     public function getTeacherSalaries($teacher_id)
     {
         return SalaryDetail::with('salary')
-        ->where('teacher_id', $teacher_id)
+        ->whereHas('salary', function($query){
+            $query->whereNotNull('approved_at');
+        })
+        ->where('user_id', $teacher_id)
         ->latest()
         ->get();
     }

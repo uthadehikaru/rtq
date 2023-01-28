@@ -28,6 +28,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
     public function headings(): array
     {
         return [
+            'id',
             'tanggal',
             'kode',
             'halaqoh',
@@ -46,6 +47,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
         $isBadal = $present->is_badal ? 'Ya' : 'Tidak';
 
         return [
+            $present->schedule_id,
             $present->schedule->scheduled_at->format('Y-m-d H:i'),
             $present->schedule->batch->code,
             $present->schedule->batch->name,

@@ -12,7 +12,7 @@ class Salary extends Controller
     public function index(Request $request)
     {
         $data['title'] = __('Salaries');
-        $data['details'] = (new SalaryService())->getTeacherSalaries(Auth::user()->teacher->id);
+        $data['details'] = (new SalaryService())->getTeacherSalaries(Auth::id());
 
         return view('datatables.teacher-salary', $data);
     }

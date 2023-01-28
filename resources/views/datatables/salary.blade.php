@@ -119,6 +119,7 @@ jQuery(document).ready(function () {
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Period')</th>
+                    <th title="Field #2">@lang('Disetujui pada')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -128,16 +129,19 @@ jQuery(document).ready(function () {
                         <td>{{ $salary->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $salary->name }}</td>
                         <td>{{ $salary->start_date->format('d/m/y') }} - {{ $salary->end_date->format('d/m/y') }}</td>
+                        <td>{{ $salary->approved_at?->format('d/m/y H:i') }}</td>
                         <td>
                             <a href="{{ route('salaries.details.index', $salary->id) }}" class="text-primary">
                                 <i class="la la-list"></i> @lang('Detail')
                             </a>
+                            @if(!$salary->approved_at)
                             <a href="{{ route('salaries.edit', $salary->id) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $salary->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -83,10 +83,17 @@ jQuery(document).ready(function () {
                         <i class="la la-arrow-left"></i>
                         @lang('Back')
                     </a>
+                    @if(!$salary->approved_at)
                     <a href="{{ route('salaries.calculate', $salary->id) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-refresh"></i>
                         @lang('Calculate')
                     </a>
+                    <a href="{{ route('salaries.approve', $salary->id) }}" class="btn btn-info btn-icon-sm"
+                    onclick="return confirm('Dengan menyetujui, data ini akan dikunci dan pengajar mendapatkan laporan masing2. Lanjutkan?')">
+                        <i class="la la-check"></i>
+                        @lang('Setujui')
+                    </a>
+                    @endif
                     <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm" target="_BLANK">
                         <i class="la la-file"></i>
                         @lang('Report')
@@ -151,12 +158,14 @@ jQuery(document).ready(function () {
                             <a href="{{ route('salaries.report', [$salary->id,$detail->user_id]) }}" class="text-info" target="_blank">
                                 <i class="la la-file"></i> @lang('Report')
                             </a>
+                            @if(!$salary->approved_at)
                             <a href="{{ route('salaries.details.edit', [$salary->id,$detail->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
                             </a>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $detail->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
                             </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

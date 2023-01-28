@@ -13,11 +13,13 @@ class Salary extends Model
         'name',
         'start_date',
         'end_date',
+        'approved_at',
     ];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
+        'approved_at' => 'datetime',
     ];
 
     public function details()

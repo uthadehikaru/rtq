@@ -28,12 +28,16 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
     public function headings(): array
     {
         return [
+            'id',
+            'schedule_id',
             'tanggal',
             'kode',
             'halaqoh',
+            'pengajar',
             'durasi',
             'nama',
             'status',
+            'operan',
             'keterangan',
         ];
     }
@@ -41,12 +45,16 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
     public function map($present): array
     {
         return [
+            $present->id,
+            $present->schedule_id,
             $present->schedule->scheduled_at->format('Y-m-d H:i'),
-            $present->schedule->batch->kode,
+            $present->schedule->batch->code,
             $present->schedule->batch->name,
+            $present->schedule->teachers()->pluck('name')->join(', '),
             $present->schedule->start_at?->format('H:i').' - '.$present->schedule->end_at?->format('H:i'),
             $present->user->name,
             __('app.present.status.'.$present->status),
+            $present->is_transfer?'ya':'tidak',
             $present->description,
         ];
     }
