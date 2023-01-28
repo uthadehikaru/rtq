@@ -29,6 +29,18 @@ class SchedulesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->filterColumn('batch_id', function($query, $keyword) {
+                $sql = "batches.name like ?";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
+            ->filterColumn('teacher', function($query, $keyword) {
+                $sql = "exists(select 1 from presents 
+                join users on presents.user_id=users.id
+                where presents.schedule_id=schedules.id 
+                and presents.type='teacher'
+                and users.name like ?)";
+                $query->whereRaw($sql, ["%{$keyword}%"]);
+            })
             ->editColumn('scheduled_at', function($row){
                 return $row->created_at->format('d M Y H:i');
             })
@@ -73,6 +85,7 @@ class SchedulesDataTable extends DataTable
             $model = $model->whereRelation('presents', 'user_id', $this->user_id);
 
         return $model
+        ->join('batches','batches.id','schedules.batch_id')
         ->with('batch','presents','presents.user')
         ->withCount(['presents' => function ($query) {
             $query->where('type', 'member');
@@ -120,7 +133,7 @@ class SchedulesDataTable extends DataTable
                   ->addClass('text-center'),
             Column::make('scheduled_at')->title('Tanggal'),
             Column::make('batch_id')->title('Halaqoh'),
-            Column::make('teacher')->title('Pengajar')->searchable(false),
+            Column::make('teacher')->title('Pengajar'),
             Column::make('start_at')->title('Mulai'),
             Column::make('place')->title('Tempat'),
             Column::make('presents_count')->title('Peserta')->searchable(false),
