@@ -42,7 +42,7 @@ class SchedulesDataTable extends DataTable
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
             ->editColumn('scheduled_at', function($row){
-                return $row->created_at->format('d M Y H:i');
+                return $row->scheduled_at->format('d M Y');
             })
             ->editColumn('start_at', function($row){
                 return $row->created_at->format('H:i');
