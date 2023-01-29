@@ -23,6 +23,12 @@ class PresentsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->filterColumn('description', function($query, $keyword) {
+                if($keyword=='operan')
+                    $query->where('is_transfer',true);
+                if($keyword=='badal')
+                    $query->where('is_badal',true);
+            })
             ->editColumn('created_at', function($row){
                 return $row->created_at->format('d M Y');
             })
@@ -96,7 +102,7 @@ class PresentsDataTable extends DataTable
             Column::make('user_id')->title('Nama'),
             Column::make('type')->title('Tipe'),
             Column::make('status')->title('Status'),
-            Column::make('description')->title('Ketrangan'),
+            Column::make('description')->title('Keterangan'),
         ];
     }
 
