@@ -51,11 +51,16 @@ class PresentsDataTable extends DataTable
                 $description = $row->description;
                 if($row->photo)
                     $description .= '<a href="'.asset('storage/'.$row->photo).'" target="_blank">Bukti Foto</a>';
-                $description .= $row->type=='teacher' && $row->is_badal?'(Badal)':'';
-                $description .= $row->type=='member' && $row->is_transfer?'(Operan)':'';
+                $description .= ' '.($row->type=='teacher' && $row->is_badal?'(Badal)':'');
+                $description .= ' '.($row->type=='member' && $row->is_transfer?'(Operan)':'');
                 return $description;
             })
-            ->rawColumns(['description'])
+            ->addColumn('action', function($row){
+                $buttons = "";
+                $buttons .= '<a href="'.route('schedules.presents.edit', ['schedule'=>$row->schedule_id,'present'=>$row->id,'redirect'=>url()->current()]).'" class="ml-2 text-warning">Ubah</a>';
+                return $buttons;
+            })
+            ->rawColumns(['action','description'])
             ->setRowId('id');
     }
 
@@ -84,7 +89,7 @@ class PresentsDataTable extends DataTable
                     ->setTableId('Present-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(0)
+                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([]);
     }
@@ -97,6 +102,11 @@ class PresentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
             Column::make('created_at')->title('Tanggal'),
             Column::make('schedule_id')->title('Halaqoh'),
             Column::make('user_id')->title('Nama'),
