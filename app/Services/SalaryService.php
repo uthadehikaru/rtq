@@ -130,14 +130,15 @@ class SalaryService
                     $summary['switch']++;
                 }
                 
-                $summary['transportasi'] = $summary['present']*$settings['transportasi'];
-                $amount += $summary['transportasi'];
 
                 $summary['own']++;
 
                 $present->salary_id = $salary->id;
                 $present->save();
             }
+            
+            $summary['transportasi'] = $summary['present']*$settings['transportasi'];
+            $amount += $summary['transportasi'];
 
             $summary['nominal_oper'] = $summary['oper_santri']*$settings['oper_santri'];
             $amount += $summary['nominal_oper'];
