@@ -20,7 +20,7 @@
                         <td>Pokok : @money($detail->summary['base'])</td>
                     </tr>
                     <tr>
-                        <td>Hadir : {{ $detail->summary['present'] }} | Tidak Hadir : {{ $detail->summary['absent'] }}</td>
+                        <td>Hadir : {{ $detail->summary['present'] }}</td>
                         <td>Transportasi : @money($detail->summary['transportasi'])</td>
                     </tr>
                     <tr>
@@ -35,7 +35,7 @@
                         <td>Operan Santri : @money($detail->summary['nominal_oper'])</td>
                     </tr>
                     <tr>
-                        <td>Izin : {{ $detail->summary['permit'] }}</td>
+                        <td>Alpha : {{ $detail->summary['absent'] }} | Izin : {{ $detail->summary['permit'] }} | Sakit : {{ $detail->summary['sick'] }}</td>
                         <td>Tunjangan : @money($detail->summary['tunjangan'])</td>
                     </tr>
                 </table>

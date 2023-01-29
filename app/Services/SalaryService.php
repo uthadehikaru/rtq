@@ -88,6 +88,7 @@ class SalaryService
                 'late_without_confirm' => 0,
                 'absent' => 0,
                 'permit' => 0,
+                'sick'=>0,
                 'base' => 0,
                 'oper_santri' => 0,
                 'transportasi' => 0,
@@ -120,8 +121,10 @@ class SalaryService
                         'is_transfer'=>true,
                     ])
                     ->count();
-                } elseif (in_array($present->status, [Present::STATUS_SICK, Present::STATUS_permit])) {
+                } elseif ($present->status == Present::STATUS_permit) {
                     $summary['permit']++;
+                } elseif ($present->status == Present::STATUS_SICK) {
+                    $summary['sick']++;
                 } else {
                     $summary[Present::STATUS_ABSENT]++;
                 }
@@ -136,7 +139,7 @@ class SalaryService
                 $present->salary_id = $salary->id;
                 $present->save();
             }
-            
+
             $summary['transportasi'] = $summary['present']*$settings['transportasi'];
             $amount += $summary['transportasi'];
 
