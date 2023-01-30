@@ -44,7 +44,7 @@ class SalaryService
 
     public function findDetail($id)
     {
-        return SalaryDetail::with('teacher', 'salary')->find($id);
+        return SalaryDetail::with('user', 'salary')->findOrFail($id);
     }
 
     public function deleteDetail($id)
