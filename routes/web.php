@@ -3,6 +3,7 @@
 use App\Http\Controllers\Actions;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
+use App\Http\Controllers\BiodataMemberController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
+use App\Http\Requests\BiodataMemberRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +55,7 @@ Route::middleware('auth')->group(function () {
             Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');
             Route::post('members/{id}/switch', Actions\SwitchBatch::class);
             Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
+            Route::resource('biodata', BiodataMemberController::class);
             Route::resource('members', MemberController::class);
             Route::resource('courses', CourseController::class);
             Route::get('courses/{course_id}/batches/export', Actions\ExportBatch::class)->name('courses.batches.export');
@@ -111,5 +114,8 @@ Route::post('/register/{type}', [RegisterController::class, 'submit']);
 
 Route::get('/payment', [PaymentController::class, 'form'])->name('payment');
 Route::post('/payment', [PaymentController::class, 'store'])->name('payment.confirm');
+
+Route::get('/member/biodata', [BiodataMemberController::class, 'add'])->name('member.biodata');
+Route::post('/member/biodata', [BiodataMemberController::class, 'store']);
 
 Route::get('/login-as/{user:email}', Actions\LoginAsUser::class)->name('login.as');

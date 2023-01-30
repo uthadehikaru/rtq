@@ -23,10 +23,14 @@ class Member extends Model
         'user_id',
         'registration_date',
         'status',
+        'nik',
+        'birth_date',
+        'profile_picture',
     ];
 
     protected $casts = [
         'registration_date' => 'date',
+        'birth_date'=>'date',
     ];
 
     public function batches()

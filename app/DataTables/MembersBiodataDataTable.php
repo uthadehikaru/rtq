@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Member;
+use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -10,7 +12,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class MembersDataTable extends DataTable
+class MembersBiodataDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,22 +26,28 @@ class MembersDataTable extends DataTable
             ->editColumn('created_at', function($row){
                 return $row->created_at->format('d M Y H:i');
             })
-            ->editColumn('batches', function($row){
-                return $row->batches->count()?$row->batches->pluck('name')->join(', '):'Inaktif';
+            ->addColumn('name', function($row){
+                $member = Member::find($row->name);
+                return $member?->full_name;
             })
-            ->editColumn('gender', function($row){
-                return __($row->gender);
+            ->addColumn('nik', function($row){
+                return $row->payload['nik'];
             })
-            ->editColumn('birth_date', function($row){
-                return $row->birth_date?->format('d M Y');
+            ->addColumn('birth_date', function($row){
+                return Carbon::createFromFormat('Y-m-d',$row->payload['birth_date'])->format('d M Y');
             })
-            ->editColumn('profile_picture', function($row){
-                if($row->profile_picture)
-                    return '<img src="'.asset('storage/'.$row->profile_picture).'" width="200" />';
+            ->addColumn('profile_picture', function($row){
+                if($row->payload['profile_picture'])
+                return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.asset('storage/'.$row->payload['profile_picture']).'" width="200" /></a>';
             })
             ->addColumn('action', function($row){
                 $buttons = "";
-                $buttons .= '<a href="'.route('members.edit', $row->id).'" class="text-warning">Ubah</a>';
+                if(!$row->payload['verified']){
+                    $buttons .= '<a href="'.route('biodata.edit', $row->id).'" 
+                    onclick="return confirm(\'Apakah data sudah sesuai?\')" class="text-primary">Confirm</a>';
+                }else{
+                    $buttons .= '<a href="#" class="text-success">Verified</a>';
+                }
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 return $buttons;
             })
@@ -53,10 +61,11 @@ class MembersDataTable extends DataTable
      * @param \App\Models\Registration $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Member $model): QueryBuilder
+    public function query(Setting $model): QueryBuilder
     {
         return $model
-        ->with('batches','batches.course')
+        ->where('group','biodata')
+        ->latest()
         ->newQuery();
     }
 
@@ -97,15 +106,10 @@ class MembersDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('created_at')->title('Tgl Masuk'),
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('name')->title('Nama'),
             Column::make('nik')->title('NIK'),
-            Column::make('full_name')->title('Nama'),
-            Column::make('gender')->title('Jenis Kelamin'),
-            Column::make('birth_date')->title('Tgl Lahir'),
-            Column::make('school')->title('Sekolah'),
-            Column::make('level')->title('Level'),
-            Column::make('batches')->title('Halaqoh')->searchable(false),
-            Column::make('status')->title('Status'),
+            Column::make('birth_date')->title('Tanggal Lahir'),
             Column::make('profile_picture')->title('Foto'),
         ];
     }

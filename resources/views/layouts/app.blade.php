@@ -112,6 +112,11 @@
 														<span class="kt-menu__link-text">Pendaftaran</span>
 													</a>
 												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('biodata.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Verifikasi Biodata</span>
+													</a>
+												</li>
 											</ul>
 										</div>
 									</li>

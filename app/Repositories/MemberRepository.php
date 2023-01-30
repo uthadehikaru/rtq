@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -88,5 +89,39 @@ class MemberRepository implements MemberRepositoryInterface
     public function countActiveMembers(): int
     {
         return Member::has('batches')->count();
+    }
+
+    public function updateBiodata($data)
+    {
+        $member = Member::findOrFail($data['member_id']);
+        $biodata = Setting::where([
+            'group'=>'biodata',
+            'name'=>$data['member_id'],
+        ])
+        ->first();
+        
+        if($biodata){
+            $msg = 'Biodata sudah pernah diinput, ';
+            if($biodata->payload['verified'])
+                $msg .= 'dan sudah diverifikasi. terima kasih';
+            else
+                $msg .= 'sedang proses verifikasi. mohon tunggu';
+        }
+
+        $biodata = Setting::where('group','biodata')->where('payload','like','%'.$data['nik'].'%')->first();
+        if($biodata)
+            return 'NIK sudah digunakan, mohon pastikan NIK yang dimasukkan sesuai';
+            
+        if ($data['profile_picture']) {
+            $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
+        }
+        
+        $biodata = Setting::create([
+            'group'=>'biodata',
+            'name'=>$data['member_id'],
+            'payload'=>$data,
+        ]);
+
+        return null;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\BatchRepositoryInterface;
+use App\Repositories\BatchRepository;
 use Illuminate\Http\Request;
 
 class BatchMemberController extends Controller
@@ -39,11 +40,13 @@ class BatchMemberController extends Controller
         return response()->json($data);
     }
 
-    public function json(BatchRepositoryInterface $batchRepository, Request $request)
+    public function json(BatchRepository $batchRepository, Request $request)
     {
         $keyword = $request->get('q');
+        if(!$keyword)
+            $keyword = 'xx';
         $data['items'] = $batchRepository->getBatchMembers($keyword);
-        $data['total_count'] = 10;
+        $data['total_count'] = count($data['items']);
 
         return response()->json($data);
     }

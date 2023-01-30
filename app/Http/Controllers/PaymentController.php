@@ -24,7 +24,6 @@ class PaymentController extends Controller
 
     public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)
     {
-        $data['members'] = $batchRepository->getBatchMembers();
         $data['periods'] = $periodRepository->all();
         $data['period_id'] = $request->get('period_id');
 
