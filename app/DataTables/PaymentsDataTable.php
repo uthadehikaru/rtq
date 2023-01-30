@@ -37,7 +37,7 @@ class PaymentsDataTable extends DataTable
             ->addColumn('member', function($row){
                 $val = "";
                 foreach($row->details as $detail)
-                    $val .=$detail->member->full_name.' periode '.$detail->period->name;
+                    $val .='<p>'.$detail->member->full_name.' periode '.$detail->period->name.'</p>';
                 return $val;
             })
             ->editColumn('attachment', function($row){
@@ -52,7 +52,7 @@ class PaymentsDataTable extends DataTable
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 return $buttons;
             })
-            ->rawColumns(['action','attachment','status'])
+            ->rawColumns(['action','attachment','status','member'])
             ->setRowId('id');
     }
 
