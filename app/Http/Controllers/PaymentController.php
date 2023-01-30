@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PaymentsDataTable;
 use App\Exports\PaymentsExport;
 use App\Models\Payment;
 use App\Models\Period;
@@ -14,13 +15,11 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
-    public function index(PaymentRepository $paymentRepository)
+    public function index(PaymentRepository $paymentRepository, PaymentsDataTable $dataTable)
     {
-        $data['title'] = __('Payments');
-        $data['payments'] = $paymentRepository->all();
-        $data['total'] = $paymentRepository->count();
+        $data['title'] = $paymentRepository->count().' Pembayaran';
 
-        return view('datatables.payment', $data);
+        return $dataTable->render('datatables.datatable',$data);
     }
 
     public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)
