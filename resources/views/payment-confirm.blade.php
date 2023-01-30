@@ -4,70 +4,30 @@
 <script type="text/javascript">
 
 var KTSelect2 = function() {
-	var tagify = function() {
-        // Init autocompletes
-        var toEl = document.getElementById('kt_tagify_members');
-        var tagifyTo = new Tagify(toEl, {
-            delimiters: ", ", // add new tags when a comma or a space character is entered
-    		userInput: false,
-            templates: {
-                dropdownItem : function(tagData){
-                    try{
-                        return '<div class="tagify__dropdown__item">' +
-                            '<div class="kt-media-card">' +
-                            '    <div class="kt-media-card__info">' +
-                            '        <a href="#" class="kt-media-card__title">'+tagData.value+'</a>' +
-                            '        <span class="kt-media-card__desc">'+tagData.email+'</span>' +
-                            '    </div>' +
-                            '</div>' +
-                            '</div>';
-                    }
-                    catch(err){}
-                }
-            },
-            transformTag: function(tagData) {
-                tagData.class = 'tagify__tag tagify__tag--brand';
-            },
-            dropdown : {
-                classname : "color-blue",
-                enabled   : 1,
-                maxItems  : 10
-            },
-			callbacks: {
-    			"add": (e) => {
-					var members = $('tag').length
-					var periods = $('.kt-select-period').select2('data').length
-					$('#total').val(members*periods*120000)
-				},
-    			"remove": (e) => {
-					var members = $('tag').length
-					var periods = $('.kt-select-period').select2('data').length
-					$('#total').val(members*periods*120000)
-				},
-			},
-            whitelist: [
-				@foreach($members as $member)
-                {
-					id:'{{ $member->member_id }}',
-					value : '{{ $member->full_name }}',
-					email : 'Halaqoh {{ $member->batch }}',
-				}, 
-				@endforeach
-			],
-        });
-
-    }
-
-
+	
     // Private functions
     var demos = function() {
+		
+		$('.kt-select-member').select2({
+			placeholder: "@lang('Pilih Peserta')",
+			ajax: {
+				url: '{{ route('api.batchmembers') }}',
+				dataType: 'json',
+				processResults: function (data) {
+					return {
+						results: data.items
+					};
+				}
+			}
+		});
+
 		$('.kt-select-period').select2({
 			placeholder: "@lang('Pilih Periode Pembayaran')"
 		});
 
 		$('select').on('select2:close', function (evt) {
-			var members = $('tag').length
-			var periods = $(this).select2('data').length
+			var members = $('.kt-select-member').select2('data').length
+			var periods = $('.kt-select-period').select2('data').length
 			$('#total').val(members*periods*120000)
 		});
 
@@ -86,7 +46,6 @@ var KTSelect2 = function() {
 	return {
         init: function() {
             demos();
-			tagify();
         }
     };
 }();
@@ -149,7 +108,9 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Peserta</label>
 												<div class="col-9">
-													<input id="kt_tagify_members" name='members' placeholder="@lang('Masukkan nama peserta')" value="">
+													<select class="form-control kt-select-member" name="member_ids[]" multiple>
+														<option></option>
+													</select>
 												</div>
 											</div>
 											<div class="form-group row">
