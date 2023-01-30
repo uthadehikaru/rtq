@@ -28,7 +28,7 @@ class BiodataMemberController extends Controller
     public function store(BiodataMemberRequest $request, MemberRepository $memberRepository)
     {
         $data = $request->validated();
-        $data = $data->safe()->merge(['validated'=>false]);
+        $data['verified'] = false;
 
         $error = $memberRepository->updateBiodata($data);
 
