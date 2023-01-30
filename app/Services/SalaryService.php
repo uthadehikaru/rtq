@@ -80,6 +80,10 @@ class SalaryService
         foreach ($teacherPresents as $user_id => $presents) {
             $amount = 0;
             $summary = [
+                'tahsin_anak'=>['total'=>0,'amount'=>0],
+                'tahsin_dewasa'=>['total'=>0,'amount'=>0],
+                'tahsin_balita'=>['total'=>0,'amount'=>0],
+                'talaqqi_jamai'=>['total'=>0,'amount'=>0],
                 'own' => 0,
                 'switch' => 0,
                 'present' => 0,
@@ -99,19 +103,24 @@ class SalaryService
 
             foreach ($presents as $present) {
                 if ($present->status == Present::STATUS_PRESENT) {
-                    $summary['base'] += $settings[Str::snake($present->schedule->batch->course->type)];
-                    $amount += $settings[Str::snake($present->schedule->batch->course->type)]; // TODO::create config for salary per present
+                    $type = Str::snake($present->schedule->batch->course->type);
+                    $summary[$type]['total']++;
+                    $summary[$type]['amount'] += $settings[$type];
+                    $summary['base'] += $settings[$type];
+                    $amount += $settings[$type];
                     $summary[Present::STATUS_PRESENT]++;
                     $attended_at = $present->attended_at;
                     if(!$attended_at)
                         $attended_at = $present->created_at;
-                    $diff = $attended_at->diffInMinutes($present->schedule->start_at);
-                    if ($diff > $summary['maks_waktu_telat']) { 
-                        $summary['late']++;
-                        if($present->description)
-                            $summary['late_with_confirm']++;
-                        else
-                            $summary['late_without_confirm']++;
+                    if($attended_at->greaterThan($present->schedule->start_at)){
+                        $diff = $attended_at->diffInMinutes($present->schedule->start_at);
+                        if ($diff > $summary['maks_waktu_telat']) { 
+                            $summary['late']++;
+                            if($present->description)
+                                $summary['late_with_confirm']++;
+                            else
+                                $summary['late_without_confirm']++;
+                        }
                     }
 
                     $summary['oper_santri'] += Present::where([
@@ -156,7 +165,7 @@ class SalaryService
                     $summary['tunjangan'] = 0;
                 else
                     $summary['tunjangan'] -= $summary['permit']*$settings['pengurangan_tunjangan_per_izin'];
-                    
+
                 $amount += $summary['tunjangan'];
             }
 

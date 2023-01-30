@@ -15,6 +15,12 @@
                 <h5>@lang('Teacher') {{ $detail->user->name }}</h5>
                 <p>Total : <x-money :amount="$detail->amount" /></p>
                 <table class="table table-striped">
+                    @foreach (['tahsin_anak','tahsin_dewasa','tahsin_balita','talaqqi_jamai'] as $type)
+                    <tr>
+                        <td>{{ Str::title($type) }} : {{ $detail->summary[$type]['total'] }}</td>
+                        <td>Nominal : @money($detail->summary[$type]['amount'])</td>
+                    </tr>
+                    @endforeach
                     <tr>
                         <td>Jadwal : {{ $detail->summary['own'] }} (Badal : {{ $detail->summary['switch'] }})</td>
                         <td>Pokok : @money($detail->summary['base'])</td>
@@ -70,9 +76,11 @@
                                             $attended_at = $present->attended_at;
                                             if(!$attended_at)
                                                 $attended_at = $present->created_at;
-                                            $late = $attended_at->diffInMinutes($present->schedule->start_at); 
+                                            if($attended_at->greaterThan($present->schedule->start_at)){
+                                                $late = $attended_at->diffInMinutes($present->schedule->start_at);
+                                                echo $late>$detail->summary['maks_waktu_telat']?'(Telat '.$late.' menit)':'';
+                                            }
                                             @endphp
-                                            {{ $late>$detail->summary['maks_waktu_telat']?'(Telat '.$late.' menit)':'' }}
                                         @endif
                                     </span>
                                 </td>
