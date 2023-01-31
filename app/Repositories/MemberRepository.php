@@ -6,6 +6,7 @@ use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
 use App\Models\Setting;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -34,12 +35,24 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function delete($id)
     {
-        Member::destroy($id);
+        return DB::transaction(function() use ($id){
+            $member = Member::findOrFail($id);
+            $member->batches()->detach();
+            $user = $member->user;
+            $member->delete();
+            $user->delete();
+
+            return true;
+        });
     }
 
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
+            $nik = Member::where('nik',$data['nik'])->first();
+            if($nik)
+                throw new Exception('NIK sudah terdaftar');
+
             $user = User::create([
                 'email' => $data['email'],
                 'name' => $data['full_name'],
@@ -47,6 +60,10 @@ class MemberRepository implements MemberRepositoryInterface
             ]);
 
             $data['user_id'] = $user->id;
+            
+            if (isset($data['profile_picture'])) {
+                $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
+            }
             $member = Member::create($data);
 
             if (isset($data['batch_id'])) {
@@ -60,6 +77,10 @@ class MemberRepository implements MemberRepositoryInterface
     public function update($id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
+            $nik = Member::where('nik',$data['nik'])->where('id','<>',$id)->first();
+            if($nik)
+                throw new Exception('NIK sudah terdaftar');
+            
             $member = Member::with('user')->find($id);
 
             if ($member->user) {
@@ -76,6 +97,10 @@ class MemberRepository implements MemberRepositoryInterface
                 $data['user_id'] = $user->id;
             }
 
+            
+            if (isset($data['profile_picture'])) {
+                $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
+            }
             $member->update($data);
 
             if (isset($data['batch_id'])) {

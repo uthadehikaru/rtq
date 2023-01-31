@@ -38,7 +38,7 @@
             <form class="kt-form" method="POST" action="{{ route('members.update', $member->id) }}">
                 <input type="hidden" name="_method" value="PUT" />
             @else
-            <form class="kt-form" method="POST" action="{{ route('members.store') }}">
+            <form class="kt-form" method="POST" action="{{ route('members.store') }}" enctype="multipart/form-data">
             @endif
                 @csrf
                 <div class="kt-portlet__body">
@@ -57,6 +57,13 @@
                                     <option value="{{ $batch->id }}" @selected($member && $member->batch() && $member->batch()->id==$batch->id)>{{ $batch->course->name }} - {{ $batch->name }} ({{ $batch->members_count }} anggota)</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('NIK')<span class="text-danger">*</span></label>
+                            <input type="text" name="nik" class="form-control" placeholder="Nomor Induk Kependudukan"
+                            value="{{ old('nik', $member?$member->nik:'') }}"
+                            required
+                            >
                         </div>
                         <div class="form-group">
                             <label>@lang('Full Name')<span class="text-danger">*</span></label>
@@ -104,6 +111,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>@lang('Tanggal Lahir')</label>
+                            <input type="date" name="birth_date" class="form-control" placeholder="Tanggal Lahir"
+                            value="{{ old('birth_date', $member?$member->birth_date:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
                             <label>@lang('School')</label>
                             <input type="text" name="school" class="form-control" placeholder="@lang('Enter') @lang('School')"
                             value="{{ old('school', $member?$member->school:'') }}"
@@ -146,6 +159,11 @@
                             <label>@lang('Post Code')</label>
                             <input type="text" name="postcode" class="form-control" placeholder="@lang('Enter') @lang('Post Code')"
                             value="{{ old('postcode', $member?$member->postcode:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Foto')</label>
+                            <input type="file" name="profile_picture" class="form-control"
                             >
                         </div>
                     </div>

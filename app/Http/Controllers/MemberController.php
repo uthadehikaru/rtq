@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\DataTables\MembersDataTable;
 use App\Exports\MemberExport;
+use App\Http\Requests\MemberRequest;
 use App\Models\Member;
 use App\Repositories\BatchRepository;
 use App\Repositories\MemberRepository;
+use Exception;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -39,25 +41,15 @@ class MemberController extends Controller
         return view('forms.member', $data);
     }
 
-    public function store(MemberRepository $memberRepository, Request $request)
+    public function store(MemberRepository $memberRepository, MemberRequest $request)
     {
-        $data = $request->validate([
-            'full_name' => 'required',
-            'short_name' => '',
-            'email' => '',
-            'gender' => 'required',
-            'phone' => '',
-            'address' => '',
-            'postcode' => '',
-            'school' => '',
-            'class' => '',
-            'level' => '',
-            'batch_id' => '',
-            'registration_date' => '',
-            'status' => '',
-        ]);
+        $data = $request->validated();
 
-        $memberRepository->create($data);
+        try{
+            $memberRepository->create($data);
+        }catch(Exception $ex){
+            return back()->with('error',$ex->getMessage())->withInput();
+        }
 
         return redirect()->route('members.index')->with('message', __('Created Successfully'));
     }
@@ -73,25 +65,15 @@ class MemberController extends Controller
         return view('forms.member', $data);
     }
 
-    public function update(MemberRepository $memberRepository, Request $request, $member_id)
+    public function update(MemberRepository $memberRepository, MemberRequest $request, $member_id)
     {
-        $data = $request->validate([
-            'full_name' => 'required',
-            'short_name' => '',
-            'email' => '',
-            'gender' => 'required',
-            'phone' => '',
-            'address' => '',
-            'postcode' => '',
-            'school' => '',
-            'class' => '',
-            'level' => '',
-            'batch_id' => '',
-            'registration_date' => '',
-            'status' => '',
-        ]);
+        $data = $request->validated();
 
-        $memberRepository->update($member_id, $data);
+        try{
+            $memberRepository->update($member_id, $data);
+        }catch(Exception $ex){
+            return back()->with('error',$ex->getMessage())->withInput();
+        }
 
         return redirect()->route('members.index')->with('message', __('Updated Successfully'));
     }
