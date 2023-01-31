@@ -56,8 +56,6 @@ class PaymentController extends Controller
 
         DB::beginTransaction();
 
-        $members = json_decode($data['members'], true);
-
         $path = null;
         if ($request->file('attachment')) {
             $path = $request->file('attachment')->storePublicly('attachments', 'public');
@@ -71,11 +69,10 @@ class PaymentController extends Controller
         foreach ($data['period_ids'] as $period_id) {
             $period = Period::find($period_id);
 
-            foreach ($members as $member) {
-                if (! isset($member['id'])) {
-                    return back()->with('error', 'Tidak ada peserta atas nama '.$member['value']);
+            foreach ($data['members'] as $member_id) {
+                if (! isset($member_id)) {
+                    return back()->with('error', 'Peserta Tidak ditemukan');
                 }
-                $member_id = $member['id'];
                 $paymentDetail = $paymentRepository->check($payment, $member_id, $period_id);
                 if (! $paymentDetail) {
                     $paymentRepository->createDetail([

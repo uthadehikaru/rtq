@@ -65,9 +65,8 @@ class PaymentRepository implements PaymentRepositoryInterface
     public function calculate($data): int
     {
         $total = 0;
-        $members = json_decode($data['members'], true);
         foreach ($data['period_ids'] as $period_id) {
-            foreach ($members as $member) {
+            foreach ($data['members'] as $member) {
                 $total += 120000;
             }
         }

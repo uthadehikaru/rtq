@@ -108,7 +108,7 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Peserta</label>
 												<div class="col-9">
-													<select class="form-control kt-select-member" name="member_ids[]" multiple>
+													<select class="form-control kt-select-member" name="members[]" multiple>
 														<option></option>
 													</select>
 												</div>
