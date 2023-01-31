@@ -93,6 +93,12 @@ jQuery(document).ready(function () {
                         <i class="la la-check"></i>
                         @lang('Setujui')
                     </a>
+                    @else
+                    <a href="{{ route('salaries.cancel', $salary->id) }}" class="btn btn-danger btn-icon-sm"
+                    onclick="return confirm('batalkan?')">
+                        <i class="la la-times"></i>
+                        @lang('Batal')
+                    </a>
                     @endif
                     <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm" target="_BLANK">
                         <i class="la la-file"></i>
