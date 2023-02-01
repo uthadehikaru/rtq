@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -28,11 +29,20 @@ class PaymentsDataTable extends DataTable
                 elseif(Str::lower($keyword)=='lunas')
                     $query->where('status','paid');
             })
+            ->filterColumn('member', function($query, $keyword){
+                $query->whereExists(function ($query) use($keyword){
+                    $query->select(DB::raw(1))
+                    ->from('payment_details')
+                    ->join('members','members.id','payment_details.member_id')
+                    ->whereColumn('payments.id','payment_details.payment_id')
+                    ->where('members.full_name','LIKE','%'.$keyword.'%');
+                });
+            })
             ->editColumn('created_at', function($row){
                 return $row->created_at->format('d M Y H:i');
             })
             ->editColumn('status', function($row){
-                return '<span class="kt-badge '.($row->status=='new'?'kt-badge--info':'kt-badge--info').' kt-badge--inline kt-badge--pill">'.($row->status=='new'?'Baru':'Lunas').'</span>';
+                return '<span class="kt-badge '.($row->status=='new'?'kt-badge--info':'kt-badge--success').' kt-badge--inline kt-badge--pill">'.($row->status=='new'?'Baru':'Lunas').'</span>';
             })
             ->addColumn('member', function($row){
                 $val = "";
@@ -65,7 +75,7 @@ class PaymentsDataTable extends DataTable
     public function query(Payment $model): QueryBuilder
     {
         return $model
-        ->with(['details.member', 'details.batch'])
+        ->with(['details.member', 'details.batch', 'details.period'])
         ->newQuery();
     }
 
