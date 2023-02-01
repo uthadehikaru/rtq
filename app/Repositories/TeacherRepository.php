@@ -70,7 +70,7 @@ class TeacherRepository implements TeacherRepositoryInterface
             'name' => $data['name'],
             'status'=> $data['status'],
             ]);
-        $teacher->user()->update(['email' => $data['email']]);
+        $teacher->user()->update(['email' => $data['email'], 'name' => $data['name']]);
         if(isset($data['batch_ids']))
             $teacher->batches()->sync($data['batch_ids']);
         DB::commit();
