@@ -47,6 +47,8 @@ class TeacherRepository implements TeacherRepositoryInterface
             'type' => 'teacher',
         ]);
 
+        $user->assignRole('teacher');
+
         $teacher = Teacher::create([
             'name' => $data['name'],
             'status' => $data['status'],
