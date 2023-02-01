@@ -144,7 +144,6 @@ class SalaryService
                     $summary['switch']++;
                 }
                 
-
                 $summary['own']++;
 
                 $present->salary_id = $salary->id;
@@ -162,7 +161,7 @@ class SalaryService
             $amount -= $summary['potongan_telat'];
 
             if ($summary['present'] > 0) {
-                $summary['tunjangan'] = $settings['tunjangan'];
+                $summary['tunjangan'] = $settings['tunjangan']*$ratio;
                 $totalPermit = $summary['permit']+$summary['sick'];
                 if($totalPermit>$settings['maks_izin'])
                     $summary['tunjangan'] = 0;
