@@ -50,6 +50,7 @@ class TeacherController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'batch_ids' => '',
+            'status' => 'required',
         ]);
 
         $teacherRepository->create($data);
@@ -102,6 +103,7 @@ class TeacherController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'batch_ids' => '',
+            'status' => 'required',
         ]);
 
         $teacherRepository->update($id, $data);

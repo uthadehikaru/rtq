@@ -65,7 +65,7 @@ class SalaryService
 
         $salary = $this->find($salary_id);
 
-        $presents = Present::with('schedule', 'schedule.batch', 'schedule.batch.course')
+        $presents = Present::with('user', 'user.teacher', 'schedule', 'schedule.batch', 'schedule.batch.course')
         ->whereHas('schedule', function ($query) use ($salary) {
             return $query
             ->where('scheduled_at', '>=', $salary->start_date)
@@ -104,10 +104,12 @@ class SalaryService
             foreach ($presents as $present) {
                 if ($present->status == Present::STATUS_PRESENT) {
                     $type = Str::snake($present->schedule->batch->course->type);
+                    $ratio = $present->user->teacher->status=='training'?0.5:1;
                     $summary[$type]['total']++;
-                    $summary[$type]['amount'] += $settings[$type];
-                    $summary['base'] += $settings[$type];
-                    $amount += $settings[$type];
+                    $rate = $settings[$type]*$ratio;
+                    $summary[$type]['amount'] += $rate;
+                    $summary['base'] += $rate;
+                    $amount += $rate;
                     $summary[Present::STATUS_PRESENT]++;
                     $attended_at = $present->attended_at;
                     if(!$attended_at)

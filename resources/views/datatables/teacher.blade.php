@@ -101,6 +101,7 @@ jQuery(document).ready(function() {
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Email')</th>
                     <th title="Field #2">@lang('Batches')</th>
+                    <th title="Field #2">@lang('status')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
             </thead>
@@ -111,6 +112,7 @@ jQuery(document).ready(function() {
                         <td>{{ $teacher->name }}</td>
                         <td>{{ $teacher->user?->email }}</td>
                         <td>{{ $teacher->batches_count }} @lang('Batches')</td>
+                        <td>{{ $teacher->status }}</td>
                         <td>
                             <a href="{{ route('teachers.edit', $teacher->id) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')

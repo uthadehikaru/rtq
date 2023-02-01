@@ -12,6 +12,7 @@ class Teacher extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'status',
     ];
 
     public function batches()

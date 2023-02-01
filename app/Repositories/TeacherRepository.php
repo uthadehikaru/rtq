@@ -5,14 +5,14 @@ namespace App\Repositories;
 use App\Interfaces\TeacherRepositoryInterface;
 use App\Models\Teacher;
 use App\Models\User;
-use Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
     public function all()
     {
-        return Teacher::withCount('batches')->get();
+        return Teacher::withCount('batches')->latest()->get();
     }
 
     public function count()
@@ -49,10 +49,12 @@ class TeacherRepository implements TeacherRepositoryInterface
 
         $teacher = Teacher::create([
             'name' => $data['name'],
+            'status' => $data['status'],
             'user_id' => $user->id,
         ]);
 
-        $teacher->batches()->sync($data['batch_ids']);
+        if(isset($data['batch_ids']))
+            $teacher->batches()->sync($data['batch_ids']);
         DB::commit();
 
         return $teacher;
@@ -62,9 +64,13 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
         DB::beginTransaction();
         $teacher = Teacher::find($id);
-        $teacher->update(['name' => $data['name']]);
+        $teacher->update([
+            'name' => $data['name'],
+            'status'=> $data['status'],
+            ]);
         $teacher->user()->update(['email' => $data['email']]);
-        $teacher->batches()->sync($data['batch_ids']);
+        if(isset($data['batch_ids']))
+            $teacher->batches()->sync($data['batch_ids']);
         DB::commit();
 
         return $teacher;

@@ -63,6 +63,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Status')</label>
+                            <select name="status" class="form-control">
+                                <option value="tetap" @selected($teacher && $teacher->status=='tetap')>Tetap</option>
+                                <option value="training" @selected($teacher && $teacher->status=='training')>Training</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">
