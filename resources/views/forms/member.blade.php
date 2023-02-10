@@ -44,6 +44,12 @@
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
+                            <label>@lang('No Anggota')</label>
+                            <input type="text" name="member_no" class="form-control"
+                            value="{{ old('member_no', $member?$member->member_no:'') }}"
+                            >
+                        </div>
+                        <div class="form-group">
                             <label>@lang('Tanggal Masuk')</label>
                             <input type="date" name="registration_date" class="form-control"
                             value="{{ old('registration_date', $member?$member->registration_date?->format('Y-m-d'):'') }}"

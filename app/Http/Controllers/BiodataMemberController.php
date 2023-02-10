@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Setting;
 use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class BiodataMemberController extends Controller
@@ -54,6 +55,7 @@ class BiodataMemberController extends Controller
             $member->update($payload);
             $payload['verified'] = true;
             $setting->update(['payload'=>$payload]);
+            Artisan::call('member:generateno');
         });
         return back()->with('message','Berhasil dikonfirmasi');
     }

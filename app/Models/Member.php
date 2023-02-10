@@ -26,6 +26,7 @@ class Member extends Model
         'nik',
         'birth_date',
         'profile_picture',
+        'member_no',
     ];
 
     protected $casts = [

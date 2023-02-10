@@ -35,7 +35,7 @@ class MembersDataTable extends DataTable
             })
             ->editColumn('profile_picture', function($row){
                 if($row->profile_picture)
-                    return '<img src="'.asset('storage/'.$row->profile_picture).'" width="200" />';
+                    return '<a href="'.asset('storage/'.$row->profile_picture).'" target="_blank"><img src="'.asset('storage/'.$row->profile_picture).'" height="50" /></a>';
             })
             ->addColumn('action', function($row){
                 $buttons = "";
@@ -98,6 +98,7 @@ class MembersDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('created_at')->title('Tgl Masuk'),
+            Column::make('member_no')->title('No Anggota'),
             Column::make('nik')->title('NIK'),
             Column::make('full_name')->title('Nama'),
             Column::make('gender')->title('Jenis Kelamin'),

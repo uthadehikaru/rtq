@@ -25,6 +25,7 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         return [
+            'member_no'=>'',
             'nik' => 'required',
             'full_name' => 'required',
             'short_name' => '',

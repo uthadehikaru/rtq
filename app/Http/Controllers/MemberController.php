@@ -21,7 +21,8 @@ class MemberController extends Controller
 
         $total = Member::whereHas('batches')->count();
         $data['title'] = $total.' '.__('Members');
-        $data['buttons'] = '<a href="'.route('members.index', ['action'=>'export']).'" class="btn btn-success btn-icon-sm">
+        $data['buttons'] = '
+        <a href="'.route('members.index', ['action'=>'export']).'" class="btn btn-success btn-icon-sm">
             <i class="la la-download"></i>
             Export (.xls)
         </a>
