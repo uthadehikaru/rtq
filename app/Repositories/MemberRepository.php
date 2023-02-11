@@ -123,16 +123,16 @@ class MemberRepository implements MemberRepositoryInterface
 
         // extract birth date from nik
         // 3174082905880001
-        $date = Str::substr($data['nik'],6,2);
-        if($member->gender=='female')
-            $date -= 40;
-        if($date<0)
-            return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
-        $month = Str::substr($data['nik'],8,2);
-        $year = Str::substr($data['nik'],10,2); 
-        $nikDate = Carbon::create($year,$month,$date);
-        if($nikDate!=$data['birth_date'])
-            return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
+        // $date = Str::substr($data['nik'],6,2);
+        // if($member->gender=='female')
+        //     $date -= 40;
+        // if($date<0)
+        //     return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
+        // $month = Str::substr($data['nik'],8,2);
+        // $year = Str::substr($data['nik'],10,2); 
+        // $nikDate = Carbon::create($year,$month,$date);
+        // if($nikDate!=$data['birth_date'])
+        //     return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
 
         $biodata = Setting::where([
             'group'=>'biodata',
