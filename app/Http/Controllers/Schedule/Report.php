@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Present;
 use App\Repositories\BatchRepository;
 use App\Repositories\PresentRepository;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Report extends Controller
 {
@@ -16,18 +18,18 @@ class Report extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(PresentsDataTable $dataTable, BatchRepository $batchRepository)
+    public function __invoke(Request $request, PresentsDataTable $dataTable)
     {
         $data['title'] = 'Laporan';
-        $data['batches'] = $batchRepository->all();
-        $data['statuses'] = Present::STATUSES;
-        $data['buttons'] = '
-            <a href="'.route('schedules.export').'" class="btn btn-primary btn-icon-sm">
-                <i class="la la-download"></i>
-                Export (.xls)
-            </a>
-        ';
+        $data['start_date'] = $request->get('start_date',Carbon::now()->startOfMonth()->format('Y-m-d'));
+        $data['end_date'] = $request->get('end_date',Carbon::now()->endOfMonth()->format('Y-m-d'));
+        $dataTable->filterDate($data['start_date'],$data['end_date']);
+        if($request->has('type')){
+            $data['title'] .= " ".__($request->type);
+            $dataTable->filterType($request->type);
+        }
+        $data['type'] = $request->get('type');
 
-        return $dataTable->render('datatables.datatable',$data);
+        return $dataTable->render('datatables.report',$data);
     }
 }

@@ -12,6 +12,13 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTitle
 {
     use Exportable;
+    
+    private $filter = null;
+
+    public function __construct($filter=null)
+    {
+        $this->filter = $filter;    
+    }
 
     public function title(): string
     {
@@ -20,9 +27,17 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
 
     public function query()
     {
-        return Present::with(['schedule', 'user', 'schedule.batch'])
+        $model = Present::with(['schedule', 'user', 'schedule.batch'])
         ->where('type', 'member')
         ->latest();
+
+        if($this->filter['start_date'])
+            $model = $model->whereDate('created_at','>=',$this->filter['start_date']);
+            
+        if($this->filter['end_date'])
+            $model = $model->whereDate('created_at','<=',$this->filter['end_date']);
+
+        return $model;
     }
 
     public function headings(): array

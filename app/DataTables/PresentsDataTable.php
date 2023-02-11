@@ -14,6 +14,21 @@ use Yajra\DataTables\Services\DataTable;
 class PresentsDataTable extends DataTable
 {
 
+    private $type = null;
+    private $start_date = null;
+    private $end_date = null;
+
+    public function filterType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function filterDate($start_date,$end_date)
+    {
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -72,10 +87,20 @@ class PresentsDataTable extends DataTable
      */
     public function query(Present $model): QueryBuilder
     {
-        return $model
+        $model = $model
         ->with(['schedule','schedule.batch'])
-        ->latest()
-        ->newQuery();
+        ->latest();
+
+        if($this->type)
+            $model = $model->where('type',$this->type);
+
+        if($this->start_date)
+            $model = $model->whereDate('created_at','>=',$this->start_date);
+            
+        if($this->end_date)
+            $model = $model->whereDate('created_at','<=',$this->end_date);
+
+        return $model->newQuery();
     }
 
     /**

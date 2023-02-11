@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Schedule;
 
 use App\Exports\PresentsExport;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class Export extends Controller
 {
@@ -13,8 +14,13 @@ class Export extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        return (new PresentsExport)->download('rekap kehadiran per '.date('d M Y H.i').'.xlsx');
+        $filter = $request->only(['type','start_date','end_date']);
+        $export = new PresentsExport($filter);
+        $name = isset($filter['type'])?' '.__($filter['type']):'';
+        $name .= isset($filter['start_date'])?' tanggal '.$filter['start_date']:'';
+        $name .= isset($filter['end_date'])?' sampai '.$filter['end_date']:'';
+        return $export->download('rekap kehadiran'.$name.'.xlsx');
     }
 }

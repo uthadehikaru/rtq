@@ -13,6 +13,13 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
 {
     use Exportable;
 
+    private $filter = null;
+
+    public function __construct($filter=null)
+    {
+        $this->filter = $filter;    
+    }
+
     public function title(): string
     {
         return 'Pengajar';
@@ -20,9 +27,17 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function query()
     {
-        return Present::with(['schedule', 'user', 'schedule.batch'])
+        $model = Present::with(['schedule', 'user', 'schedule.batch'])
         ->where('type', 'teacher')
         ->latest();
+
+        if($this->filter['start_date'])
+            $model = $model->whereDate('created_at','>=',$this->filter['start_date']);
+            
+        if($this->filter['end_date'])
+            $model = $model->whereDate('created_at','<=',$this->filter['end_date']);
+
+        return $model;
     }
 
     public function headings(): array

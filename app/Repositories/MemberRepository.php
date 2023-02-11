@@ -6,6 +6,7 @@ use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
 use App\Models\Setting;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -119,6 +120,20 @@ class MemberRepository implements MemberRepositoryInterface
     public function updateBiodata($data)
     {
         $member = Member::findOrFail($data['member_id']);
+
+        // extract birth date from nik
+        // 3174082905880001
+        $date = Str::substr($data['nik'],6,2);
+        if($member->gender=='female')
+            $date -= 40;
+        if($date<0)
+            return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
+        $month = Str::substr($data['nik'],8,2);
+        $year = Str::substr($data['nik'],10,2); 
+        $nikDate = Carbon::create($year,$month,$date);
+        if($nikDate!=$data['birth_date'])
+            return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
+
         $biodata = Setting::where([
             'group'=>'biodata',
             'name'=>$data['member_id'],
