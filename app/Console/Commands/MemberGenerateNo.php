@@ -51,10 +51,14 @@ class MemberGenerateNo extends Command
             $memberNo .= Str::padLeft($no++,3,'0');
             $member->update(['member_no'=>$memberNo]);
 
-            if(!$birthDate || $birthDate!=$member->birth_date){
+            if(!$birthDate)
+                $birthDate = $member->birth_date;
+
+            if($birthDate!=$member->birth_date){
                 $birthDate = $member->birth_date;
                 $no = 1;
             }
+            
             $bar->advance();
         }
         $bar->finish();
