@@ -43,8 +43,9 @@ class BatchMemberController extends Controller
     public function json(BatchRepository $batchRepository, Request $request)
     {
         $keyword = $request->get('q');
-        if(!$keyword)
+        if (! $keyword) {
             $keyword = 'xx';
+        }
         $data['items'] = $batchRepository->getBatchMembers($keyword);
         $data['total_count'] = count($data['items']);
 

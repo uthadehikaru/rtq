@@ -22,7 +22,7 @@ class MemberController extends Controller
         $total = Member::whereHas('batches')->count();
         $data['title'] = $total.' '.__('Members');
         $data['buttons'] = '
-        <a href="'.route('members.index', ['action'=>'export']).'" class="btn btn-success btn-icon-sm">
+        <a href="'.route('members.index', ['action' => 'export']).'" class="btn btn-success btn-icon-sm">
             <i class="la la-download"></i>
             Export (.xls)
         </a>
@@ -30,6 +30,7 @@ class MemberController extends Controller
             <i class="la la-plus"></i>
             New Member
         </a>';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 
@@ -46,10 +47,10 @@ class MemberController extends Controller
     {
         $data = $request->validated();
 
-        try{
+        try {
             $memberRepository->create($data);
-        }catch(Exception $ex){
-            return back()->with('error',$ex->getMessage())->withInput();
+        } catch(Exception $ex) {
+            return back()->with('error', $ex->getMessage())->withInput();
         }
 
         return redirect()->route('members.index')->with('message', __('Created Successfully'));
@@ -70,10 +71,10 @@ class MemberController extends Controller
     {
         $data = $request->validated();
 
-        try{
+        try {
             $memberRepository->update($member_id, $data);
-        }catch(Exception $ex){
-            return back()->with('error',$ex->getMessage())->withInput();
+        } catch(Exception $ex) {
+            return back()->with('error', $ex->getMessage())->withInput();
         }
 
         return redirect()->route('members.index')->with('message', __('Updated Successfully'));

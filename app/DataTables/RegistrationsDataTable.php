@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class RegistrationsDataTable extends DataTable
@@ -17,25 +15,26 @@ class RegistrationsDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
-            ->editColumn('birth_date', function($row){
+            ->editColumn('birth_date', function ($row) {
                 return $row->birth_date?->format('d M Y');
             })
-            ->editColumn('gender', function($row){
+            ->editColumn('gender', function ($row) {
                 return __($row->gender);
             })
-            ->addColumn('action', function($row){
-                $buttons = "";
+            ->addColumn('action', function ($row) {
+                $buttons = '';
                 $buttons .= '<a href="'.route('registrations.show', $row->id).'" class="text-primary">Lihat</a>';
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+
                 return $buttons;
             })
             ->rawColumns(['action'])
@@ -45,7 +44,7 @@ class RegistrationsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Registration $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Registration $model): QueryBuilder
@@ -73,7 +72,7 @@ class RegistrationsDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -107,6 +106,6 @@ class RegistrationsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Registration_' . date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

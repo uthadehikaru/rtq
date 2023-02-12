@@ -17,6 +17,7 @@ class TransactionController extends Controller
     public function index(TransactionsDataTable $datatable, TransactionRepository $transactionRepository)
     {
         $data['balance'] = $transactionRepository->getBalance();
+
         return $datatable->render('datatables.transaction', $data);
     }
 
@@ -28,6 +29,7 @@ class TransactionController extends Controller
     public function create()
     {
         $data['transaction'] = null;
+
         return view('forms.transaction', $data);
     }
 
@@ -40,20 +42,20 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'transaction_date'=>'required|date',
-            'description'=>'required',
-            'type'=>'required|in:debit,credit',
-            'nominal'=>'required|numeric',
+            'transaction_date' => 'required|date',
+            'description' => 'required',
+            'type' => 'required|in:debit,credit',
+            'nominal' => 'required|numeric',
         ]);
 
         Transaction::create([
-            'transaction_date'=>$data['transaction_date'],
-            'description'=>$data['description'],
-            'debit'=>$data['type']=='debit'?$data['nominal']:0,
-            'credit'=>$data['type']=='credit'?$data['nominal']:0,
+            'transaction_date' => $data['transaction_date'],
+            'description' => $data['description'],
+            'debit' => $data['type'] == 'debit' ? $data['nominal'] : 0,
+            'credit' => $data['type'] == 'credit' ? $data['nominal'] : 0,
         ]);
 
-        return to_route('transactions.index')->with('message','Berhasil ditambahkan');
+        return to_route('transactions.index')->with('message', 'Berhasil ditambahkan');
     }
 
     /**
@@ -76,6 +78,7 @@ class TransactionController extends Controller
     public function edit($id)
     {
         $data['transaction'] = Transaction::find($id);
+
         return view('forms.transaction', $data);
     }
 
@@ -88,22 +91,21 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $data = $request->validate([
-            'transaction_date'=>'required|date',
-            'description'=>'required',
-            'type'=>'required|in:debit,credit',
-            'nominal'=>'required|numeric',
+            'transaction_date' => 'required|date',
+            'description' => 'required',
+            'type' => 'required|in:debit,credit',
+            'nominal' => 'required|numeric',
         ]);
 
-        Transaction::where('id',$id)->update([
-            'transaction_date'=>$data['transaction_date'],
-            'description'=>$data['description'],
-            'debit'=>$data['type']=='debit'?$data['nominal']:0,
-            'credit'=>$data['type']=='credit'?$data['nominal']:0,
+        Transaction::where('id', $id)->update([
+            'transaction_date' => $data['transaction_date'],
+            'description' => $data['description'],
+            'debit' => $data['type'] == 'debit' ? $data['nominal'] : 0,
+            'credit' => $data['type'] == 'credit' ? $data['nominal'] : 0,
         ]);
 
-        return to_route('transactions.index')->with('message','Berhasil diperbaharui');
+        return to_route('transactions.index')->with('message', 'Berhasil diperbaharui');
     }
 
     /**

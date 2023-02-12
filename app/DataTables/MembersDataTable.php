@@ -15,48 +15,50 @@ class MembersDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
-            ->editColumn('batches', function($row){
-                return $row->batches->count()?$row->batches->pluck('name')->join(', '):'Inaktif';
+            ->editColumn('batches', function ($row) {
+                return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif';
             })
-            ->editColumn('gender', function($row){
+            ->editColumn('gender', function ($row) {
                 return __($row->gender);
             })
-            ->editColumn('birth_date', function($row){
+            ->editColumn('birth_date', function ($row) {
                 return $row->birth_date?->format('d M Y');
             })
-            ->editColumn('profile_picture', function($row){
-                if($row->profile_picture)
+            ->editColumn('profile_picture', function ($row) {
+                if ($row->profile_picture) {
                     return '<a href="'.asset('storage/'.$row->profile_picture).'" target="_blank"><img src="'.asset('storage/'.$row->profile_picture).'" height="50" /></a>';
+                }
             })
-            ->addColumn('action', function($row){
-                $buttons = "";
+            ->addColumn('action', function ($row) {
+                $buttons = '';
                 $buttons .= '<a href="'.route('members.edit', $row->id).'" class="text-warning">Ubah</a>';
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+
                 return $buttons;
             })
-            ->rawColumns(['action','profile_picture'])
+            ->rawColumns(['action', 'profile_picture'])
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Registration $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Member $model): QueryBuilder
     {
         return $model
-        ->with('batches','batches.course')
+        ->with('batches', 'batches.course')
         ->newQuery();
     }
 
@@ -80,7 +82,7 @@ class MembersDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -118,6 +120,6 @@ class MembersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Registration_' . date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

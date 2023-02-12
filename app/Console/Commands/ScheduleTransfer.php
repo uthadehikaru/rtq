@@ -2,12 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Member;
 use App\Models\Schedule;
-use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class ScheduleTransfer extends Command
 {
@@ -33,23 +29,26 @@ class ScheduleTransfer extends Command
     public function handle()
     {
         $schedules = Schedule::latest()
-        ->with(['presents','batch','presents.user','presents.user.member'])
+        ->with(['presents', 'batch', 'presents.user', 'presents.user.member'])
         ->get();
 
         $bar = $this->output->createProgressBar($schedules->count());
 
         $bar->start();
         foreach ($schedules as $schedule) {
-            if($schedule->batch->course_id==9)
+            if ($schedule->batch->course_id == 9) {
                 continue;
-                
-            foreach($schedule->presents as $present){
-                if($present->type=='teacher')
-                    continue;
+            }
 
-                $memberBatch = $present->user->member->batches()->where('course_id','<>',9)->first();
-                if($memberBatch && $memberBatch->id!=$schedule->batch_id)
-                    $present->update(['is_transfer'=>true]);
+            foreach ($schedule->presents as $present) {
+                if ($present->type == 'teacher') {
+                    continue;
+                }
+
+                $memberBatch = $present->user->member->batches()->where('course_id', '<>', 9)->first();
+                if ($memberBatch && $memberBatch->id != $schedule->batch_id) {
+                    $present->update(['is_transfer' => true]);
+                }
             }
             $bar->advance();
         }

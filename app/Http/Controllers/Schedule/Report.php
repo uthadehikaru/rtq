@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Schedule;
 
 use App\DataTables\PresentsDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Present;
-use App\Repositories\BatchRepository;
-use App\Repositories\PresentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,15 +18,15 @@ class Report extends Controller
     public function __invoke(Request $request, PresentsDataTable $dataTable)
     {
         $data['title'] = 'Laporan';
-        $data['start_date'] = $request->get('start_date',Carbon::now()->startOfMonth()->format('Y-m-d'));
-        $data['end_date'] = $request->get('end_date',Carbon::now()->endOfMonth()->format('Y-m-d'));
-        $dataTable->filterDate($data['start_date'],$data['end_date']);
-        if($request->has('type')){
-            $data['title'] .= " ".__($request->type);
+        $data['start_date'] = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));
+        $data['end_date'] = $request->get('end_date', Carbon::now()->endOfMonth()->format('Y-m-d'));
+        $dataTable->filterDate($data['start_date'], $data['end_date']);
+        if ($request->has('type')) {
+            $data['title'] .= ' '.__($request->type);
             $dataTable->filterType($request->type);
         }
         $data['type'] = $request->get('type');
 
-        return $dataTable->render('datatables.report',$data);
+        return $dataTable->render('datatables.report', $data);
     }
 }

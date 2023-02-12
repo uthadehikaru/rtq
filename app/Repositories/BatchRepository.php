@@ -65,12 +65,13 @@ class BatchRepository implements BatchRepositoryInterface
         ->take(10)
         ->get();
         $data = [];
-        foreach($members as $member){
-            $data[] =[
-                'id'=>$member->member_id,
-                'text'=>$member->full_name.' - halaqoh '.$member->batch,
+        foreach ($members as $member) {
+            $data[] = [
+                'id' => $member->member_id,
+                'text' => $member->full_name.' - halaqoh '.$member->batch,
             ];
         }
+
         return $data;
     }
 

@@ -2,15 +2,17 @@
 
 use App\Models\Setting;
 
-if(!function_exists('setting')){
-    function setting($name, $group=null)
+if (! function_exists('setting')) {
+    function setting($name, $group = null)
     {
         $params['name'] = $name;
-        if($group)
+        if ($group) {
             $params['group'] = $group;
+        }
         $setting = Setting::where($params)->first();
-        if($setting)
+        if ($setting) {
             return json_decode($setting->payload, true);
+        }
 
         return null;
     }

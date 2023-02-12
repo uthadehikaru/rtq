@@ -29,7 +29,7 @@ class AddMemberToSchedule extends Controller
             $present = Present::create([
                 'schedule_id' => $schedule_id,
                 'type' => 'member',
-                'is_transfer'=>true,
+                'is_transfer' => true,
                 'user_id' => $user_id,
             ]);
         }

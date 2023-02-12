@@ -12,7 +12,6 @@ use Yajra\DataTables\Services\DataTable;
 
 class SchedulesDataTable extends DataTable
 {
-
     private $user_id = 0;
 
     public function setUserId($user_id)
@@ -23,17 +22,17 @@ class SchedulesDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->filterColumn('batch_id', function($query, $keyword) {
-                $sql = "batches.name like ?";
+            ->filterColumn('batch_id', function ($query, $keyword) {
+                $sql = 'batches.name like ?';
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->filterColumn('teacher', function($query, $keyword) {
+            ->filterColumn('teacher', function ($query, $keyword) {
                 $sql = "exists(select 1 from presents 
                 join users on presents.user_id=users.id
                 where presents.schedule_id=schedules.id 
@@ -41,32 +40,33 @@ class SchedulesDataTable extends DataTable
                 and users.name like ?)";
                 $query->whereRaw($sql, ["%{$keyword}%"]);
             })
-            ->editColumn('scheduled_at', function($row){
+            ->editColumn('scheduled_at', function ($row) {
                 return $row->scheduled_at->format('d M Y');
             })
-            ->editColumn('start_at', function($row){
+            ->editColumn('start_at', function ($row) {
                 return $row->created_at->format('H:i');
             })
-            ->editColumn('batch_id', function($row){
+            ->editColumn('batch_id', function ($row) {
                 return $row->batch->name;
             })
-            ->addColumn('teacher', function($row){
+            ->addColumn('teacher', function ($row) {
                 $teachers = [];
-                foreach($row->presents->where('type','teacher') as $teacher){
+                foreach ($row->presents->where('type', 'teacher') as $teacher) {
                     $teachers[] = $teacher->user->name;
-                }   
-                return implode(", ",$teachers);
-            })
-            ->addColumn('action', function($row){
-                $buttons = "";
-                if($this->user_id>0){
-                    $buttons .= '<a href="'.route('teacher.schedules.detail', $row->id).'" class="text-primary">Detail</a>';
                 }
-                else{
+
+                return implode(', ', $teachers);
+            })
+            ->addColumn('action', function ($row) {
+                $buttons = '';
+                if ($this->user_id > 0) {
+                    $buttons .= '<a href="'.route('teacher.schedules.detail', $row->id).'" class="text-primary">Detail</a>';
+                } else {
                     $buttons .= '<a href="'.route('schedules.presents.index', $row->id).'" class="text-primary">Detail</a>';
                     $buttons .= '<a href="'.route('schedules.edit', $row->id).'" class="ml-2 text-warning">Ubah</a>';
                     $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 }
+
                 return $buttons;
             })
             ->rawColumns(['action'])
@@ -76,17 +76,18 @@ class SchedulesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Registration $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Schedule $model): QueryBuilder
     {
-        if($this->user_id>0)
+        if ($this->user_id > 0) {
             $model = $model->whereRelation('presents', 'user_id', $this->user_id);
+        }
 
         return $model
-        ->join('batches','batches.id','schedules.batch_id')
-        ->with('batch','presents','presents.user')
+        ->join('batches', 'batches.id', 'schedules.batch_id')
+        ->with('batch', 'presents', 'presents.user')
         ->withCount(['presents' => function ($query) {
             $query->where('type', 'member');
         }])
@@ -114,7 +115,7 @@ class SchedulesDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -147,6 +148,6 @@ class SchedulesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Registration_' . date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

@@ -36,7 +36,7 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function delete($id)
     {
-        return DB::transaction(function() use ($id){
+        return DB::transaction(function () use ($id) {
             $member = Member::findOrFail($id);
             $member->batches()->detach();
             $user = $member->user;
@@ -50,9 +50,10 @@ class MemberRepository implements MemberRepositoryInterface
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-            $nik = Member::where('nik',$data['nik'])->first();
-            if($nik)
+            $nik = Member::where('nik', $data['nik'])->first();
+            if ($nik) {
                 throw new Exception('NIK sudah terdaftar');
+            }
 
             $user = User::create([
                 'email' => $data['email'],
@@ -61,7 +62,7 @@ class MemberRepository implements MemberRepositoryInterface
             ]);
 
             $data['user_id'] = $user->id;
-            
+
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
             }
@@ -78,10 +79,11 @@ class MemberRepository implements MemberRepositoryInterface
     public function update($id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
-            $nik = Member::where('nik',$data['nik'])->where('id','<>',$id)->first();
-            if($nik)
+            $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
+            if ($nik) {
                 throw new Exception('NIK sudah terdaftar');
-            
+            }
+
             $member = Member::with('user')->find($id);
 
             if ($member->user) {
@@ -98,7 +100,6 @@ class MemberRepository implements MemberRepositoryInterface
                 $data['user_id'] = $user->id;
             }
 
-            
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
             }
@@ -129,37 +130,39 @@ class MemberRepository implements MemberRepositoryInterface
         // if($date<0)
         //     return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
         // $month = Str::substr($data['nik'],8,2);
-        // $year = Str::substr($data['nik'],10,2); 
+        // $year = Str::substr($data['nik'],10,2);
         // $nikDate = Carbon::create($year,$month,$date);
         // if($nikDate!=$data['birth_date'])
         //     return "Tanggal lahir dan NIK tidak sesuai, mohon cek kembali";
 
         $biodata = Setting::where([
-            'group'=>'biodata',
-            'name'=>$data['member_id'],
+            'group' => 'biodata',
+            'name' => $data['member_id'],
         ])
         ->first();
-        
-        if($biodata){
+
+        if ($biodata) {
             $msg = 'Biodata sudah pernah diinput, ';
-            if($biodata->payload['verified'])
+            if ($biodata->payload['verified']) {
                 $msg .= 'dan sudah diverifikasi. terima kasih';
-            else
+            } else {
                 $msg .= 'sedang proses verifikasi. mohon tunggu';
+            }
         }
 
-        $biodata = Setting::where('group','biodata')->where('payload','like','%'.$data['nik'].'%')->first();
-        if($biodata)
+        $biodata = Setting::where('group', 'biodata')->where('payload', 'like', '%'.$data['nik'].'%')->first();
+        if ($biodata) {
             return 'NIK sudah digunakan, mohon pastikan NIK yang dimasukkan sesuai';
-            
+        }
+
         if ($data['profile_picture']) {
             $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
         }
-        
+
         $biodata = Setting::create([
-            'group'=>'biodata',
-            'name'=>$data['member_id'],
-            'payload'=>$data,
+            'group' => 'biodata',
+            'name' => $data['member_id'],
+            'payload' => $data,
         ]);
 
         return null;

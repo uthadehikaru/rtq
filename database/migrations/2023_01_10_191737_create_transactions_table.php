@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->date('transaction_date');
             $table->text('description');
-            $table->decimal('debit',10,2)->default(0);
-            $table->decimal('credit',10,2)->default(0);
+            $table->decimal('debit', 10, 2)->default(0);
+            $table->decimal('credit', 10, 2)->default(0);
         });
     }
 

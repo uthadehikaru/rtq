@@ -25,13 +25,13 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         return [
-            'member_no'=>'',
+            'member_no' => '',
             'nik' => 'required',
             'full_name' => 'required',
             'short_name' => '',
             'email' => '',
             'gender' => 'required',
-            'birth_date'=>'',
+            'birth_date' => '',
             'phone' => '',
             'address' => '',
             'postcode' => '',
@@ -41,7 +41,7 @@ class MemberRequest extends FormRequest
             'batch_id' => '',
             'registration_date' => '',
             'status' => '',
-            'profile_picture'=>'',
+            'profile_picture' => '',
         ];
     }
 }

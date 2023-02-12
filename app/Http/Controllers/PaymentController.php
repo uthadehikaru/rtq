@@ -19,7 +19,7 @@ class PaymentController extends Controller
     {
         $data['title'] = $paymentRepository->count().' Pembayaran';
 
-        return $dataTable->render('datatables.datatable',$data);
+        return $dataTable->render('datatables.datatable', $data);
     }
 
     public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)

@@ -6,16 +6,15 @@ use App\Models\Present;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\SearchPane;
 use Yajra\DataTables\Services\DataTable;
 
 class PresentsDataTable extends DataTable
 {
-
     private $type = null;
+
     private $start_date = null;
+
     private $end_date = null;
 
     public function filterType($type)
@@ -23,7 +22,7 @@ class PresentsDataTable extends DataTable
         $this->type = $type;
     }
 
-    public function filterDate($start_date,$end_date)
+    public function filterDate($start_date, $end_date)
     {
         $this->start_date = $start_date;
         $this->end_date = $end_date;
@@ -32,73 +31,83 @@ class PresentsDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->filterColumn('description', function($query, $keyword) {
-                if($keyword=='operan')
-                    $query->where('is_transfer',true);
-                if($keyword=='badal')
-                    $query->where('is_badal',true);
+            ->filterColumn('description', function ($query, $keyword) {
+                if ($keyword == 'operan') {
+                    $query->where('is_transfer', true);
+                }
+                if ($keyword == 'badal') {
+                    $query->where('is_badal', true);
+                }
             })
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y');
             })
-            ->editColumn('schedule_id', function($row){
+            ->editColumn('schedule_id', function ($row) {
                 return $row->schedule->batch->code.' - '.$row->schedule->batch->name;
             })
-            ->editColumn('user_id', function($row){
+            ->editColumn('user_id', function ($row) {
                 return $row->user->name;
             })
-            ->editColumn('type', function($row){
+            ->editColumn('type', function ($row) {
                 return __($row->type);
             })
-            ->editColumn('status', function($row){
+            ->editColumn('status', function ($row) {
                 $status = __('app.present.status.'.$row->status);
-                if($row->status=='present' && $row->attended_at)
+                if ($row->status == 'present' && $row->attended_at) {
                     $status .= ' pada '.$row->attended_at->format('H:i');
+                }
+
                 return $status;
             })
-            ->editColumn('description', function($row){
+            ->editColumn('description', function ($row) {
                 $description = $row->description;
-                if($row->photo)
+                if ($row->photo) {
                     $description .= '<a href="'.asset('storage/'.$row->photo).'" target="_blank">Bukti Foto</a>';
-                $description .= ' '.($row->type=='teacher' && $row->is_badal?'(Badal)':'');
-                $description .= ' '.($row->type=='member' && $row->is_transfer?'(Operan)':'');
+                }
+                $description .= ' '.($row->type == 'teacher' && $row->is_badal ? '(Badal)' : '');
+                $description .= ' '.($row->type == 'member' && $row->is_transfer ? '(Operan)' : '');
+
                 return $description;
             })
-            ->addColumn('action', function($row){
-                $buttons = "";
-                $buttons .= '<a href="'.route('schedules.presents.edit', ['schedule'=>$row->schedule_id,'present'=>$row->id,'redirect'=>url()->current()]).'" class="ml-2 text-warning">Ubah</a>';
+            ->addColumn('action', function ($row) {
+                $buttons = '';
+                $buttons .= '<a href="'.route('schedules.presents.edit', ['schedule' => $row->schedule_id, 'present' => $row->id, 'redirect' => url()->current()]).'" class="ml-2 text-warning">Ubah</a>';
+
                 return $buttons;
             })
-            ->rawColumns(['action','description'])
+            ->rawColumns(['action', 'description'])
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Registration $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Present $model): QueryBuilder
     {
         $model = $model
-        ->with(['schedule','schedule.batch'])
+        ->with(['schedule', 'schedule.batch'])
         ->latest();
 
-        if($this->type)
-            $model = $model->where('type',$this->type);
+        if ($this->type) {
+            $model = $model->where('type', $this->type);
+        }
 
-        if($this->start_date)
-            $model = $model->whereDate('created_at','>=',$this->start_date);
-            
-        if($this->end_date)
-            $model = $model->whereDate('created_at','<=',$this->end_date);
+        if ($this->start_date) {
+            $model = $model->whereDate('created_at', '>=', $this->start_date);
+        }
+
+        if ($this->end_date) {
+            $model = $model->whereDate('created_at', '<=', $this->end_date);
+        }
 
         return $model->newQuery();
     }
@@ -148,6 +157,6 @@ class PresentsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Registration_' . date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

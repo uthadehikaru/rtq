@@ -2,7 +2,6 @@
 
 namespace App\DataTables;
 
-use App\Models\Member;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -24,68 +23,71 @@ class MembersBiodataDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->filterColumn('full_name', function($query, $keyword){
+            ->filterColumn('full_name', function ($query, $keyword) {
                 $query->where('members.full_name', 'like', '%'.$keyword.'%');
             })
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
-            ->addColumn('nik', function($row){
+            ->addColumn('nik', function ($row) {
                 return $row->payload['nik'];
             })
-            ->addColumn('birth_date', function($row){
-                return Carbon::createFromFormat('Y-m-d',$row->payload['birth_date'])->format('d M Y');
+            ->addColumn('birth_date', function ($row) {
+                return Carbon::createFromFormat('Y-m-d', $row->payload['birth_date'])->format('d M Y');
             })
-            ->addColumn('profile_picture', function($row){
-                if($row->payload['profile_picture'])
-                return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.asset('storage/'.$row->payload['profile_picture']).'" width="200" /></a>';
+            ->addColumn('profile_picture', function ($row) {
+                if ($row->payload['profile_picture']) {
+                    return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.asset('storage/'.$row->payload['profile_picture']).'" width="200" /></a>';
+                }
             })
-            ->addColumn('status', function($row){
-                if($row->payload['verified'])
+            ->addColumn('status', function ($row) {
+                if ($row->payload['verified']) {
                     return '<span class="text-success">Verified</span>';
-                
+                }
+
                 return '<span class="text-danger">Not Verified</span>';
             })
-            ->addColumn('action', function($row){
-                $buttons = "";
-                if(!$row->payload['verified']){
+            ->addColumn('action', function ($row) {
+                $buttons = '';
+                if (! $row->payload['verified']) {
                     $buttons .= '<a href="'.route('biodata.edit', $row->id).'" 
                     onclick="return confirm(\'Apakah data sudah sesuai?\')" class="text-primary">Confirm</a>';
                 }
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+
                 return $buttons;
             })
-            ->rawColumns(['action','profile_picture','status'])
+            ->rawColumns(['action', 'profile_picture', 'status'])
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Registration $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Setting $model): QueryBuilder
     {
         $model = $model
         ->selectRaw('settings.*, members.full_name')
-        ->join('members','members.id','settings.name')
-        ->where('group','biodata')
+        ->join('members', 'members.id', 'settings.name')
+        ->where('group', 'biodata')
         ->latest('settings.created_at');
 
-        switch($this->status){
+        switch($this->status) {
             case 'verified':
-            $model = $model->where('payload->verified',true);
-            break;
+                $model = $model->where('payload->verified', true);
+                break;
             case 'unverified':
-            $model = $model->where('payload->verified',false);
-            break;
+                $model = $model->where('payload->verified', false);
+                break;
         }
 
         return $model->newQuery();
@@ -106,7 +108,7 @@ class MembersBiodataDataTable extends DataTable
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel')
+                        Button::make('excel'),
                     ]);
     }
 
@@ -140,6 +142,6 @@ class MembersBiodataDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Biodata_' . date('YmdHis');
+        return 'Biodata_'.date('YmdHis');
     }
 }

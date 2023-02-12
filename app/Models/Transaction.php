@@ -17,11 +17,11 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'transaction_date'=>'date:d M Y',
+        'transaction_date' => 'date:d M Y',
     ];
 
     public function nominal()
     {
-        return $this->debit>0?$this->debit:$this->credit;
+        return $this->debit > 0 ? $this->debit : $this->credit;
     }
 }

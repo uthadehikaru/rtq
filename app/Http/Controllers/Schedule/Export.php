@@ -16,11 +16,12 @@ class Export extends Controller
      */
     public function __invoke(Request $request)
     {
-        $filter = $request->only(['type','start_date','end_date']);
+        $filter = $request->only(['type', 'start_date', 'end_date']);
         $export = new PresentsExport($filter);
-        $name = isset($filter['type'])?' '.__($filter['type']):'';
-        $name .= isset($filter['start_date'])?' tanggal '.$filter['start_date']:'';
-        $name .= isset($filter['end_date'])?' sampai '.$filter['end_date']:'';
+        $name = isset($filter['type']) ? ' '.__($filter['type']) : '';
+        $name .= isset($filter['start_date']) ? ' tanggal '.$filter['start_date'] : '';
+        $name .= isset($filter['end_date']) ? ' sampai '.$filter['end_date'] : '';
+
         return $export->download('rekap kehadiran'.$name.'.xlsx');
     }
 }

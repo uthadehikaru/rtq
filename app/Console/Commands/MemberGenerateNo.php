@@ -29,8 +29,8 @@ class MemberGenerateNo extends Command
      */
     public function handle()
     {
-        if($this->option('reset')){
-            $reset = Member::whereNotNull('member_no')->update(['member_no'=>null]);
+        if ($this->option('reset')) {
+            $reset = Member::whereNotNull('member_no')->update(['member_no' => null]);
             $this->info('Reset : '.$reset);
         }
 
@@ -40,28 +40,30 @@ class MemberGenerateNo extends Command
         ->get();
         $birthDate = null;
         $no = 1;
-        
+
         $bar = $this->output->createProgressBar($members->count());
 
         $bar->start();
-        foreach($members as $member){
-            $memberNo = "RTQ";
-            $memberNo .= $member->gender=='male'?"1":"2";
+        foreach ($members as $member) {
+            $memberNo = 'RTQ';
+            $memberNo .= $member->gender == 'male' ? '1' : '2';
             $memberNo .= $member->birth_date->format('dmy');
-            $memberNo .= Str::padLeft($no++,3,'0');
-            $member->update(['member_no'=>$memberNo]);
+            $memberNo .= Str::padLeft($no++, 3, '0');
+            $member->update(['member_no' => $memberNo]);
 
-            if(!$birthDate)
+            if (! $birthDate) {
                 $birthDate = $member->birth_date;
+            }
 
-            if($birthDate!=$member->birth_date){
+            if ($birthDate != $member->birth_date) {
                 $birthDate = $member->birth_date;
                 $no = 1;
             }
-            
+
             $bar->advance();
         }
         $bar->finish();
+
         return Command::SUCCESS;
     }
 }

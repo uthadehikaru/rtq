@@ -22,13 +22,13 @@ return new class extends Migration
             $table->string('short_name');
             $table->string('birth_place');
             $table->date('birth_date');
-            $table->enum('gender', ['male','female']);
+            $table->enum('gender', ['male', 'female']);
             $table->string('address');
             $table->string('phone');
             $table->string('email');
             $table->string('type');
             $table->string('reference')->nullable();
-            $table->enum('schedule_option', ['weekend','weekday'])->nullable();
+            $table->enum('schedule_option', ['weekend', 'weekday'])->nullable();
             $table->string('activity')->nullable();
             $table->time('school_start_time')->nullable();
             $table->time('school_end_time')->nullable();

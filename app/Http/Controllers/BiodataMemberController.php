@@ -15,9 +15,9 @@ class BiodataMemberController extends Controller
 {
     public function index(MembersBiodataDataTable $dataTable, Request $request)
     {
-        $count = Setting::where('group','biodata')->count();
-        $verified = Setting::where('group','biodata')->where('payload->verified',true)->count();
-        $unverified = Setting::where('group','biodata')->where('payload->verified',false)->count();
+        $count = Setting::where('group', 'biodata')->count();
+        $verified = Setting::where('group', 'biodata')->where('payload->verified', true)->count();
+        $unverified = Setting::where('group', 'biodata')->where('payload->verified', false)->count();
         $total = Member::has('batches')->count();
         $dataTable->setStatus($request->get('status'));
         $data['title'] = $count.'/'.$total.' Biodata';
@@ -25,6 +25,7 @@ class BiodataMemberController extends Controller
         <a href="'.url()->current().'?status=verified" class="btn btn-success">'.$verified.' Verified</a>
         <a href="'.url()->current().'?status=unverified" class="btn btn-warning">'.$unverified.' Not Verified</a>
         ';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 
@@ -40,24 +41,26 @@ class BiodataMemberController extends Controller
 
         $error = $memberRepository->updateBiodata($data);
 
-        if($error)
-            return back()->with('error',$error)->withInput();
+        if ($error) {
+            return back()->with('error', $error)->withInput();
+        }
 
-        return back()->with('message','Terima kasih, data anda akan kami verifikasi');
+        return back()->with('message', 'Terima kasih, data anda akan kami verifikasi');
     }
 
     public function edit($id)
     {
-        DB::transaction(function() use ($id){
+        DB::transaction(function () use ($id) {
             $setting = Setting::find($id);
             $member = Member::find($setting->name);
             $payload = $setting->payload;
             $member->update($payload);
             $payload['verified'] = true;
-            $setting->update(['payload'=>$payload]);
+            $setting->update(['payload' => $payload]);
             Artisan::call('member:generateno');
         });
-        return back()->with('message','Berhasil dikonfirmasi');
+
+        return back()->with('message', 'Berhasil dikonfirmasi');
     }
 
     public function destroy($id)

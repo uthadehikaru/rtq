@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Salary;
-use App\Services\SalaryService;
 use Illuminate\Http\Request;
 
 class ApproveSalary extends Controller
@@ -18,7 +17,7 @@ class ApproveSalary extends Controller
     public function __invoke($salary_id)
     {
         $salary = Salary::findOrFail($salary_id);
-        $salary->update(['approved_at'=>now()]);
+        $salary->update(['approved_at' => now()]);
 
         return to_route('salaries.details.index', $salary_id)->with('message', __('Perhitungan telah disetujui'));
     }

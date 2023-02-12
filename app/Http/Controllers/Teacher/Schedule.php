@@ -11,6 +11,7 @@ class Schedule extends Controller
     {
         $data['title'] = 'Absensi';
         $data['batches'] = $batchRepository->all();
-        return view('schedule-form',$data);
+
+        return view('schedule-form', $data);
     }
 }

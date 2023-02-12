@@ -30,9 +30,10 @@ class UpdateSchedule extends Controller
                     $present->status = $statuses[$present->id];
                 }
 
-                if(isset($descriptions[$present->id]))
+                if (isset($descriptions[$present->id])) {
                     $present->description = $descriptions[$present->id];
-                
+                }
+
                 if ($present->isDirty()) {
                     $present->save();
                 }

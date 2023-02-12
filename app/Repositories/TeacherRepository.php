@@ -55,8 +55,9 @@ class TeacherRepository implements TeacherRepositoryInterface
             'user_id' => $user->id,
         ]);
 
-        if(isset($data['batch_ids']))
+        if (isset($data['batch_ids'])) {
             $teacher->batches()->sync($data['batch_ids']);
+        }
         DB::commit();
 
         return $teacher;
@@ -68,11 +69,12 @@ class TeacherRepository implements TeacherRepositoryInterface
         $teacher = Teacher::find($id);
         $teacher->update([
             'name' => $data['name'],
-            'status'=> $data['status'],
-            ]);
+            'status' => $data['status'],
+        ]);
         $teacher->user()->update(['email' => $data['email'], 'name' => $data['name']]);
-        if(isset($data['batch_ids']))
+        if (isset($data['batch_ids'])) {
             $teacher->batches()->sync($data['batch_ids']);
+        }
         DB::commit();
 
         return $teacher;

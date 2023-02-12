@@ -31,7 +31,7 @@ class Member extends Model
 
     protected $casts = [
         'registration_date' => 'date',
-        'birth_date'=>'date',
+        'birth_date' => 'date',
     ];
 
     public function batches()

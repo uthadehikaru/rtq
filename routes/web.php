@@ -27,7 +27,6 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
-use App\Http\Requests\BiodataMemberRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +47,7 @@ Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::group(['middleware' => ['role:administrator']], function () {
-        Route::prefix('educations')->group(function(){
+        Route::prefix('educations')->group(function () {
             Route::resource('users', UserController::class);
             Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
             Route::post('members/{id}/change', Actions\ChangeBatch::class);
@@ -69,7 +68,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('schedules.presents', PresentController::class);
             Route::resource('registrations', RegistrationController::class);
         });
-        Route::prefix('finances')->group(function(){
+        Route::prefix('finances')->group(function () {
             Route::get('salaries/config', [ConfigSalary::class, 'index'])->name('salaries.config');
             Route::post('salaries/config', [ConfigSalary::class, 'save']);
             Route::get('salaries/{id}/report/{user_id?}', Actions\ReportSalary::class)->name('salaries.report');

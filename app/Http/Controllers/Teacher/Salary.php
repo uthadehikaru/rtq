@@ -21,8 +21,9 @@ class Salary extends Controller
     {
         $title = 'Laporan';
         $detail = (new SalaryService())->findDetail($detail_id);
-        if($detail->user_id!=Auth::id())
+        if ($detail->user_id != Auth::id()) {
             return abort(404);
+        }
         $details[] = $detail;
         $salary = $detail->salary;
         $teacherPresents = (new SalaryService())->getPresentOfSalary($detail->salary->id, Auth::id());

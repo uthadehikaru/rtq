@@ -21,9 +21,10 @@ class CourseExport implements WithMultipleSheets
     {
         $batches = [];
 
-        foreach($this->course->batches as $batch)
+        foreach ($this->course->batches as $batch) {
             $batches[] = new BatchExport($batch->id);
-        
+        }
+
         return $batches;
     }
 }

@@ -28,7 +28,7 @@ class BatchExport implements FromQuery, WithHeadings, WithMapping, WithTitle
 
     public function query()
     {
-        return Member::whereRelation('batches','id',$this->batch->id);
+        return Member::whereRelation('batches', 'id', $this->batch->id);
     }
 
     public function headings(): array

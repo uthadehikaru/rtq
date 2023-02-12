@@ -48,6 +48,7 @@ class RegistrationController extends Controller
     public function show($id)
     {
         $data['registration'] = Registration::find($id);
+
         return view('forms.registration-show', $data);
     }
 

@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class TransactionsDataTable extends DataTable
@@ -17,16 +15,17 @@ class TransactionsDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
-                $buttons = "";
+            ->addColumn('action', function ($row) {
+                $buttons = '';
                 $buttons .= '<a href="'.route('transactions.edit', $row->id).'" class="text-warning">Edit</a>';
                 $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+
                 return $buttons;
             })
             ->rawColumns(['action'])
@@ -36,7 +35,7 @@ class TransactionsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Transaction $model
+     * @param  \App\Models\Transaction  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Transaction $model): QueryBuilder
@@ -60,7 +59,7 @@ class TransactionsDataTable extends DataTable
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -91,6 +90,6 @@ class TransactionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Transactions_' . date('YmdHis');
+        return 'Transactions_'.date('YmdHis');
     }
 }

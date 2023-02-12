@@ -24,10 +24,10 @@ class BiodataMemberRequest extends FormRequest
     public function rules()
     {
         return [
-            'member_id'=>'required|exists:members,id',
-            'nik'=>'required|size:16',
-            'birth_date'=>'required|date',
-            'profile_picture'=>'required|image|max:2048',
+            'member_id' => 'required|exists:members,id',
+            'nik' => 'required|size:16',
+            'birth_date' => 'required|date',
+            'profile_picture' => 'required|image|max:2048',
         ];
     }
 }

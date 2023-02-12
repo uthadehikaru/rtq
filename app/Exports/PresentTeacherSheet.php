@@ -15,9 +15,9 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     private $filter = null;
 
-    public function __construct($filter=null)
+    public function __construct($filter = null)
     {
-        $this->filter = $filter;    
+        $this->filter = $filter;
     }
 
     public function title(): string
@@ -31,11 +31,13 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
         ->where('type', 'teacher')
         ->latest();
 
-        if($this->filter['start_date'])
-            $model = $model->whereDate('created_at','>=',$this->filter['start_date']);
-            
-        if($this->filter['end_date'])
-            $model = $model->whereDate('created_at','<=',$this->filter['end_date']);
+        if ($this->filter['start_date']) {
+            $model = $model->whereDate('created_at', '>=', $this->filter['start_date']);
+        }
+
+        if ($this->filter['end_date']) {
+            $model = $model->whereDate('created_at', '<=', $this->filter['end_date']);
+        }
 
         return $model;
     }

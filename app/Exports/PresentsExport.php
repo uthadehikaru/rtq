@@ -11,17 +11,17 @@ class PresentsExport implements WithMultipleSheets
 
     private $filter = null;
 
-    public function __construct($filter=null)
+    public function __construct($filter = null)
     {
-        $this->filter = $filter;    
+        $this->filter = $filter;
     }
 
     public function sheets(): array
     {
         $sheets = [];
 
-        if(isset($this->filter['type'])){
-            switch($this->filter['type']){
+        if (isset($this->filter['type'])) {
+            switch($this->filter['type']) {
                 case 'teacher':
                     $sheets[] = new PresentTeacherSheet($this->filter);
                     break;
@@ -29,7 +29,7 @@ class PresentsExport implements WithMultipleSheets
                     $sheets[] = new PresentMemberSheet($this->filter);
                     break;
             }
-        }else{
+        } else {
             $sheets[] = new PresentTeacherSheet($this->filter);
             $sheets[] = new PresentMemberSheet($this->filter);
         }

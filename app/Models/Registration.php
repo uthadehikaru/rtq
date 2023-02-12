@@ -38,8 +38,8 @@ class Registration extends Model
     ];
 
     protected $casts = [
-        'birth_date'=>'date',
-        'school_start_time'=>'datetime',
-        'school_end_time'=>'datetime',
+        'birth_date' => 'date',
+        'school_start_time' => 'datetime',
+        'school_end_time' => 'datetime',
     ];
 }

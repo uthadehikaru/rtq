@@ -17,6 +17,7 @@ class ExportBatch extends Controller
     public function __invoke($course_id)
     {
         $course = Course::find($course_id);
+
         return (new CourseExport($course_id))->download('Data Kelas '.$course->name.'.xlsx');
     }
 }

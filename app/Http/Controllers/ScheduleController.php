@@ -29,7 +29,7 @@ class ScheduleController extends Controller
                 <i class="la la-plus"></i>
                 Tambah Jadwal
             </a>';
-        }else{
+        } else {
             $dataTable->setUserId(Auth::id());
         }
 
