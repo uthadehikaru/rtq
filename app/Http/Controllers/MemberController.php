@@ -24,11 +24,11 @@ class MemberController extends Controller
 
         $total = Member::whereHas('batches')->count();
         $data['title'] = $total.' '.__('Members');
-        // <a href="'.route('members.cards').'" class="btn btn-warning btn-icon-sm" target="_blank">
-        //     <i class="la la-image"></i>
-        //     Kartu Anggota
-        // </a>
         $data['buttons'] = '
+        <a href="'.route('members.cards').'" class="btn btn-warning btn-icon-sm" target="_blank">
+            <i class="la la-image"></i>
+            Kartu Anggota
+        </a>
         <a href="'.route('members.index', ['action' => 'export']).'" class="btn btn-success btn-icon-sm">
             <i class="la la-download"></i>
             Export (.xls)
