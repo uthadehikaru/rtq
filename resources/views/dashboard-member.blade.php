@@ -12,7 +12,8 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}" alt="{{ $member->member_no }}" />
+                <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}" alt="{{ $member->member_no }}"
+                class="img-responsive" />
             </div>
         </div>
     </div>
