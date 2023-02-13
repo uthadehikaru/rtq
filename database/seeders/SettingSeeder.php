@@ -17,6 +17,7 @@ class SettingSeeder extends Seeder
     public function run()
     {
         $general = [
+            'idcard' => '',
             'latitude' => '-6.2214295',
             'longitude' => '106.7737958',
         ];

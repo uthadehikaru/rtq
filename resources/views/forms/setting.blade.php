@@ -54,6 +54,15 @@
                 <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general">
                     <div class="kt-section kt-section--first">
                         <div class="form-group">
+                            <label>ID Card</label>
+                            <div class="dropzone dropzone-default" id="idcard">
+                                <div class="dropzone-msg dz-message needsclick">
+                                    <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                                    <span class="dropzone-msg-desc">File yang diperbolehkan maks. 2 mb berekstensi .jpg/.png</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Latitude</label>
                             <input type="text" name="latitude" class="form-control" value="{{ $general['latitude']->payload }}">
                         </div>
@@ -104,6 +113,7 @@ KTUtil.ready(function() {
             }, 
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}");
+            formData.append("name", "banner");
             },
             accept: function(file, done) {
                 done();
@@ -114,7 +124,7 @@ KTUtil.ready(function() {
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('dropzone') }}',
-                    data: {name: 'banner', _token: '{{ csrf_token() }}'},
+                    data: {name: 'banner', _token: '{{ csrf_token() }}', delete: true},
                     sucess: function(data){
                         console.log('success: ' + data);
                     }
@@ -123,6 +133,48 @@ KTUtil.ready(function() {
                     return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
             }
         });
+
+    $('#idcard').dropzone({
+        url: "{{ route('dropzone') }}",
+        paramName: "file",
+        maxFiles: 1,
+        maxFilesize: 2, // MB
+        addRemoveLinks: true,
+        init: function() {
+            @if($general['idcard'])
+            var thisDropzone = this;
+            var mockFile = { name: 'IDCard', size: 12345, type: 'image/jpeg' };
+            thisDropzone.emit("addedfile", mockFile);
+            thisDropzone.emit("thumbnail", mockFile, "{{ $general['idcard']->payload }}")
+            thisDropzone.emit("success", mockFile);
+            @endif
+            this.on("maxfilesexceeded", function(file){
+                this.removeFile(file);
+                alert("No more files please!");
+            });
+        }, 
+        sending: function(file, xhr, formData) {
+            formData.append("_token", "{{ csrf_token() }}")
+            formData.append("name", "idcard");
+        },
+        accept: function(file, done) {
+            done();
+        },
+        removedfile: function(file) {
+            var name = file.name; 
+            
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('dropzone') }}',
+                data: {name: 'idcard', _token: '{{ csrf_token() }}', delete: true},
+                sucess: function(data){
+                    console.log('success: ' + data);
+                }
+            });
+            var _ref;
+                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        }
+    });
 });
 </script>
 @endpush
