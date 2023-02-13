@@ -18,7 +18,7 @@ class BatchFactory extends Factory
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'course_id' => 1,
-            'start_time' => $this->faker->time(),
+            'start_time' => '04:00',
             'place' => $this->faker->word(),
         ];
     }

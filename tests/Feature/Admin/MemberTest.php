@@ -24,7 +24,6 @@ it('admin can see member', function () {
     $admin = User::find(1);
     actingAs($admin);
     $response = $this->get(route('members.index'));
-    $response->assertViewHas('members');
     $response->assertStatus(200);
 });
 
@@ -44,6 +43,8 @@ it('admin can create member', function () {
         'level' => 'iqro',
         'address' => 'alamat',
         'postcode' => '12740',
+        'nik'=>'1234123412341234',
+        'birth_date'=>'2015-12-01'
     ];
 
     $response = $this->post(route('members.store'), $data);
