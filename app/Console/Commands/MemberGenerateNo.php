@@ -45,12 +45,6 @@ class MemberGenerateNo extends Command
 
         $bar->start();
         foreach ($members as $member) {
-            $memberNo = 'RTQ';
-            $memberNo .= $member->gender == 'male' ? '1' : '2';
-            $memberNo .= $member->birth_date->format('dmy');
-            $memberNo .= Str::padLeft($no++, 3, '0');
-            $member->update(['member_no' => $memberNo]);
-
             if (! $birthDate) {
                 $birthDate = $member->birth_date;
             }
@@ -59,6 +53,12 @@ class MemberGenerateNo extends Command
                 $birthDate = $member->birth_date;
                 $no = 1;
             }
+
+            $memberNo = 'RTQ';
+            $memberNo .= $member->gender == 'male' ? '1' : '2';
+            $memberNo .= $member->birth_date->format('dmy');
+            $memberNo .= Str::padLeft($no++, 3, '0');
+            $member->update(['member_no' => $memberNo]);
 
             $bar->advance();
         }

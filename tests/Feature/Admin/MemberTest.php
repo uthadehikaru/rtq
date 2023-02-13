@@ -16,8 +16,6 @@ beforeEach(function () {
         PermissionSeeder::class,
         UserSeeder::class,
     ]);
-
-    Member::factory(10)->for(User::factory())->create();
 });
 
 it('admin can see member', function () {
@@ -50,4 +48,23 @@ it('admin can create member', function () {
     $response = $this->post(route('members.store'), $data);
     $response->assertStatus(302)->assertSessionHas('message');
     $response->assertRedirect(route('members.index'));
+});
+
+it('generate non duplicate member no', function(){
+    Member::factory(2)->for(User::factory())->create(['birth_date'=>'2020-02-25','gender'=>'male']);
+    Member::factory(2)->for(User::factory())->create(['birth_date'=>'2015-02-26','gender'=>'female']);
+
+    $this->artisan('member:generateno')->assertExitCode(0);
+
+    $members = Member::whereNotNull('member_no')->select('member_no','full_name')
+    ->orderBy('birth_date')
+    ->get();
+    expect($members->count())->toBe(4);
+
+    $memberno = "";
+    foreach($members as $member){
+        $same = $member->member_no==$memberno;
+        expect($same)->toBeFalse();
+        $memberno = $member->member_no;
+    }
 });
