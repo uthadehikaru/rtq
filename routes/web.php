@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['role:administrator']], function () {
         Route::prefix('educations')->group(function () {
             Route::resource('users', UserController::class);
+            Route::get('members/cards/{member_no?}', [MemberController::class, 'cards'])->name('members.cards');
             Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
             Route::post('members/{id}/change', Actions\ChangeBatch::class);
             Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');

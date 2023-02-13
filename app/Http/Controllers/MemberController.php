@@ -10,6 +10,8 @@ use App\Repositories\BatchRepository;
 use App\Repositories\MemberRepository;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MemberController extends Controller
 {
@@ -21,6 +23,10 @@ class MemberController extends Controller
 
         $total = Member::whereHas('batches')->count();
         $data['title'] = $total.' '.__('Members');
+        // <a href="'.route('members.cards').'" class="btn btn-warning btn-icon-sm" target="_blank">
+        //     <i class="la la-image"></i>
+        //     Kartu Anggota
+        // </a>
         $data['buttons'] = '
         <a href="'.route('members.index', ['action' => 'export']).'" class="btn btn-success btn-icon-sm">
             <i class="la la-download"></i>
@@ -116,5 +122,22 @@ class MemberController extends Controller
         $data['members'] = $memberRepository->all();
 
         return view('forms.member-switch', $data);
+    }
+
+    public function cards($member_no=null)
+    {
+        if($member_no){
+            $file = Storage::disk('public')->get('idcards/'.$member_no.'.jpg');
+            if($file)
+                return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'" />';
+            
+            return abort(404);
+        }
+        $files = Storage::disk('public')->files('idcards');
+        $list = "";
+        foreach($files as $file){
+            $list .= '<p><img src="'.asset('storage/'.$file).'" /></p>';
+        }
+        return Pdf::loadHTML($list)->setPaper('a4', 'landscape')->stream();
     }
 }

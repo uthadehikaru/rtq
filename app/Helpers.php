@@ -10,10 +10,13 @@ if (! function_exists('setting')) {
             $params['group'] = $group;
         }
         $setting = Setting::where($params)->first();
+        $value = null;
         if ($setting) {
-            return json_decode($setting->payload, true);
+            $value = json_decode($setting->payload, true);
         }
-
-        return null;
+        if(!$value)
+            $value = $setting->payload;
+            
+        return $value;
     }
 }

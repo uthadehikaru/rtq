@@ -33,6 +33,9 @@ class MembersDataTable extends DataTable
             ->editColumn('birth_date', function ($row) {
                 return $row->birth_date?->format('d M Y');
             })
+            ->editColumn('member_no', function ($row) {
+                return '<a href="'.route('members.cards', $row->member_no).'" target="_blank">'.$row->member_no.'</a>';
+            })
             ->editColumn('profile_picture', function ($row) {
                 if ($row->profile_picture) {
                     return '<a href="'.asset('storage/'.$row->profile_picture).'" target="_blank"><img src="'.asset('storage/'.$row->profile_picture).'" height="50" /></a>';
@@ -45,7 +48,7 @@ class MembersDataTable extends DataTable
 
                 return $buttons;
             })
-            ->rawColumns(['action', 'profile_picture'])
+            ->rawColumns(['action', 'profile_picture','member_no'])
             ->setRowId('id');
     }
 
