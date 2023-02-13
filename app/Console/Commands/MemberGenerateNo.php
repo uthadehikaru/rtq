@@ -29,14 +29,16 @@ class MemberGenerateNo extends Command
      */
     public function handle()
     {
-        if ($this->option('reset')) {
-            $reset = Member::whereNotNull('member_no')->update(['member_no' => null]);
-            $this->info('Reset : '.$reset);
+        $reset = $this->option('reset');
+    
+        if ($reset) {
+            $updated = Member::whereNotNull('member_no')->update(['member_no' => null]);
+            $this->info('Reset : '.$updated);
         }
 
         $members = Member::whereNull('member_no')
         ->whereNotNull('birth_date')
-        ->oldest('birth_date')
+        ->orderByRaw('birth_date, created_at')
         ->get();
         $birthDate = null;
         $no = 1;
@@ -45,13 +47,17 @@ class MemberGenerateNo extends Command
 
         $bar->start();
         foreach ($members as $member) {
-            if (! $birthDate) {
-                $birthDate = $member->birth_date;
-            }
+            if($reset){
+                if (! $birthDate) {
+                    $birthDate = $member->birth_date;
+                }
 
-            if ($birthDate != $member->birth_date) {
-                $birthDate = $member->birth_date;
-                $no = 1;
+                if ($birthDate != $member->birth_date) {
+                    $birthDate = $member->birth_date;
+                    $no = 1;
+                }
+            }else{
+                $no = Member::whereDate('birth_date',$member->birth_date)->count();
             }
 
             $memberNo = 'RTQ';

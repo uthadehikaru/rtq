@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\User;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\UserSeeder;
+use Illuminate\Support\Facades\Artisan;
 
 uses()->group('admin');
 
@@ -54,12 +55,17 @@ it('generate non duplicate member no', function(){
     Member::factory(2)->for(User::factory())->create(['birth_date'=>'2020-02-25','gender'=>'male']);
     Member::factory(2)->for(User::factory())->create(['birth_date'=>'2015-02-26','gender'=>'female']);
 
-    $this->artisan('member:generateno')->assertExitCode(0);
+    Artisan::call('member:generateno', ['--reset'=>1]);
+    
+    Member::factory()->for(User::factory())->create(['birth_date'=>'2015-02-26','gender'=>'female']);
+
+    Artisan::call('member:generateno');
 
     $members = Member::whereNotNull('member_no')->select('member_no','full_name')
     ->orderBy('birth_date')
+    ->orderBy('member_no')
     ->get();
-    expect($members->count())->toBe(4);
+    expect($members->count())->toBe(5);
 
     $memberno = "";
     foreach($members as $member){
