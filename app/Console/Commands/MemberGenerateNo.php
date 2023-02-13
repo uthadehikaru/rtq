@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Member;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class MemberGenerateNo extends Command
@@ -65,6 +66,8 @@ class MemberGenerateNo extends Command
             $memberNo .= $member->birth_date->format('dmy');
             $memberNo .= Str::padLeft($no++, 3, '0');
             $member->update(['member_no' => $memberNo]);
+
+            $member->user->update(['email'=>$memberNo,'password'=>Hash::make($member->nik)]);
 
             $bar->advance();
         }

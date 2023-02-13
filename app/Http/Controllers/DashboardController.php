@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
+use App\Models\PaymentDetail;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\MemberRepository;
@@ -34,6 +36,13 @@ class DashboardController extends Controller
                 $scheduleRepository,
                 $presentRepository));
             $view = 'dashboard-teacher';
+        }else{
+            $data['member'] = Member::where('user_id',Auth::id())->first();
+            $data['payments'] =PaymentDetail::where('member_id',$data['member']->id)
+            ->with(['payment','period'])
+            ->latest()
+            ->get();
+            $view = 'dashboard-member';
         }
 
         if ($view) {

@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login/{username?}', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
 Route::get('/register/{type}', [RegisterController::class, 'index'])->name('register');

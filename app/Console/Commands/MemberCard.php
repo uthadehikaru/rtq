@@ -15,7 +15,7 @@ class MemberCard extends Command
      *
      * @var string
      */
-    protected $signature = 'member:card {--limit=0} {--no=null}';
+    protected $signature = 'member:card {--limit=0} {--no=}';
 
     /**
      * The console command description.
