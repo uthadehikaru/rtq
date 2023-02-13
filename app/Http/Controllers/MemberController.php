@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Artisan;
 
 class MemberController extends Controller
 {
@@ -130,8 +131,11 @@ class MemberController extends Controller
             $file = Storage::disk('public')->get('idcards/'.$member_no.'.jpg');
             if($file)
                 return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'" />';
-            
-            return abort(404);
+            else{
+                Artisan::call('member:card', ['--no'=>$member_no]);
+                return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'" />';
+            }
+
         }
         $files = Storage::disk('public')->files('idcards');
         $list = "";

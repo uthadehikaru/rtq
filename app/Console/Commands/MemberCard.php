@@ -15,7 +15,7 @@ class MemberCard extends Command
      *
      * @var string
      */
-    protected $signature = 'member:card {--limit=0}';
+    protected $signature = 'member:card {--limit=0} {--no=null}';
 
     /**
      * The console command description.
@@ -32,18 +32,20 @@ class MemberCard extends Command
     public function handle()
     {
         $limit = $this->option('limit');
+        $no = $this->option('no');
 
         Storage::disk('public')->makeDirectory('idcards');
 
         $members = Member::whereNotNull('member_no')
         ->orderBy('member_no');
 
+        if($no)
+            $members = $members->where('member_no', $no);
+
         if($limit>0)
             $members = $members->limit($limit);
         
         $members = $members->get();
-
-
 
         $bar = $this->output->createProgressBar($members->count());
 
