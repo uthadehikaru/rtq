@@ -89,7 +89,6 @@ class MemberRepository implements MemberRepositoryInterface
             if ($member->user) {
                 $member->user()->update([
                     'name' => $data['full_name'],
-                    'email' => $data['email'],
                 ]);
             } else {
                 $user = User::create([
@@ -102,6 +101,8 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
+            }else{
+                unset($data['profile_picture']);
             }
             $member->update($data);
 

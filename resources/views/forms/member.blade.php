@@ -79,26 +79,24 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Short Name')<span class="text-danger">*</span></label>
+                            <label>@lang('Short Name')</label>
                             <input type="text" name="short_name" class="form-control" 
                             placeholder="@lang('Enter') @lang('Short Name')"
                             value="{{ old('short_name', $member?$member->short_name:'') }}"
-                            required
                             >
                         </div>
                         <div class="form-group">
                             <label>@lang('Email')<span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control" 
                             placeholder="@lang('Enter') @lang('Email')"
-                            value="{{ old('email', $member?$member->email:(Str::random(8).'@rtqmaisuro.id')) }}"
+                            value="{{ old('email', $member && $member->email?$member->email:(Str::random(8).'@rtqmaisuro.id')) }}"
                             required
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Phone')<span class="text-danger">*</span></label>
+                            <label>@lang('Phone')</label>
                             <input type="text" name="phone" class="form-control" placeholder="@lang('Enter') @lang('Phone')"
                             value="{{ old('phone', $member?$member->phone:'') }}"
-                            required
                             >
                         </div>
                         <div class="form-group">
@@ -119,7 +117,7 @@
                         <div class="form-group">
                             <label>@lang('Tanggal Lahir')</label>
                             <input type="date" name="birth_date" class="form-control" placeholder="Tanggal Lahir"
-                            value="{{ old('birth_date', $member?$member->birth_date:'') }}"
+                            value="{{ old('birth_date', $member?$member->birth_date?->format('Y-m-d'):'') }}"
                             >
                         </div>
                         <div class="form-group">
