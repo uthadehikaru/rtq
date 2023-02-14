@@ -8,6 +8,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Member\IqobController;
+use App\Http\Controllers\Member\PresentController as MemberPresentController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
@@ -103,6 +105,11 @@ Route::middleware('auth')->group(function () {
         Route::get('presents', Teacher\PresentList::class)->name('presents.index');
         Route::get('salaries', [Teacher\Salary::class, 'index'])->name('salaries.index');
         Route::get('salaries/{detail_id}', [Teacher\Salary::class, 'report'])->name('salaries.report');
+    });
+    
+    Route::name('member.')->prefix('member')->middleware('role:member')->group(function () {
+        Route::get('presents', MemberPresentController::class)->name('presents.index');
+        Route::get('iqob', IqobController::class)->name('iqob.index');
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

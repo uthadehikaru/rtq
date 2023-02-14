@@ -172,6 +172,18 @@
                                         </a>
                                     </li>
 									@endrole
+									@role('member')
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member/presents*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('member.presents.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Kehadiran')</span>
+                                        </a>
+                                    </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member/iqob*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('member.iqob.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Iqob')</span>
+                                        </a>
+                                    </li>
+									@endrole
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">
                                             <span class="kt-menu__link-text">@lang('Sign Out')</span>

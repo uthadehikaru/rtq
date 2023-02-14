@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}" alt="{{ $member->member_no }}"
+                <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}?v={{ $member->updated_at }}" alt="{{ $member->member_no }}"
                 class="img-responsive" />
             </div>
         </div>
@@ -22,7 +22,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        @lang('Data Infaq')
+                        @lang('Data Infaq 5 periode terakhir')
                     </h3>
                 </div>
             </div>

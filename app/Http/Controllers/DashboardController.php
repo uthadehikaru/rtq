@@ -41,6 +41,7 @@ class DashboardController extends Controller
             $data['payments'] =PaymentDetail::where('member_id',$data['member']->id)
             ->with(['payment','period'])
             ->latest()
+            ->limit(5)
             ->get();
             $view = 'dashboard-member';
         }
