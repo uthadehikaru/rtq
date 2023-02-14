@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 
 class MemberController extends Controller
@@ -126,18 +127,14 @@ class MemberController extends Controller
         return view('forms.member-switch', $data);
     }
 
-    public function cards(Request $request, $member_no=null)
+    public function cards($member_no=null)
     {
         if($member_no){
-            $file = Storage::disk('public')->get('idcards/'.$member_no.'.jpg');
-            $reset = $request->has('reset');
-            if($file && !$reset)
-                return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'" />';
-            else{
-                Artisan::call('member:card', ['--no'=>$member_no]);
-                return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'" />';
-            }
-
+            $member = Member::where('member_no',$member_no)->first();
+            Artisan::call('member:card', ['--no'=>$member_no]);
+            $member->updated_at = Carbon::now();
+            $member->save();
+            return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'?v='.$member->updated_at.'" />';
         }
         $files = Storage::disk('public')->files('idcards');
         $list = "";
