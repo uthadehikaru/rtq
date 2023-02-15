@@ -18,7 +18,26 @@ class PaymentController extends Controller
     public function index(PaymentRepository $paymentRepository, PaymentsDataTable $dataTable)
     {
         $data['title'] = $paymentRepository->count().' Pembayaran';
-
+        $data['buttons'] = '
+        <div class="btn-group" role="group">
+            <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Aksi
+            </button>
+            <div class="dropdown-menu" aria-labelledby="action" style="">
+                <a class="dropdown-item" href="'.route('periods.index').'">
+                    <i class="la la-list"></i> Periode
+                </a>
+                <a class="dropdown-item" href="'.route('payment').'">
+                    <i class="la la-plus"></i> Buat Baru
+                </a>
+                <a class="dropdown-item" href="'.route('payments.export').'">
+                    <i class="la la-share"></i> Export to Excel
+                </a>
+                <a class="dropdown-item" href="'.route('periods.export').'">
+                    <i class="la la-download"></i> Export per Period
+                </a>
+            </div>
+        </div>';
         return $dataTable->render('datatables.datatable', $data);
     }
 
