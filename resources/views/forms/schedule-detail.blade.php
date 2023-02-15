@@ -21,7 +21,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Jadwal {{ $schedule->batch->name }} - {{ $schedule->scheduled_at->format('d M Y H:i') }}
+                        Jadwal {{ $schedule->batch->name }} - {{ $schedule->scheduled_at->format('d M Y') }}
                     </h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
@@ -85,7 +85,7 @@
                         <div class="col-12 col-md-4">
                             <label>Keterangan</label>
                             <input type="text" class="form-control"
-                            placeholder="Masukkan keterangan"
+                            placeholder="Tidak ada keterangan"
                             name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}" />
                         </div>
                     </div>
@@ -104,6 +104,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Foto</th>
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th>Keterangan</th>
@@ -115,6 +116,15 @@
                                 @continue
                                 @endif
                                 <tr>
+                                    <td>
+                                        @if($users->find($present->user_id))
+                                        @php
+                                            $user = $users->find($present->user_id);
+                                            $member = $user->member;
+                                        @endphp
+                                        <img src="{{ asset('storage/profiles/'.$member->profile_picture) }}" class="img-responsive" />
+                                        @endif
+                                    </td>
                                     <td>
                                         {{ $present->name() }}
                                         <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
@@ -130,7 +140,7 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control"
-                                        placeholder="Masukkan keterangan"
+                                        placeholder="Tidak ada keterangan"
                                         name="description[{{$present->id}}]"  value="{{ $present->description }}" />
                                     </td>
                                 </tr>

@@ -12,7 +12,9 @@ use App\Repositories\PeriodRepository;
 use App\Repositories\PresentRepository;
 use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -37,12 +39,15 @@ class DashboardController extends Controller
                 $presentRepository));
             $view = 'dashboard-teacher';
         }else{
-            $data['member'] = Member::where('user_id',Auth::id())->first();
-            $data['payments'] =PaymentDetail::where('member_id',$data['member']->id)
+            $member = Member::where('user_id',Auth::id())->first();
+            $data['payments'] =PaymentDetail::where('member_id',$member->id)
             ->with(['payment','period'])
             ->latest()
             ->limit(5)
             ->get();
+            $data['member'] = $member;
+            if(!Storage::disk('public')->exists('idcards/'.$member->member_no.'.jpg'))
+                Artisan::call('member:card', ['--no'=>$member->member_no]);
             $view = 'dashboard-member';
         }
 
