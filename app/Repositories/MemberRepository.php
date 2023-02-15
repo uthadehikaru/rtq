@@ -58,7 +58,7 @@ class MemberRepository implements MemberRepositoryInterface
             $user = User::create([
                 'email' => $data['email'],
                 'name' => $data['full_name'],
-                'password' => Hash::make(Str::random(8)),
+                'password' => Hash::make($data['nik']),
             ]);
 
             $data['user_id'] = $user->id;
@@ -87,14 +87,16 @@ class MemberRepository implements MemberRepositoryInterface
             $member = Member::with('user')->find($id);
 
             if ($member->user) {
-                $member->user()->update([
+                $user = [
                     'name' => $data['full_name'],
-                ]);
+                    'password' => Hash::make($data['nik']),
+                ];
+                $member->user()->update($user);
             } else {
                 $user = User::create([
                     'email' => $data['email'],
                     'name' => $data['full_name'],
-                    'password' => Hash::make(Str::random(8)),
+                    'password' => Hash::make($data['nik']),
                 ]);
                 $data['user_id'] = $user->id;
             }
