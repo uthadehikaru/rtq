@@ -35,7 +35,7 @@
 
             <!--begin::Form-->
             @if($member)
-            <form class="kt-form" method="POST" action="{{ route('members.update', $member->id) }}">
+            <form class="kt-form" method="POST" action="{{ route('members.update', $member->id) }}" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT" />
             @else
             <form class="kt-form" method="POST" action="{{ route('members.store') }}" enctype="multipart/form-data">
