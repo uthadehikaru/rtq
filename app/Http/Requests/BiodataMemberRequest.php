@@ -27,7 +27,7 @@ class BiodataMemberRequest extends FormRequest
             'member_id' => 'required|exists:members,id',
             'nik' => 'required|size:16',
             'birth_date' => 'required|date',
-            'profile_picture' => 'required|image|max:2048',
+            'profile_picture' => 'required|image|max:4068',
         ];
     }
 }
