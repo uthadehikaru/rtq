@@ -14,9 +14,10 @@ if (! function_exists('setting')) {
         if ($setting) {
             $value = json_decode($setting->payload, true);
         }
-        if(!$value)
+        if (! $value) {
             $value = $setting->payload;
-            
+        }
+
         return $value;
     }
 }

@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index($username=null)
+    public function index($username = null)
     {
         $data['username'] = $username;
+
         return view('login', $data);
     }
 

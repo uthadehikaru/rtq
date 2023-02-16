@@ -61,7 +61,7 @@ function createTeacher()
     return $user;
 }
 
-function createBatch($user, $batch=null)
+function createBatch($user, $batch = null)
 {
     $batch = Batch::factory()->for(Course::factory())
     ->create($batch);

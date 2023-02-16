@@ -38,16 +38,17 @@ class DashboardController extends Controller
                 $scheduleRepository,
                 $presentRepository));
             $view = 'dashboard-teacher';
-        }else{
-            $member = Member::where('user_id',Auth::id())->first();
-            $data['payments'] =PaymentDetail::where('member_id',$member->id)
-            ->with(['payment','period'])
+        } else {
+            $member = Member::where('user_id', Auth::id())->first();
+            $data['payments'] = PaymentDetail::where('member_id', $member->id)
+            ->with(['payment', 'period'])
             ->latest()
             ->limit(5)
             ->get();
             $data['member'] = $member;
-            if(!Storage::disk('public')->exists('idcards/'.$member->member_no.'.jpg'))
-                Artisan::call('member:card', ['--no'=>$member->member_no]);
+            if (! Storage::disk('public')->exists('idcards/'.$member->member_no.'.jpg')) {
+                Artisan::call('member:card', ['--no' => $member->member_no]);
+            }
             $view = 'dashboard-member';
         }
 

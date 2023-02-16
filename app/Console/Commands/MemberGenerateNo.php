@@ -31,7 +31,7 @@ class MemberGenerateNo extends Command
     public function handle()
     {
         $reset = $this->option('reset');
-    
+
         if ($reset) {
             $updated = Member::whereNotNull('member_no')->update(['member_no' => null]);
             $this->info('Reset : '.$updated);
@@ -48,7 +48,7 @@ class MemberGenerateNo extends Command
 
         $bar->start();
         foreach ($members as $member) {
-            if($reset){
+            if ($reset) {
                 if (! $birthDate) {
                     $birthDate = $member->birth_date;
                 }
@@ -57,8 +57,8 @@ class MemberGenerateNo extends Command
                     $birthDate = $member->birth_date;
                     $no = 1;
                 }
-            }else{
-                $no = Member::whereDate('birth_date',$member->birth_date)->count();
+            } else {
+                $no = Member::whereDate('birth_date', $member->birth_date)->count();
             }
 
             $memberNo = 'RTQ';
@@ -67,7 +67,7 @@ class MemberGenerateNo extends Command
             $memberNo .= Str::padLeft($no++, 3, '0');
             $member->update(['member_no' => $memberNo]);
 
-            $member->user->update(['email'=>$memberNo,'password'=>Hash::make($member->nik)]);
+            $member->user->update(['email' => $memberNo, 'password' => Hash::make($member->nik)]);
 
             $bar->advance();
         }

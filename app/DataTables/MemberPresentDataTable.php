@@ -28,16 +28,16 @@ class MemberPresentDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->schedule->scheduled_at?->format('d M Y');
             })
-            ->editColumn('schedule_id', function($row){
+            ->editColumn('schedule_id', function ($row) {
                 return $row->schedule->start_at?->format('H:i');
             })
-            ->addColumn('place', function($row){
+            ->addColumn('place', function ($row) {
                 return $row->schedule->place;
             })
-            ->editColumn('status', function($row){
+            ->editColumn('status', function ($row) {
                 return __('app.present.status.'.$row->status);
             })
             ->setRowId('id');
@@ -53,8 +53,8 @@ class MemberPresentDataTable extends DataTable
     {
         return $model
         ->with(['schedule'])
-        ->where('user_id',$this->user_id)
-        ->where('type','member')
+        ->where('user_id', $this->user_id)
+        ->where('type', 'member')
         ->newQuery();
     }
 

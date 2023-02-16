@@ -28,7 +28,7 @@ class MemberIqobDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->editColumn('violated_date', function($row){
+        ->editColumn('violated_date', function ($row) {
             return $row->violated_date?->format('d M Y');
         })
             ->setRowId('id');
@@ -43,8 +43,8 @@ class MemberIqobDataTable extends DataTable
     public function query(Violation $model): QueryBuilder
     {
         return $model
-        ->where('user_id',$this->user_id)
-        ->where('type','member')
+        ->where('user_id', $this->user_id)
+        ->where('type', 'member')
         ->newQuery();
     }
 

@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Member;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Intervention\Image\Facades\Image;
 
 class MemberCard extends Command
@@ -39,31 +38,35 @@ class MemberCard extends Command
         $members = Member::whereNotNull('member_no')
         ->orderBy('member_no');
 
-        if($no)
+        if ($no) {
             $members = $members->where('member_no', $no);
+        }
 
-        if($limit>0)
+        if ($limit > 0) {
             $members = $members->limit($limit);
-        
+        }
+
         $members = $members->get();
 
         $bar = $this->output->createProgressBar($members->count());
 
         $template = Storage::disk('public')->get('uploads/'.basename(setting('idcard')));
-        if(!$template)
+        if (! $template) {
             return $this->error('No Template Found');
+        }
 
         $bar->start();
         foreach ($members as $member) {
             $image = Image::make($template);
-            if($member->profile_picture){
+            if ($member->profile_picture) {
                 $watermark = Image::make(Storage::disk('public')->get($member->profile_picture));
                 $watermark->orientate();
-                if($watermark->width()>$watermark->height())
+                if ($watermark->width() > $watermark->height()) {
                     $watermark->rotate(-90);
+                }
                 $watermark->resize(220, 300);
                 $image->insert($watermark, 'top-left', 30, 195);
-            }else{
+            } else {
                 $image->rectangle(30, 195, 250, 490, function ($draw) {
                     $draw->background('#cccccc');
                 });
@@ -83,7 +86,7 @@ class MemberCard extends Command
                 $font->align('left');
                 $font->valign('top');
             });
-            $qrcode = Image::make('https://api.qrserver.com/v1/create-qr-code/?size=210x210&data='.urlencode(url('login', ['username'=>$member->member_no])));
+            $qrcode = Image::make('https://api.qrserver.com/v1/create-qr-code/?size=210x210&data='.urlencode(url('login', ['username' => $member->member_no])));
             $image->insert($qrcode, 'top-left', 715, 285);
             $image->save(storage_path('app/public/idcards/'.$member->member_no.'.jpg'));
             $bar->advance();

@@ -38,6 +38,7 @@ class PaymentController extends Controller
                 </a>
             </div>
         </div>';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 

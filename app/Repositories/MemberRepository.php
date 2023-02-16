@@ -103,7 +103,7 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
-            }else{
+            } else {
                 unset($data['profile_picture']);
             }
             $member->update($data);

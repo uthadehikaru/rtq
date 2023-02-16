@@ -42,8 +42,8 @@ it('admin can create member', function () {
         'level' => 'iqro',
         'address' => 'alamat',
         'postcode' => '12740',
-        'nik'=>'1234123412341234',
-        'birth_date'=>'2015-12-01'
+        'nik' => '1234123412341234',
+        'birth_date' => '2015-12-01',
     ];
 
     $response = $this->post(route('members.store'), $data);
@@ -51,25 +51,25 @@ it('admin can create member', function () {
     $response->assertRedirect(route('members.index'));
 });
 
-it('generate non duplicate member no', function(){
-    Member::factory(2)->for(User::factory())->create(['birth_date'=>'2020-02-25','gender'=>'male']);
-    Member::factory(2)->for(User::factory())->create(['birth_date'=>'2015-02-26','gender'=>'female']);
+it('generate non duplicate member no', function () {
+    Member::factory(2)->for(User::factory())->create(['birth_date' => '2020-02-25', 'gender' => 'male']);
+    Member::factory(2)->for(User::factory())->create(['birth_date' => '2015-02-26', 'gender' => 'female']);
 
-    Artisan::call('member:generateno', ['--reset'=>1]);
-    
-    Member::factory()->for(User::factory())->create(['birth_date'=>'2015-02-26','gender'=>'female']);
+    Artisan::call('member:generateno', ['--reset' => 1]);
+
+    Member::factory()->for(User::factory())->create(['birth_date' => '2015-02-26', 'gender' => 'female']);
 
     Artisan::call('member:generateno');
 
-    $members = Member::whereNotNull('member_no')->select('member_no','full_name')
+    $members = Member::whereNotNull('member_no')->select('member_no', 'full_name')
     ->orderBy('birth_date')
     ->orderBy('member_no')
     ->get();
     expect($members->count())->toBe(5);
 
-    $memberno = "";
-    foreach($members as $member){
-        $same = $member->member_no==$memberno;
+    $memberno = '';
+    foreach ($members as $member) {
+        $same = $member->member_no == $memberno;
         expect($same)->toBeFalse();
         $memberno = $member->member_no;
     }

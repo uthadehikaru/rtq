@@ -48,7 +48,7 @@ class MembersDataTable extends DataTable
 
                 return $buttons;
             })
-            ->rawColumns(['action', 'profile_picture','member_no'])
+            ->rawColumns(['action', 'profile_picture', 'member_no'])
             ->setRowId('id');
     }
 

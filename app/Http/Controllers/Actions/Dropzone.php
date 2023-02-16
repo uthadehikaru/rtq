@@ -17,7 +17,7 @@ class Dropzone extends Controller
     public function __invoke(Request $request)
     {
         if ($request->has('delete')) {
-            Setting::where('name', $request->get('name'))->update(['payload'=>json_encode("")]);
+            Setting::where('name', $request->get('name'))->update(['payload' => json_encode('')]);
 
             return response()->json('success', 200);
         }

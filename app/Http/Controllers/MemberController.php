@@ -8,12 +8,12 @@ use App\Http\Requests\MemberRequest;
 use App\Models\Member;
 use App\Repositories\BatchRepository;
 use App\Repositories\MemberRepository;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -25,7 +25,7 @@ class MemberController extends Controller
 
         $total = Member::whereHas('batches')->count();
         $data['title'] = $total.' '.__('Members');
-        
+
         // <a href="'.route('members.cards').'" class="btn btn-warning btn-icon-sm" target="_blank">
         //     <i class="la la-image"></i>
         //     Kartu Anggota
@@ -127,20 +127,22 @@ class MemberController extends Controller
         return view('forms.member-switch', $data);
     }
 
-    public function cards($member_no=null)
+    public function cards($member_no = null)
     {
-        if($member_no){
-            $member = Member::where('member_no',$member_no)->first();
-            Artisan::call('member:card', ['--no'=>$member_no]);
+        if ($member_no) {
+            $member = Member::where('member_no', $member_no)->first();
+            Artisan::call('member:card', ['--no' => $member_no]);
             $member->updated_at = Carbon::now();
             $member->save();
+
             return '<img src="'.asset('storage/idcards/'.$member_no.'.jpg').'?v='.$member->updated_at.'" />';
         }
         $files = Storage::disk('public')->files('idcards');
-        $list = "";
-        foreach($files as $file){
+        $list = '';
+        foreach ($files as $file) {
             $list .= '<p><img src="'.asset('storage/'.$file).'" /></p>';
         }
+
         return Pdf::loadHTML($list)->setPaper('a4', 'landscape')->stream();
     }
 }

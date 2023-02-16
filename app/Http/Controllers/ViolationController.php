@@ -28,8 +28,8 @@ class ViolationController extends Controller
     public function create(Request $request)
     {
         $data['violation'] = null;
-        $data['type'] = $request->get('type', $request->get('type','member'));
-        $data['users'] = User::has($request->get('type','member'))
+        $data['type'] = $request->get('type', $request->get('type', 'member'));
+        $data['users'] = User::has($request->get('type', 'member'))
         ->orderBy('name')
         ->get();
 

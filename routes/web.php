@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('salaries', [Teacher\Salary::class, 'index'])->name('salaries.index');
         Route::get('salaries/{detail_id}', [Teacher\Salary::class, 'report'])->name('salaries.report');
     });
-    
+
     Route::name('member.')->prefix('member')->middleware('role:member')->group(function () {
         Route::get('presents', MemberPresentController::class)->name('presents.index');
         Route::get('iqob', IqobController::class)->name('iqob.index');
