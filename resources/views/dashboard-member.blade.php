@@ -10,6 +10,14 @@
                         @lang('Kartu Anggota')
                     </h3>
                 </div>
+                
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            <a href="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}?v={{ $member->updated_at }}" class="btn btn-primary" target="_blank">Download</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="kt-portlet__body">
                 <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}?v={{ $member->updated_at }}" alt="{{ $member->member_no }}"
