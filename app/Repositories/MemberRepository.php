@@ -88,13 +88,14 @@ class MemberRepository implements MemberRepositoryInterface
 
             if ($member->user) {
                 $user = [
+                    'email' => $data['member_no']??$data['email'],
                     'name' => $data['full_name'],
                     'password' => Hash::make($data['nik']),
                 ];
                 $member->user()->update($user);
             } else {
                 $user = User::create([
-                    'email' => $data['email'],
+                    'email' => $data['member_no']??$data['email'],
                     'name' => $data['full_name'],
                     'password' => Hash::make($data['nik']),
                 ]);
