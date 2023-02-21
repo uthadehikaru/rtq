@@ -104,7 +104,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Foto</th>
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th>Keterangan</th>
@@ -116,15 +115,6 @@
                                 @continue
                                 @endif
                                 <tr>
-                                    <td>
-                                        @if($users->find($present->user_id))
-                                        @php
-                                            $user = $users->find($present->user_id);
-                                            $member = $user->member;
-                                        @endphp
-                                        <img src="{{ asset('storage/profiles/'.$member->profile_picture) }}" class="img-responsive" />
-                                        @endif
-                                    </td>
                                     <td>
                                         {{ $present->name() }}
                                         <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
