@@ -62,4 +62,42 @@
         @endif
     </div>
 </div>
+@if(!$registration->user_id)
+<!--begin::Portlet-->
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Diterima di Halaqoh
+            </h3>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="kt-form" method="POST" action="{{ route('registrations.update', $registration->id) }}">
+        @csrf
+        <input type="hidden" name="_method" value="PUT" />
+        <div class="kt-portlet__body">
+            <div class="kt-section kt-section--first">
+                <div class="form-group">
+                    <label>@lang('Batch')</label>
+                    <select name="batch_id" class="form-control kt-select2" required>
+                        <option value="">--- Pilih Halaqoh ---</option>
+                        @foreach($batches as $batch)
+                            <option value="{{ $batch->id }}">{{ $batch->course->name }} @lang('Batch') {{ $batch->name }} : {{ $batch->members_count }} peserta</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__foot">
+            <div class="kt-form__actions">
+                <button type="submit" class="btn btn-primary">@lang('Submit')</button>
+                <button type="reset" class="btn btn-secondary">@lang('Cancel')</button>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+@endif
 @endsection

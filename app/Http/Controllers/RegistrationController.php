@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DataTables\RegistrationsDataTable;
 use App\Models\Registration;
+use App\Repositories\BatchRepository;
+use App\Repositories\RegistrationRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
@@ -45,9 +48,11 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(BatchRepository $batchRepository, $id)
     {
-        $data['registration'] = Registration::find($id);
+        $registration = Registration::find($id);
+        $data['registration'] = $registration;
+        $data['batches'] = $batchRepository->getByCourseType($registration->type);
 
         return view('forms.registration-show', $data);
     }
@@ -70,9 +75,15 @@ class RegistrationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RegistrationRepository $registrationRepository, Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'batch_id' => 'required|exists:batches,id',
+        ]);
+
+        $registrationRepository->activate($id, $data['batch_id']);
+
+        return to_route('registrations.index')->with('message','Aktifasi berhasil');
     }
 
     /**
