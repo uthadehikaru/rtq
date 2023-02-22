@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PaymentsDataTable;
 use App\Exports\PaymentsExport;
+use App\Models\Member;
 use App\Models\Payment;
 use App\Models\Period;
 use App\Repositories\BatchRepository;
@@ -93,6 +94,7 @@ class PaymentController extends Controller
                 if (! isset($member_id)) {
                     return back()->with('error', 'Peserta Tidak ditemukan');
                 }
+                $member = Member::find($member_id);
                 $paymentDetail = $paymentRepository->check($payment, $member_id, $period_id);
                 if (! $paymentDetail) {
                     $paymentRepository->createDetail([
@@ -103,7 +105,7 @@ class PaymentController extends Controller
                 } else {
                     DB::rollBack();
 
-                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member['value'].' '.$member['email'].' periode '.$period['name']);
+                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member->full_name.' periode '.$period->name);
                 }
             }
         }
