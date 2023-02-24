@@ -28,6 +28,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
     public function query()
     {
         $model = Present::with(['schedule', 'user', 'schedule.batch'])
+        ->selectRaw('presents.*, (select coalesce(count(1),0) from presents p where presents.schedule_id=p.schedule_id and p.type=? and p.status=?) as present_members',['member','present'])
         ->where('type', 'teacher')
         ->latest();
 
@@ -51,6 +52,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
             'halaqoh',
             'durasi',
             'nama',
+            'kehadiran peserta',
             'status',
             'Jam Kehadiran',
             'keterangan',
@@ -70,6 +72,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $present->schedule->batch->name,
             $present->schedule->start_at?->format('H:i').' - '.$present->schedule->end_at?->format('H:i'),
             $present->user->name,
+            $present->present_members,
             __('app.present.status.'.$present->status),
             $present->attended_at?->format('H:i'),
             $present->description,
