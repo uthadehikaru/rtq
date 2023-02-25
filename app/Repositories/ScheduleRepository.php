@@ -33,7 +33,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function find($id)
     {
-        return Schedule::with('presents', 'presents.user')->findOrFail($id);
+        return Schedule::with('presents', 'presents.user', 'presents.user.member')->findOrFail($id);
     }
 
     public function delete($id)

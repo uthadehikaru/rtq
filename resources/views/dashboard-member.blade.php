@@ -21,7 +21,7 @@
             </div>
             <div class="kt-portlet__body">
                 <img src="{{ asset('storage/idcards/'.$member->member_no.'.jpg') }}?v={{ $member->updated_at }}" alt="{{ $member->member_no }}"
-                class="img-responsive" />
+                class="img-fluid" />
             </div>
         </div>
     </div>

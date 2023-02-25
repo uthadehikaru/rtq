@@ -101,42 +101,46 @@
                     @endif
                     <hr/>
                     <h4>Peserta</h4>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="row">
                             @foreach($schedule->presents as $present)
                                 @if($present->type=='teacher')
                                 @continue
                                 @endif
-                                <tr>
-                                    <td>
-                                        {{ $present->name() }}
-                                        <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
-                                        onclick="return confirm('Yakin ingin menghapus?')"
-                                        class="text-danger">(hapus)</a>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" name="status[{{$present->id}}]">
-                                            @foreach($statuses as $status)
-                                            <option value="{{ $status }}" @selected($status==$present->status)>@lang('app.present.status.'.$status)</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control"
-                                        placeholder="Tidak ada keterangan"
-                                        name="description[{{$present->id}}]"  value="{{ $present->description }}" />
-                                    </td>
-                                </tr>
+                                <div class="col-12 col-md-4">
+                                    <div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    @if($present->user->member->profile_picture)
+                                                    <img 
+                                                    src="{{ thumbnail(storage_path('app/public/'.$present->user->member->profile_picture), 300, 400) }}"
+                                                    class="img-fluid" />
+                                                    @else
+                                                    <img 
+                                                    src="{{ asset('assets/images/default.jpg') }}"
+                                                    class="img-fluid" />
+                                                    @endif
+                                                </div>
+                                                <div class="col-8">
+                                                    <label class="form-control">{{ $present->name() }}
+                                                    <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
+                                                    onclick="return confirm('Yakin ingin menghapus?')"
+                                                    class="text-danger">(hapus)</a></label>
+                                                    <select class="form-control mt-2" name="status[{{$present->id}}]">
+                                                        @foreach($statuses as $status)
+                                                        <option value="{{ $status }}" @selected($status==$present->status)>@lang('app.present.status.'.$status)</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="text" class="form-control mt-2"
+                                                    placeholder="Tidak ada keterangan"
+                                                    name="description[{{$present->id}}]"  value="{{ $present->description }}" />     
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">

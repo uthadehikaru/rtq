@@ -1,6 +1,41 @@
 <?php
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
+if (! function_exists('thumbnail')) {
+    function thumbnail($path, $width, $height, $force=false)
+    {
+        $filename = basename($path);
+        $thumbnail = 'thumbnail_'.$filename;
+        $thumbnail_path = storage_path('app/public/thumbnails/');
+        if(Storage::missing($thumbnail_path))
+            Storage::disk('public')->makeDirectory('thumbnails');
+
+        $thumbnail_path .= $thumbnail;
+        if(Storage::missing($thumbnail_path) || $force){
+            $image = Image::make($path)->orientate()->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $image->save($thumbnail_path);
+        }
+        return asset('storage/thumbnails/'.$thumbnail);
+        // $filename = basename($path);
+        // $thumbnail  = storage_path('app\\public\\thumbnails');
+        // if(Storage::missing($thumbnail))
+        //     Storage::makeDirectory($thumbnail);
+        // $thumbnail .= '\\'.$filename;
+        // if(Storage::missing($thumbnail) || $force){
+        //     $img = Image::make($path)->resize($width, $height, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     });
+        //     $img->save($thumbnail);
+        // }
+        // return asset('storage/thumbnails/'.$filename);
+    }
+}
 
 if (! function_exists('setting')) {
     function setting($name, $group = null)

@@ -38,7 +38,7 @@ class MembersDataTable extends DataTable
             })
             ->editColumn('profile_picture', function ($row) {
                 if ($row->profile_picture) {
-                    return '<a href="'.asset('storage/'.$row->profile_picture).'" target="_blank"><img src="'.asset('storage/'.$row->profile_picture).'" height="50" /></a>';
+                    return '<a href="'.asset('storage/'.$row->profile_picture).'" target="_blank"><img src="'.thumbnail(storage_path('app/public/'.$row->profile_picture), 300, 400).'" height="50" /></a>';
                 }
             })
             ->addColumn('action', function ($row) {

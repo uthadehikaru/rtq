@@ -43,7 +43,7 @@ class MembersBiodataDataTable extends DataTable
             })
             ->addColumn('profile_picture', function ($row) {
                 if ($row->payload['profile_picture']) {
-                    return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.asset('storage/'.$row->payload['profile_picture']).'" width="200" /></a>';
+                    return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.thumbnail(storage_path('app/public/'.$row->payload['profile_picture']), 300, 400).'" width="200" /></a>';
                 }
             })
             ->addColumn('status', function ($row) {
