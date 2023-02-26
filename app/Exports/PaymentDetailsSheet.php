@@ -33,7 +33,6 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
                 $query->where('period_id', $this->period->id);
             },
             'batches' => function ($query) {
-                $query->whereRelation('course','type', '<>', 'Talaqqi Jamai');
                 $query->orderBy('name');
             },
         ])
