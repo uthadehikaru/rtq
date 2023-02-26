@@ -33,6 +33,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
                 $query->where('period_id', $this->period->id);
             },
             'batches' => function ($query) {
+                $query->whereRelation('course','type', '<>', 'Talaqqi Jamai');
                 $query->orderBy('name');
             },
         ])
@@ -52,10 +53,14 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function map($member): array
     {
+        if($member->status)
+            $status = "Gratis";
+        else
+            $status = $member->paymentDetails->count() ? 'Sudah Bayar' : 'Belum Bayar';
         return [
             $member->full_name,
             $member->batches->first()?->name,
-            $member->paymentDetails->count() ? 'Sudah Bayar' : 'Belum Bayar',
+            $status,
             $member->paymentDetails->first()?->created_at,
         ];
     }

@@ -46,9 +46,14 @@ class PaymentsDataTable extends DataTable
                 return '<span class="kt-badge '.($row->status == 'new' ? 'kt-badge--info' : 'kt-badge--success').' kt-badge--inline kt-badge--pill">'.($row->status == 'new' ? 'Baru' : 'Lunas').'</span>';
             })
             ->addColumn('member', function ($row) {
-                $val = '';
+                $keyword = $this->request->keyword();
+                $val = "";
                 foreach ($row->details as $detail) {
-                    $val .= '<p>'.$detail->member->full_name.' periode '.$detail->period->name.'</p>';
+                    $class = "";
+                    if(Str::contains($detail->member->full_name, $keyword, true))
+                        $class = "text-danger";
+
+                    $val .= '<p class="'.$class.'">'.$detail->member->full_name.' periode '.$detail->period->name.'</p>';
                 }
 
                 return $val;

@@ -119,9 +119,9 @@ jQuery(document).ready(function() {
         <table class="kt-datatable" id="html_table" width="100%">
             <thead>
                 <tr>
-                    <th title="Field #1">@lang('Created at')</th>
+                    <th title="Field #1">@lang('Start Date')</th>
+                    <th title="Field #1">@lang('End Date')</th>
                     <th title="Field #2">@lang('Name')</th>
-                    <th title="Field #4">@lang('Duration Date')</th>
                     <th title="Field #3">@lang('Total Bayar')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -129,9 +129,9 @@ jQuery(document).ready(function() {
             <tbody>
                 @foreach($periods as $period)
                     <tr>
-                        <td>{{ $period->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $period->start_date->format('Y-m-d') }}</td>
+                        <td>{{ $period->end_date->format('Y-m-d') }}</td>
                         <td>{{ $period->name }}</td>
-                        <td>{{ $period->start_date->format('d M Y') }} - {{ $period->end_date->format('d M Y') }}</td>
                         <td>{{ $period->payment_details_count }}/{{ $total_members }} Anggota</td>
                         <td>
                             <a href="{{ route('periods.export', $period->id) }}" class="text-warning">
