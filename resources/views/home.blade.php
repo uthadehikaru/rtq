@@ -7,6 +7,7 @@
 
 		<x-header />
 
+		<x-blogs />
 		<!-- begin:: Section -->
 		@if($settings->value('banner'))
 		<img src="{{ $settings->value('banner') }}" width="100%" class="mb-4" />
