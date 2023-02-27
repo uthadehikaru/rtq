@@ -80,9 +80,13 @@ jQuery(document).ready(function() {
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
                     @role('administrator')
-                    <a href="{{ route('schedules.presents.create', $schedule->id) }}" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('schedules.presents.create', ['schedule'=>$schedule->id,'type'=>'teacher']) }}" class="btn btn-primary btn-icon-sm">
                         <i class="la la-plus"></i>
-                        @lang('Tambah Absensi Pengajar')
+                        @lang('Tambah Pengajar')
+                    </a>
+                    <a href="{{ route('schedules.presents.create', ['schedule'=>$schedule->id,'type'=>'member']) }}" class="btn btn-primary btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @lang('Tambah Anggota')
                     </a>
                     @endrole
                 </div>
