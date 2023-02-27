@@ -7,7 +7,9 @@ use Intervention\Image\Facades\Image;
 if (! function_exists('thumbnail')) {
     function thumbnail($path, $width, $height, $force=false)
     {
-        if(Storage::missing($path))
+        $path = str_replace('/','\\',$path);
+        
+        if(!Storage::disk('public')->exists($path))
             return asset('assets/images/default.jpg');
         
         $filename = basename($path);
@@ -18,25 +20,13 @@ if (! function_exists('thumbnail')) {
 
         $thumbnail_path .= $thumbnail;
         if(Storage::missing($thumbnail_path) || $force){
-            $image = Image::make($path)->orientate()->resize($width, $height, function ($constraint) {
+            $image = Image::make(Storage::disk('public')->get($path))->orientate()->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $image->save($thumbnail_path);
         }
         return asset('storage/thumbnails/'.$thumbnail);
-        // $filename = basename($path);
-        // $thumbnail  = storage_path('app\\public\\thumbnails');
-        // if(Storage::missing($thumbnail))
-        //     Storage::makeDirectory($thumbnail);
-        // $thumbnail .= '\\'.$filename;
-        // if(Storage::missing($thumbnail) || $force){
-        //     $img = Image::make($path)->resize($width, $height, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     });
-        //     $img->save($thumbnail);
-        // }
-        // return asset('storage/thumbnails/'.$filename);
     }
 }
 

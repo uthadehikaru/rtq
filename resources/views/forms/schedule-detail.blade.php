@@ -113,7 +113,7 @@
                                                 <div class="col-4">
                                                     @if($present->user->member->profile_picture)
                                                     <img 
-                                                    src="{{ thumbnail(storage_path('app/public/'.$present->user->member->profile_picture), 300, 400) }}"
+                                                    src="{{ thumbnail($present->user->member->profile_picture, 300, 400) }}"
                                                     class="img-fluid" />
                                                     @else
                                                     <img 
