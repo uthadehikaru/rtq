@@ -45,12 +45,15 @@ class PresentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(
+        Request $request,
         Schedule $schedule,
     ) {
+        $type = $request->get('type','teacher');
         $data['title'] = __('Tambah Absensi');
         $data['schedule'] = $schedule;
         $data['present'] = null;
-        $data['teachers'] = User::role('teacher')->orderBy('name')->pluck('name', 'id');
+        $data['type'] = $type;
+        $data['users'] = User::role($type)->orderBy('name')->pluck('name', 'id');
         $data['statuses'] = Present::STATUSES;
 
         return view('forms.present', $data);
@@ -72,6 +75,9 @@ class PresentController extends Controller
             'status' => 'required',
             'description' => '',
             'attended_at' => '',
+            'is_badal'=>'',
+            'is_transfer'=>'',
+            'type'=>'required|in:teacher,member',
         ]);
         if ($data['status'] != 'present') {
             $data['attended_at'] = null;
@@ -83,7 +89,7 @@ class PresentController extends Controller
             'user_id' => $data['user_id'],
         ])->first();
         if ($present) {
-            return back()->with('error', __('Data pengajar sudah pernah diinput'));
+            return back()->with('error', __('Data '.$data['type'].' sudah pernah diinput'));
         }
 
         $presentRepository->create($data);
@@ -115,6 +121,7 @@ class PresentController extends Controller
         $data['title'] = __('Edit Present').' '.$present->name();
         $data['schedule'] = $schedule;
         $data['present'] = $present;
+        $data['type'] = $present->type;
         $data['statuses'] = Present::STATUSES;
 
         return view('forms.present', $data);

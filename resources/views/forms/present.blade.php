@@ -27,7 +27,7 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{ route('schedules.presents.index', $schedule->id) }}" class="btn btn-default btn-icon-sm">
+                            <a href="{{ route('schedules.presents.index', $schedule->id) }}" class="btn btn-warning btn-icon-sm">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
@@ -44,14 +44,15 @@
             <form class="kt-form" method="POST" action="{{ route('schedules.presents.store', $schedule->id) }}">
             @endif
                 @csrf
+                <input type="hidden" name="type" value="{{ $type }}" />
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         @if(!$present)
                         <div class="form-group">
-                            <label>@lang('Anggota')</label>
+                            <label>{{ $type }}</label>
                             <select class="form-control" name="user_id" required>
-                                <option value="">@lang('Pilih Pengajar')</option>
-                                @foreach($teachers as $id=>$name)
+                                <option value="">@lang('Pilih '.$type)</option>
+                                @foreach($users as $id=>$name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
                             </select>
@@ -70,7 +71,7 @@
                             <label>@lang('Description')</label>
                             <textarea class="form-control" name="description" placeholder="isi keterangan jika dibutuhkan">{{ $present?->description }}</textarea>
                         </div>
-                        @if($present->type=='teacher')
+                        @if($type=='teacher')
                         <div class="form-group">
                             <label>@lang('Attended At') (Isi jika status hadir)</label>
                             <input type="time" name="attended_at" class="form-control"
@@ -80,10 +81,10 @@
                             <label>Guru Pengganti</label>
                             <div class="radio-inline">
                                 <label class="radio">
-                                <input type="radio" value="1" name="is_badal" @checked($present->is_badal)>
+                                <input type="radio" value="1" name="is_badal" @checked($present && $present->is_badal)>
                                 Ya</label>
                                 <label class="radio">
-                                <input type="radio" value="0" name="is_badal" @checked(!$present->is_badal)>
+                                <input type="radio" value="0" name="is_badal" @checked($present && !$present->is_badal)>
                                 Tidak</label>
                             </div>
                         </div>
@@ -92,10 +93,10 @@
                             <label>Operan Santri</label>
                             <div class="radio-inline">
                                 <label class="radio">
-                                <input type="radio" value="1" name="is_transfer" @checked($present->is_transfer)>
+                                <input type="radio" value="1" name="is_transfer" @checked($present && $present->is_transfer)>
                                 Ya</label>
                                 <label class="radio">
-                                <input type="radio" value="0" name="is_transfer" @checked(!$present->is_transfer)>
+                                <input type="radio" value="0" name="is_transfer" @checked($present && !$present->is_transfer)>
                                 Tidak</label>
                             </div>
                         </div>
