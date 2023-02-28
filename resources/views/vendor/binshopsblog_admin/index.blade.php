@@ -1,8 +1,14 @@
 @extends("binshopsblog_admin::layouts.admin_layout")
 @section("content")
 
-
-    <h5>Admin - Manage Blog Posts</h5>
+    <div class="row">
+        <div class="col-6">
+            <h5>Admin - Manage Blog Posts</h5>
+        </div>
+        <div class="col-6">
+            <a href="{{ route('binshopsblog.admin.create_post') }}" class="btn btn-primary pull-right">Add Post</a>
+        </div>
+    </div>
 
     @forelse($post_translations as $post)
         <div class="card m-4" style="">
