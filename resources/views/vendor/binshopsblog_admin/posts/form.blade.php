@@ -257,11 +257,12 @@
 </script>
 
 @if( config("binshopsblog.use_wysiwyg") && config("binshopsblog.echo_html"))
-    <script src="//cdn.ckeditor.com/4.15.0/full/ckeditor.js"></script>
-
-    <script>
-        if( typeof(CKEDITOR) !== "undefined" ) {
-            CKEDITOR.replace('post_body');
-        }
-    </script>
+<!-- include summernote css/js -->
+<link href="{{ asset('summernote/summernote.min.css') }}" rel="stylesheet" />
+<script src="{{ asset('summernote/summernote.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#blog_post_body').summernote();
+    });
+</script>
 @endif
