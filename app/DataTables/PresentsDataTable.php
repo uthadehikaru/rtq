@@ -45,6 +45,14 @@ class PresentsDataTable extends DataTable
                     $query->where('is_badal', true);
                 }
             })
+            ->filterColumn('user_id', function ($query, $keyword) {
+                $query->whereExists(function($query)use($keyword){
+                    $query->selectRaw('1')
+                    ->from('users')
+                    ->whereColumn('presents.user_id','users.id')
+                    ->where('users.name','like','%'.$keyword.'%');
+                });
+            })
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y');
             })
@@ -94,7 +102,7 @@ class PresentsDataTable extends DataTable
     public function query(Present $model): QueryBuilder
     {
         $model = $model
-        ->with(['schedule', 'schedule.batch'])
+        ->with(['schedule', 'schedule.batch','user'])
         ->latest();
 
         if ($this->type) {

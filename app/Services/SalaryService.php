@@ -67,8 +67,8 @@ class SalaryService
         $presents = Present::with('user', 'user.teacher', 'schedule', 'schedule.batch', 'schedule.batch.course')
         ->whereHas('schedule', function ($query) use ($salary) {
             return $query
-            ->where('scheduled_at', '>=', $salary->start_date)
-            ->where('scheduled_at', '<=', $salary->end_date);
+            ->whereDate('scheduled_at', '>=', $salary->start_date)
+            ->whereDate('scheduled_at', '<=', $salary->end_date);
         })->where('type', 'teacher')
         ->get();
 
