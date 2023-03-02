@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-primary" role="alert" id="alert">
             <ul>
                 <li class="list-unstyled"><h3>PERHATIAN!</h3></li>
                 <li>Pastikan telah memberikan akses untuk mendapatkan lokasi dan kamera</li>
@@ -15,7 +15,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <div class="form-group">
             <label>@lang('Batch')</label>
             <select class="form-control kt-select2" name="batch_id" id="batch" required>
@@ -41,7 +41,7 @@
         </div>
         <p id="locationData"></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <video id="webcam" autoplay playsinline width="640" height="480"></video>
         <img id="photo" download="selfie.png" class="d-none" />
         <canvas id="canvas" class="d-none"></canvas>
@@ -81,6 +81,10 @@ jQuery(document).ready(function() {
    })
    .catch(err => {
        console.log(err);
+        $('#capture').addClass('d-none');
+        $('#alert').removeClass('alert-primary');
+        $('#alert').addClass('alert-danger');
+        $('#alert').text('Gagal mengakses kamera. pastikan anda memberikan akses ke kamera untuk melakukan absensi. silahkan refresh kembali dan pastikan akses kamera diberikan');
    });
 
    function toggle(){
@@ -156,7 +160,7 @@ jQuery(document).ready(function() {
             error: function(errMsg) {
                 $('#capture').addClass('d-none');
                 $('#reset').removeClass('d-none');
-                alert('Errpr : '+errMsg);
+                alert('Error : '+errMsg);
             }
         });
     }
