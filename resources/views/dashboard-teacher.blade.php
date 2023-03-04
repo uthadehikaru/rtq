@@ -111,7 +111,8 @@
                                     </div>
                                     <div class="kt-timeline-v2__item-text  kt-padding-top-5">
                                         Jadwal Halaqoh {{ $schedule->batch->name }} pada
-                                        {{ $schedule->scheduled_at->format('d M Y H:i') }}
+                                        {{ $schedule->scheduled_at->format('d M Y') }}
+                                        {{ $schedule->start_at->format('H:i') }}
                                         @if($schedule->teacher_id)
                                             digantikan oleh {{ $schedule->teacher->name }}
                                         @endif

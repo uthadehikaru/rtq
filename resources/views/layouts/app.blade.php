@@ -207,7 +207,7 @@
 							<div class="kt-header__topbar-item kt-header__topbar-item--user">
 								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
 									<div class="kt-header__topbar-user">
-										<span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->name }}</span>
+										<span class="kt-header__topbar-username">{{ Auth::user()->name }}</span>
 										<img alt="Pic" src="{{ asset('assets/images/default.jpg') }}" />
 									</div>
 								</div>

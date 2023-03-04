@@ -26,7 +26,7 @@
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
+                        <div class="kt-portlet__head-actions text-right">
                             <a href="{{ route('teacher.schedules.index') }}" class="btn btn-warning btn-icon-sm mt-2">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
