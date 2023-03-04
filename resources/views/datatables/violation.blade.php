@@ -72,12 +72,12 @@ jQuery(document).ready(function() {
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    <a href="{{ route('violations.create', ['type'=>'member']) }}" class="btn btn-primary btn-icon-sm">
+                <div class="kt-portlet__head-actions text-right">
+                    <a href="{{ route('violations.create', ['type'=>'member']) }}" class="btn btn-primary btn-icon-sm mt-2">
                         <i class="la la-plus"></i>
                         @lang('Anggota')
                     </a>
-                    <a href="{{ route('violations.create', ['type'=>'teacher']) }}" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('violations.create', ['type'=>'teacher']) }}" class="btn btn-primary btn-icon-sm mt-2">
                         <i class="la la-plus"></i>
                         @lang('Pengajar')
                     </a>

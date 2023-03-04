@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-widget14">
                 <div class="kt-widget14__header kt-margin-b-30">
@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-widget14">
                 <div class="kt-widget14__header">

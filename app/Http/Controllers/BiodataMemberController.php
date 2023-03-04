@@ -22,8 +22,8 @@ class BiodataMemberController extends Controller
         $dataTable->setStatus($request->get('status'));
         $data['title'] = $count.'/'.$total.' Biodata';
         $data['buttons'] = '
-        <a href="'.url()->current().'?status=verified" class="btn btn-success">'.$verified.' Verified</a>
-        <a href="'.url()->current().'?status=unverified" class="btn btn-warning">'.$unverified.' Not Verified</a>
+        <a href="'.url()->current().'?status=verified" class="btn btn-success mt-2">'.$verified.' Verified</a>
+        <a href="'.url()->current().'?status=unverified" class="btn btn-warning mt-2">'.$unverified.' Not Verified</a>
         ';
 
         return $dataTable->render('datatables.datatable', $data);

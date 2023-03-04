@@ -18,7 +18,7 @@
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
+                <div class="kt-portlet__head-actions text-right">
                     @if(isset($buttons))
                     {!! $buttons !!}
                     @endif

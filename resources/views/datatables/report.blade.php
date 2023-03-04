@@ -19,20 +19,20 @@
     </div>
     <div class="kt-portlet__body">
 		<form class="row">
-            <div class="col-2">
+            <div class="col-md-2 mt-2">
                 <select name="type" class="form-control">
                     <option value="">Semua</option>
                     <option value="teacher" @selected($type && $type=='teacher')>Pengajar</option>
                     <option value="member" @selected($type && $type=='member')>Anggota</option>
                 </select>
             </div>
-            <div class="col-2">
+            <div class="col-6 col-md-2 mt-2">
                 <input type="date" name="start_date" class="form-control" value="{{ $start_date }}" required>
             </div>
-            <div class="col-2">
+            <div class="col-6 col-md-2 mt-2">
                 <input type="date" name="end_date" class="form-control" value="{{ $end_date }}" required>
             </div>
-            <div class="col-2">
+            <div class="col-md-2 mt-2">
                 <button type="submit" class="btn btn-primary">Cari</button>
             </div>
         </form>
@@ -45,13 +45,14 @@
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                Data Laporan {{ Carbon\Carbon::parse($start_date)?->format('d M Y') }} - {{ Carbon\Carbon::parse($end_date)?->format('d M Y') }}
+                Data Laporan
+                <br/>{{ Carbon\Carbon::parse($start_date)?->format('d M Y') }} - {{ Carbon\Carbon::parse($end_date)?->format('d M Y') }}
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <a href="{{ route('schedules.export', ['type'=>$type,'start_date'=>$start_date,'end_date'=>$end_date]) }}" class="btn btn-success">
+                    <a href="{{ route('schedules.export', ['type'=>$type,'start_date'=>$start_date,'end_date'=>$end_date]) }}" class="btn btn-success btn-sm">
                         <i class="la la-download"></i>
                         Export (.xls)
                     </a>

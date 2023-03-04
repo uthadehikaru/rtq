@@ -56,7 +56,7 @@ jQuery(document).ready(function () {
 @endpush
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Salarys')
+    @lang('Bisyaroh')
 </span>
 @endsection
 @section('content')
@@ -75,12 +75,12 @@ jQuery(document).ready(function () {
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    <a href="{{ route('salaries.create') }}" class="btn btn-primary btn-icon-sm">
+                <div class="kt-portlet__head-actions text-right">
+                    <a href="{{ route('salaries.create') }}" class="btn btn-primary btn-icon-sm mt-2">
                         <i class="la la-plus"></i>
                         @lang('New Salary')
                     </a>
-                    <a href="{{ route('salaries.config') }}" class="btn btn-warning btn-icon-sm">
+                    <a href="{{ route('salaries.config') }}" class="btn btn-warning btn-icon-sm mt-2">
                         <i class="la la-cog"></i>
                         @lang('Konfigurasi')
                     </a>

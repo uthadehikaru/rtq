@@ -21,11 +21,11 @@ class ScheduleController extends Controller
     {
         $data['title'] = __('Schedules');
         if (Auth::user()->hasRole('administrator')) {
-            $data['buttons'] = '<a href="'.route('schedules.report').'" class="btn btn-success btn-icon-sm">
+            $data['buttons'] = '<a href="'.route('schedules.report').'" class="btn btn-success btn-icon-sm mt-2">
                 <i class="la la-file"></i>
                 Laporan
             </a>
-            <a href="'.route('schedules.create').'" class="btn btn-primary btn-icon-sm">
+            <a href="'.route('schedules.create').'" class="btn btn-primary btn-icon-sm mt-2">
                 <i class="la la-plus"></i>
                 Tambah Jadwal
             </a>';
