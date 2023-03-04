@@ -293,6 +293,7 @@
 							</div>
 							<div class="kt-footer__menu">
 								@role('administrator')
+								<a href="{{ route('activities') }}" target="_blank" class="kt-footer__menu-link kt-link">Activities</a>
 								<a href="{{ route('logs') }}" target="_blank" class="kt-footer__menu-link kt-link">Logs</a>
 								@endrole
 							</div>

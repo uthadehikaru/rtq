@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Actions;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\BiodataMemberController;
@@ -50,6 +51,7 @@ Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::group(['middleware' => ['role:administrator']], function () {
+        Route::get('activities', ActivityController::class)->name('activities');
         Route::prefix('educations')->group(function () {
             Route::resource('users', UserController::class);
             Route::get('members/cards/{member_no?}', [MemberController::class, 'cards'])->name('members.cards');
