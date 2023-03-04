@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Member\IqobController;
 use App\Http\Controllers\Member\PresentController as MemberPresentController;
+use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::name('member.')->prefix('member')->middleware('role:member')->group(function () {
         Route::get('presents', MemberPresentController::class)->name('presents.index');
         Route::get('iqob', IqobController::class)->name('iqob.index');
+        Route::resource('profile', ProfileController::class)->only('update');
     });
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

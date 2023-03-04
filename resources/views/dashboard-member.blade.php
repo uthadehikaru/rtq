@@ -1,13 +1,75 @@
 @extends('layouts.app')
 @section('content')
-<x-validation />
+<x-message />
 <div class="row">
+<div class="col-lg-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @lang('Biodata Peserta') - {{ $member->full_name }}
+                    </h3>
+                </div>
+                
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <img src="{{ thumbnail($member->profile_picture) }}" alt="profile picture"
+                            class="img-fluid" />
+                    </div>
+                    <div class="col-8">
+                        <form method="post" action="{{ route('member.profile.update', 0) }}">
+                            @csrf
+                            <input type="hidden" name="_method" value="PUT" />
+                            <div class="form-group">
+                                <label>@lang('Nama Panggilan')</label>
+                                <input type="text" name="short_name" class="form-control"
+                                value="{{ old('short_name', $member?$member->short_name:'') }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label>@lang('Email')</label>
+                                <input type="text" name="email" class="form-control"
+                                value="{{ old('email', $member?$member->email:'') }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label>@lang('No Telp')</label>
+                                <input type="text" name="phone" class="form-control"
+                                value="{{ old('phone', $member?$member->phone:'') }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label>@lang('Alamat')</label>
+                                <textarea name="address" class="form-control"
+                                >{{ old('address', $member?$member->address:'') }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>@lang('Kodepos')</label>
+                                <input type="text" name="postcode" class="form-control"
+                                value="{{ old('postcode', $member?$member->postcode:'') }}"
+                                >
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        @lang('Kartu Anggota')
+                        @lang('Kartu Anggota') - {{ $member->member_no }}
                     </h3>
                 </div>
                 

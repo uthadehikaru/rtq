@@ -76,6 +76,11 @@ class MemberRepository implements MemberRepositoryInterface
         });
     }
 
+    public function updateMember($user_id, array $data)
+    {
+        return Member::where('user_id',$user_id)->update($data);
+    }
+
     public function update($id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
