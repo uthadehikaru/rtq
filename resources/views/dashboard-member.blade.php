@@ -39,6 +39,7 @@
                                 <input type="text" name="email" class="form-control"
                                 value="{{ old('email', $member?$member->email:'') }}"
                                 >
+                                <span class="form-text text-muted">Email bisa digunakan untuk login selain menggunakan nomor anggota. anda juga bisa mendapatkan notifikasi via email jika email yang diisi valid dan aktif</span>
                             </div>
                             <div class="form-group">
                                 <label>@lang('No Telp')</label>

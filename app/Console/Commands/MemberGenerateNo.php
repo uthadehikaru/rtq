@@ -67,7 +67,7 @@ class MemberGenerateNo extends Command
             $memberNo .= Str::padLeft($no++, 3, '0');
             $member->update(['member_no' => $memberNo]);
 
-            $member->user->update(['email' => $memberNo, 'password' => Hash::make($member->nik)]);
+            $member->user->update(['username' => $memberNo, 'password' => Hash::make($member->nik)]);
 
             $bar->advance();
         }

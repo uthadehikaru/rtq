@@ -34,7 +34,7 @@
 								<form class="kt-form" action="{{ route('login') }}" method="post">
                                     @csrf
 									<div class="input-group">
-										<input class="form-control" type="text" placeholder="@lang('login.email')" name="email"
+										<input class="form-control" type="text" placeholder="Email atau No anggota" name="email"
 										value="{{ $username }}"
 										autocomplete="off">
 									</div>

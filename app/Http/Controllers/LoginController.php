@@ -7,6 +7,18 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    protected $username;
+ 
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+ 
+        $this->username = $this->findUsername();
+    }
+
     public function index($username = null)
     {
         $data['username'] = $username;
@@ -14,10 +26,26 @@ class LoginController extends Controller
         return view('login', $data);
     }
 
+    public function findUsername()
+    {
+        $login = request()->input('email');
+ 
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+ 
+        request()->merge([$fieldType => $login]);
+ 
+        return $fieldType;
+    }
+
+    public function username()
+    {
+        return $this->username;
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required'],
+            $this->username() => ['required'],
             'password' => ['required'],
         ]);
 

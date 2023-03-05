@@ -83,7 +83,10 @@ class ProfileController extends Controller
             'address'=>'',
             'postcode'=>'',
         ]);
-        $memberRepository->updateMember(Auth::id(), $data);
+        $error = $memberRepository->updateMember(Auth::id(), $data);
+        if($error)
+            return back()->with('error',$error);
+
         return back()->with('message','Berhasil update biodata');
     }
 

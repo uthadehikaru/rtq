@@ -78,7 +78,17 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function updateMember($user_id, array $data)
     {
-        return Member::where('user_id',$user_id)->update($data);
+        if($data['email']){
+            $exists = User::where('id','<>',$user_id)->where('email',$data['email'])->first();
+            if($exists)
+                return "Email yang diinput sudah digunakan. mohon gunakan email yang lain";
+
+            User::find($user_id)->update(['email'=>$data['email']]);
+        }
+
+        Member::where('user_id',$user_id)->update($data);
+
+        return null;
     }
 
     public function update($id, array $data)
@@ -93,7 +103,8 @@ class MemberRepository implements MemberRepositoryInterface
 
             if ($member->user) {
                 $user = [
-                    'email' => $data['member_no']??$data['email'],
+                    'email' => $data['email'],
+                    'username'=> $data['member_no'],
                     'name' => $data['full_name'],
                     'password' => Hash::make($data['nik']),
                 ];
