@@ -8,15 +8,13 @@
 @if(session()->has('message'))
 <x-alert type="success">{{ session()->get('message') }}</x-alert>
 @endif
+
+<x-alert type="info" icon="flaticon-information ">Perhatian : Untuk perubahan status dan deskripsi peserta, tidak perlu mengklik tombol simpan lagi. Sistem akan otomatis memperbaharui saat ada perubahan.</x-alert>
 <div class="row">
     <div class="col">
 
-        <x-validation />
-
         <!--begin::Portlet-->
         <!--begin::Form-->
-        <form class="kt-form" method="POST" action="{{ route('teacher.schedules.update', $schedule->id) }}">
-        @csrf
         <div class="kt-portlet">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
@@ -43,122 +41,10 @@
             </div>
 
             <div class="kt-portlet__body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <h3 class="mt-2">{{Auth::user()->name}} {{ $teacherPresent->is_badal?'(Guru Pengganti)':'' }}</h3>
-                        @if($teacherPresent->photo)
-                        <a href="{{ asset('storage/'.$teacherPresent->photo) }}" target="_BLANK"><img src="{{ asset('storage/'.$teacherPresent->photo) }}" class="img-fluid" /></a>
-                        @endif
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row mt-2">
-                            <div class="col-12 col-md-4">
-                                <label>Mulai Kelas</label>
-                                <input type="time" class="form-control"
-                                name="start_at"  value="{{ $schedule->start_at?->format("H:i") }}"  disabled="disabled" />
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label>Selesai Kelas</label>
-                                <input type="time" class="form-control"
-                                name="end_at"  value="{{ $schedule->end_at?->format("H:i") }}"  disabled="disabled" />
-                                @if(!$schedule->end_at)
-                                <span class="text-help">Saat "Tutup Kelas", Jam selesai akan otomatis tercatat</span>
-                                @endif
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label>Tempat</label>
-                                <input type="text" class="form-control"
-                                name="place"  value="{{ $schedule->place }}" required />
-                            </div>
-                        </div>
-                        @if($canUpdate)
-                        <div class="row mt-2">
-                            <div class="col-12 col-md-4">
-                                <label>Status</label>
-                                <select class="form-control" name="status[{{$teacherPresent->id}}]" disabled>
-                                    @foreach($statuses as $status)
-                                    <option value="{{ $status }}" @selected($status==$teacherPresent->status)>@lang('app.present.status.'.$status)</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label>Jam Kehadiran</label>
-                                <input type="time" class="form-control"
-                                name="attended_at[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->attended_at?->format('H:i') }}"  disabled="disabled" />
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <label>Keterangan</label>
-                                <input type="text" class="form-control"
-                                placeholder="Tidak ada keterangan"
-                                name="description[{{$teacherPresent->id}}]"  value="{{ $teacherPresent->description }}" />
-                            </div>
-                        </div>
-                        @else
-                            @lang('app.present.status.'.$teacherPresent->status)
-                            @if($teacherPresent->status=='present' && $teacherPresent->attended_at)
-                                pada {{ $teacherPresent->attended_at->format('H:i')}}
-                            @elseif($teacherPresent->status!='present' && $teacherPresent->description)
-                                pada {{ $teacherPresent->description}}
-                            @else
-                                tanpa keterangan
-                            @endif
-                        @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h4>PESERTA</h4>
-                    </div>
-                    @foreach($schedule->presents as $present)
-                        @if($present->type=='teacher')
-                        @continue
-                        @endif
-                        <div class="col-12 col-md-4">
-                            <div class="card mt-2">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 text-center">
-                                            @if($present->user->member->profile_picture)
-                                            <img 
-                                            src="{{ thumbnail($present->user->member->profile_picture, 300, 400) }}"
-                                            class="img-fluid" />
-                                            @else
-                                            <img 
-                                            src="{{ asset('assets/images/default.jpg') }}"
-                                            class="img-fluid" />
-                                            @endif
-                                            <a href="{{ route('teacher.schedules.presents.remove', [$schedule->id, $present->id]) }}" 
-                                            onclick="return confirm('Yakin ingin menghapus?')"
-                                            class="text-danger mt-2">(hapus)</a>
-                                        </div>
-                                        <div class="col-8">
-                                            <label class="form-control">{{ $present->name() }}</label>
-                                            <select class="form-control mt-2" name="status[{{$present->id}}]">
-                                                @foreach($statuses as $status)
-                                                <option value="{{ $status }}" @selected($status==$present->status)>@lang('app.present.status.'.$status)</option>
-                                                @endforeach
-                                            </select>
-                                            <input type="text" class="form-control mt-2"
-                                            placeholder="Tidak ada keterangan"
-                                            name="description[{{$present->id}}]"  value="{{ $present->description }}" />     
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="kt-portlet__foot">
-                    <div class="kt-form__actions">
-                        <button type="submit" class="btn btn-primary">@lang('Submit')</button>
-                        <button type="reset" class="btn btn-secondary">@lang('Cancel')</button>
-                    </div>
+                <livewire:teacher :present="$teacherPresent" :schedule="$schedule" />
             </div>
+            <livewire:presents :presents="$schedule->presents" />
         </div>
-        </form>
-
-        <!--end::Form-->
         
 
         <form class="kt-form" method="POST" action="{{ route('teacher.schedules.presents.add', $schedule->id) }}">
@@ -214,9 +100,17 @@
     </div>
 </div>
 @endsection
+@push('styles')
+    @livewireStyles
+@endpush
 @push('scripts')
+@livewireScripts
 <script type="text/javascript">
 jQuery(document).ready(function() {
+    Livewire.on('message', message => {
+        alert(message); //put sweet alert here :)
+    });
+
     $('#kt-select2-user').select2({
         placeholder: 'Pilih Peserta',
     });
