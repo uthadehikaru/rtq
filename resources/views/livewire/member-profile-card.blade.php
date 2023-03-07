@@ -68,7 +68,6 @@
                         value="{{ old('postcode', $member?$member->postcode:'') }}"
                         >
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
         </div>
