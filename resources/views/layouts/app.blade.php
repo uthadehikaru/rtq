@@ -26,6 +26,7 @@
 		<link href="{{ asset('assets/css/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/skins/brand/light.css') }}" rel="stylesheet" type="text/css" />
 
+		@livewireStyles
 		@stack('styles')
 
 		<!--end::Layout Skins -->
@@ -358,6 +359,8 @@
 
 		<!--end::Global Theme Bundle -->
         
+		@livewireScripts
+		
 		<!--begin::Page Scripts(used by this page) -->
         @stack('scripts')
 		<!--end::Page Scripts -->

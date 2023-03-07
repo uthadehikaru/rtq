@@ -20,6 +20,10 @@
                         src="{{ asset('assets/images/default.jpg') }}"
                         class="img-fluid" />
                         @endif
+                        <div class="spinner-border" wire:loading.delay>
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <span class="message text-success"></span>
                         @if($present->is_transfer)
                         <a href="{{ route('teacher.schedules.presents.remove', [$present->schedule_id, $present->id]) }}" 
                         onclick="return confirm('Yakin ingin menghapus?')"
@@ -37,9 +41,6 @@
                         <input type="text" class="form-control mt-2"
                         placeholder="Tidak ada keterangan"
                          value="{{ $present->description }}" wire:blur="updateDescription({{ $present->id }}, $event.target.value)" />
-                        <div wire:loading>
-                            Memperbaharui...
-                        </div>
                     </div>
                 </div>
             </div>

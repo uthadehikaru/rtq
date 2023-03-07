@@ -100,15 +100,14 @@
     </div>
 </div>
 @endsection
-@push('styles')
-    @livewireStyles
-@endpush
 @push('scripts')
-@livewireScripts
 <script type="text/javascript">
 jQuery(document).ready(function() {
     Livewire.on('message', message => {
-        alert(message); //put sweet alert here :)
+        $('.message').text('updated');
+        setInterval(function() {
+            $('.message').text('');
+        }, 2000);
     });
 
     $('#kt-select2-user').select2({
