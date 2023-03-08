@@ -35,7 +35,7 @@
                                     @csrf
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Email atau No anggota" name="email"
-										value="{{ $username }}"
+										value="{{ old('email',$username) }}"
 										autocomplete="off">
 									</div>
 									<div class="input-group">

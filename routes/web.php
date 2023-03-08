@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Actions;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Admin\ResetPassword;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\BiodataMemberController;
@@ -31,6 +33,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
+use App\Http\Livewire\UpdatePassword;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +53,7 @@ Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/update-password', UpdatePassword::class)->name('update-password');
     Route::group(['middleware' => ['role:administrator']], function () {
         Route::get('activities', ActivityController::class)->name('activities');
         Route::prefix('educations')->group(function () {
@@ -91,6 +95,10 @@ Route::middleware('auth')->group(function () {
             Route::resource('payments', PaymentController::class);
             Route::resource('payments.details', PaymentDetailController::class)->only(['index', 'destroy']);
             Route::resource('transactions', TransactionController::class);
+        });
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('users/{id}/reset', ResetPassword::class)->name('users.reset');
+            Route::resource('users', AdminUserController::class);
         });
         Route::resource('settings', SettingController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');

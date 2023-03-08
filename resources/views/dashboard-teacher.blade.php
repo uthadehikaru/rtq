@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<x-validation />
+<x-message />
 <div class="row">
     <div class="col-lg-6">
         <div class="kt-portlet kt-iconbox kt-iconbox--success kt-iconbox--animate">

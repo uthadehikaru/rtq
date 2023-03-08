@@ -12,6 +12,8 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
+                    <a href="{{ route('update-password') }}"
+                    class="btn btn-primary">Ubah Password</a>
                 </div>
             </div>
         </div>

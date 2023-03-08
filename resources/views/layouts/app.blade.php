@@ -150,16 +150,30 @@
 											</ul>
 										</div>
 									</li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('blog*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ url('blog_admin') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Artikel')</span>
-                                        </a>
-                                    </li>
-									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('setting*')?'kt-menu__item--active':'' }}">
-                                        <a href="{{ route('settings.index') }}" class="kt-menu__link">
-                                            <span class="kt-menu__link-text">@lang('Pengaturan')</span>
-                                        </a>
-                                    </li>
+									<li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel  {{ \Request::is('finances*')?'kt-menu__item--active':'' }} kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+										<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+											<span class="kt-menu__link-text">Admin</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+										</a>
+										<div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+											<ul class="kt-menu__subnav">
+												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('blog*')?'kt-menu__item--active':'' }}">
+													<a href="{{ route('admin.users.index') }}" class="kt-menu__link">
+														<span class="kt-menu__link-text">@lang('Pengguna')</span>
+													</a>
+												</li>
+												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('blog*')?'kt-menu__item--active':'' }}">
+													<a href="{{ url('blog_admin') }}" class="kt-menu__link">
+														<span class="kt-menu__link-text">@lang('Artikel')</span>
+													</a>
+												</li>
+												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('setting*')?'kt-menu__item--active':'' }}">
+													<a href="{{ route('settings.index') }}" class="kt-menu__link">
+														<span class="kt-menu__link-text">@lang('Pengaturan')</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</li>
 									@endrole
 									@role('teacher')
 									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('teacher/schedules*')?'kt-menu__item--active':'' }}">
@@ -230,6 +244,7 @@
 									<!--begin: Navigation -->
 									<div class="kt-notification">
 										<div class="kt-notification__custom kt-space-between">
+											<a href="{{ route('update-password') }}" class="btn btn-label btn-label-info btn-sm btn-bold">@lang('Ubah Password')</a>
 											<a href="{{ route('logout') }}" class="btn btn-label btn-label-brand btn-sm btn-bold">@lang('Sign Out')</a>
 										</div>
 									</div>
@@ -260,7 +275,7 @@
                                         <span class="kt-subheader__breadcrumbs-separator"></span>
 										@yield('breadcrumbs')
 									</div>
-                                    @else
+                                    @elseif(isset($title))
 									<h3 class="kt-subheader__title">
 										{{ $title }} </h3>
 									<span class="kt-subheader__separator kt-hidden"></span>
