@@ -20,6 +20,9 @@ class PaymentController extends Controller
     {
         $data['title'] = $paymentRepository->count().' Pembayaran';
         $data['buttons'] = '
+        <a href="'.route('payments.summary').'" class="btn btn-success">
+            Rekapitulasi
+        </a>
         <div class="btn-group" role="group">
             <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Aksi

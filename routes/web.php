@@ -15,6 +15,7 @@ use App\Http\Controllers\Member\IqobController;
 use App\Http\Controllers\Member\PresentController as MemberPresentController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\Payment\Rekapitulasi;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\PeriodController;
@@ -90,6 +91,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('violations', ViolationController::class);
             Route::get('periods/export/{id?}', [PeriodController::class, 'export'])->name('periods.export');
             Route::resource('periods', PeriodController::class);
+            Route::get('payments/summary', Rekapitulasi::class)->name('payments.summary');
             Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
             Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
             Route::resource('payments', PaymentController::class);

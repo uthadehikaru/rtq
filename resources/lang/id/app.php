@@ -17,6 +17,7 @@ return [
         'status' => [
             'new' => 'Belum dikonfirmasi',
             'paid' => 'Lunas',
+            'free' => 'Gratis',
         ],
     ],
     'gender' => [

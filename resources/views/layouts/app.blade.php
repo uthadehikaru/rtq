@@ -150,7 +150,7 @@
 											</ul>
 										</div>
 									</li>
-									<li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel  {{ \Request::is('finances*')?'kt-menu__item--active':'' }} kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+									<li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel  {{ \Request::is('admin*')?'kt-menu__item--active':'' }} kt-menu__item--open-dropdown" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
 										<a href="javascript:;" class="kt-menu__link kt-menu__toggle">
 											<span class="kt-menu__link-text">Admin</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
 										</a>
