@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Member;
+use App\Models\Payment;
 use App\Models\Period;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -43,9 +44,12 @@ class MemberPaymentDataTable extends DataTable
             $datatable->addColumn('period_'.$id, function($row)use($id){
                 $status = "";
 
-                $paymentDetails = $row->paymentDetails->where('id',$id)->first();
-                if($paymentDetails)
-                    $status = $paymentDetails->payment->status;
+                $payment = Payment::wherehas('details', function($query)use($id, $row){
+                    $query->where('member_id',$row->id)
+                    ->where('period_id',$id);
+                })->first();
+                if($payment)
+                    $status = $payment->status;
                 elseif($row->status)
                     $status = 'free';
                 else
@@ -75,7 +79,7 @@ class MemberPaymentDataTable extends DataTable
     public function query(Member $model): QueryBuilder
     {
         return $model
-        ->with(['paymentDetails','paymentDetails.payment','batches'])
+        ->with(['batches'])
         ->whereHas('batches')
         ->newQuery();
     }
