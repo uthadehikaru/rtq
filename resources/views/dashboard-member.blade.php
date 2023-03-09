@@ -80,7 +80,7 @@
                     </tr>
                     @foreach ($violations as $violation)
                         <tr>
-                            <td>{{ $violation->violated_at->format('d/M/Y') }}</td>
+                            <td>{{ $violation->violated_at?->format('d/M/Y') }}</td>
                             <td>{{ $violation->description }}</td>
                             <td>{{ $violation->amount }}</td>
                             <td>{{ $violation->paid_at?'Selesai':'Belum dibayar' }}</td>
