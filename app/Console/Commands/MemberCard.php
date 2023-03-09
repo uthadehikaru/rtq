@@ -63,6 +63,8 @@ class MemberCard extends Command
                 $watermark->orientate();
                 if ($watermark->width() > $watermark->height()) {
                     $watermark->rotate(-90);
+                    $watermark->save(storage_path('app/public/'.$member->profile_picture));
+                    thumbnail($member->profile_picture, 300, 400, true);
                 }
                 $watermark->resize(220, 300);
                 $image->insert($watermark, 'top-left', 30, 195);

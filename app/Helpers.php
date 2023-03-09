@@ -28,6 +28,15 @@ if (! function_exists('thumbnail')) {
     }
 }
 
+if (! function_exists('clearThumbnail')) {
+    function clearThumbnail($path)
+    {
+        $filename = basename($path);
+        $thumbnail = 'thumbnail_'.$filename;
+        $thumbnail_path = storage_path('app/public/thumbnails/');
+    }
+}
+
 if (! function_exists('setting')) {
     function setting($name, $group = null)
     {
