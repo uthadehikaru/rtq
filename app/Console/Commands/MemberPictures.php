@@ -31,14 +31,30 @@ class MemberPictures extends Command
      */
     public function handle()
     {
-        $members = Member::whereNotNull('profile_picture')->get();
+        $members = Member::whereNotNull('profile_picture')->latest()->get();
 
         $bar = $this->output->createProgressBar($members->count());
 
         $bar->start();
         foreach ($members as $member) {
             try{
-                thumbnail($member->profile_picture, 300, 400, true);
+                $filename = basename($member->profile_picture);
+                $path = storage_path('app/public/profiles/'.$filename);
+                if(!file_exists($path))
+                    continue;
+
+                $image = Image::make($path)->resize(800, 1024, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $image->orientate();
+                if ($image->width() > $image->height()) {
+                    $image->rotate(-90);
+                }
+                $new = rand().'.jpg';
+                $image->save(storage_path('app/public/profiles/'.$new));
+                $member->update(['profile_picture'=>'profiles/'.$new]);
+                unlink(storage_path('app/public/profiles/'.$filename));
             }catch(Exception $ex){
                 $this->warn('Failed '.$member->full_name.' : '.$member->profile_picture);
                 $this->error($ex->getMessage());
