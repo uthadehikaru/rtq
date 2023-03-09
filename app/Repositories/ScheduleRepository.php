@@ -33,7 +33,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function find($id)
     {
-        return Schedule::with('presents', 'presents.user', 'presents.user.member')->findOrFail($id);
+        return Schedule::with(['presents', 'presents.user', 'presents.user.member'])->findOrFail($id);
     }
 
     public function delete($id)
@@ -102,12 +102,16 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             }
         }
 
-        Present::create([
+        $present = Present::firstOrCreate([
             'schedule_id' => $schedule->id,
             'user_id' => Auth::id(),
-            'status' => 'present',
             'type' => 'teacher',
+        ],[
+            'status' => 'present',
             'attended_at' => CarbonImmutable::now()->format('H:i'),
+        ]);
+
+        $present->update([
             'is_badal' => $data['is_badal'],
             'photo' => $data['photo'],
         ]);
