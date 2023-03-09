@@ -7,7 +7,7 @@ use Intervention\Image\Facades\Image;
 if (! function_exists('thumbnail')) {
     function thumbnail($path, $width=300, $height=400, $force=false)
     {
-        if(!Storage::disk('public')->exists($path))
+        if(!$path || !Storage::disk('public')->exists($path))
             return asset('assets/images/default.jpg');
         
         $filename = basename($path);
