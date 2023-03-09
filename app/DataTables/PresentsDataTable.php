@@ -74,10 +74,11 @@ class PresentsDataTable extends DataTable
                 return $status;
             })
             ->editColumn('description', function ($row) {
-                $description = $row->description;
+                $description = "";
                 if ($row->photo) {
-                    $description .= '<a href="'.asset('storage/'.$row->photo).'" target="_blank">Bukti Foto</a>';
+                    $description .= '<p><a href="'.asset('storage/'.$row->photo).'" target="_blank"><img src="'.asset('storage/'.$row->photo).'" width="200" class="img-fluid" /></a></p>';
                 }
+                $description .= $row->description;
                 $description .= ' '.($row->type == 'teacher' && $row->is_badal ? '(Badal)' : '');
                 $description .= ' '.($row->type == 'member' && $row->is_transfer ? '(Operan)' : '');
 
