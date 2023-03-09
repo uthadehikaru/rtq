@@ -36,8 +36,8 @@ class ScheduleDetail extends Controller
             ->orderBy('name')
             ->get();
         $data['statuses'] = Present::STATUSES;
-        $data['teacherPresent'] = $schedule->presents->where('user_id', Auth::id())->latest()->first();
-        $data['canUpdate'] = true;
+        $data['teacherPresent'] = $schedule->presents->where('user_id', Auth::id())->first();
+        $data['canUpdate'] = true; //Carbon::now()->between($schedule->scheduled_at, $schedule->scheduled_at->addDay());
 
         return view('forms.schedule-detail', $data);
     }
