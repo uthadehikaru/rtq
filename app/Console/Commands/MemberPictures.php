@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Member;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -36,7 +37,12 @@ class MemberPictures extends Command
 
         $bar->start();
         foreach ($members as $member) {
-            thumbnail($member->profile_picture, 300, 400, true);
+            try{
+                thumbnail($member->profile_picture, 300, 400, true);
+            }catch(Exception $ex){
+                $this->warn('Failed '.$member->full_name.' : '.$member->profile_picture);
+                $this->error($ex->getMessage());
+            }
             $bar->advance();
         }
         $bar->finish();
