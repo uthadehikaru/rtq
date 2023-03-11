@@ -6,7 +6,7 @@
 		<div class="p-4">
 			<div class="row">
 				@foreach ($members as $member)
-					<div class="col-3 text-center">
+					<div class="col-md-3 text-center">
 						<img data-src="{{ thumbnail('idcards/'.$member->member_no.'.jpg') }}" class="img-fluid lazy" />
 						<p class="">{{ $member->member_no }} - {{ $member->full_name }}</p>
 					</div>

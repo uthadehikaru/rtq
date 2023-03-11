@@ -6,7 +6,7 @@
 		<div class="p-4">
 			<div class="row">
 				@foreach ($members as $member)
-					<div class="col-2 text-center">
+					<div class="col-6 col-md-2 text-center">
 						<img data-src="{{ thumbnail($member->profile_picture) }}" class="lazy img-fluid" />
 						<p class="">{{ $member->full_name }}</p>
 					</div>
