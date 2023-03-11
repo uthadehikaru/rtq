@@ -27,14 +27,25 @@ class MemberController extends Controller
         $data['title'] = $total.' '.__('Members');
 
         $data['buttons'] = '
-        <a href="'.route('members.index', ['action' => 'export']).'" class="btn btn-success btn-icon-sm mt-2">
-            <i class="la la-download"></i>
-            Export (.xls)
-        </a>
-        <a href="'.route('members.create').'" class="btn btn-primary btn-icon-sm mt-2">
-            <i class="la la-plus"></i>
-            New Member
-        </a>';
+        <div class="btn-group" role="group">
+            <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Aksi
+            </button>
+            <div class="dropdown-menu" aria-labelledby="action" style="">
+                <a href="'.route('members.index', ['action' => 'export']).'" class="dropdown-item">
+                    Export (.xls)
+                </a>
+                <a href="'.route('members.create').'" class="dropdown-item">
+                    Tambah Anggota
+                </a>
+                <a href="'.route('members.pictures').'" class="dropdown-item">
+                    Foto Anggota
+                </a>
+                <a href="'.route('members.cards').'" class="dropdown-item">
+                    Kartu Anggota
+                </a>
+            </div>
+        </div>';
 
         return $dataTable->render('datatables.datatable', $data);
     }
