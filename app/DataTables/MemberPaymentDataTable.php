@@ -37,6 +37,9 @@ class MemberPaymentDataTable extends DataTable
             ->addColumn('batches',function($row){
                 return $row->batches->first()->name;
             })
+            ->editColumn('registration_date', function($row){
+                return $row->registration_date?->format('d M Y');
+            })
             ->setRowId('id');
 
         $rawColumns = [];
@@ -96,7 +99,7 @@ class MemberPaymentDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0, 'asc')
+                    ->orderBy(1, 'asc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -116,6 +119,7 @@ class MemberPaymentDataTable extends DataTable
     public function getColumns(): array
     {
         $columns = [
+            Column::make('registration_date')->title('Tgl Gabung'),
             Column::make('full_name')->title('Nama'),
             Column::make('batches')->title('Halaqoh'),
         ];
