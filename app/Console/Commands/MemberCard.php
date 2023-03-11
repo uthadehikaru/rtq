@@ -66,8 +66,8 @@ class MemberCard extends Command
                     $watermark->save(storage_path('app/public/'.$member->profile_picture));
                     thumbnail($member->profile_picture, 300, 400, true);
                 }
-                $watermark->resize(220, 300);
-                $image->insert($watermark, 'top-left', 30, 195);
+                $watermark->resize(234, 270);
+                $image->insert($watermark, 'top-left', 18, 230);
             } else {
                 $image->rectangle(30, 195, 250, 490, function ($draw) {
                     $draw->background('#cccccc');
