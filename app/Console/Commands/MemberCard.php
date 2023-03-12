@@ -60,12 +60,6 @@ class MemberCard extends Command
             $image = Image::make($template);
             if ($member->profile_picture) {
                 $watermark = Image::make(Storage::disk('public')->get($member->profile_picture));
-                $watermark->orientate();
-                if ($watermark->width() > $watermark->height()) {
-                    $watermark->rotate(-90);
-                    $watermark->save(storage_path('app/public/'.$member->profile_picture));
-                    thumbnail($member->profile_picture, 300, 400, true);
-                }
                 $watermark->resize(234, 270);
                 $image->insert($watermark, 'top-left', 18, 230);
             } else {
