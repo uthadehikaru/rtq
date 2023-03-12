@@ -4,8 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Livewire\Component;
 
 class MemberProfileCard extends Component
@@ -26,16 +24,7 @@ class MemberProfileCard extends Component
         $this->validate();
 
         $this->member->save();
-    }
-
-    public function rotate()
-    {
-        $path = Storage::disk('public')->get($this->member->profile_picture);
-        $image = Image::make($path)->rotate(90);
-        $image->save(storage_path('app/public/'.$this->member->profile_picture));
-        $this->member->save();
-        $this->image = asset('storage/'.$this->member->profile_picture).'?v='.time();
-    }
+    }    
 
     public function mount()
     {

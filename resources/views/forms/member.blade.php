@@ -165,10 +165,15 @@
                             value="{{ old('postcode', $member?$member->postcode:'') }}"
                             >
                         </div>
-                        <div class="form-group">
-                            <label>@lang('Foto')</label>
-                            <input type="file" name="profile_picture" class="form-control"
-                            >
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>@lang('Foto')</label>
+                                    <input type="file" name="profile_picture" class="form-control"
+                                    >
+                            </div>
+                            <div class="col-md-6">
+                                <livewire:member-profile :member="$member" />
+                            </div>
                         </div>
                     </div>
                 </div>

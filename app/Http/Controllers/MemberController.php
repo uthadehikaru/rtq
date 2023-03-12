@@ -38,10 +38,10 @@ class MemberController extends Controller
                 <a href="'.route('members.create').'" class="dropdown-item">
                     Tambah Anggota
                 </a>
-                <a href="'.route('members.pictures').'" class="dropdown-item">
+                <a href="'.route('members.pictures').'" class="dropdown-item" target="member-pictures">
                     Foto Anggota
                 </a>
-                <a href="'.route('members.cards').'" class="dropdown-item">
+                <a href="'.route('members.cards').'" class="dropdown-item" target="member-cards">
                     Kartu Anggota
                 </a>
             </div>
