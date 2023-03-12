@@ -5,7 +5,11 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
+		@hasSection('title')
+		<title>@yield('title')</title>
+		@else
 		<title>{{ config('app.name') }} {{ $title??''}}</title>
+		@endif
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!--begin::Fonts -->
