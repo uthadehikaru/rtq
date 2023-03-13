@@ -58,14 +58,15 @@ class MemberCard extends Command
         $bar->start();
         foreach ($members as $member) {
             $image = Image::make($template);
-            if ($member->profile_picture) {
-                $watermark = Image::make(Storage::disk('public')->get($member->profile_picture));
+            $profile = Storage::disk('public')->get($member->profile_picture);
+            if ($profile) {
+                $watermark = Image::make($profile);
                 $watermark->resize(234, 270);
                 $image->insert($watermark, 'top-left', 18, 230);
             } else {
-                $image->rectangle(30, 195, 250, 490, function ($draw) {
-                    $draw->background('#cccccc');
-                });
+                $watermark = Image::make(public_path('assets/images/default.jpg'));
+                $watermark->resize(234, 270);
+                $image->insert($watermark, 'top-left', 18, 230);
             }
             $image->rectangle(715, 195, 925, 495, function ($draw) {
                 $draw->background('#f3f4df');
