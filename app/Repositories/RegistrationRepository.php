@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\Registration;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +34,8 @@ class RegistrationRepository
         // create member
         $member = Member::create([
             'user_id'=>$user->id,
-            'registration_date'=>$registration->created_at,
+            'nik'=>$registration->nik,
+            'registration_date'=>Carbon::now(),
             'full_name'=>$registration->full_name,
             'short_name'=>$registration->short_name,
             'birth_date'=>$registration->birth_date,
