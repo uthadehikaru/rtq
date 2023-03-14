@@ -50,9 +50,11 @@ class MemberRepository implements MemberRepositoryInterface
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-            $nik = Member::where('nik', $data['nik'])->first();
-            if ($nik) {
-                throw new Exception('NIK sudah terdaftar');
+            if($data['nik']){
+                $nik = Member::where('nik', $data['nik'])->first();
+                if ($nik) {
+                    throw new Exception('NIK sudah terdaftar');
+                }
             }
 
             $user = User::create([
@@ -94,9 +96,11 @@ class MemberRepository implements MemberRepositoryInterface
     public function update($id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
-            $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
-            if ($nik) {
-                throw new Exception('NIK sudah terdaftar');
+            if($data['nik']){
+                $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
+                if ($nik) {
+                    throw new Exception('NIK sudah terdaftar');
+                }
             }
 
             $member = Member::with('user')->find($id);

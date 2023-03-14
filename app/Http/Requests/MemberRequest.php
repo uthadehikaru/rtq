@@ -26,7 +26,7 @@ class MemberRequest extends FormRequest
     {
         return [
             'member_no' => '',
-            'nik' => 'required',
+            'nik' => 'nullable|size:16',
             'full_name' => 'required',
             'short_name' => '',
             'email' => '',

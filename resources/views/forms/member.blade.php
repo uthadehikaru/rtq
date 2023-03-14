@@ -65,10 +65,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>@lang('NIK')<span class="text-danger">*</span></label>
+                            <label>@lang('NIK')</label>
                             <input type="text" name="nik" class="form-control" placeholder="Nomor Induk Kependudukan"
                             value="{{ old('nik', $member?$member->nik:'') }}"
-                            required
                             >
                         </div>
                         <div class="form-group">
@@ -133,16 +132,14 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label>@lang('Level')<span class="text-danger">*</span></label>
+                            <label>@lang('Level')</label>
                             <div class="kt-radio-inline">
                                 <label class="kt-radio">
-                                    <input type="radio" value="Iqro" {{ $member && $member->level=='Iqro'?'checked="checked"':'' }} name="level"
-                                    required> Iqro'
+                                    <input type="radio" value="Iqro" {{ $member && $member->level=='Iqro'?'checked="checked"':'' }} name="level"> Iqro'
                                     <span></span>
                                 </label>
                                 <label class="kt-radio">
-                                    <input type="radio" value="Quran" {{ $member && $member->level=='Quran'?'checked="checked"':'' }} name="level"
-                                    required> Qur'an
+                                    <input type="radio" value="Quran" {{ $member && $member->level=='Quran'?'checked="checked"':'' }} name="level"> Qur'an
                                     <span></span>
                                 </label>
                             </div>
