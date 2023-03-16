@@ -79,9 +79,10 @@ class RegistrationController extends Controller
     {
         $data = $request->validate([
             'batch_id' => 'required|exists:batches,id',
+            'registration_date' => 'required|date',
         ]);
 
-        $registrationRepository->activate($id, $data['batch_id']);
+        $registrationRepository->activate($id, $data);
 
         return to_route('registrations.index')->with('message','Aktifasi berhasil');
     }

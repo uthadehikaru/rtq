@@ -21,8 +21,8 @@ class MembersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d M Y H:i');
+            ->editColumn('registration_date', function ($row) {
+                return $row->registration_date?->format('d M Y');
             })
             ->editColumn('batches', function ($row) {
                 return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif';
@@ -102,7 +102,7 @@ class MembersDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('created_at')->title('Tgl Masuk'),
+            Column::make('registration_date')->title('Tgl Masuk'),
             Column::make('member_no')->title('No Anggota'),
             Column::make('nik')->title('NIK'),
             Column::make('full_name')->title('Nama'),

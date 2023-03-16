@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegistrationRepository
 {
-    public function activate($id, $batch_id)
+    public function activate($id, $data)
     {
         DB::beginTransaction();
         $registration = Registration::findOrFail($id);
@@ -35,7 +35,7 @@ class RegistrationRepository
         $member = Member::create([
             'user_id'=>$user->id,
             'nik'=>$registration->nik,
-            'registration_date'=>Carbon::now(),
+            'registration_date'=>$data['registration_date'],
             'full_name'=>$registration->full_name,
             'short_name'=>$registration->short_name,
             'birth_date'=>$registration->birth_date,
@@ -48,7 +48,7 @@ class RegistrationRepository
         ]);
 
         // register batch
-        $member->batches()->attach($batch_id);
+        $member->batches()->attach($data['batch_id']);
         
         Artisan::call('member:generateno');
 

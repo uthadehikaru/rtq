@@ -88,6 +88,10 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>Tanggal Masuk</label>
+                    <input class="form-control col-1" type="date" name="registration_date" value="{{ date('Y-m-d') }}" />
+                </div>
             </div>
         </div>
         <div class="kt-portlet__foot">
