@@ -27,11 +27,13 @@ class Member extends Model
         'birth_date',
         'profile_picture',
         'member_no',
+        'leave_at',
     ];
 
     protected $casts = [
         'registration_date' => 'date',
         'birth_date' => 'date',
+        'leave_at' => 'datetime',
     ];
 
     public function batches()

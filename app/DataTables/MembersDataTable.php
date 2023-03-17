@@ -21,11 +21,16 @@ class MembersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->filterColumn('batches', function($query, $keyword){
+                if($keyword=='inaktif'){
+                    $query->doesntHave('batches');
+                }
+            })
             ->editColumn('registration_date', function ($row) {
                 return $row->registration_date?->format('d M Y');
             })
             ->editColumn('batches', function ($row) {
-                return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif';
+                return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif '.$row->leave_at?->format('d M Y');
             })
             ->editColumn('gender', function ($row) {
                 return __($row->gender);
@@ -110,7 +115,8 @@ class MembersDataTable extends DataTable
             Column::make('birth_date')->title('Tgl Lahir'),
             Column::make('school')->title('Sekolah'),
             Column::make('level')->title('Level'),
-            Column::make('batches')->title('Halaqoh')->searchable(false),
+            Column::make('batches')->title('Halaqoh')
+            ->sortable(false),
             Column::make('status')->title('Status'),
             Column::make('profile_picture')->title('Foto'),
         ];

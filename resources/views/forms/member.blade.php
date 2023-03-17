@@ -24,10 +24,28 @@
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <a href="{{ route('members.index') }}" class="btn btn-default btn-icon-sm">
+                            <a href="{{ route('members.index') }}" class="btn btn-warning btn-icon-sm">
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
+                            @if($member)
+                            <div class="btn-group" role="group">
+                                <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Aksi
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action" style="">
+                                    <a href="{{ route('members.change', $member->id) }}" class="dropdown-item">
+                                        Pindah Halaqoh
+                                    </a>
+                                    <a href="{{ route('members.switch', $member->id) }}" class="dropdown-item">
+                                        Tukar Halaqoh
+                                    </a>
+                                    <a href="{{ route('members.leave', $member->id) }}" class="dropdown-item">
+                                        Keluar Halaqoh
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
