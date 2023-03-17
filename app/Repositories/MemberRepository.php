@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MemberRepository implements MemberRepositoryInterface
@@ -124,6 +125,8 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
+                if($member->profile_picture)
+                    Storage::disk('public')->delete($member->profile_picture);
             } else {
                 unset($data['profile_picture']);
             }

@@ -1,5 +1,5 @@
 <div>
-    @if($member)
+    @if($profile_picture)
     <p><img src="{{ $profile_picture }}" id="profilepicture" class="img-fluid" width="200" /></p>
     <button type="button" class="btn btn-success btn-icon-sm save"><i class="fas fa-save"></i> Update Image</button>
     <button type="button" class="btn btn-warning btn-icon-sm rotate"><i class="fas fa-sync-alt"></i> Rotate</button>
@@ -18,7 +18,7 @@
     var vEl = document.getElementById('profilepicture'),
     profilepicture = new Croppie(vEl, {
         viewport: {
-            width: 234,
+            width: 270,
             height: 270,
         },
         boundary: {

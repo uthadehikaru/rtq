@@ -15,7 +15,7 @@ class MemberProfile extends Component
     public function mount()
     {
         $img = $this->member?->profile_picture;
-        if($img){
+        if($img && Storage::disk('public')->exists($img)){
             $imagePath = storage_path('app/public/'.$img);
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $type = $finfo->file($imagePath);

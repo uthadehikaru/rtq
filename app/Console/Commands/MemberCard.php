@@ -61,12 +61,12 @@ class MemberCard extends Command
             $profile = Storage::disk('public')->get($member->profile_picture);
             if ($profile) {
                 $watermark = Image::make($profile);
-                $watermark->resize(234, 270);
-                $image->insert($watermark, 'top-left', 18, 230);
+                $watermark->resize(250, 250);
+                $image->insert($watermark, 'top-left', 10, 240);
             } else {
                 $watermark = Image::make(public_path('assets/images/default.jpg'));
-                $watermark->resize(234, 270);
-                $image->insert($watermark, 'top-left', 18, 230);
+                $watermark->resize(250, 250);
+                $image->insert($watermark, 'top-left', 10, 240);
             }
             $image->rectangle(715, 195, 925, 495, function ($draw) {
                 $draw->background('#f3f4df');

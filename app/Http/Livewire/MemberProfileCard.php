@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class MemberProfileCard extends Component
@@ -29,7 +30,10 @@ class MemberProfileCard extends Component
     public function mount()
     {
         $this->member = Member::where('user_id', Auth::id())->first();
-        $this->image = asset('storage/'.$this->member->profile_picture).'?v='.time();
+        if(Storage::disk('public')->exists($this->member->profile_picture))
+            $this->image = asset('storage/'.$this->member->profile_picture).'?v='.time();
+        else
+            $this->image = asset('assets/images/default.jpg');
     }
 
     public function render()
