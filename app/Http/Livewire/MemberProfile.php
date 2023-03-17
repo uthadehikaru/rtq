@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use finfo;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Intervention\Image\Facades\Image;
@@ -28,7 +30,12 @@ class MemberProfile extends Component
         if($property=='profile_picture'){
             $image = Image::make($this->profile_picture);
             $image->save(storage_path('app/public/'.$this->member->profile_picture));
+            $thumbnail = 'thumbnail/'.basename($this->member->profile_picture);
+            Storage::disk('public')->delete('thumbnails/'.$thumbnail);
+            Artisan::call('member:card', ['--no' => $this->member->member_no]);
+            $this->member->updated_at = Carbon::now();
             $this->member->save();
+            $this->emit('refresh');
         }
     }
 

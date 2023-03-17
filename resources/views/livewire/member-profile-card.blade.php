@@ -20,11 +20,10 @@
     </div>
     <div class="kt-portlet__body">
         <div class="row">
-            <div class="col-4 text-center">
-                <img src="{{ $image }}" alt="profile picture"
-                    class="img-fluid" />
+            <div class="col-md-6 text-center" style="height:400px;">
+                <livewire:member-profile :member="$member" />
             </div>
-            <div class="col-8">
+            <div class="col-md-6">
                 <form wire:submit.prevent="simpan">
                     <input type="hidden" name="_method" value="PUT" />
                     <div class="form-group">

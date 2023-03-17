@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -127,10 +128,17 @@ class MemberRepository implements MemberRepositoryInterface
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
                 if($member->profile_picture)
                     Storage::disk('public')->delete($member->profile_picture);
+                
+                $thumbnail = 'thumbnail/'.basename($member->profile_picture);
+                Storage::disk('public')->delete('thumbnails/'.$thumbnail);
             } else {
                 unset($data['profile_picture']);
             }
             $member->update($data);
+
+            if (isset($data['profile_picture'])) {
+                Artisan::call('member:card', ['--no' => $member->member_no]);
+            }
 
             if (isset($data['batch_id'])) {
                 $member->batches()->sync($data['batch_id']);

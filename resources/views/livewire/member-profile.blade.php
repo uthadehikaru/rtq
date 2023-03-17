@@ -37,5 +37,8 @@
             @this.set('profile_picture', resp);
         });
     });
+    Livewire.on('refresh',function(){
+        window.location.reload();
+    })
 </script>
 @endpush
