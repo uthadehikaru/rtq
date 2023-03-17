@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use finfo;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Intervention\Image\Facades\Image;
@@ -14,16 +15,21 @@ class MemberProfile extends Component
     public function mount()
     {
         $img = $this->member?->profile_picture;
-        $this->profile_picture = thumbnail($img);
+        if($img){
+            $imagePath = storage_path('app/public/'.$img);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $type = $finfo->file($imagePath);
+            $this->profile_picture = 'data:' . $type . ';base64,' . base64_encode(file_get_contents($imagePath));
+        }
     }
 
-    public function rotate()
+    public function updated($property)
     {
-        $path = Storage::disk('public')->get($this->member->profile_picture);
-        $image = Image::make($path)->rotate(-90);
-        $image->save(storage_path('app/public/'.$this->member->profile_picture));
-        $this->member->save();
-        $this->profile_picture = asset('storage/'.$this->member->profile_picture).'?v='.time();
+        if($property=='profile_picture'){
+            $image = Image::make($this->profile_picture);
+            $image->save(storage_path('app/public/'.$this->member->profile_picture));
+            $this->member->save();
+        }
     }
 
     public function render()
