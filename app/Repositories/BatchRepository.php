@@ -34,8 +34,8 @@ class BatchRepository implements BatchRepositoryInterface
     {
         return Batch::with(['course'])
         ->withCount('members')
-        ->whereHas('course',function($query) use ($type){
-            $query->whereRaw("lower(type)=?",['tahsin '.$type]);
+        ->whereHas('course', function ($query) use ($type) {
+            $query->whereRaw('lower(type)=?', ['tahsin '.$type]);
         })
         ->get();
     }

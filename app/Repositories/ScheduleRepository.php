@@ -106,7 +106,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             'schedule_id' => $schedule->id,
             'user_id' => Auth::id(),
             'type' => 'teacher',
-        ],[
+        ], [
             'status' => 'present',
             'attended_at' => CarbonImmutable::now()->format('H:i'),
         ]);

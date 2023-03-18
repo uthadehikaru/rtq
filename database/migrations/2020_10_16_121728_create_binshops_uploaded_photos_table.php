@@ -15,10 +15,10 @@ class CreateBinshopsUploadedPhotosTable extends Migration
     {
         Schema::create('binshops_uploaded_photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->text("uploaded_images")->nullable();
-            $table->string("image_title")->nullable();
-            $table->string("source")->default("unknown");
-            $table->unsignedInteger("uploader_id")->nullable()->index();
+            $table->text('uploaded_images')->nullable();
+            $table->string('image_title')->nullable();
+            $table->string('source')->default('unknown');
+            $table->unsignedInteger('uploader_id')->nullable()->index();
             $table->timestamps();
         });
     }

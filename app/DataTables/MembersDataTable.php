@@ -21,8 +21,8 @@ class MembersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->filterColumn('batches', function($query, $keyword){
-                if($keyword=='inaktif'){
+            ->filterColumn('batches', function ($query, $keyword) {
+                if ($keyword == 'inaktif') {
                     $query->doesntHave('batches');
                 }
             })

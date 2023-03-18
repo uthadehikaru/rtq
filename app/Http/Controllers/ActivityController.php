@@ -16,6 +16,7 @@ class ActivityController extends Controller
     public function __invoke(Request $request, ActivitiesDataTable $dataTable)
     {
         $data['title'] = 'Activities';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 }

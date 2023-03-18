@@ -9,8 +9,11 @@ use Livewire\Component;
 class UpdatePassword extends Component
 {
     public $user;
+
     public $old_password;
+
     public $new_password;
+
     public $new_password_confirmation;
 
     protected $rules = [
@@ -35,8 +38,8 @@ class UpdatePassword extends Component
 
         $this->user->password = Hash::make($this->new_password);
         $this->user->save();
-        
-        return redirect()->to('dashboard')->with('message','Password berhasil diubah');
+
+        return redirect()->to('dashboard')->with('message', 'Password berhasil diubah');
     }
 
     public function render()

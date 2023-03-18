@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Member;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class MemberPictures extends Command
@@ -37,11 +36,12 @@ class MemberPictures extends Command
 
         $bar->start();
         foreach ($members as $member) {
-            try{
+            try {
                 $filename = basename($member->profile_picture);
                 $path = storage_path('app/public/profiles/'.$filename);
-                if(!file_exists($path))
+                if (! file_exists($path)) {
                     continue;
+                }
 
                 $image = Image::make($path)->resize(800, 1024, function ($constraint) {
                     $constraint->aspectRatio();
@@ -53,9 +53,9 @@ class MemberPictures extends Command
                 }
                 $new = rand().'.jpg';
                 $image->save(storage_path('app/public/profiles/'.$new));
-                $member->update(['profile_picture'=>'profiles/'.$new]);
+                $member->update(['profile_picture' => 'profiles/'.$new]);
                 unlink(storage_path('app/public/profiles/'.$filename));
-            }catch(Exception $ex){
+            } catch(Exception $ex) {
                 $this->warn('Failed '.$member->full_name.' : '.$member->profile_picture);
                 $this->error($ex->getMessage());
             }

@@ -16,6 +16,7 @@ class UserController extends Controller
     public function index(UserDataTable $dataTable)
     {
         $data['title'] = 'Pengguna';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 

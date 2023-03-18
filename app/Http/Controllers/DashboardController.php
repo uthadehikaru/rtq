@@ -50,7 +50,7 @@ class DashboardController extends Controller
             if (! Storage::disk('public')->exists('idcards/'.$member->member_no.'.jpg')) {
                 Artisan::call('member:card', ['--no' => $member->member_no]);
             }
-            $data['violations'] = Violation::where('user_id',Auth::id())->latest()->limit(5)->get();
+            $data['violations'] = Violation::where('user_id', Auth::id())->latest()->limit(5)->get();
             $view = 'dashboard-member';
         }
 

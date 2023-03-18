@@ -14,8 +14,8 @@ class CreateBinshopsConfigurationsTable extends Migration
     public function up()
     {
         Schema::create('binshops_configurations', function (Blueprint $table) {
-            $table->string("key")->primary();
-            $table->string("value");
+            $table->string('key')->primary();
+            $table->string('value');
             $table->timestamps();
         });
     }

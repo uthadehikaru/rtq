@@ -33,8 +33,9 @@ class RegistrationsDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $buttons = '';
                 $buttons .= '<a href="'.route('registrations.show', $row->id).'" class="text-primary">Lihat</a>';
-                if(!$row->user_id)
+                if (! $row->user_id) {
                     $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+                }
 
                 return $buttons;
             })

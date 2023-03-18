@@ -3,25 +3,25 @@
 namespace App\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Spatie\Activitylog\Models\Activity;
 
 class ActivitiesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
             ->setRowId('id');
@@ -30,7 +30,7 @@ class ActivitiesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Activity $model
+     * @param  \App\Models\Activity  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Activity $model): QueryBuilder
@@ -58,7 +58,7 @@ class ActivitiesDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -82,6 +82,6 @@ class ActivitiesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Activities_' . date('YmdHis');
+        return 'Activities_'.date('YmdHis');
     }
 }

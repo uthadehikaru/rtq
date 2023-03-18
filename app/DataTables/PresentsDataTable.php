@@ -46,11 +46,11 @@ class PresentsDataTable extends DataTable
                 }
             })
             ->filterColumn('user_id', function ($query, $keyword) {
-                $query->whereExists(function($query)use($keyword){
+                $query->whereExists(function ($query) use ($keyword) {
                     $query->selectRaw('1')
                     ->from('users')
-                    ->whereColumn('presents.user_id','users.id')
-                    ->where('users.name','like','%'.$keyword.'%');
+                    ->whereColumn('presents.user_id', 'users.id')
+                    ->where('users.name', 'like', '%'.$keyword.'%');
                 });
             })
             ->editColumn('created_at', function ($row) {
@@ -74,7 +74,7 @@ class PresentsDataTable extends DataTable
                 return $status;
             })
             ->editColumn('description', function ($row) {
-                $description = "";
+                $description = '';
                 if ($row->photo) {
                     $description .= '<p><a href="'.asset('storage/'.$row->photo).'" target="_blank"><img src="'.asset('storage/'.$row->photo).'" width="200" class="img-fluid" /></a></p>';
                 }
@@ -103,7 +103,7 @@ class PresentsDataTable extends DataTable
     public function query(Present $model): QueryBuilder
     {
         $model = $model
-        ->with(['schedule', 'schedule.batch','user'])
+        ->with(['schedule', 'schedule.batch', 'user'])
         ->latest();
 
         if ($this->type) {

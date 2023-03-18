@@ -47,11 +47,12 @@ class PaymentsDataTable extends DataTable
             })
             ->addColumn('member', function ($row) {
                 $keyword = $this->request->keyword();
-                $val = "";
+                $val = '';
                 foreach ($row->details as $detail) {
-                    $class = "";
-                    if(Str::contains($detail->member->full_name, $keyword, true))
-                        $class = "text-danger";
+                    $class = '';
+                    if (Str::contains($detail->member->full_name, $keyword, true)) {
+                        $class = 'text-danger';
+                    }
 
                     $val .= '<p class="'.$class.'">'.$detail->member->full_name.' periode '.$detail->period->name.'</p>';
                 }

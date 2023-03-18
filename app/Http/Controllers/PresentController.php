@@ -48,7 +48,7 @@ class PresentController extends Controller
         Request $request,
         Schedule $schedule,
     ) {
-        $type = $request->get('type','teacher');
+        $type = $request->get('type', 'teacher');
         $data['title'] = __('Tambah Absensi');
         $data['schedule'] = $schedule;
         $data['present'] = null;
@@ -75,9 +75,9 @@ class PresentController extends Controller
             'status' => 'required',
             'description' => '',
             'attended_at' => '',
-            'is_badal'=>'',
-            'is_transfer'=>'',
-            'type'=>'required|in:teacher,member',
+            'is_badal' => '',
+            'is_transfer' => '',
+            'type' => 'required|in:teacher,member',
         ]);
         if ($data['status'] != 'present') {
             $data['attended_at'] = null;

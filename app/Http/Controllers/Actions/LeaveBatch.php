@@ -20,7 +20,7 @@ class LeaveBatch extends Controller
         Request $request,
         MemberRepositoryInterface $memberRepository, $id)
     {
-        DB::transaction(function() use ($memberRepository, $id){
+        DB::transaction(function () use ($memberRepository, $id) {
             $member = $memberRepository->find($id);
             $member->batches()->detach();
             $member->leave_at = Carbon::now();

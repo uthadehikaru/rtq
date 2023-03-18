@@ -52,7 +52,7 @@ class MemberRepository implements MemberRepositoryInterface
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-            if($data['nik']){
+            if ($data['nik']) {
                 $nik = Member::where('nik', $data['nik'])->first();
                 if ($nik) {
                     throw new Exception('NIK sudah terdaftar');
@@ -82,15 +82,16 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function updateMember($user_id, array $data)
     {
-        if($data['email']){
-            $exists = User::where('id','<>',$user_id)->where('email',$data['email'])->first();
-            if($exists)
-                return "Email yang diinput sudah digunakan. mohon gunakan email yang lain";
+        if ($data['email']) {
+            $exists = User::where('id', '<>', $user_id)->where('email', $data['email'])->first();
+            if ($exists) {
+                return 'Email yang diinput sudah digunakan. mohon gunakan email yang lain';
+            }
 
-            User::find($user_id)->update(['email'=>$data['email']]);
+            User::find($user_id)->update(['email' => $data['email']]);
         }
 
-        Member::where('user_id',$user_id)->update($data);
+        Member::where('user_id', $user_id)->update($data);
 
         return null;
     }
@@ -98,7 +99,7 @@ class MemberRepository implements MemberRepositoryInterface
     public function update($id, array $data)
     {
         return DB::transaction(function () use ($id, $data) {
-            if($data['nik']){
+            if ($data['nik']) {
                 $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
                 if ($nik) {
                     throw new Exception('NIK sudah terdaftar');
@@ -110,14 +111,14 @@ class MemberRepository implements MemberRepositoryInterface
             if ($member->user) {
                 $user = [
                     'email' => $data['email'],
-                    'username'=> $data['member_no'],
+                    'username' => $data['member_no'],
                     'name' => $data['full_name'],
                     'password' => Hash::make($data['nik']),
                 ];
                 $member->user()->update($user);
             } else {
                 $user = User::create([
-                    'email' => $data['member_no']??$data['email'],
+                    'email' => $data['member_no'] ?? $data['email'],
                     'name' => $data['full_name'],
                     'password' => Hash::make($data['nik']),
                 ]);
@@ -126,9 +127,10 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['profile_picture'])) {
                 $data['profile_picture'] = $data['profile_picture']->storePublicly('profiles', 'public');
-                if($member->profile_picture)
+                if ($member->profile_picture) {
                     Storage::disk('public')->delete($member->profile_picture);
-                
+                }
+
                 $thumbnail = 'thumbnail/'.basename($member->profile_picture);
                 Storage::disk('public')->delete('thumbnails/'.$thumbnail);
             } else {

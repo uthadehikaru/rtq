@@ -10,6 +10,7 @@ use Livewire\Component;
 class MemberProfileCard extends Component
 {
     public $member;
+
     public $image;
 
     protected $rules = [
@@ -25,15 +26,16 @@ class MemberProfileCard extends Component
         $this->validate();
 
         $this->member->save();
-    }    
+    }
 
     public function mount()
     {
         $this->member = Member::where('user_id', Auth::id())->first();
-        if(Storage::disk('public')->exists($this->member->profile_picture))
+        if (Storage::disk('public')->exists($this->member->profile_picture)) {
             $this->image = asset('storage/'.$this->member->profile_picture).'?v='.time();
-        else
+        } else {
             $this->image = asset('assets/images/default.jpg');
+        }
     }
 
     public function render()

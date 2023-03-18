@@ -18,8 +18,9 @@ class Cards extends Controller
     {
         $data['members'] = Member::has('batches')
         ->orderBy('full_name')
-        ->select('full_name','member_no')
+        ->select('full_name', 'member_no')
         ->get();
+
         return view('member-cards', $data);
     }
 }

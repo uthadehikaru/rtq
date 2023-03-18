@@ -7,7 +7,6 @@ use App\Models\Registration;
 use App\Repositories\BatchRepository;
 use App\Repositories\RegistrationRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
 {
@@ -84,7 +83,7 @@ class RegistrationController extends Controller
 
         $registrationRepository->activate($id, $data);
 
-        return to_route('registrations.index')->with('message','Aktifasi berhasil');
+        return to_route('registrations.index')->with('message', 'Aktifasi berhasil');
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Models\Member;
 use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,23 +70,23 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(
-        Request $request, 
+        Request $request,
         MemberRepository $memberRepository,
         $id
-    )
-    {
+    ) {
         $data = $request->validate([
-            'short_name'=>'',
-            'email'=>'',
-            'phone'=>'',
-            'address'=>'',
-            'postcode'=>'',
+            'short_name' => '',
+            'email' => '',
+            'phone' => '',
+            'address' => '',
+            'postcode' => '',
         ]);
         $error = $memberRepository->updateMember(Auth::id(), $data);
-        if($error)
-            return back()->with('error',$error);
+        if ($error) {
+            return back()->with('error', $error);
+        }
 
-        return back()->with('message','Berhasil update biodata');
+        return back()->with('message', 'Berhasil update biodata');
     }
 
     /**

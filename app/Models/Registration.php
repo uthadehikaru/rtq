@@ -52,7 +52,7 @@ class Registration extends Model
     protected function scheduleOption(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value?Self::OPTIONS[$value]:'',
+            get: fn ($value) => $value ? self::OPTIONS[$value] : '',
         );
     }
 }

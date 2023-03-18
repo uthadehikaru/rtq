@@ -52,10 +52,12 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function map($member): array
     {
-        if($member->status)
-            $status = "Gratis";
-        else
+        if ($member->status) {
+            $status = 'Gratis';
+        } else {
             $status = $member->paymentDetails->count() ? 'Sudah Bayar' : 'Belum Bayar';
+        }
+
         return [
             $member->full_name,
             $member->batches->first()?->name,

@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UserDataTable extends DataTable
@@ -17,22 +15,23 @@ class UserDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $buttons = '<a href="'.route('admin.users.reset', $row->id).'" 
                 onclick="return confirm(\'Apakah anda yakin?\')" class="btn btn-danger btn-sm">reset</a>';
+
                 return $buttons;
             })
-            ->addColumn('roles', function($row){
+            ->addColumn('roles', function ($row) {
                 return $row->roles->pluck('name')->join(',');
             })
-            ->filterColumn('roles', function($query, $keyword){
-                $query->whereRelation('roles','name',$keyword);
+            ->filterColumn('roles', function ($query, $keyword) {
+                $query->whereRelation('roles', 'name', $keyword);
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -41,7 +40,7 @@ class UserDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\User $model
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(User $model): QueryBuilder
@@ -71,7 +70,7 @@ class UserDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -102,6 +101,6 @@ class UserDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'User_' . date('YmdHis');
+        return 'User_'.date('YmdHis');
     }
 }

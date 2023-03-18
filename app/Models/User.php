@@ -53,7 +53,7 @@ class User extends Authenticatable
         return $this->hasOne(Member::class);
     }
 
-     /**
+    /**
      * Enter your own logic (e.g. if ($this->id === 1) to
      *   enable this user to be able to add/edit blog posts
      *
@@ -66,12 +66,11 @@ class User extends Authenticatable
         // Maybe you can just hardcode in a user id that you
         //   know is always an admin ID?
 
-        if ($this->hasRole('administrator')){
+        if ($this->hasRole('administrator')) {
+            // return true so this user CAN edit/post/delete
+            // blog posts (and post any HTML/JS)
 
-           // return true so this user CAN edit/post/delete
-           // blog posts (and post any HTML/JS)
-
-           return true;
+            return true;
         }
 
         // otherwise return false, so they have no access

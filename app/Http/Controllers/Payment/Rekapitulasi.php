@@ -17,6 +17,7 @@ class Rekapitulasi extends Controller
     public function __invoke(MemberPaymentDataTable $dataTable)
     {
         $data['title'] = 'Rekapitulasi pembayaran';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 }

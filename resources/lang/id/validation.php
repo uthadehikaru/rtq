@@ -117,7 +117,7 @@ return [
     'uploaded' => 'Isian :attribute gagal mengunggah.',
     'url' => 'Format isian :attribute tidak valid.',
     'uuid' => 'Isian :attribute harus berupa UUID yang valid.',
-    'current_password'=>'Password tidak sesuai',
+    'current_password' => 'Password tidak sesuai',
 
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +156,7 @@ return [
         'new_password' => 'Password Baru',
         're_password' => 'Ulangi Password Baru',
         'scheduled_at' => 'Jadwal Kelas',
-        'new_password_confirmation'=>'Password baru',
+        'new_password_confirmation' => 'Password baru',
     ],
 
 ];

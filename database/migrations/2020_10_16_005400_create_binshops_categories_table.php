@@ -16,7 +16,7 @@ class CreateBinshopsCategoriesTable extends Migration
         Schema::create('binshops_categories', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedInteger("created_by")->nullable()->index()->comment("user id");
+            $table->unsignedInteger('created_by')->nullable()->index()->comment('user id');
 
             //columns related to multi-level categories
             $table->integer('parent_id')->nullable();
@@ -26,7 +26,6 @@ class CreateBinshopsCategoriesTable extends Migration
 
             $table->timestamps();
         });
-
     }
 
     /**
