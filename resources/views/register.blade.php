@@ -490,13 +490,13 @@
 							window.location.href = "{{ route('home') }}"
 						});
 					},
-					error: function(){
+					error: function (xhr, ajaxOptions, thrownError) {
 						KTApp.unprogress(btn);
 						//KTApp.unblock(formEl);
 
 						swal.fire({
-							"title": "",
-							"text": "Gagal mengirim data, mohon coba kembali",
+							"title": "Gagal mengirim data, mohon coba kembali",
+							"text": xhr.responseJSON.message,
 							"type": "error",
 							"confirmButtonClass": "btn btn-secondary"
 						});
