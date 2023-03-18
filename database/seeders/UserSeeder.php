@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         $user = \App\Models\User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@rtqmaisuro.id',
+            'username' => 'admin',
         ], [
             'id' => 1,
             'email_verified_at' => now(),
