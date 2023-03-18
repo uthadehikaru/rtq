@@ -92,7 +92,7 @@
                 </div>
                 <div class="form-group">
                     <label>Tanggal Masuk</label>
-                    <input class="form-control col-1" type="date" name="registration_date" value="{{ date('Y-m-d') }}" />
+                    <input class="form-control col-md-2" type="date" name="registration_date" value="{{ date('Y-m-d') }}" />
                 </div>
             </div>
         </div>
