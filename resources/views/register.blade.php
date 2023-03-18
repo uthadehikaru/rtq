@@ -258,12 +258,12 @@
                                         <label>Jadwal Tahsin yang diinginkan</label>
                                         <div class="radio-inline">
 											<label class="radio">
-												<input type="radio" name="schedule_option" value="weekend">
+												<input type="radio" name="schedule_option" value="weekday">
 												<span></span>
 												Hari Biasa (Senin-Jum'at)
 											</label>
 											<label class="radio">
-												<input type="radio" name="schedule_option" value="weekday">
+												<input type="radio" name="schedule_option" value="weekend">
 												<span></span>
 												Hari Libur (Sabtu-Ahad)
 											</label>

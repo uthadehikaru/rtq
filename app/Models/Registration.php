@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
     use HasFactory;
+
+    public const OPTIONS = [
+        'weekday' => 'Hari Biasa (Senin-Jum\'at)',
+        'weekend' => 'Hari Libur (Sabtu-Ahad)',
+    ];
 
     protected $fillable = [
         'registration_no',
@@ -42,4 +48,11 @@ class Registration extends Model
         'school_start_time' => 'datetime',
         'school_end_time' => 'datetime',
     ];
+
+    protected function scheduleOption(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value?Self::OPTIONS[$value]:'',
+        );
+    }
 }

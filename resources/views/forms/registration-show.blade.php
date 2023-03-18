@@ -59,6 +59,8 @@
         <p>Referensi : {{ $registration->reference }}</p>
         @if(in_array($registration->type,['anak','balita']))
         <p>Jadwal tahsin saudara : {{ $registration->reference_schedule }}</p>
+        @else
+        <p>Jadwal Tahsin yang Diinginkan : {{ $registration->schedule_option }}</p>
         @endif
     </div>
 </div>
