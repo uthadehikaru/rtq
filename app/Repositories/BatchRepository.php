@@ -32,10 +32,21 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function getByCourseType($type)
     {
+        $types = [];
+        if(in_array($type, ['anak','balita'])){
+            $types = [
+                'Tahsin Anak',
+                'Tahsin Balita', 
+            ];
+        }else{
+            $types = [
+                'Tahsin Dewasa', 
+            ];
+        }
         return Batch::with(['course'])
         ->withCount('members')
-        ->whereHas('course', function ($query) use ($type) {
-            $query->whereRaw('lower(type)=?', ['tahsin '.$type]);
+        ->whereHas('course', function ($query) use ($types) {
+            $query->whereIn('type', $types);
         })
         ->get();
     }
