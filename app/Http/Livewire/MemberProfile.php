@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use finfo;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Livewire\Component;
 
@@ -30,12 +31,18 @@ class MemberProfile extends Component
     {
         if ($property == 'profile_picture') {
             $image = Image::make($this->profile_picture);
-            $image->save(storage_path('app/public/'.$this->member->profile_picture));
-            $thumbnail = 'thumbnail/'.basename($this->member->profile_picture);
-            Storage::disk('public')->delete('thumbnails/'.$thumbnail);
-            Artisan::call('member:card', ['--no' => $this->member->member_no]);
+            $filename = $this->member->profile_picture;
+            if($filename){
+                $thumbnail = 'thumbnail/'.basename($filename);
+                Storage::disk('public')->delete('thumbnails/'.$thumbnail);
+            }else{
+                $filename .= 'profiles/'.Str::random().'.jpg';
+                $this->member->profile_picture=$filename;
+            }
             $this->member->updated_at = Carbon::now();
             $this->member->save();
+            $image->save(storage_path('app/public/'.$filename));
+            Artisan::call('member:card', ['--no' => $this->member->member_no]);
             $this->emit('refresh');
         }
     }
