@@ -73,7 +73,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label>NIK</label>
-												<input type="text" class="form-control" name="nik"
+												<input type="text" class="form-control" name="nik" id="nik"
 													placeholder="Nomor induk kependudukan"
 													aria-describedby="nik-error">
 												<span class="form-text text-muted">Mohon masukkan nomor induk kependudukan anda/anak anda.</span>
@@ -352,6 +352,8 @@
     <link href="{{ asset('assets/css/pages/wizard/wizard-1.css') }}" rel="stylesheet" type="text/css">
 @endpush
 @push('scripts')
+<script src="{{ asset('assets/js/pages/crud/forms/widgets/input-mask.js') }}" type="text/javascript"></script>
+
 <script>
 	var KTWizard1 = function () {
 	// Base elements
@@ -521,6 +523,7 @@
 
 jQuery(document).ready(function() {
 	KTWizard1.init();
+	$('#nik').inputmask({"mask": "9999999999999999"});
 });
 
 </script>
