@@ -33,10 +33,21 @@ class MemberPaymentDataTable extends DataTable
     {
         $datatable = (new EloquentDataTable($query))
             ->addColumn('batches', function ($row) {
-                return $row->batches->first()->name;
+                $batch = $row->batches->first();
+                $value = 'inaktif';
+                if($batch)
+                    $value = $batch->name;
+                else
+                    $value .= ' '.$row->leave_at?->format('d M Y');
+                return $value;
             })
             ->editColumn('registration_date', function ($row) {
                 return $row->registration_date?->format('d M Y');
+            })
+            ->filterColumn('batches',function($query, $keyword){
+                if($keyword=='inaktif'){
+                    $query->doesntHave('batches');
+                }
             })
             ->setRowId('id');
 
@@ -82,7 +93,6 @@ class MemberPaymentDataTable extends DataTable
     {
         return $model
         ->with(['batches'])
-        ->whereHas('batches')
         ->newQuery();
     }
 
