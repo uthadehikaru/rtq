@@ -23,6 +23,10 @@ class MemberPaymentDataTable extends DataTable
         $this->periods = Period::orderBy('start_date')
         ->where('name', '<>', 'Registrasi')
         ->pluck('name', 'id');
+
+        $registrasi = Period::where('name','Registrasi')->first();
+        if($registrasi)
+            $this->periods = array_merge([$registrasi->id=>'Registrasi'], $this->periods->toArray());
     }
 
     public function inactive()
