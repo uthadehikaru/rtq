@@ -49,7 +49,6 @@ class MembersDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $buttons = '';
                 $buttons .= '<a href="'.route('members.edit', $row->id).'" class="text-warning">Ubah</a>';
-                $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
 
                 return $buttons;
             })

@@ -64,7 +64,7 @@
         @endif
     </div>
 </div>
-@if(!$registration->user_id)
+@if(!$registration->user)
 <!--begin::Portlet-->
 <div class="kt-portlet">
     <div class="kt-portlet__head">
