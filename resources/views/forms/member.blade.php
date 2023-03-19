@@ -180,6 +180,14 @@
                             value="{{ old('postcode', $member?$member->postcode:'') }}"
                             >
                         </div>
+                        @if($member)
+                        <div class="form-group">
+                            <label>@lang('Tgl Keluar')</label>
+                            <input type="date" name="leave_at" class="form-control"
+                            value="{{ old('leave_at', $member?$member->leave_at?->format('Y-m-d'):'') }}"
+                            >
+                        </div>
+                        @endif
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label>@lang('Foto')</label>

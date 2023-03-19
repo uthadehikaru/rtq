@@ -98,13 +98,18 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function update($id, array $data)
     {
-        return DB::transaction(function () use ($id, $data) {
-            if ($data['nik']) {
-                $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
-                if ($nik) {
-                    throw new Exception('NIK sudah terdaftar');
-                }
+        if ($data['nik']) {
+            $nik = Member::where('nik', $data['nik'])->where('id', '<>', $id)->first();
+            if ($nik) {
+                throw new Exception('NIK sudah terdaftar');
             }
+        }
+        
+        if(!isset($data['batch_id']) && !$data['leave_at']){
+            throw new Exception('Tanggal keluar harus ditentukan apabila peserta inaktif');
+        }
+
+        return DB::transaction(function () use ($id, $data) {
 
             $member = Member::with('user')->find($id);
 
@@ -136,6 +141,11 @@ class MemberRepository implements MemberRepositoryInterface
             } else {
                 unset($data['profile_picture']);
             }
+
+            if (isset($data['batch_id'])) {
+                $data['leave_at'] = null;
+            }
+            
             $member->update($data);
 
             if (isset($data['profile_picture'])) {
@@ -144,6 +154,8 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['batch_id'])) {
                 $member->batches()->sync($data['batch_id']);
+            }else{
+                $member->batches()->detach();
             }
 
             return $member;
