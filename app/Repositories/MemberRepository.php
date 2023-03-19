@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Events\BatchChanged;
-use App\Events\MemberActivated;
 use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
 use App\Models\Setting;
@@ -108,16 +107,16 @@ class MemberRepository implements MemberRepositoryInterface
         }
 
         return DB::transaction(function () use ($id, $data) {
-
             $member = Member::with('user')->find($id);
 
-            if(!isset($data['batch_id']) && $member->batches->count())
+            if (! isset($data['batch_id']) && $member->batches->count()) {
                 throw new Exception("Mohon tentukan halaqoh anggota. jika ingin mengeluarkan, silahkan melalui 'aksi' -> 'keluar halaqoh'.");
-        
-            if(!isset($data['batch_id']) && !$data['leave_at']){
+            }
+
+            if (! isset($data['batch_id']) && ! $data['leave_at']) {
                 throw new Exception('Tanggal keluar harus ditentukan apabila peserta inaktif');
             }
-            
+
             if ($member->user) {
                 $user = [
                     'email' => $data['email'],
@@ -150,7 +149,7 @@ class MemberRepository implements MemberRepositoryInterface
             if (isset($data['batch_id'])) {
                 $data['leave_at'] = null;
             }
-            
+
             $member->update($data);
 
             if (isset($data['profile_picture'])) {
@@ -159,7 +158,7 @@ class MemberRepository implements MemberRepositoryInterface
 
             if (isset($data['batch_id'])) {
                 $member->batches()->sync($data['batch_id']);
-            }else{
+            } else {
                 $member->batches()->detach();
             }
 
@@ -224,7 +223,7 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function changeBatch($member_id, $batch_id)
     {
-        DB::transaction(function() use ($member_id, $batch_id){
+        DB::transaction(function () use ($member_id, $batch_id) {
             $member = $this->find($member_id);
 
             $old_batch = $member->batches->pluck('name')->join(',');
@@ -233,6 +232,5 @@ class MemberRepository implements MemberRepositoryInterface
 
             BatchChanged::dispatch($member, $old_batch);
         });
-
     }
 }

@@ -16,11 +16,18 @@ class MemberPaymentDataTable extends DataTable
 {
     public $periods;
 
+    public $inactive = false;
+
     public function __construct()
     {
         $this->periods = Period::orderBy('start_date')
         ->where('name', '<>', 'Registrasi')
         ->pluck('name', 'id');
+    }
+
+    public function inactive()
+    {
+        $this->inactive = true;
     }
 
     /**
@@ -35,19 +42,16 @@ class MemberPaymentDataTable extends DataTable
             ->addColumn('batches', function ($row) {
                 $batch = $row->batches->first();
                 $value = 'inaktif';
-                if($batch)
+                if ($batch) {
                     $value = $batch->name;
-                else
+                } else {
                     $value .= ' '.$row->leave_at?->format('d M Y');
+                }
+
                 return $value;
             })
             ->editColumn('registration_date', function ($row) {
                 return $row->registration_date?->format('d M Y');
-            })
-            ->filterColumn('batches',function($query, $keyword){
-                if($keyword=='inaktif'){
-                    $query->doesntHave('batches');
-                }
             })
             ->setRowId('id');
 
@@ -91,9 +95,17 @@ class MemberPaymentDataTable extends DataTable
      */
     public function query(Member $model): QueryBuilder
     {
-        return $model
+        $model = $model
         ->with(['batches'])
         ->newQuery();
+
+        if ($this->inactive) {
+            $model->doesntHave('batches');
+        } else {
+            $model->has('batches');
+        }
+
+        return $model;
     }
 
     /**

@@ -42,7 +42,7 @@ class MemberRequest extends FormRequest
             'registration_date' => '',
             'status' => '',
             'profile_picture' => '',
-            'leave_at'=> 'nullable|date',
+            'leave_at' => 'nullable|date',
         ];
     }
 }

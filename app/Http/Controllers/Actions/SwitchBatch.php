@@ -29,7 +29,7 @@ class SwitchBatch extends Controller
         $old_batch = $member->batches->pluck('name')->join(',');
         $member->batches()->sync($otherBatch);
         BatchChanged::dispatch($member, $old_batch);
-        
+
         $old_batch = $otherMember->batches->pluck('name')->join(',');
         $otherMember->batches()->sync($memberBatch);
         BatchChanged::dispatch($otherMember, $old_batch);

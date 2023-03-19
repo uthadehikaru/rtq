@@ -50,7 +50,7 @@ class Registration extends Model
         'school_end_time' => 'datetime',
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

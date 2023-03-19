@@ -21,9 +21,9 @@ class LeaveBatch extends Controller
         Request $request,
         MemberRepositoryInterface $memberRepository, $id)
     {
-        DB::transaction(function () use ($memberRepository, $request, $id) {    
+        DB::transaction(function () use ($memberRepository, $request, $id) {
             $data = $request->validate([
-                'leave_at'=>'required|date'
+                'leave_at' => 'required|date',
             ]);
 
             $member = $memberRepository->find($id);

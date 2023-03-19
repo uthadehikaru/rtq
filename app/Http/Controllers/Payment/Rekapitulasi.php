@@ -14,9 +14,20 @@ class Rekapitulasi extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(MemberPaymentDataTable $dataTable)
+    public function __invoke(Request $request, MemberPaymentDataTable $dataTable)
     {
         $data['title'] = 'Rekapitulasi pembayaran';
+
+        if ($request->has('inaktif')) {
+            $dataTable->inactive();
+            $data['buttons'] = '
+            <a href="'.route('payments.summary').'" class="btn btn-primary">Peserta Aktif</a>
+            ';
+        } else {
+            $data['buttons'] = '
+            <a href="'.route('payments.summary', ['inaktif' => 'true']).'" class="btn btn-warning">Peserta Inaktif</a>
+            ';
+        }
 
         return $dataTable->render('datatables.datatable', $data);
     }

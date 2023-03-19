@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\BatchChanged;
-use App\Events\MemberActivated;
-use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class LogBatchChanged implements ShouldQueue
 {
@@ -29,11 +26,10 @@ class LogBatchChanged implements ShouldQueue
     public function handle(BatchChanged $event)
     {
         $member = $event->member;
-        
+
         activity()
             ->on($member)
             ->event('halaqoh')
             ->log(':subject.full_name pindah dari '.$event->oldBatch.' ke '.$member->batches->pluck('name')->join(','));
-
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\MemberRepositoryInterface;
 use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
 
@@ -20,9 +19,9 @@ class ChangeBatch extends Controller
         MemberRepository $memberRepository, $id)
     {
         $request->validate([
-            'batch_id'=>'required',
+            'batch_id' => 'required',
         ]);
-        
+
         $memberRepository->changeBatch($id, $request->batch_id);
 
         return to_route('members.index')->with('message', 'Berhasil pindah halaqoh');
