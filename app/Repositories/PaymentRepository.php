@@ -5,6 +5,11 @@ namespace App\Repositories;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\User;
+use App\Notifications\PaymentConfirmed;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {
@@ -30,7 +35,7 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     public function find($id)
     {
-        return Payment::findOrFail($id);
+        return Payment::with(['details','details.period','details.member'])->findOrFail($id);
     }
 
     public function delete($id)
@@ -72,5 +77,25 @@ class PaymentRepository implements PaymentRepositoryInterface
         }
 
         return $total;
+    }
+
+    public function confirm($payment_id)
+    {
+        DB::beginTransaction();
+
+        $payment = $this->find($payment_id);
+        $payment->status = 'paid';
+        $payment->paid_at = Carbon::now();
+        $payment->save();
+
+        foreach($payment->details as $detail){
+            $user = $detail->member->user;
+            if($user)
+                Notification::send($user, new PaymentConfirmed($detail));
+        }
+
+        DB::commit();
+
+        return $payment;
     }
 }

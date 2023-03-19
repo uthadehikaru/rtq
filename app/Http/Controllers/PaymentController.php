@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Period;
 use App\Models\User;
 use App\Notifications\PaymentConfirmation;
+use App\Notifications\PaymentConfirmed;
 use App\Repositories\BatchRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\PeriodRepository;
@@ -59,10 +60,7 @@ class PaymentController extends Controller
 
     public function confirm(PaymentRepository $paymentRepository, $payment_id)
     {
-        $payment = $paymentRepository->find($payment_id);
-        $payment->status = 'paid';
-        $payment->paid_at = Carbon::now();
-        $payment->save();
+        $paymentRepository->confirm($payment_id);
 
         return back()->with('message', __('Payment Confirmed'));
     }
@@ -118,7 +116,7 @@ class PaymentController extends Controller
 
         $admins = User::role('administrator')->get();
         Notification::send($admins, new PaymentConfirmation($payment));
-        
+
         DB::commit();
 
         return back()->with('message', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
