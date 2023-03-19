@@ -20,9 +20,17 @@ class MemberPaymentDataTable extends DataTable
 
     public function __construct()
     {
-        $this->periods = Period::orderBy('start_date')
-        ->where('name', '<>', 'Registrasi')
-        ->pluck('name', 'id');
+        $periods = Period::orderBy('start_date')
+        ->get();
+
+        $this->periods[] = $periods->where('name','Registrasi')->first();
+
+        foreach($periods as $period){
+            if($period->name=='Registrasi')
+                continue;
+            
+            $this->periods[] = $period;
+        }
     }
 
     public function inactive()
@@ -56,13 +64,13 @@ class MemberPaymentDataTable extends DataTable
             ->setRowId('id');
 
         $rawColumns = [];
-        foreach ($this->periods as $id => $name) {
-            $datatable->addColumn('period_'.$id, function ($row) use ($id) {
+        foreach ($this->periods as $period) {
+            $datatable->addColumn('period_'.$period->id, function ($row) use ($period) {
                 $status = '';
 
-                $payment = Payment::wherehas('details', function ($query) use ($id, $row) {
+                $payment = Payment::wherehas('details', function ($query) use ($period, $row) {
                     $query->where('member_id', $row->id)
-                    ->where('period_id', $id);
+                    ->where('period_id', $period->id);
                 })->first();
                 if ($payment) {
                     $status = $payment->status;
@@ -80,7 +88,7 @@ class MemberPaymentDataTable extends DataTable
 
                 return '<span class="badge badge-'.$badges[$status].'">'.__('app.payment.status.'.$status).'</span>';
             });
-            $rawColumns[] = 'period_'.$id;
+            $rawColumns[] = 'period_'.$period->id;
         }
         $datatable->rawColumns($rawColumns);
 
@@ -145,8 +153,8 @@ class MemberPaymentDataTable extends DataTable
             Column::make('batches')->title('Halaqoh'),
         ];
 
-        foreach ($this->periods as $id => $name) {
-            $columns[] = Column::make('period_'.$id)->title($name);
+        foreach ($this->periods as $period) {
+            $columns[] = Column::make('period_'.$period->id)->title($period->name);
         }
 
         return $columns;
