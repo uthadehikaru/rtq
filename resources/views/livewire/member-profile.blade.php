@@ -27,6 +27,9 @@
         },
         enableOrientation: true
     });
+    $(document).ready(function() {
+        profilepicture.setZoom(0);
+    });
     $('.rotate').on('click', function(ev) {
         profilepicture.rotate(-90);
     });
