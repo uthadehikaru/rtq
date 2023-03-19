@@ -20,9 +20,6 @@ class ShowNotification extends Controller
         $notification = DatabaseNotification::findOrFail($id);
         $notification->markAsRead();
 
-        if($notification->type=='App\Notifications\RegisteredUser')
-        {
-            return redirect($notification->data['url']);
-        }
+        return redirect($notification->data['url']);
     }
 }
