@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\BatchChanged;
+use App\Events\MemberActivated;
 use App\Listeners\ActivityLogin;
+use App\Listeners\LogBatchChanged;
+use App\Listeners\LogMemberActivated;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +26,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         Login::class => [
             ActivityLogin::class,
+        ],
+        MemberActivated::class => [
+            LogMemberActivated::class,
+        ],
+        BatchChanged::class => [
+            LogBatchChanged::class,
         ],
     ];
 

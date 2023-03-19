@@ -68,7 +68,8 @@ Route::middleware('auth')->group(function () {
             Route::post('members/{id}/change', Actions\ChangeBatch::class);
             Route::get('members/{id}/switch', [MemberController::class, 'switch'])->name('members.switch');
             Route::post('members/{id}/switch', Actions\SwitchBatch::class);
-            Route::get('members/{id}/leave', Actions\LeaveBatch::class)->name('members.leave');
+            Route::get('members/{id}/leave', [MemberController::class, 'leave'])->name('members.leave');
+            Route::post('members/{id}/leave', Actions\LeaveBatch::class);
             Route::resource('biodata', BiodataMemberController::class);
             Route::resource('members', MemberController::class);
             Route::resource('courses', CourseController::class);

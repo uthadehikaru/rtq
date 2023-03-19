@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Events\MemberActivated;
 use App\Models\Member;
 use App\Models\Registration;
 use App\Models\User;
@@ -48,6 +49,8 @@ class RegistrationRepository
 
         // register batch
         $member->batches()->attach($data['batch_id']);
+
+        MemberActivated::dispatch($member);
 
         Artisan::call('member:generateno');
 

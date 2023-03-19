@@ -28,7 +28,7 @@
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
-                            @if($member)
+                            @if($member && !$member->leave_at)
                             <div class="btn-group" role="group">
                                 <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Aksi

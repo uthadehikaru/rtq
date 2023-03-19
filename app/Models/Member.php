@@ -33,7 +33,7 @@ class Member extends Model
     protected $casts = [
         'registration_date' => 'date',
         'birth_date' => 'date',
-        'leave_at' => 'datetime',
+        'leave_at' => 'date',
     ];
 
     public function batches()

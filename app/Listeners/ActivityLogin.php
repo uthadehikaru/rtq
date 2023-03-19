@@ -26,6 +26,7 @@ class ActivityLogin implements ShouldQueue
     {
         activity()
             ->causedBy($event->user)
+            ->event('auth')
             ->log(':causer.name logged in');
     }
 }

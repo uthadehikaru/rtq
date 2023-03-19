@@ -72,6 +72,7 @@ class ActivitiesDataTable extends DataTable
         return [
             Column::make('created_at'),
             Column::make('description'),
+            Column::make('event'),
         ];
     }
 

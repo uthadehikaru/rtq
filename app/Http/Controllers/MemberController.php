@@ -134,6 +134,16 @@ class MemberController extends Controller
         return view('forms.member-switch', $data);
     }
 
+    public function leave(MemberRepository $memberRepository,
+        $member_id)
+    {
+        $member = $memberRepository->find($member_id);
+        $data['title'] = 'Mengeluarkan '.$member->full_name.' - '.$member->batchName();
+        $data['member'] = $member;
+
+        return view('forms.member-leave', $data);
+    }
+
     public function cards($member_no = null)
     {
         if ($member_no) {

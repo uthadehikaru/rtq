@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\MemberRepositoryInterface;
+use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
 
 class ChangeBatch extends Controller
@@ -16,11 +17,14 @@ class ChangeBatch extends Controller
      */
     public function __invoke(
         Request $request,
-        MemberRepositoryInterface $memberRepository, $id)
+        MemberRepository $memberRepository, $id)
     {
-        $member = $memberRepository->find($id);
-        $member->batches()->sync($request->batch_id);
+        $request->validate([
+            'batch_id'=>'required',
+        ]);
+        
+        $memberRepository->changeBatch($id, $request->batch_id);
 
-        return to_route('members.index')->with('message', __('Updated Successfully'));
+        return to_route('members.index')->with('message', 'Berhasil pindah halaqoh');
     }
 }
