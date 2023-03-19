@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Registration;
-use Carbon\Carbon;
+use App\Repositories\MemberRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -16,7 +14,7 @@ class RegisterController extends Controller
         return view('register', $data);
     }
 
-    public function submit(Request $request, $type)
+    public function submit(Request $request, MemberRepository $memberRepository, $type)
     {
         $data = $request->validate([
             'nik' => 'required|size:16',
@@ -42,17 +40,7 @@ class RegisterController extends Controller
             'term_condition' => 'required',
         ]);
 
-        $exists = Registration::where('nik', $data['nik'])->first();
-        if ($exists) {
-            return response()->json(['success' => false, 'message' => 'NIK sudah terdaftar'], 500);
-        }
-
-        $last = Registration::whereYear('created_at', Carbon::now()->format('Y'))
-        ->whereMonth('created_at', Carbon::now()->format('m'))
-        ->count();
-        $data['registration_no'] = date('Ym').Str::padLeft(++$last, 3, '0');
-        $data['type'] = $type;
-        $registration = Registration::create($data);
+        $memberRepository->register($type, $data);
 
         return response()->json(['success' => true]);
     }

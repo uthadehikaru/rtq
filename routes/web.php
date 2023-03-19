@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Actions;
+use App\Http\Controllers\Actions\ShowNotification;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\ResetPassword;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -57,6 +58,7 @@ Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/update-password', UpdatePassword::class)->name('update-password');
+    Route::get('/notification/{id}', ShowNotification::class)->name('notification');
     Route::group(['middleware' => ['role:administrator']], function () {
         Route::get('activities', ActivityController::class)->name('activities');
         Route::prefix('educations')->group(function () {

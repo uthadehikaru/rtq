@@ -5,13 +5,16 @@ namespace App\Repositories;
 use App\Events\BatchChanged;
 use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
+use App\Models\Registration;
 use App\Models\Setting;
 use App\Models\User;
+use App\Notifications\RegisteredUser;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -232,5 +235,27 @@ class MemberRepository implements MemberRepositoryInterface
 
             BatchChanged::dispatch($member, $old_batch);
         });
+    }
+
+    public function register($type, $data)
+    {
+        DB::beginTransaction();
+
+        $exists = Registration::where('nik', $data['nik'])->first();
+        if ($exists) {
+            return response()->json(['success' => false, 'message' => 'NIK sudah terdaftar'], 500);
+        }
+
+        $last = Registration::whereYear('created_at', Carbon::now()->format('Y'))
+        ->whereMonth('created_at', Carbon::now()->format('m'))
+        ->count();
+        $data['registration_no'] = date('Ym').Str::padLeft(++$last, 3, '0');
+        $data['type'] = $type;
+        $registration = Registration::create($data);
+
+        $admins = User::role('administrator')->get();
+        Notification::send($admins, new RegisteredUser($registration));
+
+        DB::commit();
     }
 }
