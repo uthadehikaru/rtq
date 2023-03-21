@@ -26,9 +26,6 @@
             <div class="tab-content">
                 <div class="tab-pane active show" id="notifications" role="tabpanel" wire:ignore.self>
                     <div>
-                        <div class="text-center p-2" width="100%">
-                            <a href="#" wire:click="markAsRead">Tandai sudah dibaca</a>
-                        </div>
                         @if($notifications)
                         <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true"
                             data-height="300" data-mobile-height="200">
