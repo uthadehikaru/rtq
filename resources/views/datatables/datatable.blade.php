@@ -6,6 +6,7 @@
 @endsection
 @section('content')
 <x-message />
+@yield('search')
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">

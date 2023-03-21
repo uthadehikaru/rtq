@@ -45,7 +45,7 @@ class ActivitiesDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
+        return $this->builder()->responsive(true)
                     ->setTableId('activities-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()

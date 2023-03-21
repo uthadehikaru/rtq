@@ -100,7 +100,7 @@ class MembersBiodataDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
+        return $this->builder()->responsive(true)
                     ->setTableId('member-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()

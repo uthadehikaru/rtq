@@ -128,7 +128,7 @@ class PresentsDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
+        return $this->builder()->responsive(true)
                     ->setTableId('Present-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()

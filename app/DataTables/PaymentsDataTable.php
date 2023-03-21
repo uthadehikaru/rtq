@@ -98,8 +98,7 @@ class PaymentsDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
-                    ->responsive(true)
+        return $this->builder()->responsive(true)
                     ->setTableId('Payment-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()

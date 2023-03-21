@@ -61,7 +61,7 @@ class RegistrationsDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
+        return $this->builder()->responsive(true)
                     ->setTableId('registration-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
