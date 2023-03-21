@@ -61,7 +61,7 @@ class PaymentsDataTable extends DataTable
             })
             ->editColumn('attachment', function ($row) {
                 if ($row->attachment) {
-                    return '<a href="'.asset('storage/'.$row->attachment).'" target="_blank">Lampiran</a>';
+                    return '<a href="'.asset('storage/'.$row->attachment).'" data-lightbox="attachment-'.$row->id.'">Lampiran</a>';
                 }
             })
             ->addColumn('action', function ($row) {

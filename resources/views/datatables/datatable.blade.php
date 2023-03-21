@@ -37,11 +37,13 @@
 @push('styles')
 		<link href="{{ asset('assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/buttons.dataTables.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('lightbox/css/lightbox.min.css') }}" />
 @endpush
 @push('scripts')
 	<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/datatables/buttons.dataTables.min.js') }}"></script>
 	<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lightbox/js/lightbox.min.js') }}"></script>
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 	<script>
 	jQuery(document).ready(function() {
