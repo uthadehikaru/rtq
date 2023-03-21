@@ -99,11 +99,12 @@ class PaymentsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
+                    ->responsive(true)
                     ->setTableId('Payment-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -123,17 +124,17 @@ class PaymentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('created_at')->title('Tanggal'),
             Column::make('member')->title('Anggota'),
             Column::make('amount')->title('Nominal'),
             Column::make('status'),
             Column::make('paid_at')->title('Dikonfirmasi pada'),
             Column::make('attachment')->title('Lampiran')->searchable(false),
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
         ];
     }
 
