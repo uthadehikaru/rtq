@@ -9,11 +9,9 @@ use App\Models\Payment;
 use App\Models\Period;
 use App\Models\User;
 use App\Notifications\PaymentConfirmation;
-use App\Notifications\PaymentConfirmed;
 use App\Repositories\BatchRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\PeriodRepository;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -23,31 +21,8 @@ class PaymentController extends Controller
     public function index(PaymentRepository $paymentRepository, PaymentsDataTable $dataTable)
     {
         $data['title'] = $paymentRepository->count().' Pembayaran';
-        $data['buttons'] = '
-        <a href="'.route('payments.summary').'" class="btn btn-success">
-            Rekapitulasi
-        </a>
-        <div class="btn-group" role="group">
-            <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Aksi
-            </button>
-            <div class="dropdown-menu" aria-labelledby="action" style="">
-                <a class="dropdown-item" href="'.route('periods.index').'">
-                    <i class="la la-list"></i> Periode
-                </a>
-                <a class="dropdown-item" href="'.route('payment').'">
-                    <i class="la la-plus"></i> Buat Baru
-                </a>
-                <a class="dropdown-item" href="'.route('payments.export').'">
-                    <i class="la la-share"></i> Export to Excel
-                </a>
-                <a class="dropdown-item" href="'.route('periods.export').'">
-                    <i class="la la-download"></i> Export per Period
-                </a>
-            </div>
-        </div>';
 
-        return $dataTable->render('datatables.datatable', $data);
+        return $dataTable->render('datatables.payment', $data);
     }
 
     public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)
@@ -92,14 +67,12 @@ class PaymentController extends Controller
         ]);
 
         foreach ($data['period_ids'] as $period_id) {
-            $period = Period::find($period_id);
 
             foreach ($data['members'] as $member_id) {
                 if (! isset($member_id)) {
                     return back()->with('error', 'Peserta Tidak ditemukan');
                 }
-                $member = Member::find($member_id);
-                $paymentDetail = $paymentRepository->check($payment, $member_id, $period_id);
+                $paymentDetail = $paymentRepository->check($member_id, $period_id);
                 if (! $paymentDetail) {
                     $paymentRepository->createDetail([
                         'member_id' => $member_id,
@@ -109,7 +82,7 @@ class PaymentController extends Controller
                 } else {
                     DB::rollBack();
 
-                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$member->full_name.' periode '.$period->name);
+                    return back()->with('error', 'Konfirmasi pembayaran sudah pernah dibuat. '.$paymentDetail->member->full_name.' periode '.$paymentDetail->period->name);
                 }
             }
         }

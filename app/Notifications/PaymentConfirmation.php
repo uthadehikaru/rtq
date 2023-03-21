@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class PaymentConfirmation extends Notification implements ShouldQueue
@@ -44,9 +43,9 @@ class PaymentConfirmation extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title'=>'Konfirmasi Pembayaran terbaru sebesar '.$this->payment->amount,
-            'created_at'=>$this->payment->created_at,
-            'url'=>route('payments.index'),
+            'title' => 'Konfirmasi Pembayaran terbaru sebesar '.$this->payment->amount,
+            'created_at' => $this->payment->created_at,
+            'url' => route('payments.index'),
         ];
     }
 }

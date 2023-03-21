@@ -43,9 +43,9 @@ class RegisteredUser extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title'=>$this->registration->full_name.' mendaftar tahsin '.$this->registration->type,
-            'created_at'=>$this->registration->created_at,
-            'url'=>route('registrations.show', $this->registration->id),
+            'title' => $this->registration->full_name.' mendaftar tahsin '.$this->registration->type,
+            'created_at' => $this->registration->created_at,
+            'url' => route('registrations.show', $this->registration->id),
         ];
     }
 }

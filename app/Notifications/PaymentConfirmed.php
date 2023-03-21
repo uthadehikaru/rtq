@@ -44,9 +44,9 @@ class PaymentConfirmed extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title'=>'Pembayaran periode '.$this->paymentDetail->period->name.' telah dikonfirmasi',
-            'created_at'=>Carbon::now(),
-            'url'=>route('dashboard'),
+            'title' => 'Pembayaran periode '.$this->paymentDetail->period->name.' telah dikonfirmasi',
+            'created_at' => Carbon::now(),
+            'url' => route('dashboard'),
         ];
     }
 }

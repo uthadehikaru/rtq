@@ -19,6 +19,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions text-right">
+                    @yield('buttons')
                     @if(isset($buttons))
                     {!! $buttons !!}
                     @endif
@@ -59,7 +60,7 @@
                 },
                 success: function(dataResult){
                     if(dataResult.statusCode==200){
-                        alert('@lang('Berhasil dihapus')');
+                        alert('@lang('Berhasils`     dihapus')');
                         location.reload(true);
                     }
                 }

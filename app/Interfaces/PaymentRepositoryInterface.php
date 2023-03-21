@@ -20,7 +20,5 @@ interface PaymentRepositoryInterface
 
     public function delete($id);
 
-    public function check($payment, $member_id, $period_id);
-
     public function createDetail(array $data);
 }

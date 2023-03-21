@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
-use App\Models\User;
 use App\Notifications\PaymentConfirmed;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +34,7 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     public function find($id)
     {
-        return Payment::with(['details','details.period','details.member'])->findOrFail($id);
+        return Payment::with(['details', 'details.period', 'details.member'])->findOrFail($id);
     }
 
     public function delete($id)
@@ -48,18 +47,35 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::create($data);
     }
 
+    public function createPayment(array $data)
+    {
+        $payment = Payment::create($data);
+
+        foreach($data['details'] as $detail){
+            $detail['payment_id'] = $payment->id;
+            PaymentDetail::create($detail);
+        }
+
+        return $payment;
+    }
+
     public function update($id, array $data)
     {
         return Payment::whereId($id)->update($data);
     }
 
-    public function check($payment, $member_id, $period_id)
+    public function check($member_id, $period_id)
     {
-        return PaymentDetail::where([
+        $detail = PaymentDetail::where([
             'member_id' => $member_id,
             'period_id' => $period_id,
         ])
         ->first();
+
+        if($detail)
+            $detail->load(['member','period']);
+
+        return $detail;
     }
 
     public function createDetail(array $data)
@@ -88,10 +104,11 @@ class PaymentRepository implements PaymentRepositoryInterface
         $payment->paid_at = Carbon::now();
         $payment->save();
 
-        foreach($payment->details as $detail){
+        foreach ($payment->details as $detail) {
             $user = $detail->member->user;
-            if($user)
+            if ($user) {
                 Notification::send($user, new PaymentConfirmed($detail));
+            }
         }
 
         DB::commit();

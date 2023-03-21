@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Actions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\Notification;
 
 class ShowNotification extends Controller
 {

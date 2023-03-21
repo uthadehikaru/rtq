@@ -23,12 +23,13 @@ class MemberPaymentDataTable extends DataTable
         $periods = Period::orderBy('start_date')
         ->get();
 
-        $this->periods[] = $periods->where('name','Registrasi')->first();
+        $this->periods[] = $periods->where('name', 'Registrasi')->first();
 
-        foreach($periods as $period){
-            if($period->name=='Registrasi')
+        foreach ($periods as $period) {
+            if ($period->name == 'Registrasi') {
                 continue;
-            
+            }
+
             $this->periods[] = $period;
         }
     }

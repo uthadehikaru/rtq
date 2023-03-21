@@ -132,7 +132,7 @@ class PaymentsDataTable extends DataTable
             Column::make('member')->title('Anggota'),
             Column::make('amount')->title('Nominal'),
             Column::make('status'),
-            Column::make('paid_at')->title('Dibayar pada'),
+            Column::make('paid_at')->title('Dikonfirmasi pada'),
             Column::make('attachment')->title('Lampiran')->searchable(false),
         ];
     }

@@ -157,6 +157,7 @@ return [
         're_password' => 'Ulangi Password Baru',
         'scheduled_at' => 'Jadwal Kelas',
         'new_password_confirmation' => 'Password baru',
+        'members' => 'Peserta',
     ],
 
 ];

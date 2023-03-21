@@ -32,12 +32,12 @@ class MemberProfile extends Component
         if ($property == 'profile_picture') {
             $image = Image::make($this->profile_picture);
             $filename = $this->member->profile_picture;
-            if($filename){
+            if ($filename) {
                 $thumbnail = 'thumbnail/'.basename($filename);
                 Storage::disk('public')->delete('thumbnails/'.$thumbnail);
-            }else{
+            } else {
                 $filename .= 'profiles/'.Str::random().'.jpg';
-                $this->member->profile_picture=$filename;
+                $this->member->profile_picture = $filename;
             }
             $this->member->updated_at = Carbon::now();
             $this->member->save();
