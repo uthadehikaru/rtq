@@ -3,6 +3,7 @@
 use App\Http\Controllers\Actions;
 use App\Http\Controllers\Actions\ShowNotification;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\ResetPassword;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BatchController;
@@ -108,6 +109,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('users/{id}/reset', ResetPassword::class)->name('users.reset');
             Route::resource('users', AdminUserController::class);
+            Route::get('notifications', NotificationController::class)->name('notifications.index');
         });
         Route::resource('settings', SettingController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
