@@ -35,9 +35,7 @@ class DashboardController extends Controller
             $data = array_merge($data, $this->admin($paymentRepository, $batchRepository, $memberRepository));
             $view = 'dashboard-admin';
         } elseif ($user->hasRole('teacher')) {
-            $data = array_merge($data, $this->teacher(
-                $scheduleRepository,
-                $presentRepository));
+            $data = array_merge($data, $this->teacher());
             $view = 'dashboard-teacher';
         } else {
             $member = Member::where('user_id', Auth::id())->first();
@@ -76,14 +74,11 @@ class DashboardController extends Controller
         return $data;
     }
 
-    public function teacher(
-        ScheduleRepository $scheduleRepository,
-        PresentRepository $presentRepository)
+    public function teacher()
     {
         $teacher = Auth::user()->teacher;
         $data['batches'] = (new BatchRepository)->teacherBatches(Auth::id());
-        $data['schedules'] = $scheduleRepository->getByTeacher($teacher->user_id);
-        $data['presents'] = $presentRepository->getByTeacher($teacher->user_id)->groupBy('status');
+        $data['schedules'] = (new ScheduleRepository)->currentMonth($teacher->user_id);
 
         return $data;
     }

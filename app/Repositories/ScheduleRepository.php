@@ -136,4 +136,17 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             ->latest('scheduled_at')
             ->paginate(20);
     }
+
+    public function currentMonth($user_id)
+    {
+        return Schedule::with('batch')
+            ->withCount(['presents' => function ($query) {
+                $query->where('type', 'member');
+            }])
+            ->whereRelation('presents', 'user_id', $user_id)
+            ->latest('scheduled_at')
+            ->whereDate('scheduled_at', ">=", Carbon::now()->startOfMonth())
+            ->whereDate('scheduled_at', "<=", Carbon::now()->endOfMonth())
+            ->get();
+    }
 }

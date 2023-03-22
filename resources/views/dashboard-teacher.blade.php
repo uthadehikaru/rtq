@@ -24,7 +24,7 @@
                             <a class="kt-link" href="#">@lang('Batches') Yang Diajar</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $batches->count() }} @lang('Data')
+                            {{ $batches->count() }} Halaqoh
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             <a class="kt-link" href="#">@lang('Schedules') Pengajar</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $schedules->count() }} @lang('Data')
+                            {{ $schedules->count() }} Pertemuan
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        @lang('Jadwal Terbaru')
+                        @lang('Jadwal') {{ date('F Y') }}
                     </h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
@@ -113,9 +113,6 @@
                                         Jadwal Halaqoh {{ $schedule->batch->name }} pada
                                         {{ $schedule->scheduled_at->format('d M Y') }}
                                         {{ $schedule->start_at->format('H:i') }}
-                                        @if($schedule->teacher_id)
-                                            digantikan oleh {{ $schedule->teacher->name }}
-                                        @endif
                                     </div>
                                 </div>
                             @endforeach
