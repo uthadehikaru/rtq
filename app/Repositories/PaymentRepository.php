@@ -51,7 +51,7 @@ class PaymentRepository implements PaymentRepositoryInterface
     {
         $payment = Payment::create($data);
 
-        foreach($data['details'] as $detail){
+        foreach ($data['details'] as $detail) {
             $detail['payment_id'] = $payment->id;
             PaymentDetail::create($detail);
         }
@@ -72,8 +72,9 @@ class PaymentRepository implements PaymentRepositoryInterface
         ])
         ->first();
 
-        if($detail)
-            $detail->load(['member','period']);
+        if ($detail) {
+            $detail->load(['member', 'period']);
+        }
 
         return $detail;
     }

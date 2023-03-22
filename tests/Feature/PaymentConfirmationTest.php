@@ -6,6 +6,8 @@ use App\Models\Member;
 use App\Models\Period;
 use App\Models\User;
 use Database\Seeders\PeriodSeeder;
+use Database\Seeders\PermissionSeeder;
+use Database\Seeders\UserSeeder;
 
 test('guest can access payment confirmation', function () {
     $response = $this->get(route('payment'));
@@ -13,7 +15,7 @@ test('guest can access payment confirmation', function () {
 });
 
 test('guest can create payment confirmation', function () {
-    $this->seed(PeriodSeeder::class);
+    $this->seed([PeriodSeeder::class, PermissionSeeder::class, UserSeeder::class]);
     $period = Period::first();
     $member = Member::factory()->for(User::factory())->create(['birth_date' => '2020-02-25', 'gender' => 'male']);
     $data = [

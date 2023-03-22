@@ -145,8 +145,8 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             }])
             ->whereRelation('presents', 'user_id', $user_id)
             ->latest('scheduled_at')
-            ->whereDate('scheduled_at', ">=", Carbon::now()->startOfMonth())
-            ->whereDate('scheduled_at', "<=", Carbon::now()->endOfMonth())
+            ->whereDate('scheduled_at', '>=', Carbon::now()->startOfMonth())
+            ->whereDate('scheduled_at', '<=', Carbon::now()->endOfMonth())
             ->get();
     }
 }

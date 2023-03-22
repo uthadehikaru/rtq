@@ -16,7 +16,8 @@ class NotificationController extends Controller
      */
     public function __invoke(NotificationsDataTable $dataTable)
     {
-        $data['title'] = "Notifications";
+        $data['title'] = 'Notifications';
+
         return $dataTable->render('datatables.datatable', $data);
     }
 }

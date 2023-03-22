@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class NotificationsDataTable extends DataTable
@@ -17,20 +15,20 @@ class NotificationsDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', '')
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
-            ->editColumn('read_at', function($row){
-                return $row->read_at?->format('d M Y H:i')??'not read yet';
+            ->editColumn('read_at', function ($row) {
+                return $row->read_at?->format('d M Y H:i') ?? 'not read yet';
             })
-            ->editColumn('data', function($row){
+            ->editColumn('data', function ($row) {
                 return $row->data['title'];
             })
             ->setRowId('id');
@@ -39,7 +37,7 @@ class NotificationsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Notification $model
+     * @param  \App\Models\Notification  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(DatabaseNotification $model): QueryBuilder
@@ -71,7 +69,7 @@ class NotificationsDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -102,6 +100,6 @@ class NotificationsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Notifications_' . date('YmdHis');
+        return 'Notifications_'.date('YmdHis');
     }
 }

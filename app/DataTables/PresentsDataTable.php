@@ -76,7 +76,7 @@ class PresentsDataTable extends DataTable
             ->editColumn('description', function ($row) {
                 $description = '';
                 if ($row->photo) {
-                    $description .= '<p><a href="'.asset('storage/'.$row->photo).'" target="_blank"><img src="'.asset('storage/'.$row->photo).'" width="200" class="img-fluid" /></a></p>';
+                    $description .= '<p><a href="'.asset('storage/'.$row->photo).'"  data-lightbox="present-'.$row->id.'"><img src="'.asset('storage/'.$row->photo).'" width="200" class="img-fluid" /></a></p>';
                 }
                 $description .= $row->description;
                 $description .= ' '.($row->type == 'teacher' && $row->is_badal ? '(Badal)' : '');

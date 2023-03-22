@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Member;
 use App\Models\Period;
-use App\Models\User;
 use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,9 +13,13 @@ class PaymentForm extends Component
     use WithFileUploads;
 
     public $periods;
+
     public $period_ids = [];
+
     public $total = 0;
+
     public $attachment;
+
     public $members = [];
 
     protected $rules = [
@@ -35,10 +37,10 @@ class PaymentForm extends Component
     public function updated($property)
     {
         $this->resetValidation();
-        
+
         $this->validateOnly($property);
 
-        if(in_array($property,['members','period_ids'])){
+        if (in_array($property, ['members', 'period_ids'])) {
             $this->validateMemberPeriod();
         }
 
@@ -50,8 +52,9 @@ class PaymentForm extends Component
         foreach ($this->period_ids as $period_id) {
             foreach ($this->members as $member_id) {
                 $paymentDetail = (new PaymentRepository())->check($member_id, $period_id);
-                if($paymentDetail){
+                if ($paymentDetail) {
                     $this->addError('members', 'Konfirmasi pembayaran sudah pernah dibuat. '.$paymentDetail->member->full_name.' periode '.$paymentDetail->period->name);
+
                     return false;
                 }
             }
@@ -62,7 +65,7 @@ class PaymentForm extends Component
 
     private function calculateTotal()
     {
-        return 120000*count($this->members)*count($this->period_ids);
+        return 120000 * count($this->members) * count($this->period_ids);
     }
 
     public function savePayment()
@@ -70,7 +73,7 @@ class PaymentForm extends Component
         $this->validate();
 
         $valid = $this->validateMemberPeriod();
-        if(!$valid){
+        if (! $valid) {
             return;
         }
 

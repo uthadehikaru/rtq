@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PaymentsDataTable;
 use App\Exports\PaymentsExport;
-use App\Models\Member;
 use App\Models\Payment;
-use App\Models\Period;
 use App\Models\User;
 use App\Notifications\PaymentConfirmation;
 use App\Repositories\BatchRepository;
@@ -67,7 +65,6 @@ class PaymentController extends Controller
         ]);
 
         foreach ($data['period_ids'] as $period_id) {
-
             foreach ($data['members'] as $member_id) {
                 if (! isset($member_id)) {
                     return back()->with('error', 'Peserta Tidak ditemukan');
