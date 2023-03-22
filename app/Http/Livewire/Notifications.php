@@ -13,8 +13,19 @@ class Notifications extends Component
 
     public function mount()
     {
-        $this->notifications = Auth::user()->notifications;
-        $this->unread = Auth::user()->unreadNotifications->count();
+        $this->update();
+    }
+
+    private function update()
+    {
+        $this->notifications = Auth::user()->unreadNotifications;
+        $this->unread = $this->notifications->count();
+    }
+
+    public function markAsRead()
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+        $this->update();
     }
 
     public function render()

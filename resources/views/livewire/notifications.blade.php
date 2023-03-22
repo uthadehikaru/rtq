@@ -26,7 +26,10 @@
             <div class="tab-content">
                 <div class="tab-pane active show" id="notifications" role="tabpanel" wire:ignore.self>
                     <div>
-                        @if($notifications)
+                        @if($notifications->count()>0)
+                        <div class="text-center p-2" width="100%">
+                            <button class="btn btn-sm btn-outline text-warning" wire:click="markAsRead">Tandai semua sudah dibaca</button>
+                        </div>
                         <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true"
                             data-height="300" data-mobile-height="200">
                             @foreach ($notifications as $notif)
