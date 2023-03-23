@@ -4,7 +4,7 @@
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
-                Pencarian
+                Pencarian 
             </h3>
         </div>
     </div>
@@ -29,4 +29,10 @@
         </form>
     </div>
 </div>
+@endsection
+@section('buttons')
+<a href="{{ route('schedules.export', ['type'=>$type,'start_date'=>$start_date,'end_date'=>$end_date]) }}" class="btn btn-success btn-sm">
+    <i class="la la-download"></i>
+    Export (.xls)
+</a>
 @endsection
