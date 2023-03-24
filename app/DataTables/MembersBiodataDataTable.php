@@ -43,7 +43,7 @@ class MembersBiodataDataTable extends DataTable
             })
             ->addColumn('profile_picture', function ($row) {
                 if ($row->payload['profile_picture']) {
-                    return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" target="_blank"><img src="'.thumbnail($row->payload['profile_picture'], 300, 400).'" width="200" /></a>';
+                    return '<a href="'.asset('storage/'.$row->payload['profile_picture']).'" data-lightbox="present-'.$row->id.'"><img src="'.thumbnail($row->payload['profile_picture'], 300, 400).'" width="100" /></a>';
                 }
             })
             ->addColumn('status', function ($row) {
@@ -105,7 +105,7 @@ class MembersBiodataDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -120,18 +120,18 @@ class MembersBiodataDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->dom('Bfrtip')
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('created_at')->title('Tanggal')->searchable(false),
             Column::make('full_name')->title('Nama'),
             Column::make('nik')->title('NIK'),
             Column::make('birth_date')->title('Tanggal Lahir'),
             Column::make('status'),
             Column::make('profile_picture')->title('Foto'),
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->dom('Bfrtip')
+                  ->width(60)
+                  ->addClass('text-center'),
         ];
     }
 
