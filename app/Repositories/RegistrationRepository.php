@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegistrationRepository
 {
@@ -25,8 +26,12 @@ class RegistrationRepository
         }
 
         // create user
+        $email = $registration->email;
+        $existingUser = User::where('email',$email)->exists();
+        if($existingUser)
+            $email = Str::random().'@rtqmaisuro.id';
         $user = User::create([
-            'email' => $registration->email,
+            'email' => $email,
             'password' => Hash::make($registration->nik),
             'name' => $registration->full_name,
         ]);
