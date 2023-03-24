@@ -30,6 +30,9 @@ class RegistrationsDataTable extends DataTable
             ->editColumn('gender', function ($row) {
                 return __($row->gender);
             })
+            ->editColumn('full_name', function ($row) {
+                return '<a href="'.route('registrations.show', $row->id).'" class="text-primary">'.$row->full_name.'</a>';
+            })
             ->addColumn('action', function ($row) {
                 $buttons = '';
                 $buttons .= '<a href="'.route('registrations.show', $row->id).'" class="text-primary">Lihat</a>';
@@ -39,7 +42,7 @@ class RegistrationsDataTable extends DataTable
 
                 return $buttons;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','full_name'])
             ->setRowId('id');
     }
 
@@ -65,8 +68,9 @@ class RegistrationsDataTable extends DataTable
                     ->setTableId('registration-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -86,18 +90,18 @@ class RegistrationsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('created_at'),
+            Column::make('full_name'),
+            Column::make('type'),
+            Column::make('nik'),
+            Column::make('gender'),
+            Column::make('birth_date'),
+            Column::make('phone'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('created_at'),
-            Column::make('type'),
-            Column::make('nik'),
-            Column::make('full_name'),
-            Column::make('gender'),
-            Column::make('birth_date'),
-            Column::make('phone'),
         ];
     }
 

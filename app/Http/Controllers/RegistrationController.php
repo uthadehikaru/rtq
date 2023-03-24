@@ -17,7 +17,8 @@ class RegistrationController extends Controller
      */
     public function index(RegistrationsDataTable $dataTable)
     {
-        return $dataTable->render('datatables.registration');
+        $data['title'] = "Pendaftaran";
+        return $dataTable->render('datatables.datatable');
     }
 
     /**
