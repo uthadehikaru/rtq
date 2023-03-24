@@ -27,9 +27,10 @@ class RegistrationRepository
 
         // create user
         $email = $registration->email;
-        $existingUser = User::where('email',$email)->exists();
-        if($existingUser)
+        $existingUser = User::where('email', $email)->exists();
+        if ($existingUser) {
             $email = Str::random().'@rtqmaisuro.id';
+        }
         $user = User::create([
             'email' => $email,
             'password' => Hash::make($registration->nik),

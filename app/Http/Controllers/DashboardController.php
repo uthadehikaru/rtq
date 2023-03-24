@@ -72,8 +72,6 @@ class DashboardController extends Controller
 
         $data['biodata_count'] = Setting::where('group', 'biodata')->count();
         $data['biodata_verified'] = Setting::where('group', 'biodata')->where('payload->verified', true)->count();
-        $data['biodata_unverified'] = Setting::where('group', 'biodata')->where('payload->verified', false)->count();
-        
 
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
         $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];

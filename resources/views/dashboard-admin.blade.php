@@ -132,7 +132,7 @@
                 </a>
 
                 <div class="font-weight-bold text-white font-size-sm">
-                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ round($biodata_verified/$biodata_count*100) }}%</span>dari {{ $biodata_count }} telah terverifikasi
+                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ $biodata_verified }}</span>dari {{ $biodata_count }} telah terverifikasi
                 </div>
 
                 <div class="progress progress-xs mt-7 bg-warning-o-60">

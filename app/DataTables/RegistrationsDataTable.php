@@ -42,7 +42,7 @@ class RegistrationsDataTable extends DataTable
 
                 return $buttons;
             })
-            ->rawColumns(['action','full_name'])
+            ->rawColumns(['action', 'full_name'])
             ->setRowId('id');
     }
 

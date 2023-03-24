@@ -13,7 +13,9 @@ class BiodataUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $member, $biodata;
+    public $member;
+
+    public $biodata;
 
     /**
      * Create a new event instance.

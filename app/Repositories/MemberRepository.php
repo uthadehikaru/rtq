@@ -222,7 +222,6 @@ class MemberRepository implements MemberRepositoryInterface
             'payload' => $data,
         ]);
 
-        
         BiodataUpdated::dispatch($member, $biodata);
 
         return null;

@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use App\Models\Member;
-use App\Models\Payment;
 use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +12,9 @@ class BiodataUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $member,$biodata;
+    private $member;
+
+    private $biodata;
 
     /**
      * Create a new notification instance.
