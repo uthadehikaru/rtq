@@ -16,10 +16,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="{{ route('payments.index') }}">@lang('Payments')</a>
+                            <a class="kt-link" href="{{ route('payments.index') }}">{{ $payments }} @lang('Payments')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $payments }} @lang('Pembayaran')
+                            {{ $unconfirmed_payments }} @lang('Pembayaran belum dikonfirmasi')
                         </div>
                     </div>
                 </div>
@@ -122,6 +122,25 @@
         </div>
 
         <!--end:: Widgets/Profit Share-->
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom bg-info card-stretch gutter-b">
+            <!--begin::Body-->
+            <div class="card-body my-4">
+                <a href="{{ route('biodata.index') }}" class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">
+                    Verifikasi Biodata
+                </a>
+
+                <div class="font-weight-bold text-white font-size-sm">
+                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ round($biodata_verified/$biodata_count*100) }}%</span>dari {{ $biodata_count }} telah terverifikasi
+                </div>
+
+                <div class="progress progress-xs mt-7 bg-warning-o-60">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: {{ round($biodata_verified/$biodata_count*100) }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
     </div>
 </div>
 @endsection

@@ -22,6 +22,11 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::count();
     }
 
+    public function countUnconfirmed()
+    {
+        return Payment::whereNull('paid_at')->count();
+    }
+
     public function getByPeriod($period_id)
     {
         return Payment::where('period_id', $period_id)->get();

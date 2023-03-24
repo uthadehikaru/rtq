@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\PaymentDetail;
+use App\Models\Setting;
 use App\Models\Violation;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
@@ -64,8 +65,16 @@ class DashboardController extends Controller
     MemberRepository $memberRepository)
     {
         $data['payments'] = $paymentRepository->count();
+        $data['unconfirmed_payments'] = $paymentRepository->countUnconfirmed();
         $data['batches'] = $batchRepository->count();
         $data['members'] = $memberRepository->countActiveMembers();
+        $data['members'] = $memberRepository->countActiveMembers();
+
+        $data['biodata_count'] = Setting::where('group', 'biodata')->count();
+        $data['biodata_verified'] = Setting::where('group', 'biodata')->where('payload->verified', true)->count();
+        $data['biodata_unverified'] = Setting::where('group', 'biodata')->where('payload->verified', false)->count();
+        
+
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
         $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];
         $data['courses'] = (new CourseRepository)->membersPerType($data['types']);
