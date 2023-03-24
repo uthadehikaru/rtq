@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Events\BatchChanged;
+use App\Events\BiodataUpdated;
 use App\Interfaces\MemberRepositoryInterface;
 use App\Models\Member;
 use App\Models\Registration;
@@ -220,6 +221,9 @@ class MemberRepository implements MemberRepositoryInterface
             'name' => $data['member_id'],
             'payload' => $data,
         ]);
+
+        
+        BiodataUpdated::dispatch($member, $biodata);
 
         return null;
     }

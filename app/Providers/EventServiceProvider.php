@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Events\BatchChanged;
+use App\Events\BiodataUpdated;
 use App\Events\MemberActivated;
 use App\Listeners\ActivityLogin;
 use App\Listeners\LogBatchChanged;
 use App\Listeners\LogMemberActivated;
+use App\Listeners\NotifyBiodataUpdated;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BatchChanged::class => [
             LogBatchChanged::class,
+        ],
+        BiodataUpdated::class => [
+            NotifyBiodataUpdated::class,
         ],
     ];
 
