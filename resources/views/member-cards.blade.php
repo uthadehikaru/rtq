@@ -12,6 +12,7 @@
 					</div>
 				@endforeach
 			</div>
+			<div class="row">{!! $members->links() !!}</div>
 		</div>
 @endsection
 @push('scripts')

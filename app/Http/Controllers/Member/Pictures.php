@@ -16,7 +16,7 @@ class Pictures extends Controller
      */
     public function __invoke(Request $request)
     {
-        $data['members'] = Member::has('batches')->orderBy('full_name')->select('full_name', 'profile_picture')->get();
+        $data['members'] = Member::has('batches')->orderBy('full_name')->select('full_name', 'profile_picture')->paginate(24);
 
         return view('member-pictures', $data);
     }

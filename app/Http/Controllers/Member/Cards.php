@@ -19,7 +19,7 @@ class Cards extends Controller
         $data['members'] = Member::has('batches')
         ->orderBy('full_name')
         ->select('full_name', 'member_no')
-        ->get();
+        ->paginate(24);
 
         return view('member-cards', $data);
     }
