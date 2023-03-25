@@ -31,6 +31,9 @@ class NotificationsDataTable extends DataTable
             ->editColumn('data', function ($row) {
                 return $row->data['title'];
             })
+            ->filterColumn('name', function ($query, $keyword) {
+                $query->where('users.name', 'like', '%'.$keyword.'%');
+            })
             ->setRowId('id');
     }
 
