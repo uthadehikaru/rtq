@@ -17,7 +17,18 @@ class RegistrationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nik'=>$this->faker->numerify('################'),
+            'full_name'=>$this->faker->name(),
+            'short_name'=>$this->faker->name(),
+            'gender'=>$this->faker->randomElement(['male','female']),
+            'birth_place'=>$this->faker->word(),
+            'birth_date'=>$this->faker->date(),
+            'address'=>$this->faker->address(),
+            'phone'=>$this->faker->e164PhoneNumber(),
+            'email'=>$this->faker->safeEmail(),
+            'address'=>$this->faker->address(),
+            'reference'=>$this->faker->name(),
+            'term_condition'=>1,
         ];
     }
 }

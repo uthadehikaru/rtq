@@ -76,7 +76,7 @@
 												<input type="text" class="form-control" name="nik" id="nik"
 													placeholder="Nomor induk kependudukan"
 													aria-describedby="nik-error">
-												<span class="form-text text-muted">Mohon masukkan nomor induk kependudukan anda/anak anda.</span>
+												<span class="form-text text-muted">Mohon masukkan nomor induk kependudukan {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -85,7 +85,7 @@
 												<input type="text" class="form-control" name="full_name"
 													placeholder="Nama Lengkap"
 													aria-describedby="full_name-error">
-												<span class="form-text text-muted">Mohon masukkan nama lengkap anda/anak anda.</span>
+												<span class="form-text text-muted">Mohon masukkan nama lengkap {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -93,7 +93,7 @@
 												<label>Nama Panggilan</label>
 												<input type="text" class="form-control" name="short_name"
 													placeholder="Nama Panggilan">
-												<span class="form-text text-muted">Mohon masukkan nama panggilan anda/anak anda.</span>
+												<span class="form-text text-muted">Mohon masukkan nama panggilan {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 									</div>
@@ -120,7 +120,7 @@
 												<label>Tempat Lahir</label>
 												<input type="text" class="form-control" name="birth_place"
 												aria-describedby="birth_place-error">
-												<span class="form-text text-muted">Mohon masukkan tempat lahir anda/anak anda.</span>
+												<span class="form-text text-muted">Mohon masukkan tempat lahir {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -128,7 +128,7 @@
 												<label>Tanggal Lahir</label>
 												<input type="date" class="form-control" name="birth_date"
 												aria-describedby="birth_date-error">
-												<span class="form-text text-muted">Mohon masukkan tanggal lahir anda/anak anda.</span>
+												<span class="form-text text-muted">Mohon masukkan tanggal lahir {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 									</div>
@@ -137,7 +137,7 @@
 											<div class="form-group">
 												<label>Alamat</label>
 												<textarea class="form-control" name="address"></textarea>
-												<span class="form-text text-muted">Mohon masukkan alamat domisili anda.</span>
+												<span class="form-text text-muted">Mohon masukkan alamat domisili {{ $type=='dewasa'?'anda':'anak anda'}}.</span>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -145,7 +145,7 @@
 												<label>No Telp (Whatsapp)</label>
 												<input type="text" class="form-control" name="phone"
 												aria-describedby="phone-error">
-												<span class="form-text text-muted">Mohon masukkan nomor whatsapp yang aktif.</span>
+												<span class="form-text text-muted">Mohon masukkan nomor whatsapp {{ $type=='dewasa'?'anda':'anda/anak anda'}} yang aktif.</span>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -153,7 +153,7 @@
 												<label>Email</label>
 												<input type="text" class="form-control" name="email"
 												aria-describedby="email-error">
-												<span class="form-text text-muted">Mohon masukkan email yang aktif.</span>
+												<span class="form-text text-muted">Mohon masukkan email {{ $type=='dewasa'?'anda':'anda/anak anda'}} yang aktif.</span>
 											</div>
 										</div>
 									</div>
@@ -400,7 +400,8 @@
 			rules: {
 				//= Step 1
 				nik: {
-					required: true
+					required: true,
+					minlength: 16,
 				},
 				full_name: {
 					required: true
@@ -415,7 +416,8 @@
 					required: true
 				},
 				birth_date: {
-					required: true
+					required: true,
+					date: true,
 				},
 				address: {
 					required: true
@@ -424,7 +426,8 @@
 					required: true
 				},
 				email: {
-					required: true
+					required: true,
+					email: true,
 				},
 
 				//= Step 2
