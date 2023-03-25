@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('breadcrumbs')
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    {{ isset($title)?$title:"Data" }}
+    {{ isset($title)?$title:"" }}
 </span>
 @endsection
 @section('content')
@@ -14,7 +14,7 @@
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                Data {{ isset($title)?$title:"Data" }}
+                Data {{ isset($title)?$title:"" }}
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">

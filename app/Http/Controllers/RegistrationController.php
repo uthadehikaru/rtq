@@ -19,7 +19,7 @@ class RegistrationController extends Controller
     {
         $data['title'] = 'Pendaftaran';
 
-        return $dataTable->render('datatables.datatable');
+        return $dataTable->render('datatables.datatable', $data);
     }
 
     /**
