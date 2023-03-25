@@ -58,8 +58,8 @@ class MemberCard extends Command
         $bar->start();
         foreach ($members as $member) {
             $image = Image::make($template);
-            $profile = Storage::disk('public')->get($member->profile_picture);
-            if ($profile) {
+            if ($member->profile_picture && Storage::disk('public')->exists($member->profile_picture)) {
+                $profile = Storage::disk('public')->get($member->profile_picture);
                 $watermark = Image::make($profile);
                 $watermark->resize(250, 250);
                 $image->insert($watermark, 'top-left', 10, 240);
