@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\ProfileUpdated;
 use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,8 +25,10 @@ class MemberProfileCard extends Component
     public function updated()
     {
         $this->validate();
-
-        $this->member->save();
+        if ($this->member->isDirty()) {
+            ProfileUpdated::dispatch($this->member, $this->member->getDirty());
+            $this->member->save();
+        }
     }
 
     public function mount()

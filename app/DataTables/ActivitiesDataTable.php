@@ -24,6 +24,9 @@ class ActivitiesDataTable extends DataTable
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
+            ->editColumn('properties', function ($row) {
+                return json_encode($row->properties);
+            })
             ->setRowId('id');
     }
 
@@ -72,6 +75,7 @@ class ActivitiesDataTable extends DataTable
         return [
             Column::make('created_at'),
             Column::make('description'),
+            Column::make('properties'),
             Column::make('event'),
         ];
     }

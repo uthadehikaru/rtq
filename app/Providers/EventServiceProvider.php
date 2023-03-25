@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Events\BatchChanged;
 use App\Events\BiodataUpdated;
 use App\Events\MemberActivated;
+use App\Events\ProfileUpdated;
 use App\Listeners\ActivityLogin;
 use App\Listeners\LogBatchChanged;
 use App\Listeners\LogMemberActivated;
+use App\Listeners\LogProfileUpdated;
 use App\Listeners\NotifyBiodataUpdated;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BiodataUpdated::class => [
             NotifyBiodataUpdated::class,
+        ],
+        ProfileUpdated::class => [
+            LogProfileUpdated::class,
         ],
     ];
 
