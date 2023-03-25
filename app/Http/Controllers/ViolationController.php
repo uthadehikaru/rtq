@@ -15,6 +15,7 @@ class ViolationController extends Controller
      */
     public function index()
     {
+        $data['title'] = 'Pelanggaran';
         $data['violations'] = Violation::latest('violated_date')->get();
 
         return view('datatables.violation', $data);

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title'=>'Pelanggaran'])
 @push('scripts')
 		<script type="text/javascript">
             var KTDatatable = function() {

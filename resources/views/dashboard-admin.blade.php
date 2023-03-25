@@ -134,9 +134,35 @@
                 <div class="font-weight-bold text-white font-size-sm">
                     <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ $biodata_verified }}</span>dari {{ $biodata_count }} telah terverifikasi
                 </div>
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom bg-success card-stretch gutter-b">
+            <!--begin::Body-->
+            <div class="card-body my-4">
+                <a href="{{ route('registrations.index') }}" class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">
+                    Waiting List
+                </a>
 
-                <div class="progress progress-xs mt-7 bg-warning-o-60">
-                    <div class="progress-bar bg-white" role="progressbar" style="width: {{ round($biodata_verified/$biodata_count*100) }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="font-weight-bold text-white font-size-sm">
+                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ $waitinglist }}</span>calon peserta
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom bg-dark card-stretch gutter-b">
+            <!--begin::Body-->
+            <div class="card-body my-4">
+                <a href="{{ route('violations.index') }}" class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">
+                    Pelanggaran
+                </a>
+
+                <div class="font-weight-bold text-white font-size-sm">
+                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{ $violation_count }}</span>belum diselesaikan
                 </div>
             </div>
             <!--end::Body-->
