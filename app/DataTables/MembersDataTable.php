@@ -29,6 +29,9 @@ class MembersDataTable extends DataTable
             ->editColumn('registration_date', function ($row) {
                 return $row->registration_date?->format('d M Y');
             })
+            ->editColumn('updated_at', function ($row) {
+                return $row->updated_at?->format('d M Y H:i:s');
+            })
             ->editColumn('batches', function ($row) {
                 return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif '.$row->leave_at?->format('d M Y');
             })
@@ -118,6 +121,7 @@ class MembersDataTable extends DataTable
             ->sortable(false),
             Column::make('status')->title('Status'),
             Column::make('profile_picture')->title('Foto'),
+            Column::make('updated_at'),
         ];
     }
 

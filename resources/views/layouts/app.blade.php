@@ -238,7 +238,11 @@
 								<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
 									<div class="kt-header__topbar-user">
 										<span class="kt-header__topbar-username">{{ Auth::user()->name }}</span>
+										@role('member')
+										<img alt="Pic" src="{{ thumbnail(Auth::user()->member->profile_picture) }}" />
+										@else
 										<img alt="Pic" src="{{ asset('assets/images/default.jpg') }}" />
+										@endrole
 									</div>
 								</div>
 								<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
@@ -246,8 +250,11 @@
 									<!--begin: Head -->
 									<div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(assets/media/misc/bg-1.jpg)">
 										<div class="kt-user-card__avatar">
+											@role('member')
+											<img alt="Pic" src="{{ thumbnail(Auth::user()->member->profile_picture) }}" />
+											@else
 											<img alt="Pic" src="{{ asset('assets/images/default.jpg') }}" />
-
+											@endrole
 										</div>
 										<div class="kt-user-card__name">
 											{{ Auth::user()->name }}
