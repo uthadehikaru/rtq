@@ -32,6 +32,7 @@
         <p>Nama Lengkap : {{ $registration->full_name }}</p>
         <p>Nama Panggilan : {{ $registration->short_name }}</p>
         <p>Jenis Kelamin : @lang($registration->gender)</p>
+        <p>NIK : {{ $registration->nik }}</p>
         <p>Tempat, Tanggal Lahir : {{ $registration->birth_place }}, {{ $registration->birth_date?->format('d M Y') }}</p>
         @if($registration->birth_date)
         <p>Usia : {{ Carbon\Carbon::now()->diffInYears($registration->birth_date) }} Tahun</p>
