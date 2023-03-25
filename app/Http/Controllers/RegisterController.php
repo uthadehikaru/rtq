@@ -18,7 +18,7 @@ class RegisterController extends Controller
     public function submit(Request $request, MemberRepository $memberRepository, $type)
     {
         $data = $request->validate([
-            'nik' => ['required',new Nik],
+            'nik' => ['required', new Nik],
             'full_name' => 'required|max:255',
             'short_name' => 'required|max:255',
             'gender' => 'required|in:male,female',
