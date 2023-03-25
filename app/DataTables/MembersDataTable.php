@@ -46,7 +46,7 @@ class MembersDataTable extends DataTable
             })
             ->editColumn('profile_picture', function ($row) {
                 if ($row->profile_picture) {
-                    return '<a href="'.asset('storage/'.$row->profile_picture).'?v='.$row->created_at->format('YmdHis').'" target="_blank"><img src="'.thumbnail($row->profile_picture, 300, 400).'" height="50" /></a>';
+                    return '<a href="'.asset('storage/'.$row->profile_picture).'?v='.$row->created_at->format('YmdHis').'" data-lightbox="profile-'.$row->id.'"><img src="'.thumbnail($row->profile_picture, 300, 400).'" height="50" /></a>';
                 }
             })
             ->addColumn('action', function ($row) {
