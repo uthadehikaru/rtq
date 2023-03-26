@@ -13,7 +13,6 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Member\Cards;
 use App\Http\Controllers\Member\IqobController;
 use App\Http\Controllers\Member\Pictures;
 use App\Http\Controllers\Member\PresentController as MemberPresentController;
@@ -38,6 +37,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
+use App\Http\Livewire\MemberCards;
 use App\Http\Livewire\UpdatePassword;
 use Illuminate\Support\Facades\Route;
 
@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('educations')->group(function () {
             Route::resource('users', UserController::class);
             Route::get('members/pictures', Pictures::class)->name('members.pictures');
-            Route::get('members/cards', Cards::class)->name('members.card-list');
+            Route::get('members/cards', MemberCards::class)->name('members.card-list');
             Route::get('members/cards/{member_no?}', [MemberController::class, 'cards'])->name('members.cards');
             Route::get('members/{id}/change', [MemberController::class, 'change'])->name('members.change');
             Route::post('members/{id}/change', Actions\ChangeBatch::class);
