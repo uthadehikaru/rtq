@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Schedule;
 
-use App\DataTables\PresentsDataTable;
+use App\DataTables\ReportPresentsDataTable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class Report extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, PresentsDataTable $dataTable)
+    public function __invoke(Request $request, ReportPresentsDataTable $dataTable)
     {
         $data['title'] = 'Laporan';
         $data['start_date'] = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));

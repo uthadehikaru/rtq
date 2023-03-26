@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class PresentsDataTable extends DataTable
+class ReportPresentsDataTable extends DataTable
 {
     private $type = null;
 
