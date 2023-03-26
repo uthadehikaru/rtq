@@ -107,7 +107,7 @@ class SchedulesDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -127,17 +127,17 @@ class SchedulesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('scheduled_at')->title('Tanggal'),
             Column::make('batch_id')->title('Halaqoh'),
             Column::make('teacher')->title('Pengajar'),
             Column::make('start_at')->title('Mulai'),
             Column::make('place')->title('Tempat'),
             Column::make('presents_count')->title('Peserta')->searchable(false),
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
         ];
     }
 

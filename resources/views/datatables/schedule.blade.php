@@ -1,163 +1,28 @@
-@extends('layouts.app')
+@extends('datatables.datatable')
+@section('buttons')
+        <div class="btn-group" role="group">
+            <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Aksi
+            </button>
+            <div class="dropdown-menu" aria-labelledby="action">
+                <a class="dropdown-item" href="{{ route('payments.summary') }}">
+                    <i class="la la-file"></i> Rekapitulasi
+                </a>
+                <a class="dropdown-item" href="{{ route('periods.index') }}">
+                    <i class="la la-list"></i> Periode
+                </a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#paymentModal">
+                    <i class="la la-plus"></i> Buat Baru
+                </a>
+                <a class="dropdown-item" href="{{ route('payments.export') }}">
+                    <i class="la la-share"></i> Export to Excel
+                </a>
+                <a class="dropdown-item" href="{{ route('periods.export') }}">
+                    <i class="la la-download"></i> Export per Period
+                </a>
+            </div>
+        </div>
+@endsection
 @push('scripts')
-		<script type="text/javascript">
-            var KTDatatable = function() {
-	// Private functions
-
-	// table initializer
-	var table = function() {
-
-		var datatable = $('.kt-datatable').KTDatatable({
-			data: {
-				saveState: {cookie: false},
-			},
-			search: {
-				input: $('#generalSearch'),
-			},
-		});
-
-	};
-
-	return {
-		// Public functions
-		init: function() {
-			// init dmeo
-			table();
-		},
-	};
-}();
-
-jQuery(document).ready(function() {
-	KTDatatable.init();
-
-    $(document).on("click", ".delete", function() { 
-        if(confirm("@lang('Are you sure?')")) {
-            var id= $(this).data('id');
-            var url = "{{ route('schedules.index') }}";
-            var dltUrl = url+"/"+id;
-            $.ajax({
-                url: dltUrl,
-                type: "DELETE",
-                cache: false,
-                data:{
-                    _token:'{{ csrf_token() }}'
-                },
-                success: function(dataResult){
-                    if(dataResult.statusCode==200){
-                        alert('@lang('Deleted Successfully')');
-                        location.reload(true);
-                    }
-                }
-            });
-        }
-	});
-});
-</script>
+<livewire:payment-form />
 @endpush
-@section('breadcrumbs')
-<span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    @lang('Schedules')
-</span>
-@endsection
-@section('content')
-@if(session()->has('message'))
-<x-alert type="success">{{ session()->get('message') }}</x-alert>
-@endif
-<div class="kt-portlet kt-portlet--mobile">
-    <div class="kt-portlet__head kt-portlet__head--lg">
-        <div class="kt-portlet__head-label">
-            <span class="kt-portlet__head-icon">
-                <i class="kt-font-brand flaticon2-users"></i>
-            </span>
-            <h3 class="kt-portlet__head-title">
-                @lang('Schedules')
-            </h3>
-        </div>
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-                <div class="kt-portlet__head-actions">
-                    @role('administrator')
-                    <a href="{{ route('schedules.report') }}" class="btn btn-success btn-icon-sm">
-                        <i class="la la-file"></i>
-                        @lang('Laporan')
-                    </a>
-                    <a href="{{ route('schedules.create') }}" class="btn btn-primary btn-icon-sm">
-                        <i class="la la-plus"></i>
-                        @lang('New Schedule')
-                    </a>
-                    @endrole
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="kt-portlet__body">
-
-        <!--begin: Search Form -->
-        <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-            <div class="row align-items-center">
-                <div class="col-xl-8 order-2 order-xl-1">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                            <div class="kt-input-icon kt-input-icon--left">
-                                <input type="text" class="form-control" placeholder="@lang('Search')..." id="generalSearch">
-                                <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                    <span><i class="la la-search"></i></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--end: Search Form -->
-    </div>
-    <div class="kt-portlet__body kt-portlet__body--fit">
-
-        <!--begin: Datatable -->
-        <table class="kt-datatable" id="html_table" width="100%">
-            <thead>
-                <tr>
-                    <th title="Field #1">@lang('Scheduled at')</th>
-                    <th title="Field #2">@lang('Batch')</th>
-                    <th title="Field #2">@lang('Pengajar')</th>
-                    <th title="Field #2">@lang('Waktu & Tempat')</th>
-                    <th title="Field #4">@lang('Daftar Peserta')</th>
-                    <th title="Field #2">@lang('Action')</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($schedules as $schedule)
-                    <tr>
-                        <td>{{ $schedule->scheduled_at->format('d M Y') }} {{ $schedule->start_at?->format('H:i') }}</td>
-                        <td>{{ $schedule->batch->code }} - {{ $schedule->batch->course->name }} {{ $schedule->batch->name }}</td>
-                        <td>{{ $schedule->teachers()?->pluck('name')->join(', ') }}</td>
-                        <td>{{ $schedule->start_at?->format('H:i') }} - {{ $schedule->end_at?->format('H:i') }} @ {{ $schedule->place }}</td>
-                        <td>{{ $schedule->presents_count }}</td>
-                        <td>
-                            @role('administrator')
-                            <a href="{{ route('schedules.presents.index', $schedule->id) }}" class="text-info">
-                                <i class="la la-list"></i> @lang('Detail')
-                            </a>
-                            <a href="{{ route('schedules.edit', $schedule->id) }}" class="text-warning">
-                                <i class="la la-edit"></i> @lang('Edit')
-                            </a>
-                            <a href="javascript:;" class="text-danger delete" data-id="{{ $schedule->id }}">
-                                <i class="la la-trash"></i> @lang('Delete')
-                            </a>
-                            @endrole
-                            @role('teacher')
-                            <a href="{{ route('teacher.schedules.detail', $schedule->id) }}" class="text-info">
-                                <i class="la la-list"></i> @lang('Detail')
-                            </a>
-                            @endrole
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <!--end: Datatable -->
-    </div>
-</div>
-@endsection

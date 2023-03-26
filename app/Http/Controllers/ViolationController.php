@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ViolationsDataTable;
 use App\Models\User;
 use App\Models\Violation;
 use Illuminate\Http\Request;
@@ -13,12 +14,11 @@ class ViolationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ViolationsDataTable $dataTable)
     {
         $data['title'] = 'Pelanggaran';
-        $data['violations'] = Violation::latest('violated_date')->get();
 
-        return view('datatables.violation', $data);
+        return $dataTable->render('datatables.violation', $data);
     }
 
     /**
@@ -54,7 +54,11 @@ class ViolationController extends Controller
             'paid_at' => '',
         ]);
 
-        Violation::create($data);
+        $violation = Violation::create($data);
+
+        if ($request->has('redirect')) {
+            return redirect($request->get('redirect'))->with('message', 'Pelanggaran atas '.$violation->user->name.' berhasil ditambahkan');
+        }
 
         return to_route('violations.index')->with('message', 'Data pelanggaran berhasil ditambahkan');
     }

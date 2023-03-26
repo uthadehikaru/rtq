@@ -25,6 +25,7 @@
 		<link href="{{ asset('assets/css/skins/header/base/light.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/skins/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/skins/brand/light.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('lightbox/css/lightbox.min.css') }}" />
 
 		@livewireStyles
 		@stack('styles')
@@ -392,6 +393,7 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets/js/scripts.bundle.js') }}" type="text/javascript"></script>
+    	<script src="{{ asset('lightbox/js/lightbox.min.js') }}"></script>
 
 		<!--end::Global Theme Bundle -->
         
