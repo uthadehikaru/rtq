@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Member;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -83,7 +84,22 @@ class MemberCard extends Command
                 $font->align('left');
                 $font->valign('top');
             });
-            $qrcode = Image::make('https://api.qrserver.com/v1/create-qr-code/?size=210x210&data='.urlencode(url('login', ['username' => $member->member_no])));
+            $api = Http::acceptJson()
+            ->withHeaders([
+                'X-RapidAPI-Key' => config('app.rapidapi_key'),
+	            'X-RapidAPI-Host' => 'qrcode3.p.rapidapi.com'
+            ])
+            ->post('https://qrcode3.p.rapidapi.com/qrcode/text', [
+                "data"=> url('login', ['username' => $member->member_no]),
+                "size"=> [
+                    "width"=> 230,
+                ],
+                "output"=> [
+                    "filename"=>"qrcode",
+                    "format"=> "png"
+                ]
+            ]);
+            $qrcode = Image::make($api->body());
             $image->insert($qrcode, 'top-left', 715, 285);
             $image->save(storage_path('app/public/idcards/'.$member->member_no.'.jpg'));
             $bar->advance();
