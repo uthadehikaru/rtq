@@ -6,6 +6,7 @@ use App\Models\Member;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MemberCard extends Command
 {
@@ -83,7 +84,7 @@ class MemberCard extends Command
                 $font->align('left');
                 $font->valign('top');
             });
-            $qrcode = Image::make('https://api.qrserver.com/v1/create-qr-code/?size=210x210&data='.urlencode(url('login', ['username' => $member->member_no])));
+            $qrcode = Image::make(QrCode::format('png')->size(210)->generate(url('login', ['username' => $member->member_no]))->toHtml());
             $image->insert($qrcode, 'top-left', 715, 285);
             $image->save(storage_path('app/public/idcards/'.$member->member_no.'.jpg'));
             $bar->advance();
