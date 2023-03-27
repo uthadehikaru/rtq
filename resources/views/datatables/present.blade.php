@@ -69,9 +69,10 @@
                     </div>
                 </div>
             </div>
-            <div class="kt-portlet__body kt-portlet__body--fit">
+            <div class="kt-portlet__body">
 
                 <!--begin: Datatable -->
+                <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
@@ -141,13 +142,17 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table></div>
 
                 <!--end: Datatable -->
             </div>
         </div>
         @endsection
+        @push('styles')
+                <link href="{{ asset('datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+        @endpush
         @push('scripts')
+	        <script src="{{ asset('datatables/datatables.min.js') }}" type="text/javascript"></script>
             <!-- Modal -->
             <div class="modal fade" id="iqobModal" tabindex="-1" aria-labelledby="iqobModal" aria-hidden="true">
                 <div class="modal-dialog">
@@ -187,5 +192,8 @@
                     $('#user_id').val(user_id);
                     $('#iqobModal').modal('show');
                 }
+                $(document).ready(function () {
+                    $('.table').DataTable();
+                });
             </script>
         @endpush
