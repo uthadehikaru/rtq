@@ -9,10 +9,17 @@
 					<i class="la la-arrow-left"></i>
 					<span class="kt-hidden-mobile">@lang('Back')</span>
 				</a>
+				@if($file_zip)
 				<button class="btn btn-brand" wire:click="download" wire:loading.class="disabled">
 					<i class="la la-save"></i>
 					<span class="kt-hidden-mobile">@lang('Download (.zip)')</span>
 				</button>
+				@else
+				<button class="btn btn-brand" wire:click="create" wire:loading.class="disabled"  wire:poll.visible="check">
+					<i class="la la-save"></i>
+					<span class="kt-hidden-mobile">@lang('Create (.zip)')</span>
+				</button>
+				@endif
                 <div class="spinner-border" role="status" wire:loading.delay>
                 <span class="sr-only">Loading...</span>
                 </div>
