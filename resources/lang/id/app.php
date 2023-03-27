@@ -4,7 +4,7 @@ return [
     'present' => [
         'status' => [
             'present' => 'Hadir',
-            'absent' => 'Tidak Hadir',
+            'absent' => 'Alfa',
             'sick' => 'Sakit',
             'permit' => 'Izin',
         ],
