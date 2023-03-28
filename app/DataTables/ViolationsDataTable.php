@@ -50,6 +50,7 @@ class ViolationsDataTable extends DataTable
     public function query(Violation $model): QueryBuilder
     {
         return $model
+        ->select('violations.*')
         ->with('user')
         ->latest('violated_date')->newQuery();
     }

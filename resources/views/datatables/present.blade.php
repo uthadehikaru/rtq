@@ -167,7 +167,6 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="redirect" value="{{ url()->current() }}" />
-                            <input type="hidden" name="type" value="member" />
                             <input type="hidden" name="user_id" id="user_id" value="0" />
                             <label class="">Tanggal Pelanggaran</label>
                             <input type="date" class="form-control" id="violated_date" name="violated_date" value="{{ $present->created_at->format('Y-m-d') }}" required />

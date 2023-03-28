@@ -49,10 +49,12 @@ class ViolationController extends Controller
             'violated_date' => 'required|date',
             'user_id' => 'required|exists:users,id',
             'description' => 'required',
-            'type' => 'required',
             'amount' => '',
             'paid_at' => '',
         ]);
+
+        $user = User::find($data['user_id']);
+        $data['type'] = $user->member?'member':'teacher';
 
         $violation = Violation::create($data);
 
