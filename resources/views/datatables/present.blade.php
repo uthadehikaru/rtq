@@ -91,11 +91,13 @@
                                         <a href="{{ thumbnail($present->user->member->profile_picture) }}"
                                             data-lightbox="{{ $present->id }}"><img
                                                 src="{{ thumbnail($present->user->member->profile_picture) }}"
+                                                width="100"
                                                 class="img-fluid" /></a>
                                     @elseif($present->photo)
                                         <a href="{{ asset('storage/'.$present->photo) }}"
                                             data-lightbox="{{ $present->id }}"><img
                                                 src="{{ asset('storage/'.$present->photo) }}"
+                                                width="100"
                                                 class="img-fluid" /></a>
                                     @endif
                                 </td>

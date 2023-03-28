@@ -29,12 +29,20 @@ class ViolationsDataTable extends DataTable
             })
             ->addColumn('action', function ($row) {
                 return '
-                <a href="'.route('violations.edit', $row->id).'" class="text-warning">
-                    <i class="la la-edit"></i> Ubah
-                </a>
-                <a href="javascript:;" class="text-danger delete" data-id="'.$row->id.'">
-                    <i class="la la-trash"></i> Hapus
-                </a>
+                <div class="btn-group" role="group">
+                    <button id="action" type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Aksi
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="action">
+                        <a href="'.route('violations.edit', $row->id).'" class="dropdown-item text-warning">
+                            <i class="la la-edit"></i> Ubah
+                        </a>
+                        <a href="javascript:;" class="dropdown-item text-danger delete" data-id="'.$row->id.'">
+                            <i class="la la-trash"></i> Hapus
+                        </a>
+                    </div>
+                </div>
                 ';
             })
             ->rawColumns(['action'])
@@ -89,6 +97,7 @@ class ViolationsDataTable extends DataTable
     {
         return [
             Column::make('violated_date')->title('tgl pelanggaran'),
+            Column::make('type'),
             Column::make('user.name')->title('Nama'),
             Column::make('description'),
             Column::make('amount')->title('nominal'),
