@@ -50,7 +50,7 @@
                         @if(!$present)
                         <div class="form-group">
                             <label>{{ $type }}</label>
-                            <select class="form-control" name="user_id" required>
+                            <select class="form-control select2" name="user_id" required>
                                 <option value="">@lang('Pilih '.$type)</option>
                                 @foreach($users as $id=>$name)
                                 <option value="{{ $id }}">{{ $name }}</option>
@@ -118,3 +118,10 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script> 
+jQuery(document).ready(function () {
+    $('.select2').select2();
+});
+</script>
+@endpush
