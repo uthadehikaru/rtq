@@ -68,7 +68,7 @@ class ViolationsDataTable extends DataTable
                     ->minifiedAjax()
                     ->responsive(true)
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
