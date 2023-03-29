@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Action\CheckUserRole;
 use App\Http\Controllers\Actions;
 use App\Http\Controllers\Actions\ShowNotification;
 use App\Http\Controllers\ActivityController;
@@ -35,7 +36,6 @@ use App\Http\Controllers\Teacher;
 use App\Http\Controllers\Teacher\Schedule as TeacherSchedule;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Livewire\MemberCards;
 use App\Http\Livewire\UpdatePassword;
@@ -63,7 +63,6 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['role:administrator']], function () {
         Route::get('activities', ActivityController::class)->name('activities');
         Route::prefix('educations')->group(function () {
-            Route::resource('users', UserController::class);
             Route::get('members/pictures', Pictures::class)->name('members.pictures');
             Route::get('members/cards', MemberCards::class)->name('members.card-list');
             Route::get('members/cards/{member_no?}', [MemberController::class, 'cards'])->name('members.cards');
@@ -108,6 +107,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('users/{id}/reset', ResetPassword::class)->name('users.reset');
+            Route::get('users/check-roles', CheckUserRole::class)->name('users.check-roles');
             Route::resource('users', AdminUserController::class);
             Route::get('notifications', NotificationController::class)->name('notifications.index');
         });

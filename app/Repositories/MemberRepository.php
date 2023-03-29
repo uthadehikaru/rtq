@@ -70,6 +70,8 @@ class MemberRepository implements MemberRepositoryInterface
                 'password' => Hash::make($data['nik']),
             ]);
 
+            $user->assignRole('member');
+
             $data['user_id'] = $user->id;
 
             if (isset($data['profile_picture'])) {

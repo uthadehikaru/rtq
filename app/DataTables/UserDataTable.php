@@ -31,7 +31,11 @@ class UserDataTable extends DataTable
                 return $row->roles->pluck('name')->join(',');
             })
             ->filterColumn('roles', function ($query, $keyword) {
-                $query->whereRelation('roles', 'name', $keyword);
+                if ($keyword == 'norole') {
+                    $query->doesntHave('roles');
+                } else {
+                    $query->whereRelation('roles', 'name', $keyword);
+                }
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -90,7 +94,7 @@ class UserDataTable extends DataTable
             Column::make('name'),
             Column::make('username'),
             Column::make('email'),
-            Column::make('roles'),
+            Column::make('roles')->orderable(false),
         ];
     }
 

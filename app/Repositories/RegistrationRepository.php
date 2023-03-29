@@ -37,6 +37,8 @@ class RegistrationRepository
             'name' => $registration->full_name,
         ]);
 
+        $user->assignRole('member');
+
         // create member
         $member = Member::create([
             'user_id' => $user->id,

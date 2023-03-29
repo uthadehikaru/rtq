@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $data['title'] = 'Pengguna';
 
-        return $dataTable->render('datatables.datatable', $data);
+        return $dataTable->render('datatables.user', $data);
     }
 
     /**
