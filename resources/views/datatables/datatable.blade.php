@@ -63,7 +63,7 @@
                 },
                 success: function(dataResult){
                     if(dataResult.statusCode==200){
-                        alert('@lang('Berhasils`     dihapus')');
+                        alert('@lang('Berhasil dihapus')');
                         location.reload(true);
                     }
                 }

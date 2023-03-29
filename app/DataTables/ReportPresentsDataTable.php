@@ -3,7 +3,9 @@
 namespace App\DataTables;
 
 use App\Models\Present;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Database\Query\Builder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
@@ -53,8 +55,8 @@ class ReportPresentsDataTable extends DataTable
                     ->where('users.name', 'like', '%'.$keyword.'%');
                 });
             })
-            ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d M Y');
+            ->filterColumn('batch_name', function ($query, $keyword) {
+                $query->where('batches.name', 'like', '%'.$keyword.'%');
             })
             ->editColumn('schedule_id', function ($row) {
                 return $row->schedule->batch->code.' - '.$row->schedule->batch->name;
@@ -84,11 +86,22 @@ class ReportPresentsDataTable extends DataTable
 
                 return $description;
             })
+            ->editColumn('scheduled_at', function ($row) {
+                return Carbon::parse($row->scheduled_at)->format('d M Y H:i');
+            })
+            ->editColumn('batch_name', function ($row) {
+                return $row->batch_code.' - '.$row->batch_name;
+            })
             ->addColumn('action', function ($row) {
                 $buttons = '';
                 $buttons .= '<a href="'.route('schedules.presents.edit', ['schedule' => $row->schedule_id, 'present' => $row->id, 'redirect' => url()->current()]).'" class="ml-2 text-warning">Ubah</a>';
 
                 return $buttons;
+            })
+            ->order(function ($query) {
+                if (request()->has('scheduled_at')) {
+                    $query->orderBy('name', 'asc');
+                }
             })
             ->rawColumns(['action', 'description'])
             ->setRowId('id');
@@ -103,20 +116,25 @@ class ReportPresentsDataTable extends DataTable
     public function query(Present $model): QueryBuilder
     {
         $model = $model
+        ->selectRaw('presents.*,schedules.scheduled_at,batches.code as batch_code, batches.name as batch_name')
+        ->join('schedules', 'presents.schedule_id','schedules.id')
+        ->join('batches', 'schedules.batch_id','batches.id')
         ->with(['schedule', 'schedule.batch', 'user'])
-        ->latest();
+        ->latest('scheduled_at');
 
         if ($this->type) {
             $model = $model->where('type', $this->type);
         }
 
-        if ($this->start_date) {
-            $model = $model->whereDate('created_at', '>=', $this->start_date);
-        }
-
-        if ($this->end_date) {
-            $model = $model->whereDate('created_at', '<=', $this->end_date);
-        }
+        $model = $model->whereHas('schedule', function ($query) {
+            if ($this->start_date) {
+                $query->whereDate('scheduled_at', '>=', $this->start_date);
+            }
+    
+            if ($this->end_date) {
+                $query->whereDate('scheduled_at', '<=', $this->end_date);
+            }    
+        });
 
         return $model->newQuery();
     }
@@ -150,8 +168,8 @@ class ReportPresentsDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('created_at')->title('Tanggal'),
-            Column::make('schedule_id')->title('Halaqoh'),
+            Column::make('scheduled_at')->title('jadwal')->searchable(false),
+            Column::make('batch_name')->title('Halaqoh'),
             Column::make('user_id')->title('Nama'),
             Column::make('type')->title('Tipe'),
             Column::make('status')->title('Status'),

@@ -195,6 +195,28 @@
                 }
                 $(document).ready(function () {
                     $('.table').DataTable();
+
+                    $(document).on("click", ".delete", function() { 
+                        if(confirm("@lang('Apakah kamu yakin?')")) {
+                            var id= $(this).data('id');
+                            var url = "{{ url()->current() }}";
+                            var dltUrl = url+"/"+id;
+                            $.ajax({
+                                url: dltUrl,
+                                type: "DELETE",
+                                cache: false,
+                                data:{
+                                    _token:'{{ csrf_token() }}'
+                                },
+                                success: function(dataResult){
+                                    if(dataResult.statusCode==200){
+                                        alert('@lang('Berhasil dihapus')');
+                                        location.reload(true);
+                                    }
+                                }
+                            });
+                        }
+                    });
                 });
             </script>
         @endpush
