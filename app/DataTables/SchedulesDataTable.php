@@ -44,7 +44,7 @@ class SchedulesDataTable extends DataTable
                 return $row->scheduled_at->format('d M Y');
             })
             ->editColumn('start_at', function ($row) {
-                return $row->created_at->format('H:i');
+                return $row->start_at->format('H:i');
             })
             ->editColumn('batch_id', function ($row) {
                 return $row->batch->name;

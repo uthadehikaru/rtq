@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Batch')</label>
-                            <select class="form-control" name="batch_id" required>
+                            <select class="form-control batches" name="batch_id" required>
                                 <option value="">@lang('Select Batch')</option>
                                 @foreach($batches as $batch)
                                 <option value="{{ $batch->id }}" {{ $schedule && $schedule->batch_id==$batch->id?'selected':'' }}>{{ $batch->course->name }} {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Teacher')</label>
-                            <select class="form-control kt-select2" name="teacher_ids[]" multiple>
+                            <select class="form-control teachers" name="teacher_ids[]" multiple>
                                 @foreach($teachers as $teacher)
                                 <option value="{{ $teacher->user_id }}" {{ $schedule && $schedule->teachers()->find($teacher->id)?'selected':'' }}>{{ $teacher->name }}</option>
                                 @endforeach
@@ -102,8 +102,11 @@
 @push('scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    $('.kt-select2').select2({
+    $('.teachers').select2({
         placeholder: 'Pilih Pengajar',
+    });
+    $('.batches').select2({
+        placeholder: 'Pilih Halaqoh',
     });
 });
 </script>

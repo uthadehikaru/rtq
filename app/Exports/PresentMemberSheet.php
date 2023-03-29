@@ -31,13 +31,15 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
         ->where('type', 'member')
         ->latest();
 
-        if ($this->filter['start_date']) {
-            $model = $model->whereDate('created_at', '>=', $this->filter['start_date']);
-        }
-
-        if ($this->filter['end_date']) {
-            $model = $model->whereDate('created_at', '<=', $this->filter['end_date']);
-        }
+        $model = $model->whereHas('schedule', function ($query) {
+            if ($this->filter['start_date']) {
+                $query->whereDate('scheduled_at', '>=', $this->filter['start_date']);
+            }
+    
+            if ($this->filter['end_date']) {
+                $query->whereDate('scheduled_at', '<=', $this->filter['end_date']);
+            }    
+        });
 
         return $model;
     }

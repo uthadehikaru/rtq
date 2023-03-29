@@ -50,6 +50,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         ->first();
 
         if (! $schedule) {
+            $data['scheduled_at'] .= ' '.$data['start_at'];
             $schedule = Schedule::create($data);
 
             foreach ($schedule->batch->members as $member) {
