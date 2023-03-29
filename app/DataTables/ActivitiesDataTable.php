@@ -22,7 +22,7 @@ class ActivitiesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d M Y H:i');
+                return $row->created_at->diffForHumans();
             })
             ->editColumn('properties', function ($row) {
                 return json_encode($row->properties);

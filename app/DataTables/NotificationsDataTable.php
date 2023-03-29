@@ -23,10 +23,10 @@ class NotificationsDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', '')
             ->editColumn('created_at', function ($row) {
-                return $row->created_at->format('d M Y H:i');
+                return $row->created_at->diffForHumans();
             })
             ->editColumn('read_at', function ($row) {
-                return $row->read_at?->format('d M Y H:i') ?? 'not read yet';
+                return $row->read_at?->diffForHumans() ?? 'belum dibaca';
             })
             ->editColumn('data', function ($row) {
                 return $row->data['title'];
