@@ -117,8 +117,8 @@ class ReportPresentsDataTable extends DataTable
     {
         $model = $model
         ->selectRaw('presents.*,schedules.scheduled_at,batches.code as batch_code, batches.name as batch_name')
-        ->join('schedules', 'presents.schedule_id','schedules.id')
-        ->join('batches', 'schedules.batch_id','batches.id')
+        ->join('schedules', 'presents.schedule_id', 'schedules.id')
+        ->join('batches', 'schedules.batch_id', 'batches.id')
         ->with(['schedule', 'schedule.batch', 'user'])
         ->latest('scheduled_at');
 
@@ -130,10 +130,10 @@ class ReportPresentsDataTable extends DataTable
             if ($this->start_date) {
                 $query->whereDate('scheduled_at', '>=', $this->start_date);
             }
-    
+
             if ($this->end_date) {
                 $query->whereDate('scheduled_at', '<=', $this->end_date);
-            }    
+            }
         });
 
         return $model->newQuery();

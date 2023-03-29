@@ -7,7 +7,6 @@ use App\Models\Member;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
-use ZipArchive;
 
 class MemberCards extends Component
 {
@@ -18,13 +17,14 @@ class MemberCards extends Component
     public function create()
     {
         CreateMemberCardZip::dispatch();
-        return;
+
     }
 
     public function check()
     {
-        if(Storage::disk('public')->exists('cards/kartu anggota.zip'))
+        if (Storage::disk('public')->exists('cards/kartu anggota.zip')) {
             $this->file_zip = storage_path('app/public/cards/kartu anggota.zip');
+        }
     }
 
     public function download()
@@ -38,6 +38,7 @@ class MemberCards extends Component
         ->orderBy('full_name')
         ->select('full_name', 'member_no')
         ->simplePaginate(24);
+
         return view('livewire.member-cards', $data)
         ->extends('layouts.app')
         ->section('content');

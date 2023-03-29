@@ -53,10 +53,11 @@ class PresentController extends Controller
         $data['schedule'] = $schedule;
         $data['present'] = null;
         $data['type'] = $type;
-        if($type=='member')
+        if ($type == 'member') {
             $data['users'] = User::has('member')->orderBy('name')->pluck('name', 'id');
-        else
+        } else {
             $data['users'] = User::role('teacher')->orderBy('name')->pluck('name', 'id');
+        }
         $data['statuses'] = Present::STATUSES;
 
         return view('forms.present', $data);

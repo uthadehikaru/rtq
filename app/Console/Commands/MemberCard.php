@@ -87,17 +87,17 @@ class MemberCard extends Command
             $api = Http::acceptJson()
             ->withHeaders([
                 'X-RapidAPI-Key' => config('app.rapidapi_key'),
-	            'X-RapidAPI-Host' => 'qrcode3.p.rapidapi.com'
+                'X-RapidAPI-Host' => 'qrcode3.p.rapidapi.com',
             ])
             ->post('https://qrcode3.p.rapidapi.com/qrcode/text', [
-                "data"=> url('login', ['username' => $member->member_no]),
-                "size"=> [
-                    "width"=> 230,
+                'data' => url('login', ['username' => $member->member_no]),
+                'size' => [
+                    'width' => 230,
                 ],
-                "output"=> [
-                    "filename"=>"qrcode",
-                    "format"=> "png"
-                ]
+                'output' => [
+                    'filename' => 'qrcode',
+                    'format' => 'png',
+                ],
             ]);
             $qrcode = Image::make($api->body());
             $image->insert($qrcode, 'top-left', 715, 285);

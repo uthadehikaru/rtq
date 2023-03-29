@@ -35,10 +35,10 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
             if ($this->filter['start_date']) {
                 $query->whereDate('scheduled_at', '>=', $this->filter['start_date']);
             }
-    
+
             if ($this->filter['end_date']) {
                 $query->whereDate('scheduled_at', '<=', $this->filter['end_date']);
-            }    
+            }
         });
 
         return $model;
