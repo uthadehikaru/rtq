@@ -1,10 +1,11 @@
 <div>
 <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Notifikasi" data-placement="left">
-    <a href="#" 
-        class="btn btn-icon btn-{{ $unread>0?'danger':'primary'}}"
+    <button
+        class="btn btn-{{ $unread>0?'danger':'primary'}}"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="flaticon2-notification"></i>
-    </a>
+        <i class="flaticon2-{{ $unread>0?'bell':'notification'}}"></i>
+        <span class="badge badge-primary">{{ $unread }}</span>
+</button>
     <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
         <form>
             <!--begin: Head -->
