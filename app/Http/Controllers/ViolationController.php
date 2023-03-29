@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\ViolationsDataTable;
 use App\Models\User;
 use App\Models\Violation;
+use App\Notifications\UserIqobCreated;
 use Illuminate\Http\Request;
 
 class ViolationController extends Controller
@@ -54,9 +55,11 @@ class ViolationController extends Controller
         ]);
 
         $user = User::find($data['user_id']);
-        $data['type'] = $user->member?'member':'teacher';
+        $data['type'] = $user->member ? 'member' : 'teacher';
 
         $violation = Violation::create($data);
+
+        $user->notify(new UserIqobCreated($violation));
 
         if ($request->has('redirect')) {
             return redirect($request->get('redirect'))->with('message', 'Pelanggaran atas '.$violation->user->name.' berhasil ditambahkan');

@@ -56,3 +56,10 @@ if (! function_exists('setting')) {
         return $value;
     }
 }
+
+if (! function_exists('money')) {
+    function money($value)
+    {
+        return number_format($value, 0, ',', '.');
+    }
+}
