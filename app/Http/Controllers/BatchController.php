@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\BatchesDataTable;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\TeacherRepository;
@@ -9,14 +10,16 @@ use Illuminate\Http\Request;
 
 class BatchController extends Controller
 {
-    public function index(CourseRepository $courseRepository, BatchRepository $batchRepository, $course_id)
+    public function index(CourseRepository $courseRepository, BatchRepository $batchRepository,
+    BatchesDataTable $dataTable, $course_id)
     {
-        $data['title'] = __('Batches');
-        $data['course'] = $courseRepository->find($course_id);
-        $data['batches'] = $batchRepository->getByCourse($course_id);
-        $data['total'] = $batchRepository->countByCourse($course_id);
+        $dataTable->setCourseId($course_id);
 
-        return view('datatables.batch', $data);
+        $total = $batchRepository->countByCourse($course_id);
+        $data['title'] = $total .' Halaqoh';
+        $data['course'] = $courseRepository->find($course_id);
+
+        return $dataTable->render('datatables.batch', $data);
     }
 
     public function create(

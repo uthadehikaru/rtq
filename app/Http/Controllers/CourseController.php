@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\CoursesDataTable;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function index(CourseRepositoryInterface $courseRepository)
+    public function index(CoursesDataTable $dataTable)
     {
         $data['title'] = __('Courses');
-        $data['courses'] = $courseRepository->all();
-        $data['total'] = $courseRepository->count();
 
-        return view('datatables.course', $data);
+        return $dataTable->render('datatables.course', $data);
     }
 
     public function create(Request $request)

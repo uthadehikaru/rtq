@@ -66,6 +66,9 @@
                         alert('@lang('Berhasil dihapus')');
                         location.reload(true);
                     }
+                },
+                error: function(message){
+                    alert(message);
                 }
             });
         }
