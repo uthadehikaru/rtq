@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\CoursesDataTable;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Models\Course;
+use Exception;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -61,9 +62,13 @@ class CourseController extends Controller
 
     public function destroy(CourseRepositoryInterface $courseRepository, $course_id)
     {
-        $status = $courseRepository->delete($course_id);
-        $data['statusCode'] = 200;
-
+        try{
+            $courseRepository->delete($course_id);
+            $data['statusCode'] = 200;
+        }catch(Exception $ex){
+            $data['statusCode'] = 500;
+            $data['message'] = $ex->getMessage();
+        }
         return response()->json($data);
     }
 }

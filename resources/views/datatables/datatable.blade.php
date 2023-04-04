@@ -65,10 +65,12 @@
                     if(dataResult.statusCode==200){
                         alert('@lang('Berhasil dihapus')');
                         location.reload(true);
+                    }else{
+                        alert(dataResult.message);
                     }
                 },
-                error: function(message){
-                    alert(message);
+                error: function(xhr, status, error) {
+                    alert("Gagal menghapus");
                 }
             });
         }

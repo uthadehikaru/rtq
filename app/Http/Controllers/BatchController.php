@@ -6,6 +6,7 @@ use App\DataTables\BatchesDataTable;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\TeacherRepository;
+use Exception;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -86,9 +87,13 @@ class BatchController extends Controller
 
     public function destroy(BatchRepository $batchRepository, $course_id, $batch_id)
     {
-        $status = $batchRepository->delete($batch_id);
-        $data['statusCode'] = 200;
-
+        try{
+            $batchRepository->delete($batch_id);
+            $data['statusCode'] = 200;
+        }catch(Exception $ex){
+            $data['statusCode'] = 500;
+            $data['message'] = $ex->getMessage();
+        }
         return response()->json($data);
     }
 }
