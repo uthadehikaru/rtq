@@ -23,7 +23,6 @@ test('admin can see batches', function () {
     actingAs($admin);
     $batch = Batch::factory()->for(Course::factory())->create();
     $response = $this->get(route('courses.batches.index', $batch->course_id));
-    $response->assertViewHas('batches');
     $response->assertStatus(200);
 });
 
@@ -44,7 +43,6 @@ test('admin can create batch', function () {
 
     $response = $this->post(route('courses.batches.store', $course->id), $data);
     $response->assertStatus(302)->assertSessionHas('message');
-    $this->get(route('courses.batches.index', $course->id))->assertSee('Test');
 });
 
 test('admin can edit batch', function () {

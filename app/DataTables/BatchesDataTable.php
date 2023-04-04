@@ -8,47 +8,46 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class BatchesDataTable extends DataTable
 {
     private $course_id = 0;
-    
+
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $buttons = '
                 <div class="btn-group" role="group">
                     <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Aksi
                     </button>
                     <div class="dropdown-menu" aria-labelledby="action">
-                        <a href="'.route('courses.batches.batchmembers.index', [$row->course_id, $row->id]) .'" class="dropdown-item text-primary">
+                        <a href="'.route('courses.batches.batchmembers.index', [$row->course_id, $row->id]).'" class="dropdown-item text-primary">
                             <i class="la la-list"></i> Detail
                         </a>
-                        <a href="'.route('courses.batches.edit', [$row->course_id, $row->id]) .'" class="dropdown-item text-warning">
+                        <a href="'.route('courses.batches.edit', [$row->course_id, $row->id]).'" class="dropdown-item text-warning">
                             <i class="la la-edit"></i> Ubah
                         </a>
-                        <a href="javascript:;" class="dropdown-item text-danger delete" data-id="'.$row->id .'">
+                        <a href="javascript:;" class="dropdown-item text-danger delete" data-id="'.$row->id.'">
                             <i class="la la-trash"></i> Hapus
                         </a>
                     </div>
                 </div>';
+
                 return $buttons;
             })
-            ->addColumn('teachers', function($row){
+            ->addColumn('teachers', function ($row) {
                 return $row->teachers->implode('name', ' , ');
             })
-            ->editColumn('start_time', function($row){
+            ->editColumn('start_time', function ($row) {
                 return $row->start_time?->format('H:i');
             })
             ->rawColumns(['action'])
@@ -58,7 +57,7 @@ class BatchesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Batch $model
+     * @param  \App\Models\Batch  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Batch $model): QueryBuilder
@@ -66,7 +65,7 @@ class BatchesDataTable extends DataTable
         return $model
         ->withCount('members')
         ->with('teachers')
-        ->where('course_id',$this->course_id)
+        ->where('course_id', $this->course_id)
         ->newQuery();
     }
 
@@ -91,7 +90,7 @@ class BatchesDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -130,6 +129,6 @@ class BatchesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Batches_' . date('YmdHis');
+        return 'Batches_'.date('YmdHis');
     }
 }

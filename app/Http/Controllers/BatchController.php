@@ -16,7 +16,7 @@ class BatchController extends Controller
         $dataTable->setCourseId($course_id);
 
         $total = $batchRepository->countByCourse($course_id);
-        $data['title'] = $total .' Halaqoh';
+        $data['title'] = $total.' Halaqoh';
         $data['course'] = $courseRepository->find($course_id);
 
         return $dataTable->render('datatables.batch', $data);

@@ -61,7 +61,7 @@ class CreateSchedule extends Controller
                 $y += 20;
             }
             $image->save(storage_path('app/public/'.$file));
-            
+
             $data = [
                 'batch_id' => $request->get('batch_id'),
                 'is_badal' => $request->get('badal'),

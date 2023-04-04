@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class CoursesDataTable extends DataTable
@@ -17,16 +15,16 @@ class CoursesDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function($row){
+            ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $buttons = '
                 <div class="btn-group" role="group">
                     <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,6 +42,7 @@ class CoursesDataTable extends DataTable
                         </a>
                     </div>
                 </div>';
+
                 return $buttons;
             })
             ->rawColumns(['action'])
@@ -53,7 +52,7 @@ class CoursesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Course $model
+     * @param  \App\Models\Course  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Course $model): QueryBuilder
@@ -84,7 +83,7 @@ class CoursesDataTable extends DataTable
                         Button::make('pdf'),
                         Button::make('print'),
                         Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('reload'),
                     ]);
     }
 
@@ -115,6 +114,6 @@ class CoursesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Courses_' . date('YmdHis');
+        return 'Courses_'.date('YmdHis');
     }
 }
