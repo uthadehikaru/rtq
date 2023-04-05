@@ -122,7 +122,7 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Bukti Transfer</label>
 												<div class="col-9">
-													<input class="form-control" type="file" name="attachment">
+													<input class="form-control" type="file" name="attachment" required>
 												</div>
 											</div>
 										</div>

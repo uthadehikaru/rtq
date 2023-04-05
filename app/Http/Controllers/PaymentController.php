@@ -44,7 +44,7 @@ class PaymentController extends Controller
             'period_ids' => 'required',
             'members' => 'required',
             'total' => 'numeric|min:120000',
-            'attachment' => '',
+            'attachment' => 'required|image',
         ]);
 
         $total = $paymentRepository->calculate($data);
@@ -86,6 +86,10 @@ class PaymentController extends Controller
 
         $admins = User::role('administrator')->get();
         Notification::send($admins, new PaymentConfirmation($payment));
+        activity()
+            ->on($payment)
+            ->event('payment')
+            ->log('Konfirmasi Pembayaran sebesar :subject.amount dari '.$request->ip());
 
         DB::commit();
 
