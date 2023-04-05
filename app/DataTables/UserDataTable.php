@@ -30,6 +30,9 @@ class UserDataTable extends DataTable
             ->addColumn('roles', function ($row) {
                 return $row->roles->pluck('name')->join(',');
             })
+            ->editColumn('created_at', function ($row) {
+                return $row->created_at->format('d M Y H:i');
+            })
             ->filterColumn('roles', function ($query, $keyword) {
                 if ($keyword == 'norole') {
                     $query->doesntHave('roles');
@@ -65,8 +68,9 @@ class UserDataTable extends DataTable
                     ->setTableId('user-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -86,15 +90,17 @@ class UserDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id'),
+            Column::make('created_at'),
+            Column::make('name'),
+            Column::make('username'),
+            Column::make('email'),
+            Column::make('roles')->orderable(false),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('username'),
-            Column::make('email'),
-            Column::make('roles')->orderable(false),
         ];
     }
 
