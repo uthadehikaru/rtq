@@ -4,6 +4,7 @@ use App\Http\Controllers\Action\CheckUserRole;
 use App\Http\Controllers\Actions;
 use App\Http\Controllers\Actions\ShowNotification;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Admin\CleanOldNotifications;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\ResetPassword;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
             Route::get('users/check-roles', CheckUserRole::class)->name('users.check-roles');
             Route::resource('users', AdminUserController::class);
             Route::get('notifications', NotificationController::class)->name('notifications.index');
+            Route::get('notifications/clean', CleanOldNotifications::class)->name('notifications.clean');
         });
         Route::resource('settings', SettingController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');

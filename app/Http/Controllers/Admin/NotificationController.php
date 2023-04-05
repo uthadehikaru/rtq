@@ -18,6 +18,6 @@ class NotificationController extends Controller
     {
         $data['title'] = 'Notifications';
 
-        return $dataTable->render('datatables.datatable', $data);
+        return $dataTable->render('datatables.notification', $data);
     }
 }
