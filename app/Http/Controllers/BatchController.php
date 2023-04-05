@@ -87,13 +87,14 @@ class BatchController extends Controller
 
     public function destroy(BatchRepository $batchRepository, $course_id, $batch_id)
     {
-        try{
+        try {
             $batchRepository->delete($batch_id);
             $data['statusCode'] = 200;
-        }catch(Exception $ex){
+        } catch(Exception $ex) {
             $data['statusCode'] = 500;
             $data['message'] = $ex->getMessage();
         }
+
         return response()->json($data);
     }
 }

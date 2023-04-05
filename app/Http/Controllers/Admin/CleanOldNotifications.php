@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DataTables\NotificationsDataTable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +17,8 @@ class CleanOldNotifications extends Controller
      */
     public function __invoke()
     {
-        $count = DatabaseNotification::whereNotNull('read_at')->whereDate('created_at','<=',Carbon::now()->subDays(7))->delete();
-        return back()->with('message','Deleted '.$count);
+        $count = DatabaseNotification::whereNotNull('read_at')->whereDate('created_at', '<=', Carbon::now()->subDays(7))->delete();
+
+        return back()->with('message', 'Deleted '.$count);
     }
 }

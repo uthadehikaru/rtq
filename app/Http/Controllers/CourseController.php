@@ -62,13 +62,14 @@ class CourseController extends Controller
 
     public function destroy(CourseRepositoryInterface $courseRepository, $course_id)
     {
-        try{
+        try {
             $courseRepository->delete($course_id);
             $data['statusCode'] = 200;
-        }catch(Exception $ex){
+        } catch(Exception $ex) {
             $data['statusCode'] = 500;
             $data['message'] = $ex->getMessage();
         }
+
         return response()->json($data);
     }
 }
