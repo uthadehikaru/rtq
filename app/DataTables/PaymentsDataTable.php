@@ -42,6 +42,9 @@ class PaymentsDataTable extends DataTable
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y H:i');
             })
+            ->editColumn('paid_at', function ($row) {
+                return $row->paid_at?->format('d M Y');
+            })
             ->editColumn('status', function ($row) {
                 return '<span class="kt-badge '.($row->status == 'new' ? 'kt-badge--info' : 'kt-badge--success').' kt-badge--inline kt-badge--pill">'.($row->status == 'new' ? 'Baru' : 'Lunas').'</span>';
             })
@@ -65,12 +68,17 @@ class PaymentsDataTable extends DataTable
                 }
             })
             ->addColumn('action', function ($row) {
-                $buttons = '';
+                $buttons = '<div class="btn-group" role="group">
+                <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Aksi
+                </button>
+                <div class="dropdown-menu" aria-labelledby="action">';
                 if ($row->status == 'new') {
-                    $buttons .= '<a href="'.route('payments.confirm', $row->id).'" class="text-primary">Confirm</a>';
+                    $buttons .= '<a href="'.route('payments.confirm', $row->id).'" class="dropdown-item text-primary">Confirm</a>';
                 }
-                $buttons .= '<a href="'.route('payments.edit', $row->id).'" class="ml-2 text-warning">Ubah</a>';
-                $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+                $buttons .= '<a href="'.route('payments.edit', $row->id).'" class="dropdown-item text-warning">Ubah</a>';
+                $buttons .= '<a href="javascript:;" class="dropdown-item pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+                $buttons .= '</div></div>';
 
                 return $buttons;
             })
@@ -126,6 +134,7 @@ class PaymentsDataTable extends DataTable
             Column::make('created_at')->title('Tanggal'),
             Column::make('member')->title('Anggota'),
             Column::make('amount')->title('Nominal'),
+            Column::make('payment_method')->title('via'),
             Column::make('status'),
             Column::make('paid_at')->title('Dikonfirmasi pada'),
             Column::make('attachment')->title('Lampiran')->searchable(false),

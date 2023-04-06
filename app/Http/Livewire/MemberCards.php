@@ -17,7 +17,6 @@ class MemberCards extends Component
     public function create()
     {
         CreateMemberCardZip::dispatch();
-
     }
 
     public function check()

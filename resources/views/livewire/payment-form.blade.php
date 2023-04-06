@@ -39,6 +39,30 @@
                         </div>
                         @error('total') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="col-form-label">Metode Pembayaran</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="payment_method" 
+                            id="transfer" value="transfer" wire:model.defer="payment_method">
+                            <label class="form-check-label" for="transfer">transfer</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="payment_method" 
+                            id="amplop" value="amplop" wire:model.defer="payment_method">
+                            <label class="form-check-label" for="amplop">amplop</label>
+                            </div>
+                        </div>
+                        @error('payment_method') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Tanggal Konfirmasi</label>
+                        <div>
+                            <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.lazy="paid_at">
+                        </div>
+                        @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
                     <div class="form-group">
                         <label class="col-form-label">Bukti Transfer</label>
                         <div>

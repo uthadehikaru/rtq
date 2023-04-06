@@ -120,6 +120,8 @@ class PaymentController extends Controller
     {
         $data = $request->validate([
             'amount' => 'required|numeric',
+            'paid_at' => 'nullable|date',
+            'payment_method' => 'required|in:transfer,amplop',
         ]);
 
         Payment::find($id)->update($data);

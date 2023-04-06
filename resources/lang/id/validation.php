@@ -151,6 +151,7 @@ return [
         'email_or_phone' => 'Email atau Telp',
         'title' => 'Judul',
         'created_at' => 'Tanggal',
+        'confirmed_at' => 'Tanggal Konfirmasi',
         'content' => 'Konten',
         'old_password' => 'Password Lama',
         'new_password' => 'Password Baru',

@@ -46,8 +46,30 @@
                         <div class="form-group">
                             <label>@lang('Nominal')</label>
                             <input type="number" name="amount" class="form-control" placeholder="@lang('Nominal')"
-                            value="{{ old('amount', $payment?$payment->amount:0) }}"
+                            value="{{ old('amount', $payment?$payment->getAttributes()['amount']:0) }}"
                             required>
+                        </div>
+                        <div class="form-group">
+                            <label>Metode Pembayaran</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                id="transfer" value="transfer"
+                                @checked($payment && $payment->payment_method=='transfer')>
+                                <label class="form-check-label" for="transfer">transfer</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                id="amplop" value="amplop"
+                                @checked($payment && $payment->payment_method=='amplop')>
+                                <label class="form-check-label" for="amplop">amplop</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Dikonfirmasi pada</label>
+                            <input type="date" name="paid_at" class="form-control"
+                            value="{{ old('paid_at', $payment?$payment->paid_at?->format('Y-m-d'):'') }}">
                         </div>
                         <table class="table">
                             <tr>
