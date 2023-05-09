@@ -124,7 +124,7 @@ class MemberPaymentDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()->responsive(true)
+        return $this->builder()
                     ->setTableId('memberpayment-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
