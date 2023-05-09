@@ -50,7 +50,7 @@
         <p>Nama Instansi/Sekolah : {{ $registration->school_name }}</p>
         @endif
         @if($registration->type=='anak')
-        <p>Kelas : {{ $registration->full_name }}</p>
+        <p>Kelas : {{ $registration->class }}</p>
         <p>Jam Sekolah  : {{ $registration->school_start_time?->format('H:i') }} - {{ $registration->school_end_time?->format('H:i') }}</p>
         <p>Kegiatan Setelah Sekolah  : {{ $registration->activity }}</p>
         @elseif($registration->type=='balita')
