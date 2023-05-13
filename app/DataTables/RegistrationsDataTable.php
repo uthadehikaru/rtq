@@ -69,6 +69,7 @@ class RegistrationsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->responsive(true)
+                    ->stateSave(true)
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()
