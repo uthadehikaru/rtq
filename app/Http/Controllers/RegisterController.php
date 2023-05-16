@@ -29,6 +29,7 @@ class RegisterController extends Controller
             'email' => 'required|email',
             'father_name' => 'max:255',
             'mother_name' => 'max:255',
+            'is_yatim' => 'nullable',
             'school_level' => 'max:255',
             'school_name' => 'max:255',
             'class' => 'max:255',

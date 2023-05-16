@@ -159,16 +159,33 @@
 									</div>
 									@if(in_array($type,['anak','balita']))
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<div class="form-group">
 												<label>Nama Ayah</label>
 												<input class="form-control" name="father_name">
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<div class="form-group">
 												<label>Nama Ibu</label>
 												<input class="form-control" name="mother_name">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label>Apakah anda yatim?</label>
+												<div class="radio-inline">
+													<label class="radio">
+														<input type="radio" name="is_yatim" value="1">
+														<span></span>
+														Ya
+													</label>
+													<label class="radio">
+														<input type="radio" name="is_yatim" value="0" checked>
+														<span></span>
+														Tidak
+													</label>
+												</div>
 											</div>
 										</div>
 									</div>

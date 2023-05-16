@@ -43,6 +43,7 @@
         @if(in_array($registration->type,['anak','balita']))
         <p>Nama Ayah : {{ $registration->father_name }}</p>
         <p>Nama Ibu : {{ $registration->mother_name }}</p>
+        <p>Status Yatim : {{ $registration->is_yatim?'Ya':'Tidak' }}</p>
         @endif
         <h3>Data Pendidikan</h3>
         @if(in_array($registration->type,['anak','dewasa']))

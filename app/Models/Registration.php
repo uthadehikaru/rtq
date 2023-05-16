@@ -42,6 +42,7 @@ class Registration extends Model
         'mother_name',
         'reference_schedule',
         'user_id',
+        'is_yatim',
     ];
 
     protected $casts = [
