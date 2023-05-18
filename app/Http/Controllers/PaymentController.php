@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\PaymentsDataTable;
 use App\Exports\PaymentsExport;
 use App\Models\Payment;
+use App\Models\Period;
 use App\Models\User;
 use App\Notifications\PaymentConfirmation;
 use App\Repositories\BatchRepository;
@@ -104,8 +105,8 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        $data['payment'] = Payment::findOrFail($id);
-
+        $data['payment'] = Payment::with('details')->findOrFail($id);
+        $data['periods'] = Period::orderBy('name')->get();
         return view('forms.payment', $data);
     }
 

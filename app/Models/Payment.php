@@ -19,7 +19,7 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'paid_at' => 'datetime',
+        'paid_at' => 'date:Y-m-d',
     ];
 
     public function details()
@@ -27,10 +27,8 @@ class Payment extends Model
         return $this->hasMany(PaymentDetail::class);
     }
 
-    protected function amount(): Attribute
+    public function formattedAmount()
     {
-        return Attribute::make(
-            get: fn ($value) => 'Rp. '.number_format($value, 0, ',', '.'),
-        );
+        return 'Rp. '.number_format($this->amount, 0, ',', '.');
     }
 }

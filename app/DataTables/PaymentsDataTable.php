@@ -45,6 +45,9 @@ class PaymentsDataTable extends DataTable
             ->editColumn('paid_at', function ($row) {
                 return $row->paid_at?->format('d M Y');
             })
+            ->editColumn('amount', function ($row) {
+                return $row->formattedAmount();
+            })
             ->editColumn('status', function ($row) {
                 return '<span class="kt-badge '.($row->status == 'new' ? 'kt-badge--info' : 'kt-badge--success').' kt-badge--inline kt-badge--pill">'.($row->status == 'new' ? 'Baru' : 'Lunas').'</span>';
             })

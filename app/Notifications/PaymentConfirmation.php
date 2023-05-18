@@ -43,7 +43,7 @@ class PaymentConfirmation extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Konfirmasi Pembayaran terbaru sebesar '.$this->payment->amount,
+            'title' => 'Konfirmasi Pembayaran terbaru sebesar '.$this->payment->formattedAmount(),
             'created_at' => $this->payment->created_at,
             'url' => route('payments.index'),
         ];

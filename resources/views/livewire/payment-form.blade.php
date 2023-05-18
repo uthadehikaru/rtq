@@ -1,126 +1,87 @@
 <div>
-    <div class="modal fade" id="paymentModal" aria-labelledby="paymentModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">
-                    Input Pembayaran
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+    <!--begin::Portlet-->
+    <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    Form Pembayaran
+                </h3>
             </div>
-            <div class="modal-body">
-                <form id="paymentForm" wire:submit.prevent="savePayment">
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{ route('payments.index') }}" class="btn btn-default btn-icon-sm">
+                            <i class="la la-arrow-left"></i>
+                            @lang('Back')
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin::Form-->
+        <form class="kt-form" wire:submit.prevent="save">
+            @csrf
+            <div class="kt-portlet__body">
+                <div class="kt-section kt-section--first">
                     <div class="form-group">
-                        <label class="col-form-label">@lang('Period')</label>
-                        <div wire:ignore>
-                            <select class="form-control kt-select-period" name="period_ids[]" multiple>
-                                @foreach($periods as $period)
-                                <option value="{{ $period->id }}">{{ $period->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('period_ids') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label>@lang('Nominal')</label>
+                        <input type="number" name="amount" class="form-control" placeholder="@lang('Nominal')"
+                        wire:model.defer="payment.amount"
+                        required>
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Daftar Peserta</label>
-                        <div wire:ignore>
-                            <select class="form-control kt-select-member" name="members[]" multiple>
-                                <option></option>
-                            </select>
-                        </div>
-                        @error('members') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Total Transfer</label>
-                        <div>
-                            <input class="form-control" id="total" type="number" name="total" wire:model.lazy="total">
-                        </div>
-                        @error('total') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-form-label">Metode Pembayaran</label>
+                        <label>Metode Pembayaran</label>
                         <div>
                             <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="payment_method" 
-                            id="transfer" value="transfer" wire:model.defer="payment_method">
+                            id="transfer" value="transfer"
+                            wire:model="payment.payment_method">
                             <label class="form-check-label" for="transfer">transfer</label>
                             </div>
                             <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="payment_method" 
-                            id="amplop" value="amplop" wire:model.defer="payment_method">
+                            id="amplop" value="amplop"
+                            wire:model="payment.payment_method">
                             <label class="form-check-label" for="amplop">amplop</label>
                             </div>
                         </div>
-                        @error('payment_method') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Tanggal Konfirmasi</label>
-                        <div>
-                            <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.lazy="paid_at">
-                        </div>
-                        @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
+                        <label>Dikonfirmasi pada</label>
+                        <input type="date" name="paid_at" class="form-control"
+                        wire:model.defer="payment.paid_at">
                     </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Bukti Transfer</label>
-                        <div>
-                            <input class="form-control" type="file" name="attachment" 
-                            wire:model="attachment" accept="image/*">
-                        </div>
-                        @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary" wire:loading.remove>Simpan</button>
-                    <div class="spinner-border" role="status" wire:loading.delay>
-                    <span class="sr-only">Loading...</span>
-                    </div>
-                </form>
+                    <table class="table">
+                        <tr>
+                            <th>Period</th>
+                            <th>Member</th>
+                        </tr>
+                        @foreach ($payment->details as $i=>$detail)
+                            <tr>
+                                <td>
+                                    <select class="form-control" wire:model="payment.details.{{$i}}.period_id">
+                                        @foreach ($periods as $period)
+                                            <option value="{{ $period->id }}">{{ $period->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>{{ $detail->member->full_name }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
-        </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <button type="submit" class="btn btn-primary" wire:loading.class="disabled">@lang('Submit')</button>
+                    <a href="{{ route('payments.index') }}" class="btn btn-warning">@lang('Cancel')</a>
+                </div>
+            </div>
+        </form>
+
+        <!--end::Form-->
     </div>
-    </div>
+
+    <!--end::Portlet-->
 </div>
-@push('scripts')
-    <script>
-	$(document).ready(function(){
-        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
-
-        $('.kt-select-period').select2({
-			placeholder: "Pilih Periode",
-            width: '100%',
-        });
-
-        $('.kt-select-member').select2({
-			placeholder: "Pilih Peserta",
-            width: '100%',
-			ajax: {
-				url: '{{ route('api.batchmembers') }}',
-				dataType: 'json',
-				processResults: function (data) {
-					return {
-						results: data.items
-					};
-				}
-			}  
-		});
-        
-        $('.kt-select-period').on('change', function (e) {
-            var data = $(this).select2("val");
-            @this.set('period_ids', data);
-        });
-
-        $('.kt-select-member').on('change', function (e) {
-            var data = $(this).select2("val");
-            @this.set('members', data);
-        });
-
-        Livewire.on('paymentCreated', function(){
-            $('form#paymentForm').trigger("reset");
-            $('form#paymentForm select').trigger("change");
-            $('#paymentModal').modal('hide');
-            $('#Payment-table').DataTable().ajax.reload();
-        })
-    });
-    </script>
-@endpush

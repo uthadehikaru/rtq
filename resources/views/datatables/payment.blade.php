@@ -24,5 +24,5 @@
         </div>
 @endsection
 @push('scripts')
-<livewire:payment-form />
+<livewire:new-payment />
 @endpush
