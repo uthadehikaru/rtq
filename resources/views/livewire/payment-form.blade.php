@@ -56,6 +56,7 @@
                         <tr>
                             <th>Period</th>
                             <th>Member</th>
+                            <th>Aksi</th>
                         </tr>
                         @foreach ($payment->details as $i=>$detail)
                             <tr>
@@ -67,8 +68,34 @@
                                     </select>
                                 </td>
                                 <td>{{ $detail->member->full_name }}</td>
+                                <td><button type="button" class="btn btn-danger btn-sm" wire:click="deleteLine({{ $detail->id }})"
+                                wire:loading.class="disabled">Hapus</button></td>
                             </tr>
                         @endforeach
+                            <tr>
+                                <td>
+                                    <select class="form-control" wire:model="period_id">
+                                        <option value="">-- Pilih Periode --</option>
+                                        @foreach ($periods as $period)
+                                            <option value="{{ $period->id }}">{{ $period->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('period_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </td>
+                                <td>
+                                    <div wire:ignore>
+                                    <select class="form-control" id="member_id"></select>
+                                    </div>
+                                    @error('member_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </td>
+                                <td><button type="button" class="btn btn-info btn-sm"
+                                wire:click="add"
+                                wire:loading.class="disabled">Tambah</button></td>
+                            </tr>
                     </table>
                 </div>
             </div>
@@ -85,3 +112,32 @@
 
     <!--end::Portlet-->
 </div>
+@push('scripts')
+    <script>
+        Livewire.on('line-deleted', function(){
+            window.location.reload();
+        });
+        Livewire.on('line-added', function(){
+            window.location.reload();
+        });
+        $(document).ready(function() {
+            $('#member_id').select2({
+                placeholder: "@lang('Pilih Peserta')",
+                ajax: {
+                    url: '{{ route('api.batchmembers') }}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: data.items
+                        };
+                    }
+                }
+            });     
+
+            $('#member_id').change(function(){
+                var member_id = $(this).val();
+                @this.set('member_id', member_id);
+            });
+        });
+    </script>
+@endpush

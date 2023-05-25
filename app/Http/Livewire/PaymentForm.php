@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\PaymentDetail;
 use Livewire\Component;
 
 class PaymentForm extends Component
 {
     public $payment;
     public $periods;
+    public $period_id;
+    public $member_id;
 
     public $rules = [
         'payment.amount' => 'required|numeric',
@@ -29,6 +32,31 @@ class PaymentForm extends Component
         $this->payment->save();
         $this->payment->details->each->save();
         return $this->redirect(route('payments.index'));
+    }
+
+    public function deleteLine($id)
+    {
+        PaymentDetail::findOrFail($id)->delete();
+        $this->payment->refresh();
+        $this->emit('line-deleted');
+    }
+    
+    public function add()
+    {
+        $this->resetErrorBag();
+
+        if(!$this->period_id)
+            return $this->addError('period_id','Periode wajib dipilih');
+            
+        if(!$this->member_id)
+            return $this->addError('member_id','Peserta wajib dipilih');
+
+        PaymentDetail::create([
+            'payment_id' => $this->payment->id,
+            'period_id' => $this->period_id,
+            'member_id' => $this->member_id,
+        ]);
+        $this->emit('line-added');
     }
 
     public function render()
