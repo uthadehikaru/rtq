@@ -137,6 +137,7 @@ class BatchRepository implements BatchRepositoryInterface
             ]);
 
             $batch->teachers()->sync($data['teacher_ids']);
+            $batch->members()->sync($data['member_ids']);
 
             return $batch;
         });
@@ -144,10 +145,12 @@ class BatchRepository implements BatchRepositoryInterface
 
     public function update($id, array $data)
     {
+        DB::beginTransaction();
         $batch = Batch::find($id);
         $batch->update($data);
         $batch->teachers()->sync($data['teacher_ids']);
-
+        $batch->members()->sync($data['member_ids']);
+        DB::commit();
         return $batch;
     }
 

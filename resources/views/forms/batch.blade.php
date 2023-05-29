@@ -84,6 +84,16 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Peserta')</label>
+                            <select class="form-control" id="member" name="member_ids[]" multiple>
+                                @if($batch)
+                                @foreach ($batch->members as $member)
+                                <option value="{{ $member->id }}" selected>{{ $member->full_name }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">
@@ -110,6 +120,19 @@
                 // multi select
                 $('#teacher').select2({
                     placeholder: 'Pilih Pengajar',
+                });
+
+                $('#member').select2({
+                    placeholder: "@lang('Pilih Peserta')",
+                    ajax: {
+                        url: '{{ route('api.batchmembers', $batch->id) }}',
+                        dataType: 'json',
+                        processResults: function (data) {
+                            return {
+                                results: data.items
+                            };
+                        }
+                    }
                 });
             }
 

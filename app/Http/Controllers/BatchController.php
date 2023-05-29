@@ -45,6 +45,7 @@ class BatchController extends Controller
             'start_time' => '',
             'place' => '',
             'teacher_ids' => 'required',
+            'member_ids' => 'nullable',
         ]);
 
         $data['course_id'] = $course_id;
@@ -69,7 +70,7 @@ class BatchController extends Controller
         return view('forms.batch', $data);
     }
 
-    public function update(CourseRepository $courseRepository, BatchRepository $batchRepository, Request $request, $course_id, $batch_id)
+    public function update(BatchRepository $batchRepository, Request $request, $course_id, $batch_id)
     {
         $data = $request->validate([
             'code' => 'required',
@@ -78,6 +79,7 @@ class BatchController extends Controller
             'start_time' => '',
             'place' => '',
             'teacher_ids' => 'required',
+            'member_ids' => 'nullable',
         ]);
 
         $batchRepository->update($batch_id, $data);
