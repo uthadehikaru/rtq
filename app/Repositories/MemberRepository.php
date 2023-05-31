@@ -263,4 +263,20 @@ class MemberRepository implements MemberRepositoryInterface
 
         DB::commit();
     }
+
+    public function search($keyword)
+    {
+        $members = Member::select('id','full_name')
+        ->whereRaw("lower(full_name) like '%".$keyword."%'")
+        ->orderBy('full_name')->get();
+        $data = [];
+        foreach ($members as $member) {
+            $data[] = [
+                'id' => $member->id,
+                'text' => $member->full_name,
+            ];
+        }
+
+        return $data;
+    }
 }

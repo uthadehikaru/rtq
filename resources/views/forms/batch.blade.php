@@ -125,7 +125,7 @@
                 $('#member').select2({
                     placeholder: "@lang('Pilih Peserta')",
                     ajax: {
-                        url: '{{ route('api.batchmembers', $batch->id) }}',
+                        url: '{{ route('api.members') }}',
                         dataType: 'json',
                         processResults: function (data) {
                             return {
