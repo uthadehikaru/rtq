@@ -12,9 +12,17 @@
 		<form class="row">
             <div class="col-md-2 mt-2">
                 <select name="type" class="form-control">
-                    <option value="">Semua</option>
+                    <option value="">Semua Tipe</option>
                     <option value="teacher" @selected($type && $type=='teacher')>Pengajar</option>
                     <option value="member" @selected($type && $type=='member')>Anggota</option>
+                </select>
+            </div>
+            <div class="col-md-2 mt-2">
+                <select name="status" class="form-control">
+                    <option value="">Semua Status</option>
+                    @foreach ($statuses as $option)
+                        <option value="{{ $option }}" @selected($status && $status==$option)>@lang('app.present.status.'.$option)</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-6 col-md-2 mt-2">
@@ -31,7 +39,7 @@
 </div>
 @endsection
 @section('buttons')
-<a href="{{ route('schedules.export', ['type'=>$type,'start_date'=>$start_date,'end_date'=>$end_date]) }}" class="btn btn-success btn-sm">
+<a href="{{ route('schedules.export', ['status'=>$status,'type'=>$type,'start_date'=>$start_date,'end_date'=>$end_date]) }}" class="btn btn-success btn-sm">
     <i class="la la-download"></i>
     Export (.xls)
 </a>

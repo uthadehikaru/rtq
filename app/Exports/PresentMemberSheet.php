@@ -31,6 +31,10 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
         ->where('type', 'member')
         ->latest();
 
+        if ($this->filter['status']) {
+            $model = $model->where('status', $this->filter['status']);
+        }
+
         $model = $model->whereHas('schedule', function ($query) {
             if ($this->filter['start_date']) {
                 $query->whereDate('scheduled_at', '>=', $this->filter['start_date']);

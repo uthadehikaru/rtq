@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Schedule;
 
 use App\DataTables\ReportPresentsDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Present;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,11 @@ class Report extends Controller
             $dataTable->filterType($request->type);
         }
         $data['type'] = $request->get('type');
+        if ($request->has('status')) {
+            $dataTable->filterStatus($request->status);
+        }
+        $data['status'] = $request->get('status');
+        $data['statuses'] = Present::STATUSES;
 
         return $dataTable->render('datatables.report', $data);
     }

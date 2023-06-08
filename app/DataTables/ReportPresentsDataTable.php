@@ -15,6 +15,8 @@ class ReportPresentsDataTable extends DataTable
 {
     private $type = null;
 
+    private $status = null;
+
     private $start_date = null;
 
     private $end_date = null;
@@ -22,6 +24,11 @@ class ReportPresentsDataTable extends DataTable
     public function filterType($type)
     {
         $this->type = $type;
+    }
+
+    public function filterStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function filterDate($start_date, $end_date)
@@ -124,6 +131,10 @@ class ReportPresentsDataTable extends DataTable
 
         if ($this->type) {
             $model = $model->where('type', $this->type);
+        }
+
+        if ($this->status) {
+            $model = $model->where('status', $this->status);
         }
 
         $model = $model->whereHas('schedule', function ($query) {
