@@ -31,10 +31,10 @@ class MemberProfileCard extends Component
         }
     }
 
-    public function mount()
+    public function mount($member)
     {
-        $this->member = Member::where('user_id', Auth::id())->first();
-        if (Storage::disk('public')->exists($this->member->profile_picture)) {
+        $this->member = $member;
+        if ($this->member->profile_picture && Storage::disk('public')->exists($this->member->profile_picture)) {
             $this->image = asset('storage/'.$this->member->profile_picture).'?v='.time();
         } else {
             $this->image = asset('assets/images/default.jpg');

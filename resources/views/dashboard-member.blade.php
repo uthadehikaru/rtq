@@ -3,7 +3,7 @@
 <x-message />
 <div class="row">
 <div class="col-lg-6">
-        <livewire:member-profile-card />
+        <livewire:member-profile-card :member="$member" />
     </div>
     <div class="col-lg-6">
         <div class="kt-portlet kt-portlet--height-fluid">
