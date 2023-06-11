@@ -266,7 +266,7 @@ class MemberRepository implements MemberRepositoryInterface
 
     public function search($keyword)
     {
-        $members = Member::select('id','full_name')
+        $members = Member::select('id', 'full_name')
         ->whereRaw("lower(full_name) like '%".$keyword."%'")
         ->orderBy('full_name')->get();
         $data = [];

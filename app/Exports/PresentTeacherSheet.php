@@ -32,7 +32,7 @@ class PresentTeacherSheet implements FromQuery, WithHeadings, WithMapping, WithT
         ->where('type', 'teacher')
         ->latest();
 
-        if ($this->filter['status']) {
+        if (isset($this->filter['status'])) {
             $model = $model->where('status', $this->filter['status']);
         }
 

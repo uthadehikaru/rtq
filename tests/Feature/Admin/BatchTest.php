@@ -39,6 +39,7 @@ test('admin can create batch', function () {
         'start_time' => '07:00',
         'place' => 'somewhere',
         'teacher_ids' => [$teacher->id],
+        'member_ids' => null,
     ];
 
     $response = $this->post(route('courses.batches.store', $course->id), $data);

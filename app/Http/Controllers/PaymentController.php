@@ -107,6 +107,7 @@ class PaymentController extends Controller
     {
         $data['payment'] = Payment::with('details')->findOrFail($id);
         $data['periods'] = Period::orderBy('name')->get();
+
         return view('forms.payment', $data);
     }
 

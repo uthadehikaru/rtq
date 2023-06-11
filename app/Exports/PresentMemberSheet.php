@@ -31,7 +31,7 @@ class PresentMemberSheet implements FromQuery, WithHeadings, WithMapping, WithTi
         ->where('type', 'member')
         ->latest();
 
-        if ($this->filter['status']) {
+        if (isset($this->filter['status'])) {
             $model = $model->where('status', $this->filter['status']);
         }
 

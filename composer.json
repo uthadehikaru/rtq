@@ -79,7 +79,7 @@
         ],
         "test": [
             "./vendor/bin/pint",
-            "@php artisan test --parallel"
+            "@php artisan test"
         ]
     },
     "extra": {

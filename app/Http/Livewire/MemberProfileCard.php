@@ -3,8 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Events\ProfileUpdated;
-use App\Models\Member;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 

@@ -16,7 +16,7 @@ class Export extends Controller
      */
     public function __invoke(Request $request)
     {
-        $filter = $request->only(['status','type', 'start_date', 'end_date']);
+        $filter = $request->only(['status', 'type', 'start_date', 'end_date']);
         $export = new PresentsExport($filter);
         $name = isset($filter['type']) ? ' '.__($filter['type']) : '';
         $name = isset($filter['status']) ? ' '.__($filter['status']) : '';

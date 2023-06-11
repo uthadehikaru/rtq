@@ -151,6 +151,7 @@ class BatchRepository implements BatchRepositoryInterface
         $batch->teachers()->sync($data['teacher_ids']);
         $batch->members()->sync($data['member_ids']);
         DB::commit();
+
         return $batch;
     }
 
