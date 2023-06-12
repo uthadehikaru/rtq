@@ -31,12 +31,20 @@ class RegistrationsDataTable extends DataTable
                 return __($row->gender);
             })
             ->editColumn('full_name', function ($row) {
-                return '<a href="'.route('registrations.show', $row->id).'" class="text-primary">'.$row->full_name.'</a>';
+                $value = '<a href="'.route('registrations.show', $row->id).'" class="text-primary">';
+                $value .= $row->full_name;
+                if($row->user?->member){
+                    $value .= " - ".$row->user->member->member_no;
+                }
+                $value .= '</a>';
+
+                return $value;
             })
             ->addColumn('action', function ($row) {
                 $buttons = '';
-                $buttons .= '<a href="'.route('registrations.show', $row->id).'" class="text-primary">Lihat</a>';
-                if (! $row->user) {
+                if ($row->user) {
+                    $buttons .= '<a href="#" class="ml-2 pointer text-success">Terdaftar</a>';
+                }else{
                     $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 }
 
@@ -54,7 +62,9 @@ class RegistrationsDataTable extends DataTable
      */
     public function query(Registration $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model
+        ->with(['user','user.member'])
+        ->newQuery();
     }
 
     /**
