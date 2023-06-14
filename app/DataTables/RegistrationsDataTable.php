@@ -42,8 +42,10 @@ class RegistrationsDataTable extends DataTable
             })
             ->addColumn('action', function ($row) {
                 $buttons = '';
-                if ($row->user) {
-                    $buttons .= '<a href="#" class="ml-2 pointer text-success">Terdaftar</a>';
+                if($row->user?->member->leave_at){
+                    $buttons .= '<a href="'.(route('members.edit', $row->user->member->id)).'" class="ml-2 pointer text-default">Keluar pada '.$row->user->member->leave_at->format('d M Y').'</a>';
+                }elseif ($row->user?->member) {
+                    $buttons .= '<a href="'.(route('members.edit', $row->user->member->id)).'" class="ml-2 pointer text-success">Terdaftar</a>';
                 }else{
                     $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 }
