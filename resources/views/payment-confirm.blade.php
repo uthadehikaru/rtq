@@ -9,7 +9,8 @@ var KTSelect2 = function() {
     var demos = function() {
 		
 		$('.kt-select-member').select2({
-			placeholder: "@lang('Pilih Peserta')",
+			placeholder: "@lang('Ketik nama peserta untuk mencari')",
+			minimumInputLength: 3,
 			ajax: {
 				url: '{{ route('api.batchmembers') }}',
 				dataType: 'json',
