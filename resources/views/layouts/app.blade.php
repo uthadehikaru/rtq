@@ -267,7 +267,7 @@
 									<!--begin: Navigation -->
 									<div class="kt-notification">
 										<div class="kt-notification__custom kt-space-between">
-											<a href="{{ route('update-password') }}" class="btn btn-label btn-label-info btn-sm btn-bold">@lang('Ubah Password')</a>
+											<a href="{{ route('profile') }}" class="btn btn-label btn-label-info btn-sm btn-bold">@lang('Ubah Profile')</a>
 											<a href="{{ route('logout') }}" class="btn btn-label btn-label-brand btn-sm btn-bold">@lang('Sign Out')</a>
 										</div>
 									</div>

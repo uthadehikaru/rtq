@@ -40,6 +40,7 @@
                             </span>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="{{ route('profile') }}" class="btn btn-outline">Ubah Profile</button>
                     </form>
                 </div>
             </div>

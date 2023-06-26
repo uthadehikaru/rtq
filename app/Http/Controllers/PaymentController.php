@@ -85,7 +85,7 @@ class PaymentController extends Controller
             }
         }
 
-        $admins = User::role('administrator')->get();
+        $admins = User::role('administrator')->notify()->get();
         Notification::send($admins, new PaymentConfirmation($payment));
         activity()
             ->on($payment)

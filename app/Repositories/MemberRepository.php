@@ -258,7 +258,7 @@ class MemberRepository implements MemberRepositoryInterface
         $data['type'] = $type;
         $registration = Registration::create($data);
 
-        $admins = User::role('administrator')->get();
+        $admins = User::role('administrator')->notify()->get();
         Notification::send($admins, new RegisteredUser($registration));
 
         DB::commit();

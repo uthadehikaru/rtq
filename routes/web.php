@@ -39,6 +39,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Livewire\MemberCards;
+use App\Http\Livewire\Profile;
 use App\Http\Livewire\UpdatePassword;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,7 @@ Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', Profile::class)->name('profile');
     Route::get('/update-password', UpdatePassword::class)->name('update-password');
     Route::get('/notification/{id}', ShowNotification::class)->name('notification');
     Route::group(['middleware' => ['role:administrator']], function () {
