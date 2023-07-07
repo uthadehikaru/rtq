@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('users', AdminUserController::class);
             Route::get('notifications', NotificationController::class)->name('notifications.index');
             Route::get('notifications/clean', CleanOldNotifications::class)->name('notifications.clean');
+            Route::get('/login-as/{user:id}', Actions\LoginAsUser::class)->name('login.as');
         });
         Route::resource('settings', SettingController::class);
         Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
@@ -153,4 +154,5 @@ Route::post('/payment', [PaymentController::class, 'store'])->name('payment.conf
 Route::get('/member/biodata', [BiodataMemberController::class, 'add'])->name('member.biodata');
 Route::post('/member/biodata', [BiodataMemberController::class, 'store']);
 
-Route::get('/login-as/{user:email}', Actions\LoginAsUser::class)->name('login.as');
+if(env('APP_ENV')=='local')
+    Route::get('/login-as/{user:email}', Actions\LoginAsUser::class)->name('login.as');

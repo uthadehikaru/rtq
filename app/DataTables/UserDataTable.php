@@ -27,6 +27,12 @@ class UserDataTable extends DataTable
 
                 return $buttons;
             })
+            ->addColumn('email', function ($row) {
+                $buttons = '<a href="'.route('admin.login.as', $row->id).'"
+                class="text-primary">'.$row->email.'</a>';
+
+                return $buttons;
+            })
             ->addColumn('roles', function ($row) {
                 return $row->roles->pluck('name')->join(',');
             })
@@ -40,7 +46,7 @@ class UserDataTable extends DataTable
                     $query->whereRelation('roles', 'name', $keyword);
                 }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','email'])
             ->setRowId('id');
     }
 
