@@ -16,7 +16,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="{{ route('payments.index') }}">{{ $payments }} @lang('Payments')</a>
+                            <a class="kt-link text-primary" href="{{ route('payments.index') }}">@lang('Payments')</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $unconfirmed_payments }} @lang('Pembayaran belum dikonfirmasi')
@@ -41,7 +41,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="{{ route('courses.index') }}">@lang('Batches')</a>
+                            <a class="kt-link text-primary" href="{{ route('courses.index') }}">@lang('Batches')</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $batches }} @lang('Halaqoh')
@@ -65,10 +65,10 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="{{ route('members.index') }}">@lang('Peserta Tahsin')</a>
+                            <a class="kt-link text-primary" href="{{ route('members.index') }}">@lang('Peserta Tahsin')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $members }} @lang('Peserta')
+                            {{ $members }} @lang('Peserta Aktif')
                         </div>
                     </div>
                 </div>

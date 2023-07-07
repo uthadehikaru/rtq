@@ -65,10 +65,8 @@ class DashboardController extends Controller
     BatchRepository $batchRepository,
     MemberRepository $memberRepository)
     {
-        $data['payments'] = $paymentRepository->count();
         $data['unconfirmed_payments'] = $paymentRepository->countUnconfirmed();
         $data['batches'] = $batchRepository->count();
-        $data['members'] = $memberRepository->countActiveMembers();
         $data['members'] = $memberRepository->countActiveMembers();
 
         $data['biodata_count'] = Setting::where('group', 'biodata')->count();
