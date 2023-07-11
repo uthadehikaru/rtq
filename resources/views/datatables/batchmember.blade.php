@@ -150,7 +150,7 @@ jQuery(document).ready(function () {
                 @foreach($batch->members as $member)
                     <tr class="data-row">
                         <td>{{ $member->created_at->format('d/m/y h:i') }}</td>
-                        <td>{{ $member->full_name }}</td>
+                        <td><a href="{{ route('members.edit', $member->id) }}">{{ $member->full_name }}</a></td>
                         <td>
                             <a href="javascript:;" class="text-danger delete" data-id="{{ $member->id }}">
                                 <i class="la la-trash"></i> @lang('Delete')
