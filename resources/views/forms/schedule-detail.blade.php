@@ -40,9 +40,11 @@
                 </div>
             </div>
 
+            @if($teacherPresent)
             <div class="kt-portlet__body">
                 <livewire:teacher :present="$teacherPresent" :schedule="$schedule" />
             </div>
+            @endif
             <livewire:presents :presents="$schedule->presents" />
         </div>
         
