@@ -53,9 +53,9 @@
 </div>
 @endsection
 @push('scripts')
-<script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/webcam-easy.min.js') }}"></script>
 <script>
-    
+     
 jQuery(document).ready(function() {
     const webcamElement = document.getElementById('webcam');
     const canvasElement = document.getElementById('canvas');
