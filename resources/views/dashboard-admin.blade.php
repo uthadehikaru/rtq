@@ -83,8 +83,8 @@
                         Pembayaran 12 periode terakhir
                     </h3>
                     <span class="kt-widget14__desc">
-                    <span class="kt-bg-success px-2 text-white">lunas</span>
-                    <span class="kt-bg-primary px-2 text-white">baru</span>
+                    <span class="kt-bg-success px-2 text-white">Cash</span>
+                    <span class="kt-bg-primary px-2 text-white">Transfer</span>
                     </span>
                 </div>
                 <div class="kt-widget14__chart" style="height:120px;">
@@ -190,7 +190,7 @@ jQuery(document).ready(function() {
             backgroundColor: KTApp.getStateColor('success'),
             data: [
                 @foreach ($periods as $period)
-                    "{{ $period->lunas_count }}",
+                    "{{ $period->cash_count }}",
                 @endforeach
             ]
         }, {
@@ -198,7 +198,7 @@ jQuery(document).ready(function() {
             backgroundColor: KTApp.getStateColor('primary'),
             data: [
                 @foreach ($periods as $period)
-                    "{{ $period->new_count }}",
+                    "{{ $period->transfer_count }}",
                 @endforeach
             ]
         }]

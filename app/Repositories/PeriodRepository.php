@@ -49,10 +49,10 @@ class PeriodRepository implements PeriodRepositoryInterface
         ->take(12)
         ->where('name','<>','Registrasi')
         ->whereHas('paymentDetails')
-        ->withCount(['paymentDetails as lunas_count' => function ($query) {
-            $query->whereRelation('payment', 'status', 'paid');
-        }, 'paymentDetails as new_count' => function ($query) {
-            $query->whereRelation('payment', 'status', 'new');
+        ->withCount(['paymentDetails as cash_count' => function ($query) {
+            $query->whereRelation('payment', 'payment_method', 'amplop');
+        }, 'paymentDetails as transfer_count' => function ($query) {
+            $query->whereRelation('payment', 'payment_method', 'transfer');
         }])->get();
     }
 }
