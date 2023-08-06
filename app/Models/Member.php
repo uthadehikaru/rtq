@@ -64,4 +64,12 @@ class Member extends Model
             return $batch->course->name.' '.__('Batch').' '.$batch->name;
         }
     }
+
+    public function getCourseAttribute()
+    {
+        $batches = $this->batches->filter(function ($batch, $key) {
+            return $batch->course->type!='Talaqqi Jamai';
+        });
+        return $batches->first()?->course;
+    }
 }

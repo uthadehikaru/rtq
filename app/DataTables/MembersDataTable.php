@@ -35,6 +35,9 @@ class MembersDataTable extends DataTable
             ->editColumn('batches', function ($row) {
                 return $row->batches->count() ? $row->batches->pluck('name')->join(', ') : 'Inaktif '.$row->leave_at?->format('d M Y');
             })
+            ->editColumn('category', function ($row) {
+                return $row->course?->type;
+            })
             ->editColumn('gender', function ($row) {
                 return __($row->gender);
             })
@@ -114,10 +117,9 @@ class MembersDataTable extends DataTable
             Column::make('nik')->title('NIK'),
             Column::make('full_name')->title('Nama'),
             Column::make('gender')->title('Jenis Kelamin'),
-            Column::make('birth_date')->title('Tgl Lahir'),
-            Column::make('school')->title('Sekolah'),
-            Column::make('level')->title('Level'),
             Column::make('batches')->title('Halaqoh')
+            ->sortable(false),
+            Column::make('category')->title('Kategori')
             ->sortable(false),
             Column::make('status')->title('Status'),
             Column::make('profile_picture')->title('Foto'),

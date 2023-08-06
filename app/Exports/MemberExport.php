@@ -44,6 +44,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             'alamat',
             'kodepos',
             'halaqoh',
+            'kategori',
             'foto',
         ];
     }
@@ -68,6 +69,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
             $member->address,
             $member->postcode,
             $member->batches->count() ? $member->batches->pluck('name')->join(',') : 'Inaktif',
+            $member->course?->type,
             $member->profile_picture ? asset('storage/'.$member->profile_picture) : '',
         ];
     }
