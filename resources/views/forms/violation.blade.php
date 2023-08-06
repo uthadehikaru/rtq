@@ -43,7 +43,6 @@
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
-                        <input type="hidden" name="type" value="{{ $type }}" />
                         <div class="form-group">
                             <label>@lang('Tanggal')</label>
                             <input type="date" name="violated_date" class="form-control" placeholder="@lang('Tanggal Pelanggaran')"
@@ -52,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Nama')</label>
-                            <select name="user_id" class="form-control kt-select2" required>
+                            <select name="user_id" class="form-control kt-select2">
                                 <option value="">--- Pilih ---</option>
                                 @foreach ($users as $user)
                                 <option value="{{ $user->id }}" @selected($violation && $user->id==$violation->user_id)>{{ $user->name }}</option>                                        
@@ -96,7 +95,8 @@
 <script type="text/javascript">
 jQuery(document).ready(function () {    
     $('.kt-select2').select2({
-        placeholder: "@lang('Pilih '.$type)"
+        placeholder: "@lang('Pilih Anggota')",
+        allowClear: true,
     });
 });
 </script>

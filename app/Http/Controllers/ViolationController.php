@@ -30,8 +30,7 @@ class ViolationController extends Controller
     public function create(Request $request)
     {
         $data['violation'] = null;
-        $data['type'] = $request->get('type', $request->get('type', 'member'));
-        $data['users'] = User::has($request->get('type', 'member'))
+        $data['users'] = User::select('id','name')
         ->orderBy('name')
         ->get();
 
@@ -48,18 +47,21 @@ class ViolationController extends Controller
     {
         $data = $request->validate([
             'violated_date' => 'required|date',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'description' => 'required',
             'amount' => '',
             'paid_at' => '',
         ]);
 
         $user = User::find($data['user_id']);
-        $data['type'] = $user->member ? 'member' : 'teacher';
+        if($user){
+            $data['type'] = $user->teacher ? 'teacher' : 'member';
+        }
 
         $violation = Violation::create($data);
 
-        $user->notify(new UserIqobCreated($violation));
+        if($user)
+            $user->notify(new UserIqobCreated($violation));
 
         if ($request->has('redirect')) {
             return redirect($request->get('redirect'))->with('message', 'Pelanggaran atas '.$violation->user->name.' berhasil ditambahkan');
@@ -105,11 +107,10 @@ class ViolationController extends Controller
     {
         $data = $request->validate([
             'violated_date' => 'required|date',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'description' => 'required',
             'amount' => '',
             'paid_at' => '',
-            'type' => 'required',
         ]);
 
         Violation::find($id)->update($data);
