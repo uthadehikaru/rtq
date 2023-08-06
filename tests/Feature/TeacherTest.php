@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 uses()->group('teacher');
 
 test('teacher can access dashboard', function () {
-    $user = createTeacher();
+    $user = createUser('teacher');
     $batch = createBatch($user);
     actingAs($user)
     ->get('dashboard')
@@ -17,7 +17,7 @@ test('teacher can access dashboard', function () {
 });
 
 test('teacher can create their schedule', function () {
-    $user = createTeacher();
+    $user = createUser('teacher');
     $batch = createBatch($user);
 
     Storage:fake('profiles');
@@ -40,7 +40,7 @@ test('teacher can create their schedule', function () {
 });
 
 test('teacher cannot create past schedule', function () {
-    $user = createTeacher();
+    $user = createUser('teacher');
     $batch = createBatch($user);
 
     Storage:fake('profiles');

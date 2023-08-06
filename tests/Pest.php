@@ -62,6 +62,9 @@ function createUser($roleName)
 {
     $user = User::factory()->create();
     if($roleName){
+        if($roleName=='teacher'){
+            Teacher::factory()->for($user)->create();
+        }
         $role = Role::firstOrCreate(['name'=>$roleName]);
         $user->assignRole($role);
     }
