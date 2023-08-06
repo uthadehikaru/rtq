@@ -53,12 +53,20 @@ function actingAs(Authenticatable $user, string $driver = null)
 
 function createTeacher()
 {
-    $role = Role::create(['name' => 'teacher']);
-    $user = User::factory()->has(Teacher::factory())
-    ->create();
-    $user->assignRole($role);
+    $role = Role::firstOrCreate(['name' => 'teacher']);
+    $user = createUser(($role));
+    return User::find($user->id);
+}
 
-    return $user;
+function createUser($roleName)
+{
+    $user = User::factory()->create();
+    if($roleName){
+        $role = Role::firstOrCreate(['name'=>$roleName]);
+        $user->assignRole($role);
+    }
+
+    return User::find($user->id);
 }
 
 function createBatch($user, $batch = null)

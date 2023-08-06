@@ -27,6 +27,9 @@ class ViolationsDataTable extends DataTable
             ->editColumn('paid_at', function ($row) {
                 return $row->paid_at?->format('d M Y');
             })
+            ->editColumn('user_id', function ($row) {
+                return $row->user? $row->user->name : 'noname';
+            })
             ->addColumn('action', function ($row) {
                 return '
                 <div class="btn-group" role="group">
@@ -44,6 +47,10 @@ class ViolationsDataTable extends DataTable
                     </div>
                 </div>
                 ';
+            })
+            ->filterColumn('user_id', function ($query, $keyword) {
+                if($keyword=='noname')
+                    $query->whereNull('user_id');
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -98,7 +105,7 @@ class ViolationsDataTable extends DataTable
         return [
             Column::make('violated_date')->title('tgl pelanggaran'),
             Column::make('type'),
-            Column::make('user.name')->title('Nama'),
+            Column::make('user_id')->title('Nama'),
             Column::make('description'),
             Column::make('amount')->title('nominal'),
             Column::make('paid_at')->title('diselesaikan pada'),

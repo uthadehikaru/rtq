@@ -17,7 +17,12 @@ class ViolationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'violated_date' => $this->faker->date(),
+            'user_id' => null,
+            'description' => $this->faker->text(),
+            'amount' => $this->faker->numberBetween(100,1000),
+            'paid_at' => null,
+            'type'=> 'member',
         ];
     }
 }
