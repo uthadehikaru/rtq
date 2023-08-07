@@ -120,7 +120,8 @@ class MembersDataTable extends DataTable
             Column::make('batches')->title('Halaqoh')
             ->sortable(false),
             Column::make('category')->title('Kategori')
-            ->sortable(false),
+            ->sortable(false)
+            ->searchable(false),
             Column::make('status')->title('Status'),
             Column::make('profile_picture')->title('Foto'),
             Column::make('updated_at'),
