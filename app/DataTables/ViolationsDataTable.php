@@ -50,7 +50,9 @@ class ViolationsDataTable extends DataTable
             })
             ->filterColumn('user_id', function ($query, $keyword) {
                 if($keyword=='noname')
-                    $query->whereNull('user_id');
+                    return $query->whereNull('user_id');
+                
+                $query->whereRelation('user','name','like','%'.$keyword.'%');
             })
             ->rawColumns(['action'])
             ->setRowId('id');
