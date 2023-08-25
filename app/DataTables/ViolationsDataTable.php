@@ -12,6 +12,13 @@ use Yajra\DataTables\Services\DataTable;
 
 class ViolationsDataTable extends DataTable
 {
+    private $params = [];
+    
+    public function filter($params)
+    {
+        $this->params = $params;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -66,10 +73,24 @@ class ViolationsDataTable extends DataTable
      */
     public function query(Violation $model): QueryBuilder
     {
-        return $model
+        $model = $model
         ->select('violations.*')
         ->with('user')
         ->latest('violated_date')->newQuery();
+
+        if(isset($this->params['status'])){
+            if($this->params['status']=='unpaid')
+                $model->whereNull('paid_at');
+                
+            if($this->params['status']=='paid')
+                $model->whereNotNull('paid_at');
+        }
+
+        if(isset($this->params['type'])){
+            $model->where('type',$this->params['type']);
+        }
+
+        return $model;
     }
 
     /**
@@ -84,17 +105,19 @@ class ViolationsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->responsive(true)
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload'),
                     ]);
+    }
+
+    public function wait()
+    {
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -107,10 +130,10 @@ class ViolationsDataTable extends DataTable
         return [
             Column::make('violated_date')->title('tgl pelanggaran'),
             Column::make('type'),
-            Column::make('user_id')->title('Nama'),
+            Column::make('user_id')->title('Nama')->responsivePriority(1),
             Column::make('description'),
             Column::make('amount')->title('nominal'),
-            Column::make('paid_at')->title('diselesaikan pada'),
+            Column::make('paid_at')->title('diselesaikan pada')->responsivePriority(2),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

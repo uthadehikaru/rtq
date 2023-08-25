@@ -15,9 +15,10 @@ class ViolationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ViolationsDataTable $dataTable)
+    public function index(ViolationsDataTable $dataTable, Request $request)
     {
         $data['title'] = 'Pelanggaran';
+        $dataTable->filter($request->only(['status','type']));
 
         return $dataTable->render('datatables.violation', $data);
     }
