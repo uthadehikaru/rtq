@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'analytic_id' => env('GOOGLE_ANALYTIC_ID', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -81,7 +81,17 @@
 		<!--begin::Global Theme Bundle(used by all pages) -->
 		<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets/js/scripts.bundle.js') }}" type="text/javascript"></script>
+		@if(config('app.analytic_id'))
+			<!-- Google tag (gtag.js) -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.analytic_id') }}"></script>
+			<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
 
+			gtag('config', '{{ config('app.analytic_id') }}');
+			</script>
+		@endif
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Scripts(used by this page) -->
