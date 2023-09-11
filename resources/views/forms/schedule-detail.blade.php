@@ -105,10 +105,10 @@
 @push('scripts')
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    Livewire.on('message', message => {
-        $('.message').text('updated');
+    Livewire.on('message', id => {
+        $('#message-'+id).text('Berhasil disimpan');
         setInterval(function() {
-            $('.message').text('');
+            $('#message-'+id).text('');
         }, 2000);
     });
 

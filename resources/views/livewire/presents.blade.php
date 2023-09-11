@@ -20,10 +20,10 @@
                         src="{{ asset('assets/images/default.jpg') }}"
                         class="img-fluid" />
                         @endif
-                        <div class="spinner-border" wire:loading.delay>
+                        <div class="spinner-border text-primary spinner-border-sm" wire:loading.delay>
                         <span class="sr-only">Loading...</span>
                         </div>
-                        <span class="message text-success"></span>
+                        <span class="message text-success" id="message-{{ $present->id }}"></span>
                         @if($present->is_transfer)
                         <a href="{{ route('teacher.schedules.presents.remove', [$present->schedule_id, $present->id]) }}" 
                         onclick="return confirm('Yakin ingin menghapus?')"
