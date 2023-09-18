@@ -104,6 +104,7 @@ class ViolationsDataTable extends DataTable
                     ->setTableId('violations-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->responsive(true)
                     ->dom('Bfrtip')
                     ->orderBy(0)

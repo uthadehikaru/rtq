@@ -74,6 +74,7 @@ class UserDataTable extends DataTable
                     ->setTableId('user-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->responsive(true)
                     //->dom('Bfrtip')
                     ->orderBy(0)

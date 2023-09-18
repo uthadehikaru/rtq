@@ -106,6 +106,7 @@ class SchedulesDataTable extends DataTable
                     ->setTableId('Schedule-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()

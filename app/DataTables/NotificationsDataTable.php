@@ -62,6 +62,7 @@ class NotificationsDataTable extends DataTable
                     ->setTableId('notifications-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->responsive(true)
                     ->orderBy(1)

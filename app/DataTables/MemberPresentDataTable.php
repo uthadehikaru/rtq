@@ -69,6 +69,7 @@ class MemberPresentDataTable extends DataTable
                     ->setTableId('member-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()

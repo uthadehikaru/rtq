@@ -80,6 +80,7 @@ class BatchesDataTable extends DataTable
                     ->setTableId('batches-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->responsive(true)
                     //->dom('Bfrtip')
                     ->orderBy(1)

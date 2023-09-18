@@ -128,6 +128,7 @@ class MemberPaymentDataTable extends DataTable
                     ->setTableId('memberpayment-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(1, 'asc')
                     ->selectStyleSingle()

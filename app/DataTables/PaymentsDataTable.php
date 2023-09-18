@@ -113,6 +113,7 @@ class PaymentsDataTable extends DataTable
                     ->setTableId('Payment-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()

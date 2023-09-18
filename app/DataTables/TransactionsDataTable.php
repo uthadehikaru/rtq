@@ -54,6 +54,7 @@ class TransactionsDataTable extends DataTable
                     ->setTableId('transactions-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()

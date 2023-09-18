@@ -80,6 +80,7 @@ class RegistrationsDataTable extends DataTable
                     ->setTableId('registration-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->responsive(true)
                     ->stateSave(true)
                     //->dom('Bfrtip')

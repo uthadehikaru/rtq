@@ -73,6 +73,7 @@ class CoursesDataTable extends DataTable
                     ->setTableId('courses-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->responsive(true)
                     //->dom('Bfrtip')
                     ->orderBy(1)

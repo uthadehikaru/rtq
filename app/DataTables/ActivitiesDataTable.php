@@ -52,6 +52,7 @@ class ActivitiesDataTable extends DataTable
                     ->setTableId('activities-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()

@@ -161,6 +161,7 @@ class ReportPresentsDataTable extends DataTable
                     ->setTableId('Present-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->stateSave()
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([]);
