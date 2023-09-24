@@ -21,6 +21,12 @@ class TransactionsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('debit', function ($row) {
+                return money($row->debit);
+            })
+            ->editColumn('credit', function ($row) {
+                return money($row->credit);
+            })
             ->addColumn('action', function ($row) {
                 $buttons = '';
                 $buttons .= '<a href="'.route('transactions.edit', $row->id).'" class="text-warning">Edit</a>';

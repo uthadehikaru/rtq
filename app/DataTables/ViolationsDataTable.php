@@ -37,6 +37,9 @@ class ViolationsDataTable extends DataTable
             ->editColumn('user_id', function ($row) {
                 return $row->user? $row->user->name : 'noname';
             })
+            ->editColumn('amount', function ($row) {
+                return money($row->amount);
+            })
             ->addColumn('action', function ($row) {
                 return '
                 <div class="btn-group" role="group">
@@ -133,7 +136,7 @@ class ViolationsDataTable extends DataTable
             Column::make('type'),
             Column::make('user_id')->title('Nama')->responsivePriority(1),
             Column::make('description'),
-            Column::make('amount')->title('nominal'),
+            Column::make('amount')->title('nominal')->addClass('text-right'),
             Column::make('paid_at')->title('diselesaikan pada')->responsivePriority(2),
             Column::computed('action')
                   ->exportable(false)
