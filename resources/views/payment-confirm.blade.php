@@ -1,4 +1,7 @@
 @extends('layouts.guest')
+@section('title')
+Konfirmasi Pembayaran
+@endsection
 @push('scripts')
 <!-- <script src="{{ asset('assets/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script> -->
 <script type="text/javascript">
