@@ -136,10 +136,10 @@ Route::middleware('auth')->group(function () {
 
     Route::name('member.')->prefix('member')->middleware('role:member')->group(function () {
         Route::get('presents', MemberPresentController::class)->name('presents.index');
-        Route::get('iqob', IqobController::class)->name('iqob.index');
         Route::resource('profile', ProfileController::class)->only('update');
     });
 
+    Route::get('iqob', IqobController::class)->name('iqob.index');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 Route::get('/login/{username?}', [LoginController::class, 'index'])->name('login');

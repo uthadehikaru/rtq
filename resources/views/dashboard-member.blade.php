@@ -62,33 +62,7 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        @lang('Data Iqob terbaru')
-                    </h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body table-responsive">
-                <table class="table table-striped">
-                    <tr>
-                        <th>Tgl</th>
-                        <th>Keterangan</th>
-                        <th>Nominal</th>
-                        <th>Status</th>
-                    </tr>
-                    @foreach ($violations as $violation)
-                        <tr>
-                            <td>{{ $violation->violated_at?->format('d/M/Y') }}</td>
-                            <td>{{ $violation->description }}</td>
-                            <td>{{ $violation->amount }}</td>
-                            <td>{{ $violation->paid_at?'Selesai':'Belum dibayar' }}</td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
-        </div>
+        <x-violation-card :violations="$violations" />
     </div>
 </div>
 @endsection

@@ -44,7 +44,6 @@ class MemberIqobDataTable extends DataTable
     {
         return $model
         ->where('user_id', $this->user_id)
-        ->where('type', 'member')
         ->newQuery();
     }
 

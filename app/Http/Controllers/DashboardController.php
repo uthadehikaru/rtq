@@ -89,6 +89,7 @@ class DashboardController extends Controller
         $teacher = Auth::user()->teacher;
         $data['batches'] = (new BatchRepository)->teacherBatches(Auth::id());
         $data['schedules'] = (new ScheduleRepository)->currentMonth($teacher->user_id);
+        $data['violations'] = Violation::where('user_id', Auth::id())->latest()->limit(5)->get();
 
         return $data;
     }

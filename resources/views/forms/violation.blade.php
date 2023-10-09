@@ -95,7 +95,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function () {    
     $('.kt-select2').select2({
-        placeholder: "@lang('Pilih Anggota')",
+        placeholder: "@lang('No Name')",
         allowClear: true,
     });
 });

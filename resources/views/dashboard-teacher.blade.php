@@ -1,4 +1,4 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 @section('content')
 <x-message />
 <div class="row">
@@ -125,6 +125,9 @@
             </div>
         </div>
 
+    </div>
+    <div class="col-lg-6">
+        <x-violation-card :violations="$violations" />
     </div>
 </div>
 @endsection

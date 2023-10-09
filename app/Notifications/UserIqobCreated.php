@@ -45,7 +45,7 @@ class UserIqobCreated extends Notification implements ShouldQueue
         return [
             'title' => 'Iqob : '.$this->violation->description.' Rp. '.money($this->violation->amount),
             'created_at' => $this->violation->created_at,
-            'url' => route('member.iqob.index'),
+            'url' => route('iqob.index'),
         ];
     }
 }
