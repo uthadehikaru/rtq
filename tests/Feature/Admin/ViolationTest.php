@@ -126,3 +126,10 @@ test('non admin can see their own violation', function () {
         $response->assertStatus(200);
     }
 });
+
+test('redirect route member/iqob to iqob', function () {
+    $teacher = createUser('teacher');
+    actingAs($teacher);
+    $response = $this->get('member/iqob');
+    $response->assertRedirect('iqob');
+});
