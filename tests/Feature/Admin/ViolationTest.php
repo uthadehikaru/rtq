@@ -116,3 +116,13 @@ test('admin can update violation', function () {
     $violation = Violation::find($violation['id']);
     expect($violation->paid_at)->not()->toBeNull();
 });
+
+test('non admin can see their own violation', function () {
+    $roles = Role::where('name','<>','administrator')->get();
+    foreach($roles as $role){
+        $user = createUser($role->name);
+        actingAs($user);
+        $response = $this->get(route('iqob.index'));
+        $response->assertStatus(200);
+    }
+});

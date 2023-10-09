@@ -13,6 +13,7 @@
 
 use App\Models\Batch;
 use App\Models\Course;
+use App\Models\Member;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -64,6 +65,9 @@ function createUser($roleName)
     if($roleName){
         if($roleName=='teacher'){
             Teacher::factory()->for($user)->create();
+        }
+        if($roleName=='member'){
+            Member::factory()->for($user)->create();
         }
         $role = Role::firstOrCreate(['name'=>$roleName]);
         $user->assignRole($role);
