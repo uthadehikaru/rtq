@@ -2,20 +2,20 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\Batch;
-use App\Models\Course;
-use App\Models\Member;
 use App\Models\User;
 use App\Models\Violation;
+use App\Notifications\UserIqobCreated;
 use Carbon\Carbon;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\UserSeeder;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
 
 uses()->group('admin');
 
 beforeEach(function () {
+    Notification::fake();
+
     $this->seed([
         PermissionSeeder::class,
         UserSeeder::class,
@@ -46,12 +46,55 @@ test('admin can access create violation', function () {
     $response->assertStatus(200);
 });
 
-test('admin can insert violation', function () {
+test('admin can insert violation with no user', function () {
     $admin = User::find(1);
     actingAs($admin);
     $violation = Violation::factory()->make()->toArray();
     $response = $this->post(route('violations.store'), $violation);
     $response->assertSessionHasNoErrors();
+
+    Notification::assertNothingSent();
+    expect(Violation::count())->toBe(1);
+});
+
+test('admin can insert violation for member', function () {
+    $admin = User::find(1);
+    actingAs($admin);
+    $user = createUser('member');
+    $violation = Violation::factory()->make()->toArray();
+    $violation['user_id'] = $user->id;
+    $violation['description'] = "Telat Masuk";
+    $violation['amount'] = 500;
+    $response = $this->post(route('violations.store'), $violation);
+    $response->assertSessionHasNoErrors();
+
+    Notification::assertSentTo(
+        [$user],
+        function (UserIqobCreated $notification, array $channels) use ($user) {
+            return $notification->toArray($user)['title'] === 'Iqob : Telat Masuk Rp. 500';
+        }
+    );
+    expect(Violation::count())->toBe(1);
+});
+
+test('admin can insert violation for teacher', function () {
+    $admin = User::find(1);
+    actingAs($admin);
+    $user = createUser('teacher');
+    $violation = Violation::factory()->make()->toArray();
+    $violation['user_id'] = $user->id;
+    $violation['type'] = 'teacher';
+    $violation['description'] = "Lupa tutup kelas";
+    $violation['amount'] = 1000;
+    $response = $this->post(route('violations.store'), $violation);
+    $response->assertSessionHasNoErrors();
+
+    Notification::assertSentTo(
+        [$user],
+        function (UserIqobCreated $notification, array $channels) use ($user) {
+            return $notification->toArray($user)['title'] === 'Iqob : Lupa tutup kelas Rp. 1.000';
+        }
+    );
     expect(Violation::count())->toBe(1);
 });
 

@@ -11,7 +11,7 @@ class UserIqobCreated extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $violation;
+    public $violation;
 
     /**
      * Create a new notification instance.
@@ -43,7 +43,7 @@ class UserIqobCreated extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Anda Terkena Iqob Sebesar Rp. '.money($this->violation->amount),
+            'title' => 'Iqob : '.$this->violation->description.' Rp. '.money($this->violation->amount),
             'created_at' => $this->violation->created_at,
             'url' => route('member.iqob.index'),
         ];
