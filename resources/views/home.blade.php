@@ -131,7 +131,9 @@
 			<span class="block font-semibold text-gray-700 text-xl md:text-2xl hover:text-green-500 transition ease-in-out duration-300">{{ $program->title }}</span>
 			<div class="flex w-full justify-between">
 			<p class="font-normal text-gray-800 text-base">Terkumpul<br/>@money($program->amount)</p>
+			@if($program->qty)
 			<p class="font-normal text-gray-800 text-base text-right">Donatur<br/>{{ $program->qty }}</p>
+			@endif
 			</div>
 			<div class="flex w-full">
 			<a href="https://wa.me/{{ $settings->value('whatsapp') }}?text=saya+ingin+donasi+{{ $program->title }}" target="{{ $program->slug }}" class="p-2 w-full bg-green-800 rounded text-white mt-2 text-center hover:opacity-75">Tunaikan Sekarang</a> 
