@@ -158,6 +158,11 @@
 														<span class="kt-menu__link-text">Uang Kas</span>
 													</a>
 												</li>
+												<li class="kt-menu__item " aria-haspopup="true">
+													<a href="{{ route('programs.index') }}" class="kt-menu__link ">
+														<span class="kt-menu__link-text">Programs</span>
+													</a>
+												</li>
 											</ul>
 										</div>
 									</li>

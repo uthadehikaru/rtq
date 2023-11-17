@@ -1,165 +1,145 @@
 @inject('settings', 'App\Services\SettingService')
-@extends('layouts.guest')
+@extends('layouts.kubik')
 @section('content')
-<div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 
-		<!-- begin:: Content -->
+<section class="py-8 md:py-16">
 
-		<x-header />
+	<div class="container max-w-screen-xl mx-auto px-4">
 
-		<x-blogs />
-		<!-- begin:: Section -->
-		@if($settings->value('banner'))
-		<img src="{{ $settings->value('banner') }}" width="100%" class="mb-4 p-4" />
-		@endif
-		<div class="kt-container ">
-			<div class="row">
-				<div class="col-lg-4">
-					<a href="{{ route('register', 'balita') }}" class="kt-portlet kt-iconbox kt-iconbox--animate-slow">
-						<div class="kt-portlet__body">
-							<div class="kt-iconbox__body">
-								<div class="kt-iconbox__icon">
-								<img src="{{ asset('assets/images/talita.png') }}" width="100px" />	
-								</div>
-								<div class="kt-iconbox__desc">
-									<h3 class="kt-iconbox__title">
-										Talita
-									</h3>
-									<div class="kt-iconbox__content">
-										Tahsin Balita
-									</div>
-									<p class="mt-2 font-weight-bold">
-										Pendaftaran Tahsin Balita
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
-										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
-										</svg>
-									</p>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-4">
-					<a href="{{ route('register', 'anak') }}" class="kt-portlet kt-iconbox kt-iconbox--animate">
-						<div class="kt-portlet__body">
-							<div class="kt-iconbox__body">
-								<div class="kt-iconbox__icon">
-									<img src="{{ asset('assets/images/tahsin anak.png') }}" width="100px" />
-								</div>
-								<div class="kt-iconbox__desc">
-									<h3 class="kt-iconbox__title">
-										Tahsin Anak
-									</h3>
-									<div class="kt-iconbox__content">
-										SD, SMP, SMA sederajat
-									</div>
-									<p class="mt-2 font-weight-bold">
-										Pendaftaran Tahsin Anak
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
-										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
-										</svg>
-									</p>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-4">
-					<a href="{{ route('register', 'dewasa') }}" class="kt-portlet kt-iconbox kt-iconbox--animate-fast">
-						<div class="kt-portlet__body">
-							<div class="kt-iconbox__body">
-								<div class="kt-iconbox__icon">
-								<img src="{{ asset('assets/images/tahsin dewasa.png') }}" width="100px" />
-								</div>
-								<div class="kt-iconbox__desc">
-									<h3 class="kt-iconbox__title">
-										Tahsin Dewasa
-									</h3>
-									<div class="kt-iconbox__content">
-										Ikhwan dan Akhwat
-									</div>
-									<p class="mt-2 font-weight-bold">
-										Pendaftaran Tahsin Dewasa
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
-										<path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707z"/>
-										</svg>
-									</p>
-								</div>
-							</div>
-						</div>
+		<header class="flex-col xl:flex-row flex justify-between">
+
+			<div class="mx-auto text-center xl:text-left xl:mx-0 mb-20 xl:mb-0">
+				<h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-10">RTQ Maisuro</h1>
+
+				<p class="font-normal text-gray-500 text-sm md:text-lg mb-10">Hidup indah bersama Al-Qur'an, Alhamdulillah!</p>
+
+				<div class="flex items-center justify-center lg:justify-start">
+					<a href="https://instagram.com/rumahtartilquran_maisuro" target="instagram" class="px-8 py-3 bg-green-800 font-medium text-white text-md md:text-lg rounded-md hover:opacity-75 transition ease-in-out duration-300 mr-14">Follow Us</a>
+
+					<a href="https://www.youtube.com/@RumahTartilQuranMaisuro" target="youtube" class="hidden lg:block font-normal text-gray-500 text-lg mr-8">Watch Us</a>
+
+					<a href="https://www.youtube.com/watch?v=W-vb62xcWqs" class="px-4 py-4 text-gray-300 border-2 border-gray-200 rounded-full">
+						<i data-feather="play"></i>
 					</a>
 				</div>
 			</div>
-		</div>
 
-		<!-- end:: iconbox -->
+			<div class="mx-auto xl:mx-0">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/W-vb62xcWqs?si=fbhkfromDhCPCJuP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+			</div>
 
-		<!-- begin:: Section -->
-		<div class="kt-container ">
-			<div class="kt-portlet">
-				<div class="kt-portlet__body">
-					<div class="kt-infobox">
-						<div class="kt-infobox__header">
-							<h2 class="kt-infobox__title">{{ config('app.name') }}</h2>
-						</div>
-						<div class="kt-infobox__body">
-							<img src="{{ asset('assets/images/wakaf.png') }}" width="100%" class="mx-auto mb-2" />
-							{!! $settings->value('about') !!}
-						</div>
-					</div>
+		</header>
+
+	</div> <!-- container.// -->
+
+</section>
+<!-- feature section -->
+<section class="py-8 md:py-16">
+
+<div class="container max-w-screen-xl mx-auto px-4">
+
+	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+		<div class="text-center mb-10 xl:mb-0">
+			<div class="flex items-center justify-center">
+				<div class="w-1/3 py-7 flex justify-center bg-purple-50 text-purple-500 rounded-md mb-5 md:mb-10">
+					<img src="{{ asset('assets/images/talita.png') }}" />
 				</div>
 			</div>
+
+			<h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Talita</h2>
+
+			<p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Tahsin Balita</p>
+
+			<a href="{{ route('register', 'balita') }}" class="font-normal bg-green-800 text-white text-sm border border-green-800 w-full p-2 hover:opacity-75 rounded">Daftar Sekarang</a>
 		</div>
 
-		<!-- end:: Section -->
-
-		<!-- begin:: Section -->
-		<div class="kt-container ">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="kt-portlet kt-callout">
-						<div class="kt-portlet__body">
-							<div class="kt-callout__body">
-								<div class="kt-callout__content">
-									<h3 class="kt-callout__title">Instagram</h3>
-									<p class="kt-callout__desc">
-										Ikut informasi seputar {{ config('app.name') }} melalui instagram kami
-									</p>
-								</div>
-								<div class="kt-callout__action">
-									<a href="{{ $settings->value('instagram') }}" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm btn-primary">@lang('Follow Us')</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="kt-portlet kt-callout">
-						<div class="kt-portlet__body">
-							<div class="kt-callout__body">
-								<div class="kt-callout__content">
-									<h3 class="kt-callout__title">Whatsapp</h3>
-									<p class="kt-callout__desc">
-										Sampaikan pertanyaan seputar {{ config('app.name') }} melalui whatsapp
-									</p>
-								</div>
-								<div class="kt-callout__action">
-									<a href="https://wa.me/{{ $settings->value('whatsapp') }}" target="_blank" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">
-										{{ $settings->value('whatsapp') }}
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+		<div class="text-center mb-10 md:mb-0">
+			<div class="flex items-center justify-center">
+				<div class="w-1/3 py-7 flex justify-center bg-red-50 text-red-500 rounded-md mb-5 md:mb-10">
+					<img src="{{ asset('assets/images/tahsin anak.png') }}" />
 				</div>
 			</div>
+
+			<h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Tahsin Anak</h2>
+
+			<p class="font-normal text-gray-400 text-sm md:text-lg mb-5">SD, SMP, SMA sederajat</p>
+
+			<a href="{{ route('register', 'anak') }}" class="font-normal bg-green-800 text-white text-sm border border-green-800 w-full p-2 hover:opacity-75 rounded">Daftar Sekarang</a>
 		</div>
 
-		<!-- end:: Section -->
+		<div class="text-center">
+			<div class="flex items-center justify-center">
+				<div class="w-1/3 py-7 flex justify-center bg-blue-50 text-blue-500 rounded-md mb-5 md:mb-10">
+					<img src="{{ asset('assets/images/tahsin dewasa.png') }}" />
+				</div>
+			</div>
 
-		<!-- end:: Content -->
+			<h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Tahsin Dewasa</h2>
+
+			<p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Ikhwan dan Akhwat</p>
+
+			<a href="{{ route('register', 'dewasa') }}" class="font-normal bg-green-800 text-white text-sm border border-green-800 w-full p-2 hover:opacity-75 rounded">Daftar Sekarang</a>
 		</div>
+	</div>
+
+</div> <!-- container.// -->
+
+</section>
+<!-- feature section //end -->
+
+<section class="py-8 md:py-16">
+
+<div class="container max-w-screen-xl mx-auto px-4">
+
+	<h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">WAKAF PEMBEBASAN LAHAN & BANGUNAN RTQ MAISŪRŌ</h1>
+
+	<p class="font-normal text-gray-500 text-md md:text-lg text-center mb-10 md:mb-20">Mari Bersama Kita Wujudkan Harapan Ummat Untuk Menjadikan Bangunan Ini Sebagai Pusat Pendidikan Al-Qur'an Melalui Program Wakaf Pembebasan Lahan & Bangunan Untuk Rumah Tartil Al-Qur'an (RTQ) Maisūrō</p>
+
+	<div class="flex flex-col xl:flex-row items-center justify-between">
+		<div class="mx-auto xl:mx-0 mb-20 xl:mb-0">
+			<img src="{{ asset('assets/images/wakaf.png') }}" alt="Image">
+		</div>
+
+		<div class="mx-auto xl:mx-0 text-center xl:text-left">
+			<h1 class="font-bold text-gray-700 text-3xl md:text-4xl mb-10">BSI 777.999.6861<br/>
+			An. Yayasan Al Muzzammil Quranic Reading Organization</h1>
+
+			<p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Mari Bersama Kita Wujudkan Harapan Ummat Untuk Menjadikan Bangunan Ini Sebagai Pusat Pendidikan Al-Qur'an Melalui Program Wakaf Pembebasan Lahan & Bangunan Untuk Rumah Tartil Al-Qur'an (RTQ) Maisūrō</p>
+
+			<a href="https://wa.me/{{ $settings->value('whatsapp') }}" target="whatsapp" class="flex items-center justify-center xl:justify-start font-semibold text-green-500 text-lg gap-3 hover:text-green-700 transition ease-in-out duration-300">
+				More Info 081293297936 (WA)
+			</a>
+		</div>
+	</div>
+
+</div> <!-- container.// -->
+
+</section>
+
+<section class="py-8 md:py-16">
+
+<div class="container max-w-screen-xl mx-auto px-4">
+
+	<h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">Program Kami</h1>
+
+	<p class="font-normal text-gray-500 text-md md:text-lg text-center mb-20">Jadilah bagian dari perjuangan dakwah kami</p>
+
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10">
+		@foreach ($programs as $program)
+		<div class="space-y-2 xl:space-y-4">
+			<img src="{{ $program->imageUrl('thumbnail') }}" alt="{{ $program->title }}" class="w-full" />
+			<span class="block font-semibold text-gray-700 text-xl md:text-2xl hover:text-green-500 transition ease-in-out duration-300">{{ $program->title }}</span>
+			<div class="flex w-full justify-between">
+			<p class="font-normal text-gray-800 text-base">Terkumpul<br/>@money($program->amount)</p>
+			<p class="font-normal text-gray-800 text-base text-right">Donatur<br/>{{ $program->qty }}</p>
+			</div>
+			<div class="flex w-full">
+			<a href="https://wa.me/{{ $settings->value('whatsapp') }}?text=saya+ingin+donasi+{{ $program->title }}" target="{{ $program->slug }}" class="p-2 w-full bg-green-800 rounded text-white mt-2 text-center hover:opacity-75">Tunaikan Sekarang</a> 
+			</div>
+		</div>
+		@endforeach
+	</div>
+</div> <!-- container.// -->
+
+</section>
 @endsection
-@push('styles')
-<link href="{{ asset('assets/css/pages/support-center/home-1.css') }}" rel="stylesheet" type="text/css">
-@endpush

@@ -6,6 +6,7 @@ use App\Http\Controllers\Actions\ShowNotification;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\CleanOldNotifications;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\ProgramsController;
 use App\Http\Controllers\Admin\ResetPassword;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BatchController;
@@ -107,6 +108,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('payments', PaymentController::class);
             Route::resource('payments.details', PaymentDetailController::class)->only(['index', 'destroy']);
             Route::resource('transactions', TransactionController::class);
+            Route::resource('programs', ProgramsController::class);
         });
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('users/{id}/reset', ResetPassword::class)->name('users.reset');

@@ -20,6 +20,7 @@
         "lesichkovm/laravel-advanced-route": "^1.9",
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
+        "qcod/laravel-imageup": "^1.2",
         "rap2hpoutre/laravel-log-viewer": "^2.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-activitylog": "^4.7",
