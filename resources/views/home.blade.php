@@ -9,9 +9,9 @@
 		<header class="flex-col xl:flex-row flex justify-between">
 
 			<div class="mx-auto text-center xl:text-left xl:mx-0 mb-20 xl:mb-0">
-				<h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-10">RTQ Maisuro</h1>
+				<h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-10">{{ config('app.name') }}</h1>
 
-				<p class="font-normal text-gray-500 text-sm md:text-lg mb-10">Hidup indah bersama Al-Qur'an, Alhamdulillah!</p>
+				<p class="font-normal text-gray-500 text-sm md:text-lg mb-10">Hidup indah penuh berkah bersama Al-Qur'an, Alhamdulillah!</p>
 
 				<div class="flex items-center justify-center lg:justify-start">
 					<a href="https://instagram.com/rumahtartilquran_maisuro" target="instagram" class="px-8 py-3 bg-green-800 font-medium text-white text-md md:text-lg rounded-md hover:opacity-75 transition ease-in-out duration-300 mr-14">Follow Us</a>
