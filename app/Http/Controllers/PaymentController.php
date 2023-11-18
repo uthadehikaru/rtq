@@ -26,7 +26,7 @@ class PaymentController extends Controller
 
     public function form(BatchRepository $batchRepository, PeriodRepository $periodRepository, Request $request)
     {
-        $data['periods'] = $periodRepository->all();
+        $data['periods'] = $periodRepository->lastSixMonth();
         $data['period_id'] = $request->get('period_id');
 
         return view('payment-confirm', $data);

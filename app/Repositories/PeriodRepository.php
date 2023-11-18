@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PeriodRepositoryInterface;
 use App\Models\Period;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class PeriodRepository implements PeriodRepositoryInterface
@@ -54,5 +55,13 @@ class PeriodRepository implements PeriodRepositoryInterface
         }, 'paymentDetails as transfer_count' => function ($query) {
             $query->whereRelation('payment', 'payment_method', 'transfer');
         }])->get();
+    }
+
+    public function lastSixMonth()
+    {
+        return Period::oldest('start_date')
+        ->where('name','<>','Registrasi')
+        ->where('start_date','>=',Carbon::now()->subMonths(6)->startOfMonth())
+        ->get();
     }
 }
