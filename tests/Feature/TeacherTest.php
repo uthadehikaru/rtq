@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 
@@ -37,6 +38,9 @@ test('teacher can create their schedule', function () {
     ->assertJson([
         'error' => null,
     ]);
+
+    $schedule = Schedule::first();
+    expect($schedule->batch_id)->toBe($batch->id);
 });
 
 test('teacher cannot create past schedule', function () {

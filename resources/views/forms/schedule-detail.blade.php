@@ -8,6 +8,9 @@
 @if(session()->has('message'))
 <x-alert type="success">{{ session()->get('message') }}</x-alert>
 @endif
+@if(session()->has('error'))
+<x-alert type="danger" icon="flaticon-information ">{{ session()->get('error') }}</x-alert>
+@endif
 
 <x-alert type="info" icon="flaticon-information ">Perhatian : Untuk perubahan status dan deskripsi peserta, tidak perlu mengklik tombol simpan lagi. Sistem akan otomatis memperbaharui saat ada perubahan.</x-alert>
 <div class="row">
@@ -29,7 +32,7 @@
                                 <i class="la la-arrow-left"></i>
                                 @lang('Back')
                             </a>
-                            @if(!$schedule->end_at)
+                            @if(!$schedule->end_at || !$teacherPresent->leave_at)
                             <a href="{{ route('teacher.schedules.close', $schedule->id) }}" class="btn btn-success btn-icon-sm mt-2"
                             onclick="return confirm('Apakah anda yakin ingin menutup kelas?')">
                                 tutup Kelas

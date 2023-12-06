@@ -54,6 +54,20 @@ class SettingSeeder extends Seeder
             ]);
         }
 
+        $courses = [];
+        foreach (Course::TYPES as $type) {
+            $courses[] = 'durasi_'.Str::snake($type);
+        }
+
+        foreach ($courses as $course) {
+            Setting::firstOrCreate([
+                'group' => 'course',
+                'name' => $course,
+            ], [
+                'payload' => 0,
+            ]);
+        }
+
         $homepage = [
             'banner' => '',
             'tagline' => "Hidup Indah, Penuh Berkah Bersama Al-Qur'an",

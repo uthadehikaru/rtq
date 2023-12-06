@@ -50,7 +50,7 @@ class CreateSchedule extends Controller
             $texts['Nama'] = Auth::user()->name;
             $texts['Halaqoh'] = $batch->name;
             $texts['Pengganti'] = $data['badal'] ? 'Ya' : 'Tidak';
-            $texts['posisi'] = $this->calculateDistance($texts).' meter';
+            $texts['posisi'] = $scheduleRepository->calculateDistance($texts).' meter';
             foreach ($texts as $key => $text) {
                 $image->text($key.' : '.$text, 10, $y, function ($font) {
                     $font->file(public_path('assets/fonts/Roboto-Regular.ttf'));
@@ -81,24 +81,5 @@ class CreateSchedule extends Controller
         } catch(Exception $ex) {
             return response()->json(['error' => $ex->getMessage()]);
         }
-    }
-
-    private function calculateDistance($data)
-    {
-        $lat = setting('latitude');
-        $long = setting('longitude');
-        //Converting to radians
-        $longi1 = deg2rad($data['long']);
-        $longi2 = deg2rad($long);
-        $lati1 = deg2rad($data['lat']);
-        $lati2 = deg2rad($lat);
-
-        //Haversine Formula
-        $difflong = $longi2 - $longi1;
-        $difflat = $lati2 - $lati1;
-
-        $val = pow(sin($difflat / 2), 2) + cos($lati1) * cos($lati2) * pow(sin($difflong / 2), 2);
-
-        return round(1000 * 6378.8 * (2 * asin(sqrt($val)))); // in meters
     }
 }

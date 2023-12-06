@@ -35,6 +35,7 @@ use App\Http\Controllers\Schedule;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Teacher;
+use App\Http\Controllers\Teacher\CloseSchedule;
 use App\Http\Controllers\Teacher\Schedule as TeacherSchedule;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
@@ -127,7 +128,8 @@ Route::middleware('auth')->group(function () {
         Route::get('schedules/create', TeacherSchedule::class)->name('schedules.create');
         Route::post('schedules/create', Actions\CreateSchedule::class);
         Route::get('schedule/{schedule}', Actions\ScheduleDetail::class)->name('schedules.detail');
-        Route::get('schedule/{schedule}/close', Actions\CloseSchedule::class)->name('schedules.close');
+        Route::get('schedule/{schedule}/close', CloseSchedule::class)->name('schedules.close');
+        Route::post('schedule/{schedule}/close', Actions\CloseSchedule::class);
         Route::post('schedule/{schedule}/presents/add', Actions\AddMemberToSchedule::class)->name('schedules.presents.add');
         Route::get('schedule/{schedule}/presents/remove/{present}', Actions\RemoveMemberFromSchedule::class)->name('schedules.presents.remove');
         Route::post('schedule/{schedule}', Actions\UpdateSchedule::class)->name('schedules.update');

@@ -24,16 +24,19 @@ class Present extends Model
         'type',
         'user_id',
         'attended_at',
+        'leave_at',
         'status',
         'description',
         'salary_id',
         'is_badal',
         'photo',
+        'photo_out',
         'is_transfer',
     ];
 
     protected $casts = [
         'attended_at' => 'datetime',
+        'leave_at' => 'datetime',
     ];
 
     public function user()
