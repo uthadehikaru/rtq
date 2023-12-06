@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,8 @@ class SettingController extends Controller
     {
         $data['homepage'] = Setting::where('group', 'homepage')->get()->keyBy('name');
         $data['general'] = Setting::where('group', 'general')->get()->keyBy('name');
+        $data['course'] = Setting::where('group', 'course')->get()->keyBy('name');
+        $data['types'] = Course::TYPES;
 
         return view('forms.setting', $data);
     }
@@ -38,15 +41,22 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'banner' => '',
-            'tagline' => '',
-            'about' => '',
-            'instagram' => '',
-            'whatsapp' => '',
-            'latitude' => '',
-            'longitude' => '',
-        ]);
+        $params = [
+            'banner' => 'nullable',
+            'tagline' => 'nullable',
+            'about' => 'nullable',
+            'instagram' => 'nullable',
+            'whatsapp' => 'nullable',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
+        ];
+
+        $types = Course::TYPES;
+        foreach($types as $type){
+            $params['durasi_'.str($type)->snake()] = 'min:0';
+        }
+
+        $data = $request->validate($params);
 
         foreach ($data as $name => $value) {
             Setting::where('name', $name)->update(['payload' => json_encode($value)]);

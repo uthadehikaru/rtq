@@ -158,7 +158,10 @@
                                 </td>
                                 <td>
                                     @if($present->photo)
-                                    <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto</a>
+                                    <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto Masuk</a>
+                                    @endif
+                                    @if($present->photo_out)
+                                    <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto Keluar</a>
                                     @endif
                                     {{ $present->type=='teacher' && $present->is_badal?'(Badal)':'' }}
                                     {{ $present->type=='member' && $present->is_transfer?'(Operan)':'' }}

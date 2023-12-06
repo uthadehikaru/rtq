@@ -98,7 +98,15 @@ jQuery(document).ready(function() {
                     <tr>
                         <td>{{ $present->schedule->scheduled_at->format('d M Y h:i') }}</td>
                         <td>{{ $present->schedule->batch->name }}</td>
-                        <td>@lang('app.present.status.'.$present->status) {{ $present->status!='present' && $present->description==''?'Tanpa Keterangan':'' }} {{ $present->status=='present' && $present->attended_at?__('at :time', ['time'=>$present->attended_at?->format('H:i')]):'' }}</td>
+                        <td>
+                            @lang('app.present.status.'.$present->status) 
+                            @if($present->status=='present')
+                                {{ $present->attended_at?->format('H:i') }} 
+                                {{ $present->leave_at?' - '.$present->leave_at->format('H:i'):'' }}
+                            @else
+                            {{ $present->description==''?'Tanpa Keterangan':'' }}
+                            @endif
+                        </td>
                         <td>
                         @if($present->photo)
                         <a href="{{ asset('storage/'.$present->photo) }}" target="_blank">Bukti Foto</a>

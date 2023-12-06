@@ -71,7 +71,8 @@
                                     <span class="text-{{ $present->status=='present'?'primary':'danger' }}">
                                         @lang('app.present.status.'.$present->status)
                                         @if($present->status=='present')
-                                            pada {{ $present->attended_at?->format('H:i') }}
+                                            {{ $present->attended_at?->format('H:i') }}
+                                            {{ $present->leave_at?' - '.$present->leave_at->format('H:i'):'' }}
                                             @php 
                                             $attended_at = $present->attended_at;
                                             if(!$attended_at)

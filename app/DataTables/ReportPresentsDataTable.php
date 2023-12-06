@@ -77,7 +77,9 @@ class ReportPresentsDataTable extends DataTable
             ->editColumn('status', function ($row) {
                 $status = __('app.present.status.'.$row->status);
                 if ($row->status == 'present' && $row->attended_at) {
-                    $status .= ' pada '.$row->attended_at->format('H:i');
+                    $status .= ' '.$row->attended_at->format('H:i');
+                    if($row->leave_at)
+                        $status .= " - ".$row->leave_at->format('H:i');
                 }
 
                 return $status;
@@ -86,6 +88,9 @@ class ReportPresentsDataTable extends DataTable
                 $description = '';
                 if ($row->photo) {
                     $description .= '<p><a href="'.asset('storage/'.$row->photo).'"  data-lightbox="present-'.$row->id.'"><img src="'.asset('storage/'.$row->photo).'" width="200" class="img-fluid" /></a></p>';
+                }
+                if ($row->photo_out) {
+                    $description .= '<p><a href="'.asset('storage/'.$row->photo_out).'"  data-lightbox="present_out-'.$row->id.'"><img src="'.asset('storage/'.$row->photo_out).'" width="200" class="img-fluid" /></a></p>';
                 }
                 $description .= $row->description;
                 $description .= ' '.($row->type == 'teacher' && $row->is_badal ? '(Badal)' : '');

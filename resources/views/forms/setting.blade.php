@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#general">Umum</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#course">Kelas</a>
+                </li>
             </ul>
             <div class="tab-content mt-5" id="myTabContent">
                 <div class="tab-pane fade show active" id="homepage" role="tabpanel" aria-labelledby="homepage">
@@ -70,6 +73,16 @@
                             <label>Longitude</label>
                             <input type="text" name="longitude" class="form-control" value="{{ $general['longitude']->payload }}">
                         </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="course" role="tabpanel" aria-labelledby="course">
+                    <div class="kt-section kt-section--first">
+                        @foreach ($types as $type)
+                        <div class="form-group">
+                            <label>Durasi {{ $type }}</label>
+                            <input type="text" name="{{ 'durasi_'.str($type)->snake() }}" class="form-control" value="{{ $course['durasi_'.str($type)->snake()]->payload }}">
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
