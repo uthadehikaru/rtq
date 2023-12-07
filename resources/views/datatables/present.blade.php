@@ -77,6 +77,7 @@
                     <thead>
                         <tr>
                             <th title="Field #1">@lang('#')</th>
+                            <th title="Field #2">@lang('Tipe')</th>
                             <th title="Field #2">@lang('Name')</th>
                             <th title="Field #4">@lang('Status')</th>
                             <th title="Field #4">@lang('Keterangan')</th>
@@ -93,17 +94,32 @@
                                                 src="{{ thumbnail($present->user->member->profile_picture) }}"
                                                 width="100"
                                                 class="img-fluid" /></a>
-                                    @elseif($present->photo)
+                                    @else
+                                        @if($present->photo)
                                         <a href="{{ asset('storage/'.$present->photo) }}"
-                                            data-lightbox="{{ $present->id }}"><img
+                                            data-lightbox="in-{{ $present->id }}"><img
                                                 src="{{ asset('storage/'.$present->photo) }}"
                                                 width="100"
                                                 class="img-fluid" /></a>
+                                        @endif
+                                        @if($present->photo_out)
+                                        <a href="{{ asset('storage/'.$present->photo_out) }}"
+                                            data-lightbox="out-{{ $present->id }}"><img
+                                                src="{{ asset('storage/'.$present->photo_out) }}"
+                                                width="100"
+                                                class="img-fluid" /></a>
+                                        @endif
                                     @endif
                                 </td>
-                                <td>{{ $present->user->name }} - {{ $present->type }}</td>
+                                <td>{{ $present->type }}</td>
+                                <td>{{ $present->user->name }}</td>
                                 <td>@lang('app.present.status.'.$present->status)
-                                    {{ $present->status=='present' && $present->attended_at?__('at :time', ['time'=>$present->attended_at?->format('H:i')]):'' }}
+                                    @if($present->status=='present' && $present->attended_at)
+                                        {{ $present->attended_at?->format('H:i') }}
+                                        @if($present->leave_at)
+                                        - {{ $present->leave_at->format('H:i') }}
+                                        @endif
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $present->type=='teacher' && $present->is_badal?'(Badal)':'' }}
@@ -194,7 +210,9 @@
                     $('#iqobModal').modal('show');
                 }
                 $(document).ready(function () {
-                    $('.table').DataTable();
+                    $('.table').DataTable({
+                        order: [[1, 'desc']]
+                    });
 
                     $(document).on("click", ".delete", function() { 
                         if(confirm("@lang('Apakah kamu yakin?')")) {

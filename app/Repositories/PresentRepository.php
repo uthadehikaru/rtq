@@ -16,7 +16,7 @@ class PresentRepository implements PresentRepositoryInterface
     {
         return Present::with('schedule', 'user')
         ->where('schedule_id', $schedule_id)
-        ->latest()
+        ->orderBy('type','asc')
         ->get();
     }
 
