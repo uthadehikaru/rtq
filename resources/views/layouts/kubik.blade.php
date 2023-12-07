@@ -50,9 +50,15 @@
                             <a href="{{ route('payment') }}">Konfirmasi Pembayaran</a>
                         </li>
 
-                       <li class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
+						@auth
+						<li class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
+                            <a href="{{ route('dashboard') }}">Dashboard</a>
+                       	</li>
+						@else
+                       	<li class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
                             <a href="{{ route('login') }}">Masuk</a>
                        </li>
+						@endauth
                     </ul>
                 </nav>
 
