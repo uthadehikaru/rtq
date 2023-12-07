@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Actions;
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
 use App\Repositories\ScheduleRepository;
+use App\Services\SettingService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,7 +21,8 @@ class CloseSchedule extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, ScheduleRepository $scheduleRepository, $schedule_id)
+    public function __invoke(Request $request, SettingService $settingService,
+    ScheduleRepository $scheduleRepository, $schedule_id)
     {
         $data = $request->validate([
             'lat' => 'required',
@@ -31,6 +33,11 @@ class CloseSchedule extends Controller
             $schedule = Schedule::find($schedule_id);
             $present = $schedule->presents()->where('user_id',Auth::id())->first();
             $batch = $schedule->batch;
+
+            $duration = $settingService->value('durasi_'.str($schedule->batch->course->type)->snake(), 0);
+            if(Carbon::now()->diffInMinutes($present->attended_at)<$duration)
+                return response()->json(['error' => 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i')]);
+            
 
             $file = 'jadwal/'.Auth::user()->name.' '.$batch->name.' '.Carbon::now()->format('d-M-Y H-i').'.jpg';
             Storage::disk('public')->put($file, file_get_contents($data['photo']));
@@ -57,7 +64,7 @@ class CloseSchedule extends Controller
             }
             $image->save(storage_path('app/public/'.$file));
 
-            $present->update(['photo_out' => $file, 'leave_at'=>Carbon::now()]);
+            $present->update(['photo_out' => $file, 'leave_at'=>Carbon::now()->format('H:i')]);
 
             if(!$schedule->end_at)
                 $schedule->update(['end_at' => Carbon::now()->format('H:i')]);

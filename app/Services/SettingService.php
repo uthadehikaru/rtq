@@ -21,4 +21,14 @@ class SettingService
 
         return $value;
     }
+
+    public function set($name, $value)
+    {
+        $setting = $this->get($name);
+        if ($setting) {
+            $setting->update(['payload'=>json_encode($value)]);
+        }
+
+        return $value;
+    }
 }

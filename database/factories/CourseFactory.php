@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
@@ -16,7 +17,7 @@ class CourseFactory extends Factory
         return [
             'name' => $this->faker->sentence(2),
             'fee' => $this->faker->randomNumber(6, true),
-            'type' => $this->faker->word(),
+            'type' => $this->faker->randomElement(Course::TYPES),
         ];
     }
 }
