@@ -40,9 +40,9 @@ use App\Http\Controllers\Teacher\Schedule as TeacherSchedule;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViolationController;
-use App\Http\Livewire\MemberCards;
-use App\Http\Livewire\Profile;
-use App\Http\Livewire\UpdatePassword;
+use App\Livewire\MemberCards;
+use App\Livewire\Profile;
+use App\Livewire\UpdatePassword;
 use Illuminate\Support\Facades\Route;
 
 /*

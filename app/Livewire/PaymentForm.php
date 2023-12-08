@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\PaymentDetail;
 use Livewire\Component;
@@ -42,7 +42,7 @@ class PaymentForm extends Component
     {
         PaymentDetail::findOrFail($id)->delete();
         $this->payment->refresh();
-        $this->emit('line-deleted');
+        $this->dispatch('line-deleted');
     }
 
     public function add()
@@ -62,7 +62,7 @@ class PaymentForm extends Component
             'period_id' => $this->period_id,
             'member_id' => $this->member_id,
         ]);
-        $this->emit('line-added');
+        $this->dispatch('line-added');
     }
 
     public function render()

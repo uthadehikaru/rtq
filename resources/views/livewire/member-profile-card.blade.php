@@ -24,12 +24,12 @@
                 <livewire:member-profile :member="$member" />
             </div>
             <div class="col-md-6">
-                <form wire:submit.prevent="simpan">
+                <form wire:submit="simpan">
                     <input type="hidden" name="_method" value="PUT" />
                     <div class="form-group">
                         <label>@lang('Nama Panggilan')<span class="text-danger">*</span></label>
                         <input type="text" name="short_name" class="form-control"
-                        wire:model.lazy="member.short_name"
+                        wire:model.blur="member.short_name"
                         value="{{ old('short_name', $member?$member->short_name:'') }}"
                         >
                         <span class="text-danger">
@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label>@lang('Email')<span class="text-danger">*</span></label>
                         <input type="text" name="email" class="form-control"
-                        wire:model.lazy="member.email"
+                        wire:model.blur="member.email"
                         value="{{ old('email', $member?$member->email:'') }}"
                         >
                         <span class="text-danger">
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label>@lang('No Telp')<span class="text-danger">*</span></label>
                         <input type="text" name="phone" class="form-control"
-                        wire:model.lazy="member.phone"
+                        wire:model.blur="member.phone"
                         value="{{ old('phone', $member?$member->phone:'') }}"
                         >
                         <span class="text-danger">
@@ -59,13 +59,13 @@
                     <div class="form-group">
                         <label>@lang('Alamat')</label>
                         <textarea name="address" class="form-control"
-                        wire:model.lazy="member.address"
+                        wire:model.blur="member.address"
                         >{{ old('address', $member?$member->address:'') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label>@lang('Kodepos')</label>
                         <input type="text" name="postcode" class="form-control"
-                        wire:model.lazy="member.postcode"
+                        wire:model.blur="member.postcode"
                         value="{{ old('postcode', $member?$member->postcode:'') }}"
                         >
                     </div>

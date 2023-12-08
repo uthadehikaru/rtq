@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Present;
 use Livewire\Component;
@@ -25,7 +25,7 @@ class Presents extends Component
     {
         $present = Present::find($present_id);
         $present->update(['status' => $status]);
-        $this->emit('message', $present_id);
+        $this->dispatch('message', $present_id);
     }
 
     public function updateDescription($present_id, $description)
@@ -33,7 +33,7 @@ class Presents extends Component
         $present = Present::find($present_id);
         if ($present->description != $description) {
             $present->update(['description' => $description]);
-            $this->emit('message', $present_id);
+            $this->dispatch('message', $present_id);
         }
     }
 
