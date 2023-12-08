@@ -61,6 +61,12 @@
         @if($present->photo_out)
         <h3 class="mt-2">Absen Keluar</h3>
         <a href="{{ asset('storage/'.$present->photo_out) }}" target="_BLANK"><img src="{{ asset('storage/'.$present->photo_out) }}" class="img-fluid" /></a>
+        @else
+        <h3 class="mt-2">Informasi</h3>
+        Durasi Kelas : {{ $duration }} Menit
+        <br/>Min Tutup Kelas : {{ $present->attended_at->addMinutes($duration)->format('H:i') }}
+        <br/>Kehadiran : {{ $presentCount }}
+        <br/>Durasi per Peserta : {{ round($duration/$presentCount) }} menit
         @endif
     </div>
 </div>

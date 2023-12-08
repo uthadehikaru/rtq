@@ -39,7 +39,7 @@
                             @endforeach
                         </select>
                         <input type="text" class="form-control mt-2"
-                        placeholder="Tidak ada keterangan"
+                        placeholder="keterangan"
                          value="{{ $present->description }}" wire:blur="updateDescription({{ $present->id }}, $event.target.value)" />
                     </div>
                 </div>
