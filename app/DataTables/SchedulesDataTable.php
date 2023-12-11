@@ -46,6 +46,9 @@ class SchedulesDataTable extends DataTable
             ->editColumn('start_at', function ($row) {
                 return $row->start_at->format('H:i');
             })
+            ->editColumn('end_at', function ($row) {
+                return $row->end_at?->format('H:i');
+            })
             ->editColumn('batch_id', function ($row) {
                 return $row->batch->name;
             })
@@ -132,6 +135,7 @@ class SchedulesDataTable extends DataTable
             Column::make('batch_id')->title('Halaqoh'),
             Column::make('teacher')->title('Pengajar'),
             Column::make('start_at')->title('Mulai'),
+            Column::make('end_at')->title('Selesai'),
             Column::make('place')->title('Tempat'),
             Column::make('presents_count')->title('Peserta')->searchable(false),
             Column::computed('action')
