@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Profile;
+use App\Http\Livewire\Profile;
 use App\Models\User;
 use Livewire\Livewire;
 
@@ -11,17 +11,18 @@ test('guest cannot access profile', function () {
 
 test('user can access profile', function () {
     $user = User::factory()->create();
-    Livewire::actingAs($user)
-    ->test(Profile::class)
+    actingAs($user)->get('profile')
     ->assertStatus(200)
-    ->assertSee($user->name)
-    ->assertSee($user->email);
+    ->assertSeeInOrder([$user->name,$user->email]);
 });
 
 test('user can update profile', function () {
     $user = User::factory()->create();
-    Livewire::actingAs($user)
-    ->test(Profile::class)
+    actingAs($user);
+    Livewire::test(Profile::class)
+    ->set('user.name','foo')
+    ->set('user.email', 'foo@bar')
+    ->set('user.is_notify', 0)
     ->call('update')
     ->assertSee('Profile berhasil diperbaharui');
 });

@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="paymentForm" wire:submit="savePayment">
+                <form id="paymentForm" wire:submit.prevent="savePayment">
                     <div class="form-group">
                         <label class="col-form-label">@lang('Period')</label>
                         <div wire:ignore>
@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Total Transfer</label>
                         <div>
-                            <input class="form-control" id="total" type="number" name="total" wire:model.blur="total">
+                            <input class="form-control" id="total" type="number" name="total" wire:model.lazy="total">
                         </div>
                         @error('total') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
@@ -45,12 +45,12 @@
                         <div>
                             <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="payment_method" 
-                            id="transfer" value="transfer" wire:model="payment_method">
+                            id="transfer" value="transfer" wire:model.defer="payment_method">
                             <label class="form-check-label" for="transfer">transfer</label>
                             </div>
                             <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="payment_method" 
-                            id="amplop" value="amplop" wire:model="payment_method">
+                            id="amplop" value="amplop" wire:model.defer="payment_method">
                             <label class="form-check-label" for="amplop">amplop</label>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label class="col-form-label">Tanggal Konfirmasi</label>
                         <div>
-                            <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.blur="paid_at">
+                            <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.lazy="paid_at">
                         </div>
                         @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
@@ -67,7 +67,7 @@
                         <label class="col-form-label">Bukti Transfer</label>
                         <div>
                             <input class="form-control" type="file" name="attachment" 
-                            wire:model.live="attachment" accept="image/*">
+                            wire:model="attachment" accept="image/*">
                         </div>
                         @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>

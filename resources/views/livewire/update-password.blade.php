@@ -11,11 +11,11 @@
                     </span>
                 </div>
                 <div class="kt-widget14__body">
-                    <form wire:submit="submitPassword">
+                    <form wire:submit.prevent="submitPassword">
                         <div class="form-group">
                             <label>@lang('Password Lama')<span class="text-danger">*</span></label>
                             <input type="password" name="old_password" class="form-control"
-                            wire:model.live.debounce.500ms="old_password"
+                            wire:model.debounce.500ms="old_password"
                             >
                             <span class="text-danger">
                                 @error('old_password') {{ $message }} @enderror
@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label>@lang('Password Baru')<span class="text-danger">*</span></label>
                             <input type="password" name="new_password_confirmation" class="form-control"
-                            wire:model.live.debounce.500ms="new_password_confirmation"
+                            wire:model.debounce.500ms="new_password_confirmation"
                             >
                             <span class="text-danger">
                                 @error('new_password_confirmation') {{ $message }} @enderror
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label>@lang('Ulangi Password Baru')<span class="text-danger">*</span></label>
                             <input type="password" name="new_password" class="form-control"
-                            wire:model.live.debounce.500ms="new_password"
+                            wire:model.debounce.500ms="new_password"
                             >
                             <span class="text-danger">
                                 @error('new_password') {{ $message }} @enderror

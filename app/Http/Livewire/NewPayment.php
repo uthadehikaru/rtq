@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Models\Period;
 use App\Repositories\PaymentRepository;
@@ -118,7 +118,7 @@ class NewPayment extends Component
 
         DB::commit();
 
-        return $this->dispatch('paymentCreated', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
+        return $this->emit('paymentCreated', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
     }
 
     public function render()

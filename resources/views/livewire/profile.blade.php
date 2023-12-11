@@ -16,19 +16,19 @@
                     </span>
                 </div>
                 <div class="kt-widget14__body">
-                    <form wire:submit="update">
+                    <form wire:submit.prevent="update">
                         <div class="form-group">
                             <label>@lang('Nama')<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" wire:model.blur="user.name"
-                            value="{{ $user->name }}">
+                            <input type="text" name="name" class="form-control" wire:model.lazy="user.name"
+                            >
                             <span class="text-danger">
                                 @error('name') {{ $message }} @enderror
                             </span>
                         </div>
                         <div class="form-group">
                             <label>@lang('Email')<span class="text-danger">*</span></label>
-                            <input type="email" name="email" class="form-control" wire:model.blur="user.email"
-                            value="{{ $user->email }}">
+                            <input type="email" name="email" class="form-control" wire:model.lazy="user.email"
+                            >
                             <span class="text-danger">
                                 @error('email') {{ $message }} @enderror
                             </span>
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label class="form-check">
                                 <input class="form-check-input" type="checkbox" name="is_notify"
-                                wire:model.live="user.is_notify" value="1" {{ $user->is_notify?'checked':'' }}>
+                                wire:model="user.is_notify">
                                 <span class="form-check-label">Kirim Notifikasi</span>
                             </label>
                         </div>

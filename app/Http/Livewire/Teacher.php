@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Models\Present;
 use App\Models\Schedule;
@@ -38,7 +38,7 @@ class Teacher extends Component
         $present = Present::find($present_id);
         if ($present->description != $description) {
             $present->update(['description' => $description]);
-            $this->dispatch('message', 'Deskripsi diperbaharui');
+            $this->emit('message', 'Deskripsi diperbaharui');
         }
     }
 
@@ -47,7 +47,7 @@ class Teacher extends Component
         $schedule = Schedule::find($schedule_id);
         if ($schedule->place != $place) {
             $schedule->update(['place' => $place]);
-            $this->dispatch('message', 'Tempat diperbaharui');
+            $this->emit('message', 'Tempat diperbaharui');
         }
     }
 

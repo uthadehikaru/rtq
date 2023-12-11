@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Jobs\CreateMemberCardZip;
 use App\Models\Member;

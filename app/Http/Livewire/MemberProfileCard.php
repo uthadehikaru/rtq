@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Events\ProfileUpdated;
 use Illuminate\Support\Facades\Storage;

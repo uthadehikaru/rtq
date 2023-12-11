@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Events\ProfileUpdated;
 use Carbon\Carbon;
@@ -46,7 +46,7 @@ class MemberProfile extends Component
             $image->save(storage_path('app/public/'.$filename));
             Artisan::call('member:card', ['--no' => $this->member->member_no]);
             ProfileUpdated::dispatch($this->member, $changeColumn);
-            $this->dispatch('refresh');
+            $this->emit('refresh');
         }
     }
 
