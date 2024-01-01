@@ -1,4 +1,13 @@
 @extends('datatables.datatable')
+
+@section('breadcrumbs')
+<a href="{{ route('schedules.index') }}" class="kt-subheader__breadcrumbs-link">
+@lang("Schedule")</a>
+<span class="kt-subheader__breadcrumbs-separator"></span>
+<span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
+    @lang('Laporan')
+</span>
+@endsection
 @section('search')
 <div class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">

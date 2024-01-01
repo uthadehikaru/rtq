@@ -129,8 +129,8 @@ jQuery(document).ready(function() {
             <tbody>
                 @foreach($periods as $period)
                     <tr>
-                        <td>{{ $period->start_date->format('Y-m-d') }}</td>
-                        <td>{{ $period->end_date->format('Y-m-d') }}</td>
+                        <td>{{ $period->start_date->format('d M Y') }}</td>
+                        <td>{{ $period->end_date->format('d M Y') }}</td>
                         <td>{{ $period->name }}</td>
                         <td>{{ $period->payment_details_count }}/{{ $total_members }} Anggota</td>
                         <td>
