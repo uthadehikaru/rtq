@@ -33,8 +33,8 @@ class TeacherRepository implements TeacherRepositoryInterface
     public function delete($id)
     {
         $teacher = Teacher::find($id);
-        $teacher->user()->delete();
         $teacher->delete($id);
+        $teacher->user()->delete();
     }
 
     public function create(array $data)
@@ -81,6 +81,11 @@ class TeacherRepository implements TeacherRepositoryInterface
     }
 
     public function list()
+    {
+        return Teacher::whereNotIn('status',['khidmat'])->pluck('name', 'id');
+    }
+
+    public function listAll()
     {
         return Teacher::all()->pluck('name', 'id');
     }

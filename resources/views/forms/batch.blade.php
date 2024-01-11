@@ -78,19 +78,25 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Pengajar')</label>
-                            <select class="form-control" id="teacher" name="teacher_ids[]" multiple>
+                            <select class="form-control" id="teacher" name="teacher_ids[]" multiple required>
                                 @foreach ($teachers as $id=>$name)
-                                    <option value="{{ $id }}" {{ $batch && $batch->teachers->contains($id)?'selected':'' }}>{{ $name }}</option>
+                                    <option value="{{ $id }}" {{ $batch && $batch->teachers->filter(fn($value,$key) => !$value->pivot->is_member)->contains($id)?'selected':'' }}>{{ $name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label>@lang('Peserta')</label>
                             <select class="form-control" id="member" name="member_ids[]" multiple>
-                                @if($batch)
-                                @foreach ($batch->members as $member)
-                                <option value="{{ $member->id }}" selected>{{ $member->full_name }}</option>
-                                @endforeach
+                                @if($course->type=='Talaqqi Pengajar')
+                                    @foreach ($members as $id=>$name)
+                                        <option value="{{ $id }}" {{ $batch && $batch->teachers->filter(fn($value,$key) => $value->pivot->is_member)->contains($id)?'selected':'' }}>{{ $name }}</option>
+                                    @endforeach
+                                @else
+                                    @if($batch)
+                                    @foreach ($batch->members as $member)
+                                    <option value="{{ $member->id }}" selected>{{ $member->full_name }}</option>
+                                    @endforeach
+                                    @endif
                                 @endif
                             </select>
                         </div>
@@ -122,6 +128,11 @@
                     placeholder: 'Pilih Pengajar',
                 });
 
+                @if($course->type=='Talaqqi Pengajar')
+                $('#member').select2({
+                    placeholder: 'Pilih Pengajar/Khidmat',
+                });
+                @else
                 $('#member').select2({
                     placeholder: "@lang('Pilih Peserta')",
                     ajax: {
@@ -134,6 +145,7 @@
                         }
                     }
                 });
+                @endif
             }
 
             // Public functions

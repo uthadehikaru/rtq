@@ -88,7 +88,7 @@
                         @foreach($presents as $present)
                             <tr>
                                 <td>
-                                    @if($present->type=='member')
+                                    @if($present->type=='member' && $present->user->member)
                                         <a href="{{ thumbnail($present->user->member->profile_picture) }}"
                                             data-lightbox="{{ $present->id }}"><img
                                                 src="{{ thumbnail($present->user->member->profile_picture) }}"

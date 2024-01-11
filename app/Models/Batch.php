@@ -34,6 +34,6 @@ class Batch extends Model
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class);
+        return $this->belongsToMany(Teacher::class)->withPivot('is_member');
     }
 }

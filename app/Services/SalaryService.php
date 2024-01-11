@@ -103,6 +103,9 @@ class SalaryService
             foreach ($presents as $present) {
                 if ($present->status == Present::STATUS_PRESENT) {
                     $type = Str::snake($present->schedule->batch->course->type);
+                    if($type=='talaqqi_pengajar')
+                        continue;
+                    
                     $ratio = $present->user->teacher->status == 'training' ? 0.5 : 1;
                     $summary[$type]['total']++;
                     $rate = $settings[$type] * $ratio;

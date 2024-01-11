@@ -45,7 +45,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     {
         DB::beginTransaction();
 
-        $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::now()->startOfDay())
+        $schedule = Schedule::with('batch')->whereDate('scheduled_at', $data['scheduled_at'])
         ->where('batch_id', $data['batch_id'])
         ->first();
 
@@ -53,13 +53,25 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $data['scheduled_at'] .= ' '.$data['start_at'];
             $schedule = Schedule::create($data);
 
-            foreach ($schedule->batch->members as $member) {
-                Present::create([
-                    'schedule_id' => $schedule->id,
-                    'user_id' => $member->user_id,
-                    'status' => 'present',
-                    'type' => 'member',
-                ]);
+            $batch = Batch::with('course')->find($data['batch_id']);
+            if($batch->course->type=='Talaqqi Pengajar'){
+                foreach ($batch->teachers->filter(fn($value,$key) => $value->pivot->is_member)->all() as $member) {
+                    Present::create([
+                        'schedule_id' => $schedule->id,
+                        'user_id' => $member->user_id,
+                        'status' => 'present',
+                        'type' => 'member',
+                    ]);
+                }
+            }else{
+                foreach ($batch->members as $member) {
+                    Present::create([
+                        'schedule_id' => $schedule->id,
+                        'user_id' => $member->user_id,
+                        'status' => 'present',
+                        'type' => 'member',
+                    ]);
+                }
             }
         }
 
@@ -93,13 +105,25 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $data['place'] = $batch->place;
             $schedule = Schedule::create($data);
 
-            foreach ($schedule->batch->members as $member) {
-                Present::create([
-                    'schedule_id' => $schedule->id,
-                    'user_id' => $member->user_id,
-                    'status' => 'present',
-                    'type' => 'member',
-                ]);
+            $batch = Batch::with('course')->find($data['batch_id']);
+            if($batch->course->type=='Talaqqi Pengajar'){
+                foreach ($batch->teachers->filter(fn($value,$key) => $value->pivot->is_member)->all() as $member) {
+                    Present::create([
+                        'schedule_id' => $schedule->id,
+                        'user_id' => $member->user_id,
+                        'status' => 'present',
+                        'type' => 'member',
+                    ]);
+                }
+            }else{
+                foreach ($batch->members as $member) {
+                    Present::create([
+                        'schedule_id' => $schedule->id,
+                        'user_id' => $member->user_id,
+                        'status' => 'present',
+                        'type' => 'member',
+                    ]);
+                }
             }
         }
 

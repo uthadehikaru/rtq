@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 text-center">
-                        @if($present->user->member->profile_picture)
+                        @if($present->user->member?->profile_picture)
                         <img 
                         src="{{ thumbnail($present->user->member->profile_picture, 300, 400) }}"
                         class="img-fluid" />

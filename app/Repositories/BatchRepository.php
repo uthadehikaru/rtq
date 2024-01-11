@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\BatchRepositoryInterface;
 use App\Models\Batch;
+use App\Models\Course;
 use App\Models\Member;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\DB;
@@ -136,8 +137,13 @@ class BatchRepository implements BatchRepositoryInterface
                 'place' => $data['place'],
             ]);
 
+            $course = Course::find($data['course_id']);
+
             $batch->teachers()->sync($data['teacher_ids']);
-            $batch->members()->sync($data['member_ids']);
+            if($course->type=='Talaqqi Pengajar')
+                $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member'=>true], false);
+            else
+                $batch->members()->sync($data['member_ids']);
 
             return $batch;
         });
@@ -148,8 +154,12 @@ class BatchRepository implements BatchRepositoryInterface
         DB::beginTransaction();
         $batch = Batch::find($id);
         $batch->update($data);
+
         $batch->teachers()->sync($data['teacher_ids']);
-        $batch->members()->sync($data['member_ids']);
+        if($batch->course->type=='Talaqqi Pengajar')
+            $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member'=>true], false);
+        else
+            $batch->members()->sync($data['member_ids']);
         DB::commit();
 
         return $batch;

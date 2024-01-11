@@ -45,10 +45,15 @@ class BatchesDataTable extends DataTable
                 return $buttons;
             })
             ->addColumn('teachers', function ($row) {
-                return $row->teachers->implode('name', ' , ');
+                return $row->teachers->filter(fn($value,$key) => !$value->pivot->is_member)->implode('name', ' , ');
             })
             ->editColumn('start_time', function ($row) {
                 return $row->start_time?->format('H:i');
+            })
+            ->editColumn('members_count', function ($row) {
+                if($row->course->type=='Talaqqi Pengajar')
+                    return $row->teachers->filter(fn($value,$key) => $value->pivot->is_member)->count();
+                return $row->member_count;
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -64,7 +69,7 @@ class BatchesDataTable extends DataTable
     {
         return $model
         ->withCount('members')
-        ->with('teachers')
+        ->with(['teachers','course'])
         ->where('course_id', $this->course_id)
         ->newQuery();
     }

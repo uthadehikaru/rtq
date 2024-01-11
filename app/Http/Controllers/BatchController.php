@@ -29,8 +29,11 @@ class BatchController extends Controller
         $course_id
     ) {
         $data['title'] = __('New Batch');
-        $data['course'] = $courseRepository->find($course_id);
+        $course = $courseRepository->find($course_id);
+        $data['course'] = $course;
         $data['teachers'] = $teacherRepository->list();
+        if($course->type=='Talaqqi Pengajar')
+            $data['members'] = $teacherRepository->listAll();
         $data['batch'] = null;
 
         return view('forms.batch', $data);
@@ -63,9 +66,13 @@ class BatchController extends Controller
         $course_id, $batch_id)
     {
         $data['title'] = __('Edit Batch');
-        $data['course'] = $courseRepository->find($course_id);
+        $course = $courseRepository->find($course_id);
+        $data['course'] = $course;
         $data['teachers'] = $teacherRepository->list();
+        if($course->type=='Talaqqi Pengajar')
+            $data['members'] = $teacherRepository->listAll();
         $data['batch'] = $batchRepository->find($batch_id);
+        //dd($data['batch']->teachers);
 
         return view('forms.batch', $data);
     }

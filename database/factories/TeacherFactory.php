@@ -15,6 +15,7 @@ class TeacherFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'status' => 'tetap',
             'user_id' => 1,
         ];
     }

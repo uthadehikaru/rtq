@@ -54,3 +54,15 @@ test('admin can edit batch', function () {
     $response->assertViewHas('batch');
     $response->assertStatus(200);
 });
+
+test('khidmat teacher not appear on batch form', function () {
+    $admin = User::find(1);
+    $course = Course::factory()->create();
+    $teacher = Teacher::factory()->for(User::factory())->create(['status'=>'khidmat']);
+    actingAs($admin);
+    $response = $this->get(route('courses.batches.create', $course->id));
+    $response->assertSuccessful();
+    $content = $response->getOriginalContent();
+    $data = $content->getData();
+    expect($data['teachers'])->not->toContain($teacher->name);
+});

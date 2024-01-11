@@ -68,6 +68,7 @@
                             <select name="status" class="form-control">
                                 <option value="tetap" @selected($teacher && $teacher->status=='tetap')>Tetap</option>
                                 <option value="training" @selected($teacher && $teacher->status=='training')>Training</option>
+                                <option value="khidmat" @selected($teacher && $teacher->status=='khidmat')>Khidmat</option>
                             </select>
                         </div>
                     </div>

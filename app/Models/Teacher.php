@@ -9,6 +9,12 @@ class Teacher extends Model
 {
     use HasFactory;
 
+    public const STATUSES = [
+        'tetap',
+        'training',
+        'khidmat',
+    ];
+
     protected $fillable = [
         'name',
         'user_id',

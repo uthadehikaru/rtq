@@ -14,6 +14,7 @@ class Course extends Model
         'Tahsin Dewasa',
         'Tahsin Balita',
         'Talaqqi Jamai',
+        'Talaqqi Pengajar',
     ];
 
     protected $fillable = [
