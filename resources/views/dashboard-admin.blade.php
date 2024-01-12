@@ -16,7 +16,7 @@
                         </svg> </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link text-primary" href="{{ route('payments.index') }}">@lang('Payments')</a>
+                            <a class="kt-link text-primary" href="{{ route('payments.check') }}">@lang('Payments')</a>
                         </h3>
                         <div class="kt-iconbox__content">
                             {{ $unconfirmed_payments }} @lang('Pembayaran belum dikonfirmasi')

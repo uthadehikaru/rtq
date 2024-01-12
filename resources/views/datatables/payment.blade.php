@@ -20,6 +20,9 @@
                 <a class="dropdown-item" href="{{ route('periods.export') }}">
                     <i class="la la-download"></i> Export per Period
                 </a>
+                <a class="dropdown-item" href="{{ route('payments.check') }}">
+                    <i class="la la-list"></i> Check
+                </a>
             </div>
         </div>
 @endsection

@@ -41,6 +41,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViolationController;
 use App\Http\Livewire\MemberCards;
+use App\Http\Livewire\PaymentCheck;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\UpdatePassword;
 use Illuminate\Support\Facades\Route;
@@ -103,6 +104,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('violations', ViolationController::class);
             Route::get('periods/export/{id?}', [PeriodController::class, 'export'])->name('periods.export');
             Route::resource('periods', PeriodController::class);
+            Route::get('payments/check', PaymentCheck::class)->name('payments.check');
             Route::get('payments/summary', Rekapitulasi::class)->name('payments.summary');
             Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
             Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
