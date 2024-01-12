@@ -83,7 +83,7 @@ class BatchRepository implements BatchRepositoryInterface
         ->join('courses', 'batches.course_id', 'courses.id')
         ->join('members', 'batch_member.member_id', 'members.id')
         ->where('members.full_name', 'LIKE', '%'.$keyword.'%')
-        ->groupBy('members.full_name', 'members.id')
+        ->groupBy('members.full_name', 'members.id', 'members.member_no')
         ->orderBy('members.full_name')
         ->take(10)
         ->get();
