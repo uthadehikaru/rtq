@@ -53,7 +53,7 @@ class BatchesDataTable extends DataTable
             ->editColumn('members_count', function ($row) {
                 if($row->course->type=='Talaqqi Pengajar')
                     return $row->teachers->filter(fn($value,$key) => $value->pivot->is_member)->count();
-                return $row->member_count;
+                return $row->members_count;
             })
             ->rawColumns(['action'])
             ->setRowId('id');
