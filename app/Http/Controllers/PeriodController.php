@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PeriodsDataTable;
 use App\Exports\PaymentDetailsSheet;
 use App\Exports\PeriodsExport;
 use App\Interfaces\PeriodRepositoryInterface;
@@ -11,16 +12,11 @@ use Illuminate\Http\Request;
 
 class PeriodController extends Controller
 {
-    public function index(PeriodRepositoryInterface $periodRepository)
+    public function index(PeriodsDataTable $dataTable)
     {
-        $data['title'] = __('Periods');
-        $data['periods'] = Period::latest()
-        ->withCount('paymentDetails')
-        ->get();
-        $data['total_members'] = Member::has('batches')->select('id')->count();
-        $data['total'] = $data['periods']->count();
-
-        return view('datatables.period', $data);
+        $total = Member::has('batches')->select('id')->count();
+        $data['title'] = __('Periods'). ' - Peserta : '.$total;
+        return $dataTable->render('datatables.period', $data);
     }
 
     public function create()

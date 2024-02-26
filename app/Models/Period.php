@@ -16,8 +16,8 @@ class Period extends Model
     ];
 
     protected $casts = [
-        'start_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
+        'start_date' => 'date:d M Y',
+        'end_date' => 'date:d M Y',
     ];
 
     public function paymentDetails()
