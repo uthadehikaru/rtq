@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Period;
+use App\Models\PaymentDetail;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -12,8 +12,15 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class PeriodsDataTable extends DataTable
+class PaymentDetailsDataTable extends DataTable
 {
+    private $period_id = 0;
+
+    public function setPeriod($period_id)
+    {
+        $this->period_id = $period_id;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -23,19 +30,27 @@ class PeriodsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('created_at', function($row){
+                return $row->created_at->format('d M Y H:i');
+            })
+            ->editColumn('member_id', function($row){
+                return $row->member->full_name;
+            })
+            ->editColumn('payment_id', function($row){
+                return $row->payment->amount;
+            })
             ->addColumn('action', function ($row) {
                 $buttons = '<div class="btn-group" role="group">
                 <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Aksi
                 </button>
                 <div class="dropdown-menu" aria-labelledby="action">';
-                $buttons .= '<a href="'.route('paymentdetails.index', ['period_id'=>$row->id]).'" class="dropdown-item pointer text-primary">Detail</a>';
-                $buttons .= '<a href="javascript:;" class="dropdown-item pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
+                $buttons .= '<a href="'.route('payments.edit', $row->payment_id).'" class="dropdown-item text-warning">Ubah</a>';
                 $buttons .= '</div></div>';
 
                 return $buttons;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'attachment', 'status', 'member'])
             ->setRowId('id');
     }
 
@@ -45,10 +60,13 @@ class PeriodsDataTable extends DataTable
      * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Period $model): QueryBuilder
+    public function query(PaymentDetail $model): QueryBuilder
     {
+        if($this->period_id>0){
+            $model->where('period_id', $this->period_id);
+        }
         return $model
-        ->withCount('paymentDetails')
+        ->with(['payment','period','member'])
         ->newQuery();
     }
 
@@ -60,12 +78,12 @@ class PeriodsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Period-table')
+                    ->setTableId('PaymentDetail-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -85,10 +103,9 @@ class PeriodsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('name')->title('Nama'),
-            Column::make('start_date')->title('Awal'),
-            Column::make('end_date')->title('Akhir'),
-            Column::make('payment_details_count')->title('Pembayaran'),
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('member_id')->title('Member'),
+            Column::make('payment_id')->title('Amount'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
@@ -104,6 +121,6 @@ class PeriodsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Period_'.date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
             Route::get('payments/{payment}/confirm', [PaymentController::class, 'confirm'])->name('payments.confirm');
             Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
             Route::resource('payments', PaymentController::class);
-            Route::resource('payments.details', PaymentDetailController::class)->only(['index', 'destroy']);
+            Route::resource('paymentdetails', PaymentDetailController::class);
             Route::resource('transactions', TransactionController::class);
             Route::resource('programs', ProgramsController::class);
         });

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PaymentDetailsDataTable;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\Period;
 use Illuminate\Http\Request;
 
 class PaymentDetailController extends Controller
@@ -13,8 +15,13 @@ class PaymentDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Payment $payment)
+    public function index(Request $request, PaymentDetailsDataTable $dataTable)
     {
+        $data['period_id'] = $request->period_id;
+        $data['period'] = Period::findOrFail($request->period_id);
+        $data['title'] = __('Pembayaran').' Periode '.$data['period']->name;
+        $dataTable->setPeriod($request->period_id);
+        return $dataTable->render('datatables.paymentdetails', $data);
     }
 
     /**
@@ -78,7 +85,7 @@ class PaymentDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($payment_id, $id)
+    public function destroy($id)
     {
         PaymentDetail::find($id)->delete();
         $data['statusCode'] = 200;

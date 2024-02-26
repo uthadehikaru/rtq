@@ -24,7 +24,7 @@ jQuery(document).ready(function () {
     $(document).on("click", ".delete", function() { 
         if(confirm("@lang('Are you sure?')")) {
             var id= $(this).data('id');
-            var url = "{{ route('payments.details.index', $payment->id) }}";
+            var url = "{{ route('paymentdetails.index') }}";
             var dltUrl = url+"/"+id;
             $.ajax({
                 url: dltUrl,
