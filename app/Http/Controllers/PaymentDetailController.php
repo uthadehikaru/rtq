@@ -18,9 +18,14 @@ class PaymentDetailController extends Controller
     public function index(Request $request, PaymentDetailsDataTable $dataTable)
     {
         $data['period_id'] = $request->period_id;
-        $data['period'] = Period::findOrFail($request->period_id);
-        $data['title'] = __('Pembayaran').' Periode '.$data['period']->name;
-        $dataTable->setPeriod($request->period_id);
+        $data['period'] = null;
+        $data['title'] = __('Pembayaran');
+        if($request->period_id){
+            $data['period'] = Period::findOrFail($request->period_id);
+            $data['title'] .= ' Periode '.$data['period']->name;
+            $dataTable->setPeriod($request->period_id);
+        }
+
         return $dataTable->render('datatables.paymentdetails', $data);
     }
 

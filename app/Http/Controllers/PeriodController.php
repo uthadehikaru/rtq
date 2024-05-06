@@ -14,8 +14,9 @@ class PeriodController extends Controller
 {
     public function index(PeriodsDataTable $dataTable)
     {
-        $total = Member::has('batches')->select('id')->count();
-        $data['title'] = __('Periods'). ' - Peserta : '.$total;
+        $total = Member::has('batches')->whereNull('status')->select('id')->count();
+        $data['title'] = __('Periods');
+        $dataTable->setTotal($total);
         return $dataTable->render('datatables.period', $data);
     }
 

@@ -62,12 +62,12 @@ class PaymentDetailsDataTable extends DataTable
      */
     public function query(PaymentDetail $model): QueryBuilder
     {
-        if($this->period_id>0){
-            $model->where('period_id', $this->period_id);
-        }
-        return $model
+        $model = $model
         ->with(['payment','period','member'])
         ->newQuery();
+        if($this->period_id)
+            $model = $model->where('period_id', $this->period_id);
+        return $model;
     }
 
     /**

@@ -7,6 +7,6 @@
 @lang("Periode") </a>
 <span class="kt-subheader__breadcrumbs-separator"></span>
 <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">
-    {{ $period->name }}
+    {{ $period->name ?? 'All' }}
 </span>
 @endsection

@@ -14,6 +14,12 @@ use Yajra\DataTables\Services\DataTable;
 
 class PeriodsDataTable extends DataTable
 {
+    private $total = 0;
+
+    public function setTotal($total){
+        $this->total = $total;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -23,6 +29,9 @@ class PeriodsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('payment_details_count', function ($row) {
+                return $row->payment_details_count.' / '.$this->total.' peserta';
+            })
             ->addColumn('action', function ($row) {
                 $buttons = '<div class="btn-group" role="group">
                 <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
