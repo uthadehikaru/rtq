@@ -18,6 +18,14 @@ class BatchRepository implements BatchRepositoryInterface
         ->get();
     }
 
+    public function active()
+    {
+        return Batch::with('teachers', 'course', 'members')
+        ->active()
+        ->orderBy('name')
+        ->get();
+    }
+
     public function allWithTotalMembers()
     {
         return Batch::with('course')
@@ -121,6 +129,8 @@ class BatchRepository implements BatchRepositoryInterface
     public function delete($id)
     {
         $batch = Batch::find($id);
+        $batch->teachers()->detach();
+        $batch->members()->detach();
 
         return $batch->destroy($id);
     }
@@ -135,6 +145,7 @@ class BatchRepository implements BatchRepositoryInterface
                 'description' => $data['description'],
                 'start_time' => $data['start_time'],
                 'place' => $data['place'],
+                'is_active' => $data['is_active'],
             ]);
 
             $course = Course::find($data['course_id']);
@@ -155,11 +166,11 @@ class BatchRepository implements BatchRepositoryInterface
         $batch = Batch::find($id);
         $batch->update($data);
 
-        $batch->teachers()->sync($data['teacher_ids']);
+        $batch->teachers()->sync($data['teacher_ids'] ?? []);
         if($batch->course->type=='Talaqqi Pengajar')
             $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member'=>true], false);
         else
-            $batch->members()->sync($data['member_ids']);
+            $batch->members()->sync($data['member_ids'] ?? []);
         DB::commit();
 
         return $batch;

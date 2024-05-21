@@ -49,6 +49,7 @@ class BatchController extends Controller
             'place' => '',
             'teacher_ids' => 'required',
             'member_ids' => 'nullable',
+            'is_active' => 'nullable',
         ]);
 
         $data['course_id'] = $course_id;
@@ -87,6 +88,7 @@ class BatchController extends Controller
             'place' => '',
             'teacher_ids' => 'required',
             'member_ids' => 'nullable',
+            'is_active' => 'nullable',
         ]);
 
         $batchRepository->update($batch_id, $data);

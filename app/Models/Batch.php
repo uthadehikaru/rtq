@@ -16,11 +16,17 @@ class Batch extends Model
         'course_id',
         'start_time',
         'place',
+        'is_active',
     ];
 
     protected $casts = [
         'start_time' => 'datetime',
     ];
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active',true);
+    }
 
     public function course()
     {

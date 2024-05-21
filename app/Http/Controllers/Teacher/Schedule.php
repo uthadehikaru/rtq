@@ -10,7 +10,7 @@ class Schedule extends Controller
     public function __invoke(BatchRepository $batchRepository)
     {
         $data['title'] = 'Absensi';
-        $data['batches'] = $batchRepository->all();
+        $data['batches'] = $batchRepository->active();
 
         return view('schedule-form', $data);
     }

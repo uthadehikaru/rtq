@@ -100,6 +100,13 @@
                                 @endif
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Aktif')</label>
+                            <select class="form-control" id="is_active" name="is_active">
+                                <option value="1" {{ $batch && $batch->is_active?'selected':'' }}>Aktif</option>
+                                <option value="0" {{ $batch && !$batch->is_active?'selected':'' }}>Non Aktif</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="kt-portlet__foot">

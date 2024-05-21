@@ -50,6 +50,9 @@ class BatchesDataTable extends DataTable
             ->editColumn('start_time', function ($row) {
                 return $row->start_time?->format('H:i');
             })
+            ->editColumn('is_active', function ($row) {
+                return $row->is_active?'Ya':'Tidak';
+            })
             ->editColumn('members_count', function ($row) {
                 if($row->course->type=='Talaqqi Pengajar')
                     return $row->teachers->filter(fn($value,$key) => $value->pivot->is_member)->count();
@@ -113,6 +116,7 @@ class BatchesDataTable extends DataTable
             Column::make('description')->title('Jadwal'),
             Column::make('start_time')->title('Waktu'),
             Column::make('place')->title('Tempat'),
+            Column::make('is_active')->title('Aktif'),
             Column::make('teachers')->title('Pengajar')->searchable(false),
             Column::make('members_count')->title('Peserta')->searchable(false),
             Column::computed('action')
