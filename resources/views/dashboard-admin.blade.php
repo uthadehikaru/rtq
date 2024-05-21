@@ -44,7 +44,7 @@
                             <a class="kt-link text-primary" href="{{ route('courses.index') }}">@lang('Batches')</a>
                         </h3>
                         <div class="kt-iconbox__content">
-                            {{ $batches }} @lang('Halaqoh')
+                        {{ $active_batches }} @lang('Halaqoh')
                         </div>
                     </div>
                 </div>

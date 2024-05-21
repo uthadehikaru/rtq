@@ -34,8 +34,11 @@ class BatchRepository implements BatchRepositoryInterface
         ->get();
     }
 
-    public function count()
+    public function count($isactive=false)
     {
+        if($isactive)
+            return Batch::active()->count();
+        
         return Batch::count();
     }
 
