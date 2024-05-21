@@ -168,6 +168,21 @@
             <!--end::Body-->
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card card-custom bg-warning card-stretch gutter-b">
+            <!--begin::Body-->
+            <div class="card-body my-4">
+                <a href="{{ route('transactions.index') }}" class="card-title font-weight-bolder text-white font-size-h6 mb-4 text-hover-state-dark d-block">
+                    Uang Kas
+                </a>
+
+                <div class="font-weight-bold text-white font-size-sm">
+                    <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">@money($cash)</span>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+    </div>
 </div>
 @endsection
 @push('scripts')

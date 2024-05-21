@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\PaymentDetail;
 use App\Models\Registration;
 use App\Models\Setting;
+use App\Models\Transaction;
 use App\Models\Violation;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
@@ -15,6 +16,7 @@ use App\Repositories\PeriodRepository;
 use App\Repositories\PresentRepository;
 use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -71,14 +73,15 @@ class DashboardController extends Controller
 
         $data['biodata_count'] = Setting::where('group', 'biodata')->count();
         $data['biodata_verified'] = Setting::where('group', 'biodata')->where('payload->verified', true)->count();
-
         $data['waitinglist'] = Registration::whereDoesntHave('user')->count();
-
         $data['violation_count'] = Violation::whereNull('paid_at')->count();
+        $data['cash'] = (new TransactionRepository)->getBalance();
+
 
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
         $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];
         $data['courses'] = (new CourseRepository)->membersPerType($data['types']);
+        
         //dd($data);
 
         return $data;
