@@ -20,13 +20,14 @@ class MemberProfileCard extends Component
         'member.postcode' => '',
     ];
 
-    public function updated()
+    public function simpan()
     {
         $this->validate();
         if ($this->member->isDirty()) {
             ProfileUpdated::dispatch($this->member, $this->member->getDirty());
             $this->member->save();
         }
+        $this->setErrorBag(['message'=>'Data berhasil disimpan']);
     }
 
     public function mount($member)

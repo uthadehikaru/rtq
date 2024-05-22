@@ -4,9 +4,6 @@
             <h3 class="kt-portlet__head-title">
                 @lang('Biodata Peserta') - {{ $member->full_name }}
             </h3>
-            <div class="spinner-border" role="status" wire:loading.delay>
-            <span class="sr-only">Loading...</span>
-            </div>
         </div>
         
         <div class="kt-portlet__head-toolbar">
@@ -19,13 +16,15 @@
         </div>
     </div>
     <div class="kt-portlet__body">
+        @error('message')
+        <x-alert type="success">{{ $message }}</x-alert>
+        @enderror
         <div class="row">
             <div class="col-md-6 text-center" style="height:400px;">
                 <livewire:member-profile :member="$member" />
             </div>
             <div class="col-md-6">
                 <form wire:submit.prevent="simpan">
-                    <input type="hidden" name="_method" value="PUT" />
                     <div class="form-group">
                         <label>@lang('Nama Panggilan')<span class="text-danger">*</span></label>
                         <input type="text" name="short_name" class="form-control"
@@ -68,6 +67,10 @@
                         wire:model.lazy="member.postcode"
                         value="{{ old('postcode', $member?$member->postcode:'') }}"
                         >
+                    </div>
+                    <button type="submit" class="btn btn-primary" wire:loading.class="disabled">Simpan</button>
+                    <div class="spinner-border" role="status" wire:loading.delay wire:target="simpan">
+                    <span class="sr-only">Loading...</span>
                     </div>
                 </form>
             </div>

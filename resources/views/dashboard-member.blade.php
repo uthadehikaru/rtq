@@ -48,12 +48,14 @@
                     <tr>
                         <th>Tgl Bayar</th>
                         <th>Periode</th>
+                        <th>Bukti Bayar</th>
                         <th>Status</th>
                     </tr>
                     @foreach ($payments as $payment)
                         <tr>
                             <td>{{ $payment->created_at->format('d/M/Y') }}</td>
                             <td>{{ $payment->period->name }}</td>
+                            <td><a href="{{ asset('storage/'.$payment->payment->attachment) }}" data-lightbox="attachment-'{{ $payment->id }}">tampilkan</a></td>
                             <td>{{ __('app.payment.status.'.$payment->payment->status) }}</td>
                         </tr>
                     @endforeach
