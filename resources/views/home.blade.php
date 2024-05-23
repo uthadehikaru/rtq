@@ -16,7 +16,7 @@
 				<div class="flex items-center justify-center lg:justify-start">
 					<a href="https://instagram.com/rumahtartilquran_maisuro" target="instagram" class="px-8 py-3 bg-green-800 font-medium text-white text-md md:text-lg rounded-md hover:opacity-75 transition ease-in-out duration-300 mr-14">Follow Us</a>
 
-					<a href="https://www.youtube.com/@RumahTartilQuranMaisuro" target="youtube" class="hidden lg:block font-normal text-gray-500 text-lg mr-8">Watch Us</a>
+					<a href="https://www.youtube.com/@RumahTartilQuranMaisuro" target="youtube" class="font-normal text-gray-500 text-lg mr-8">Watch Us</a>
 
 					<a href="https://www.youtube.com/watch?v=W-vb62xcWqs" class="px-4 py-4 text-gray-300 border-2 border-gray-200 rounded-full">
 						<i data-feather="play"></i>
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 
-			<div class="mx-auto xl:mx-0">
+			<div class="w-full md:w-1/2">
 			<iframe width="100%" height="315" src="https://www.youtube.com/embed/W-vb62xcWqs?si=fbhkfromDhCPCJuP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 			</div>
 
