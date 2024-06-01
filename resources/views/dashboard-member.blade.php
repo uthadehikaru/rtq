@@ -42,6 +42,13 @@
                         @lang('Data Infaq 5 periode terakhir')
                     </h3>
                 </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            <a href="{{ route('member.payments.index') }}" class="btn btn-primary btn-sm">Lihat Semua</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="kt-portlet__body table-responsive">
                 <table class="table table-striped">

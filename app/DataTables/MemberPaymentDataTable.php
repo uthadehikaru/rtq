@@ -2,10 +2,10 @@
 
 namespace App\DataTables;
 
-use App\Models\Member;
-use App\Models\Payment;
-use App\Models\Period;
+use App\Models\PaymentDetail;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -14,29 +14,17 @@ use Yajra\DataTables\Services\DataTable;
 
 class MemberPaymentDataTable extends DataTable
 {
-    public $periods;
+    private $period_id = 0;
+    private $member_id = 0;
 
-    public $inactive = false;
-
-    public function __construct()
+    public function setPeriod($period_id)
     {
-        $periods = Period::orderBy('start_date')
-        ->get();
-
-        $this->periods[] = $periods->where('name', 'Registrasi')->first();
-
-        foreach ($periods as $period) {
-            if ($period->name == 'Registrasi') {
-                continue;
-            }
-
-            $this->periods[] = $period;
-        }
+        $this->period_id = $period_id;
     }
 
-    public function inactive()
+    public function setMember($member_id)
     {
-        $this->inactive = true;
+        $this->member_id = $member_id;
     }
 
     /**
@@ -47,73 +35,37 @@ class MemberPaymentDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $datatable = (new EloquentDataTable($query))
-            ->addColumn('batches', function ($row) {
-                $batch = $row->batches->first();
-                $value = 'inaktif';
-                if ($batch) {
-                    $value = $batch->name;
-                } else {
-                    $value .= ' '.$row->leave_at?->format('d M Y');
-                }
-
-                return $value;
+        return (new EloquentDataTable($query))
+            ->editColumn('created_at', function($row){
+                return $row->created_at->format('d M Y H:i');
             })
-            ->editColumn('registration_date', function ($row) {
-                return $row->registration_date?->format('d M Y');
+            ->editColumn('member_id', function($row){
+                return $row->member->full_name;
+            })
+            ->editColumn('payment_id', function($row){
+                return $row->payment->amount;
+            })
+            ->editColumn('payment.status', function($row){
+                return __('app.payment.status.'.$row->payment->status);
             })
             ->setRowId('id');
-
-        $rawColumns = [];
-        foreach ($this->periods as $period) {
-            $datatable->addColumn('period_'.$period->id, function ($row) use ($period) {
-                $status = '';
-
-                $payment = Payment::wherehas('details', function ($query) use ($period, $row) {
-                    $query->where('member_id', $row->id)
-                    ->where('period_id', $period->id);
-                })->first();
-                if ($payment) {
-                    $status = $payment->status;
-                } elseif ($row->status) {
-                    $status = 'free';
-                } else {
-                    return '-';
-                }
-
-                $badges = [
-                    'paid' => 'success',
-                    'new' => 'warning',
-                    'free' => 'info',
-                ];
-
-                return '<span class="badge badge-'.$badges[$status].'">'.__('app.payment.status.'.$status).'</span>';
-            });
-            $rawColumns[] = 'period_'.$period->id;
-        }
-        $datatable->rawColumns($rawColumns);
-
-        return $datatable;
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param  \App\Models\MemberPayment  $model
+     * @param  \App\Models\Registration  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Member $model): QueryBuilder
+    public function query(PaymentDetail $model): QueryBuilder
     {
         $model = $model
-        ->with(['batches'])
+        ->with(['payment','period','member'])
         ->newQuery();
-
-        if ($this->inactive) {
-            $model->doesntHave('batches');
-        } else {
-            $model->has('batches');
-        }
-
+        if($this->period_id)
+            $model = $model->where('period_id', $this->period_id);
+        if($this->member_id)
+            $model = $model->where('member_id', $this->member_id);
         return $model;
     }
 
@@ -124,13 +76,13 @@ class MemberPaymentDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
-                    ->setTableId('memberpayment-table')
+        return $this->builder()->responsive(true)
+                    ->setTableId('PaymentDetail-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(1, 'asc')
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -149,17 +101,13 @@ class MemberPaymentDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        $columns = [
-            Column::make('registration_date')->title('Tgl Gabung'),
-            Column::make('full_name')->title('Nama'),
-            Column::make('batches')->title('Halaqoh'),
+        return [
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('period.name')->title('Periode'),
+            Column::make('member_id')->title('Member'),
+            Column::make('payment_id')->title('Amount'),
+            Column::make('payment.status')->title('Status'),
         ];
-
-        foreach ($this->periods as $period) {
-            $columns[] = Column::make('period_'.$period->id)->title($period->name);
-        }
-
-        return $columns;
     }
 
     /**
@@ -169,6 +117,6 @@ class MemberPaymentDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'MemberPayment_'.date('YmdHis');
+        return 'Registration_'.date('YmdHis');
     }
 }

@@ -229,6 +229,11 @@
                                             <span class="kt-menu__link-text">@lang('Iqob')</span>
                                         </a>
                                     </li>
+									<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('member/payment*')?'kt-menu__item--active':'' }}">
+                                        <a href="{{ route('member.payments.index') }}" class="kt-menu__link">
+                                            <span class="kt-menu__link-text">@lang('Payment')</span>
+                                        </a>
+                                    </li>
 									@endrole
 									<li class="kt-menu__item kt-menu__item--rel d-block d-md-none">
                                         <a href="{{ route('logout') }}" class="kt-menu__link">

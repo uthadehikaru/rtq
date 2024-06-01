@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Payment;
 
-use App\DataTables\MemberPaymentDataTable;
+use App\DataTables\RekapitulasiDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class Rekapitulasi extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, MemberPaymentDataTable $dataTable)
+    public function __invoke(Request $request, RekapitulasiDataTable $dataTable)
     {
         $data['title'] = 'Rekapitulasi pembayaran';
 

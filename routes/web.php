@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Member\IqobController;
+use App\Http\Controllers\Member\PaymentController as MemberPaymentController;
 use App\Http\Controllers\Member\Pictures;
 use App\Http\Controllers\Member\PresentController as MemberPresentController;
 use App\Http\Controllers\Member\ProfileController;
@@ -142,6 +143,7 @@ Route::middleware('auth')->group(function () {
 
     Route::name('member.')->prefix('member')->middleware('role:member')->group(function () {
         Route::get('presents', MemberPresentController::class)->name('presents.index');
+        Route::get('payments', MemberPaymentController::class)->name('payments.index');
         Route::resource('profile', ProfileController::class)->only('update');
     });
     Route::get('member/iqob', function(){
