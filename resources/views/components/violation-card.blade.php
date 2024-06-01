@@ -2,7 +2,7 @@
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
-                5 @lang('Data Iqob terbaru')
+                {{ $violations->count() }} @lang('Iqob Belum Dibayar')
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">

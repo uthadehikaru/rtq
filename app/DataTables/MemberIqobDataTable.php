@@ -31,7 +31,10 @@ class MemberIqobDataTable extends DataTable
         ->editColumn('violated_date', function ($row) {
             return $row->violated_date?->format('d M Y');
         })
-            ->setRowId('id');
+        ->editColumn('paid_at', function ($row) {
+            return $row->paid_at?->format('d M Y');
+        })
+        ->setRowId('id');
     }
 
     /**

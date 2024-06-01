@@ -17,6 +17,8 @@ use App\Repositories\PresentRepository;
 use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\TransactionRepository;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -90,9 +92,11 @@ class DashboardController extends Controller
     public function teacher()
     {
         $teacher = Auth::user()->teacher;
-        $data['batches'] = (new BatchRepository)->teacherBatches(Auth::id());
+        $start_date = CarbonImmutable::now()->startOfMonth();
+        $end_date = CarbonImmutable::now()->endOfMonth();
+        $data['presents'] = (new PresentRepository)->teacherPresents($teacher->user_id, $start_date, $end_date);
         $data['schedules'] = (new ScheduleRepository)->currentMonth($teacher->user_id);
-        $data['violations'] = Violation::where('user_id', Auth::id())->latest()->limit(5)->get();
+        $data['violations'] = Violation::where('user_id', Auth::id())->latest()->whereNull('paid_at')->get();
 
         return $data;
     }
