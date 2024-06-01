@@ -46,7 +46,7 @@ class PeriodRepository implements PeriodRepositoryInterface
 
     public function PaymentPerPeriod(): Collection
     {
-        return Period::oldest('start_date')
+        return Period::latest('start_date')
         ->take(12)
         ->where('name','<>','Registrasi')
         ->whereHas('paymentDetails')
