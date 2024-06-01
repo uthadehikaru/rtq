@@ -3,7 +3,6 @@
 Konfirmasi Pembayaran
 @endsection
 @push('scripts')
-<!-- <script src="{{ asset('assets/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script> -->
 <script type="text/javascript">
 
 var KTSelect2 = function() {
@@ -57,6 +56,11 @@ var KTSelect2 = function() {
 jQuery(document).ready(function () {
 	KTSelect2.init();
 
+	$('#kt_form').submit(function(){
+		$('#btn-submit').prop('disabled', true);
+		$('#btn-submit').html('<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>');
+	});
+
 });
 </script>
 @endpush
@@ -76,7 +80,7 @@ jQuery(document).ready(function () {
 				<form class="kt-form" id="kt_form" method="POST" action="" enctype="multipart/form-data">
 				@csrf
 				<div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
-					<div class="kt-portlet__head kt-portlet__head--lg" style="">
+					<div class="kt-portlet__head kt-portlet__head--lg">
 						<div class="kt-portlet__head-label">
 							<h3 class="kt-portlet__head-title">Konfirmasi Pembayaran <small>khusus peserta tahsin RTQ</small></h3>
 						</div>
@@ -85,7 +89,7 @@ jQuery(document).ready(function () {
 								<i class="la la-arrow-left"></i>
 								<span class="kt-hidden-mobile">@lang('Back')</span>
 							</a>
-							<button class="btn btn-brand">
+							<button class="btn btn-brand" id="btn-submit">
 								<i class="la la-check"></i>
 								<span class="kt-hidden-mobile">@lang('Save')</span>
 							</button>
@@ -126,7 +130,7 @@ jQuery(document).ready(function () {
 											<div class="form-group row">
 												<label class="col-3 col-form-label">Bukti Transfer</label>
 												<div class="col-9">
-													<input class="form-control" type="file" name="attachment" required>
+													<input class="form-control" type="file" name="attachment" accept="image/*" required>
 												</div>
 											</div>
 										</div>
