@@ -7,6 +7,7 @@ return [
             'absent' => 'Alfa',
             'sick' => 'Sakit',
             'permit' => 'Izin',
+            'late' => 'Telat',
         ],
         'type' => [
             'teacher' => 'Pengajar',
