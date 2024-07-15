@@ -22,7 +22,7 @@
                 <option value="">@lang('Select Batch')</option>
                 @foreach($batches as $batch)
                     <option value="{{ $batch->id }}">{{ $batch->course->name }}
-                        {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }})</option>
+                        {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }} {{ $batch->teachers?->pluck('name')->join(',') }})</option>
                 @endforeach
             </select>
         </div>
