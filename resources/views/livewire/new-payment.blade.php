@@ -33,6 +33,13 @@
                         @error('members') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
+                        <label class="col-form-label">Keterangan</label>
+                        <div>
+                            <input class="form-control" id="description" type="text" name="description" wire:model="description">
+                        </div>
+                        @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
                         <label class="col-form-label">Total Transfer</label>
                         <div>
                             <input class="form-control" id="total" type="number" name="total" wire:model.lazy="total">

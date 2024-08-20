@@ -25,13 +25,16 @@ class NewPayment extends Component
 
     public $paid_at = '';
 
+    public $description = '';
+
     public $payment_method = 'transfer';
 
     protected $rules = [
         'period_ids' => 'required',
         'members' => 'required',
-        'total' => 'required|numeric|min:120000',
+        'total' => 'required|numeric|min:0',
         'attachment' => 'nullable|image',
+        'description' => 'nullable|max:225',
         'paid_at' => 'required|date',
         'payment_method' => 'required|in:transfer,amplop',
     ];
@@ -52,7 +55,8 @@ class NewPayment extends Component
             $this->validateMemberPeriod();
         }
 
-        $this->total = $this->calculateTotal();
+        if(!$this->description)
+            $this->total = $this->calculateTotal();
     }
 
     private function validateMemberPeriod()
@@ -86,7 +90,7 @@ class NewPayment extends Component
         }
 
         $total = $this->calculateTotal();
-        if ($this->total < $total) {
+        if (!$this->description && $this->total < $total) {
             return $this->addError('total', 'Minimal nominal pembayaran '.$total);
         }
 
@@ -100,6 +104,7 @@ class NewPayment extends Component
         $payment = [
             'amount' => $this->total,
             'attachment' => $path,
+            'description' => $this->description,
             'paid_at' => $this->paid_at,
             'status' => 'paid',
             'payment_method' => $this->payment_method,
