@@ -57,6 +57,9 @@ class NewPayment extends Component
 
         if(!$this->description)
             $this->total = $this->calculateTotal();
+        else{
+            $this->total = 0;
+        }
     }
 
     private function validateMemberPeriod()
