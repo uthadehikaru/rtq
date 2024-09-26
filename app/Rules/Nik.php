@@ -2,7 +2,8 @@
 
 namespace App\Rules;
 
-use Carbon\Carbon;
+use App\Models\Member;
+use App\Models\Registration;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\InvokableRule;
 
@@ -24,13 +25,14 @@ class Nik implements InvokableRule, DataAwareRule
             $fail('NIK harus 16 karakter');
         }
 
-        $birth_date_of_nik = substr($value, 6, 6);
-        $birth_date = Carbon::parse($this->data['birth_date'])->format('dmy');
-        if ($this->data['gender'] == 'female') {
-            $birth_date += 400000;
+        $registration = Registration::where('nik', $value)->first();
+        if ($registration) {
+            $fail('NIK sudah terdaftar, mohon menggunakan NIK lain atau hubungi admin untuk informasi lebih lanjut');
         }
-        if ($birth_date_of_nik != $birth_date) {
-            $fail('NIK tidak sesuai dengan tanggal lahir');
+
+        $member = Member::where('nik', $value)->first();
+        if ($member) {
+            $fail('NIK sudah terdaftar, mohon menggunakan NIK lain atau hubungi admin untuk informasi lebih lanjut');
         }
     }
 
