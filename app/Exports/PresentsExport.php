@@ -21,7 +21,7 @@ class PresentsExport implements WithMultipleSheets
         $sheets = [];
 
         if (isset($this->filter['type'])) {
-            switch($this->filter['type']) {
+            switch ($this->filter['type']) {
                 case 'teacher':
                     $sheets[] = new PresentTeacherSheet($this->filter);
                     break;

@@ -4,14 +4,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="paymentModalLabel">
-                    Input Pembayaran
+                    {{ $is_member ? 'Konfirmasi Pembayaran Peserta' : 'Input Pembayaran' }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div id="paymentMessage"></div>
                 <form id="paymentForm" wire:submit.prevent="savePayment">
+                    <input type="hidden" name="is_member" value="{{ $is_member }}">
                     <div class="form-group">
                         <label class="col-form-label">@lang('Period')</label>
                         <div wire:ignore>
@@ -33,20 +35,20 @@
                         @error('members') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Keterangan</label>
-                        <div>
-                            <input class="form-control" id="description" type="text" name="description" wire:model="description">
-                        </div>
-                        @error('description') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
                         <label class="col-form-label">Total Transfer</label>
                         <div>
                             <input class="form-control" id="total" type="number" name="total" wire:model.lazy="total">
                         </div>
                         @error('total') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    
+                    @if(!$is_member)
+                    <div class="form-group">
+                        <label class="col-form-label">Keterangan</label>
+                        <div>
+                            <input class="form-control" id="description" type="text" name="description" wire:model="description">
+                        </div>
+                        @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
                     <div class="form-group">
                         <label class="col-form-label">Metode Pembayaran</label>
                         <div>
@@ -70,6 +72,7 @@
                         </div>
                         @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+                    @endif
                     <div class="form-group">
                         <label class="col-form-label">Bukti Transfer</label>
                         <div>
@@ -78,10 +81,11 @@
                         </div>
                         @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary" wire:loading.remove>Simpan</button>
-                    <div class="spinner-border" role="status" wire:loading.delay>
-                    <span class="sr-only">Loading...</span>
-                    </div>
+                    <button type="submit" class="btn btn-primary" wire:target="savePayment" wire:loading.attr="disabled">Simpan
+                    </button>
+                    @if($is_member)
+                    <a href="{{ route('home') }}" class="btn btn-secondary">Kembali</a>
+                    @endif
                 </form>
             </div>
         </div>
@@ -122,12 +126,20 @@
             @this.set('members', data);
         });
 
-        Livewire.on('paymentCreated', function(){
+        Livewire.on('paymentCreated', function(event){
             $('form#paymentForm').trigger("reset");
-            $('form#paymentForm select').trigger("change");
-            $('#paymentModal').modal('hide');
-            $('#Payment-table').DataTable().ajax.reload();
+            if(!@this.is_member){
+                $('form#paymentForm select').trigger("change");
+                $('#paymentModal').modal('hide');
+                $('#Payment-table').DataTable().ajax.reload();
+            }
         })
+
+        @if($is_member)
+        $('#paymentModal').on('hidden.bs.modal', function () {
+            window.location.href = '{{ route('home') }}';
+        })
+        @endif
     });
     </script>
 @endpush

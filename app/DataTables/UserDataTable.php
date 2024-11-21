@@ -16,7 +16,6 @@ class UserDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -46,53 +45,46 @@ class UserDataTable extends DataTable
                     $query->whereRelation('roles', 'name', $keyword);
                 }
             })
-            ->rawColumns(['action','email'])
+            ->rawColumns(['action', 'email'])
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
-     *
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(User $model): QueryBuilder
     {
         return $model
-        ->with('roles')
-        ->newQuery();
+            ->with('roles')
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('user-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->responsive(true)
+            ->setTableId('user-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->responsive(true)
                     //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -104,17 +96,15 @@ class UserDataTable extends DataTable
             Column::make('email'),
             Column::make('roles')->orderable(false),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

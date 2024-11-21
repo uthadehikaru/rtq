@@ -180,6 +180,19 @@
                             value="{{ old('postcode', $member?$member->postcode:'') }}"
                             >
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Akselerasi')</label>
+                            <div class="kt-radio-inline">
+                                <label class="kt-radio">
+                                    <input type="radio" value="1" {{ $member && $member->is_acceleration?'checked="checked"':'' }} name="is_acceleration"> Akselerasi
+                                    <span></span>
+                                </label>
+                                <label class="kt-radio">
+                                    <input type="radio" value="0" {{ $member && !$member->is_acceleration?'checked="checked"':'' }} name="is_acceleration"> Non Akselerasi
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
                         @if($member)
                         <div class="form-group">
                             <label>@lang('Tgl Keluar')</label>

@@ -10,7 +10,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class BatchImport implements ToModel, WithHeadingRow
 {
     /**
-     * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)

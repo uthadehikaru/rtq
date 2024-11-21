@@ -18,6 +18,7 @@ class ProgramFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(2);
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),

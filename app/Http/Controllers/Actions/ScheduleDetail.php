@@ -14,12 +14,11 @@ class ScheduleDetail extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    \App\Repositories\ScheduleRepository $scheduleRepository,
-    $schedule_id)
+        \App\Repositories\ScheduleRepository $scheduleRepository,
+        $schedule_id)
     {
         $schedule = $scheduleRepository->find($schedule_id);
         $data['schedule'] = $schedule;
@@ -28,9 +27,9 @@ class ScheduleDetail extends Controller
             ->whereHas('member.batches')
             ->whereNotExists(function ($query) use ($schedule_id) {
                 $query->select(DB::raw('1'))
-                ->from('presents')
-                ->whereColumn('users.id', 'presents.user_id')
-                ->where('presents.schedule_id', $schedule_id);
+                    ->from('presents')
+                    ->whereColumn('users.id', 'presents.user_id')
+                    ->where('presents.schedule_id', $schedule_id);
             })
             ->orderBy('name')
             ->get();

@@ -25,7 +25,7 @@ class Batch extends Model
 
     public function scopeActive($query)
     {
-        $query->where('is_active',true);
+        $query->where('is_active', true);
     }
 
     public function course()

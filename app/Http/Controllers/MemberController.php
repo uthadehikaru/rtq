@@ -65,7 +65,7 @@ class MemberController extends Controller
 
         try {
             $memberRepository->create($data);
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             return back()->with('error', $ex->getMessage())->withInput();
         }
 
@@ -89,7 +89,7 @@ class MemberController extends Controller
 
         try {
             $memberRepository->update($member_id, $data);
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             return back()->with('error', $ex->getMessage())->withInput();
         }
 

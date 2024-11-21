@@ -27,7 +27,7 @@ it('admin can insert teacher', function () {
     $admin = User::find(1);
     actingAs($admin);
 
-    foreach(Teacher::STATUSES as $status){
+    foreach (Teacher::STATUSES as $status) {
         $data = [
             'name' => $status,
             'email' => $status.'@gmail.com',

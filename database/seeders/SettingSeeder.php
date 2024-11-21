@@ -54,17 +54,21 @@ class SettingSeeder extends Seeder
             ]);
         }
 
-        $courses = [];
+        $courses = [
+            'course_fee' => 120000,
+        ];
         foreach (Course::TYPES as $type) {
-            $courses[] = 'durasi_'.Str::snake($type);
+            $courses['durasi_'.Str::snake($type)] = 0;
         }
+        $courses['acceleration_tahsin_anak_fee'] = 220000;
+        $courses['acceleration_tahsin_dewasa_fee'] = 200000;
 
-        foreach ($courses as $course) {
+        foreach ($courses as $name => $value) {
             Setting::firstOrCreate([
                 'group' => 'course',
-                'name' => $course,
+                'name' => $name,
             ], [
-                'payload' => 0,
+                'payload' => $value,
             ]);
         }
 

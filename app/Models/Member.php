@@ -28,6 +28,7 @@ class Member extends Model
         'profile_picture',
         'member_no',
         'leave_at',
+        'is_acceleration',
     ];
 
     protected $casts = [
@@ -68,8 +69,9 @@ class Member extends Model
     public function getCourseAttribute()
     {
         $batches = $this->batches->filter(function ($batch, $key) {
-            return $batch->course->type!='Talaqqi Jamai';
+            return $batch->course->type != 'Talaqqi Jamai';
         });
+
         return $batches->first()?->course;
     }
 }

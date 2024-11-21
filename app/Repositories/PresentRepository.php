@@ -15,28 +15,28 @@ class PresentRepository implements PresentRepositoryInterface
     public function getBySchedule($schedule_id)
     {
         return Present::with('schedule', 'user')
-        ->where('schedule_id', $schedule_id)
-        ->orderBy('type','asc')
-        ->get();
+            ->where('schedule_id', $schedule_id)
+            ->orderBy('type', 'asc')
+            ->get();
     }
 
     public function getByTeacher($user_id)
     {
         return Present::with('schedule', 'user', 'schedule.batch')
-        ->where('user_id', $user_id)
-        ->latest()
-        ->get();
+            ->where('user_id', $user_id)
+            ->latest()
+            ->get();
     }
 
-    public function teacherPresents($user_id, $start_date,$end_date)
+    public function teacherPresents($user_id, $start_date, $end_date)
     {
-        $presents =  Present::with('user', 'user.teacher', 'schedule', 'schedule.batch', 'schedule.batch.course')
-        ->whereHas('schedule', function ($query) use ($start_date, $end_date) {
-            return $query
-            ->whereDate('scheduled_at', '>=', $start_date)
-            ->whereDate('scheduled_at', '<=', $end_date);
-        })->where('user_id', $user_id)
-        ->get();
+        $presents = Present::with('user', 'user.teacher', 'schedule', 'schedule.batch', 'schedule.batch.course')
+            ->whereHas('schedule', function ($query) use ($start_date, $end_date) {
+                return $query
+                    ->whereDate('scheduled_at', '>=', $start_date)
+                    ->whereDate('scheduled_at', '<=', $end_date);
+            })->where('user_id', $user_id)
+            ->get();
 
         return $presents->groupBy(function ($present, $key) {
             return $present->status;

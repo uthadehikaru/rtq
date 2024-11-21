@@ -65,7 +65,7 @@ class CourseController extends Controller
         try {
             $courseRepository->delete($course_id);
             $data['statusCode'] = 200;
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $data['statusCode'] = 500;
             $data['message'] = $ex->getMessage();
         }

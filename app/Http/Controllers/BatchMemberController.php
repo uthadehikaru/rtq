@@ -10,18 +10,19 @@ use Illuminate\Http\Request;
 class BatchMemberController extends Controller
 {
     public function index(BatchRepository $batchRepository, TeacherRepository $teacherRepository,
-    $course_id, $batch_id)
+        $course_id, $batch_id)
     {
         $batch = $batchRepository->find($batch_id);
         $data['title'] = __('Members');
         $data['batch'] = $batch;
         $data['total'] = $batch->members()->count();
 
-        if($batch->course->type=='Talaqqi Pengajar'){
+        if ($batch->course->type == 'Talaqqi Pengajar') {
             return view('datatables.batchteacher', $data);
         }
-            
+
         $data['members'] = $batchRepository->getAvailableMembers($batch_id);
+
         return view('datatables.batchmember', $data);
     }
 

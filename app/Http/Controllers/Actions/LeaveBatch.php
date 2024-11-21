@@ -14,7 +14,6 @@ class LeaveBatch extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(
@@ -29,10 +28,10 @@ class LeaveBatch extends Controller
             $member = $memberRepository->find($id);
 
             activity()
-            ->on($member)
-            ->by(Auth::user())
-            ->event('halaqoh')
-            ->log(':subject.full_name keluar dari halaqoh '.$member->batches->pluck('name')->join(',').' pada '.Carbon::parse($request->leave_at)->format('l, d M Y'));
+                ->on($member)
+                ->by(Auth::user())
+                ->event('halaqoh')
+                ->log(':subject.full_name keluar dari halaqoh '.$member->batches->pluck('name')->join(',').' pada '.Carbon::parse($request->leave_at)->format('l, d M Y'));
 
             $member->batches()->detach();
             $member->leave_at = $data['leave_at'];

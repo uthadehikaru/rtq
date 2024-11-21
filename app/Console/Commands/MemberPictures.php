@@ -55,7 +55,7 @@ class MemberPictures extends Command
                 $image->save(storage_path('app/public/profiles/'.$new));
                 $member->update(['profile_picture' => 'profiles/'.$new]);
                 unlink(storage_path('app/public/profiles/'.$filename));
-            } catch(Exception $ex) {
+            } catch (Exception $ex) {
                 $this->warn('Failed '.$member->full_name.' : '.$member->profile_picture);
                 $this->error($ex->getMessage());
             }

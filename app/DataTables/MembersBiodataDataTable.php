@@ -24,7 +24,6 @@ class MembersBiodataDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -71,17 +70,16 @@ class MembersBiodataDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Setting $model): QueryBuilder
     {
         $model = $model
-        ->selectRaw('settings.*, members.full_name')
-        ->join('members', 'members.id', 'settings.name')
-        ->where('group', 'biodata')
-        ->latest('settings.created_at');
+            ->selectRaw('settings.*, members.full_name')
+            ->join('members', 'members.id', 'settings.name')
+            ->where('group', 'biodata')
+            ->latest('settings.created_at');
 
-        switch($this->status) {
+        switch ($this->status) {
             case 'verified':
                 $model = $model->where('payload->verified', true);
                 break;
@@ -95,28 +93,24 @@ class MembersBiodataDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('member-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                    ]);
+            ->setTableId('member-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -128,18 +122,16 @@ class MembersBiodataDataTable extends DataTable
             Column::make('status'),
             Column::make('profile_picture')->title('Foto'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->dom('Bfrtip')
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->dom('Bfrtip')
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

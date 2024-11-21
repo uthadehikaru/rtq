@@ -18,7 +18,7 @@ class ViolationController extends Controller
     public function index(ViolationsDataTable $dataTable, Request $request)
     {
         $data['title'] = 'Pelanggaran';
-        $dataTable->filter($request->only(['status','type']));
+        $dataTable->filter($request->only(['status', 'type']));
 
         return $dataTable->render('datatables.violation', $data);
     }
@@ -31,9 +31,9 @@ class ViolationController extends Controller
     public function create(Request $request)
     {
         $data['violation'] = null;
-        $data['users'] = User::select('id','name')
-        ->orderBy('name')
-        ->get();
+        $data['users'] = User::select('id', 'name')
+            ->orderBy('name')
+            ->get();
 
         return view('forms.violation', $data);
     }
@@ -41,7 +41,6 @@ class ViolationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,14 +54,15 @@ class ViolationController extends Controller
         ]);
 
         $user = User::find($data['user_id']);
-        if($user){
+        if ($user) {
             $data['type'] = $user->teacher ? 'teacher' : 'member';
         }
 
         $violation = Violation::create($data);
 
-        if($user)
+        if ($user) {
             $user->notify(new UserIqobCreated($violation));
+        }
 
         if ($request->has('redirect')) {
             return redirect($request->get('redirect'))->with('message', 'Pelanggaran atas '.$violation->user->name.' berhasil ditambahkan');
@@ -100,7 +100,6 @@ class ViolationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

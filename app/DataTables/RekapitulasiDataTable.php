@@ -21,7 +21,7 @@ class RekapitulasiDataTable extends DataTable
     public function __construct()
     {
         $periods = Period::orderBy('start_date')
-        ->get();
+            ->get();
 
         $this->periods[] = $periods->where('name', 'Registrasi')->first();
 
@@ -43,7 +43,6 @@ class RekapitulasiDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -71,7 +70,7 @@ class RekapitulasiDataTable extends DataTable
 
                 $payment = Payment::wherehas('details', function ($query) use ($period, $row) {
                     $query->where('member_id', $row->id)
-                    ->where('period_id', $period->id);
+                        ->where('period_id', $period->id);
                 })->first();
                 if ($payment) {
                     $status = $payment->status;
@@ -100,13 +99,12 @@ class RekapitulasiDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\MemberPayment  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Member $model): QueryBuilder
     {
         $model = $model
-        ->with(['batches'])
-        ->newQuery();
+            ->with(['batches'])
+            ->newQuery();
 
         if ($this->inactive) {
             $model->doesntHave('batches');
@@ -119,33 +117,29 @@ class RekapitulasiDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('memberpayment-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
+            ->setTableId('memberpayment-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(1, 'asc')
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(1, 'asc')
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -164,8 +158,6 @@ class RekapitulasiDataTable extends DataTable
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

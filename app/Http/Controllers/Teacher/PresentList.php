@@ -12,11 +12,10 @@ class PresentList extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    PresentRepositoryInterface $presentRepository, )
+        PresentRepositoryInterface $presentRepository, )
     {
         $data['title'] = __('Kehadiran');
         $data['presents'] = $presentRepository->getByTeacher(Auth::id());

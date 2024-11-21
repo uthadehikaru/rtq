@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PaymentDetailsDataTable;
-use App\Models\Payment;
 use App\Models\PaymentDetail;
 use App\Models\Period;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class PaymentDetailController extends Controller
         $data['period_id'] = $request->period_id;
         $data['period'] = null;
         $data['title'] = __('Pembayaran');
-        if($request->period_id){
+        if ($request->period_id) {
             $data['period'] = Period::findOrFail($request->period_id);
             $data['title'] .= ' Periode '.$data['period']->name;
             $dataTable->setPeriod($request->period_id);
@@ -42,7 +41,6 @@ class PaymentDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -75,7 +73,6 @@ class PaymentDetailController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

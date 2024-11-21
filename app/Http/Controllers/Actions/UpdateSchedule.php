@@ -11,12 +11,11 @@ class UpdateSchedule extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    \App\Repositories\ScheduleRepository $scheduleRepository,
-    $schedule_id)
+        \App\Repositories\ScheduleRepository $scheduleRepository,
+        $schedule_id)
     {
         $statuses = $request->get('status');
         $descriptions = $request->get('description');

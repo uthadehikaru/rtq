@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Program;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProgramSeeder extends Seeder
@@ -15,9 +14,9 @@ class ProgramSeeder extends Seeder
      */
     public function run()
     {
-        $programs = ['Wakaf Bangunan','Donasi Palestina', 'Kencleng BIM'];
-        foreach($programs as $program){
-            Program::factory()->create(['title'=>$program]);
+        $programs = ['Wakaf Bangunan', 'Donasi Palestina', 'Kencleng BIM'];
+        foreach ($programs as $program) {
+            Program::factory()->create(['title' => $program]);
         }
     }
 }

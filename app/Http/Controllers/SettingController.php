@@ -36,7 +36,6 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,10 +51,12 @@ class SettingController extends Controller
         ];
 
         $types = Course::TYPES;
-        foreach($types as $type){
+        $params['course_fee'] = 'min:0';
+        foreach ($types as $type) {
             $params['durasi_'.str($type)->snake()] = 'min:0';
         }
-
+        $params['acceleration_tahsin_anak_fee'] = 'min:0';
+        $params['acceleration_tahsin_dewasa_fee'] = 'min:0';
         $data = $request->validate($params);
 
         foreach ($data as $name => $value) {
@@ -90,7 +91,6 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

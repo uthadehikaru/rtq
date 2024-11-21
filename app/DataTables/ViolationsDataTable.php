@@ -13,7 +13,7 @@ use Yajra\DataTables\Services\DataTable;
 class ViolationsDataTable extends DataTable
 {
     private $params = [];
-    
+
     public function filter($params)
     {
         $this->params = $params;
@@ -23,7 +23,6 @@ class ViolationsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -35,7 +34,7 @@ class ViolationsDataTable extends DataTable
                 return $row->paid_at?->format('d M Y');
             })
             ->editColumn('user_id', function ($row) {
-                return $row->user? $row->user->name : 'noname';
+                return $row->user ? $row->user->name : 'noname';
             })
             ->editColumn('amount', function ($row) {
                 return money($row->amount);
@@ -59,10 +58,11 @@ class ViolationsDataTable extends DataTable
                 ';
             })
             ->filterColumn('user_id', function ($query, $keyword) {
-                if($keyword=='noname')
+                if ($keyword == 'noname') {
                     return $query->whereNull('user_id');
-                
-                $query->whereRelation('user','name','like','%'.$keyword.'%');
+                }
+
+                $query->whereRelation('user', 'name', 'like', '%'.$keyword.'%');
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -70,27 +70,26 @@ class ViolationsDataTable extends DataTable
 
     /**
      * Get query source of dataTable.
-     *
-     * @param  \App\Models\Violation  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Violation $model): QueryBuilder
     {
         $model = $model
-        ->select('violations.*')
-        ->with('user')
-        ->latest('violated_date')->newQuery();
+            ->select('violations.*')
+            ->with('user')
+            ->latest('violated_date')->newQuery();
 
-        if(isset($this->params['status'])){
-            if($this->params['status']=='unpaid')
+        if (isset($this->params['status'])) {
+            if ($this->params['status'] == 'unpaid') {
                 $model->whereNull('paid_at');
-                
-            if($this->params['status']=='paid')
+            }
+
+            if ($this->params['status'] == 'paid') {
                 $model->whereNotNull('paid_at');
+            }
         }
 
-        if(isset($this->params['type'])){
-            $model->where('type',$this->params['type']);
+        if (isset($this->params['type'])) {
+            $model->where('type', $this->params['type']);
         }
 
         return $model;
@@ -98,25 +97,23 @@ class ViolationsDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('violations-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->responsive(true)
-                    ->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->setTableId('violations-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->responsive(true)
+            ->dom('Bfrtip')
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     public function wait()
@@ -126,8 +123,6 @@ class ViolationsDataTable extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -139,17 +134,15 @@ class ViolationsDataTable extends DataTable
             Column::make('amount')->title('nominal')->addClass('text-right'),
             Column::make('paid_at')->title('diselesaikan pada')->responsivePriority(2),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

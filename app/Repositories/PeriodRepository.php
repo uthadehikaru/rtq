@@ -47,21 +47,21 @@ class PeriodRepository implements PeriodRepositoryInterface
     public function PaymentPerPeriod(): Collection
     {
         return Period::latest('start_date')
-        ->take(12)
-        ->where('name','<>','Registrasi')
-        ->whereHas('paymentDetails')
-        ->withCount(['paymentDetails as cash_count' => function ($query) {
-            $query->whereRelation('payment', 'payment_method', 'amplop');
-        }, 'paymentDetails as transfer_count' => function ($query) {
-            $query->whereRelation('payment', 'payment_method', 'transfer');
-        }])->get();
+            ->take(12)
+            ->where('name', '<>', 'Registrasi')
+            ->whereHas('paymentDetails')
+            ->withCount(['paymentDetails as cash_count' => function ($query) {
+                $query->whereRelation('payment', 'payment_method', 'amplop');
+            }, 'paymentDetails as transfer_count' => function ($query) {
+                $query->whereRelation('payment', 'payment_method', 'transfer');
+            }])->get();
     }
 
     public function lastSixMonth()
     {
         return Period::oldest('start_date')
-        ->where('name','<>','Registrasi')
-        ->where('start_date','>=',Carbon::now()->subMonths(6)->startOfMonth())
-        ->get();
+            ->where('name', '<>', 'Registrasi')
+            ->where('start_date', '>=', Carbon::now()->subMonths(6)->startOfMonth())
+            ->get();
     }
 }

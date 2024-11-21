@@ -16,9 +16,9 @@ class ScheduleRepository implements ScheduleRepositoryInterface
     public function all()
     {
         return Schedule::with('batch', 'batch.course')
-        ->withCount('presents')
-        ->latest('scheduled_at')
-        ->get();
+            ->withCount('presents')
+            ->latest('scheduled_at')
+            ->get();
     }
 
     public function count()
@@ -46,16 +46,16 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         DB::beginTransaction();
 
         $schedule = Schedule::with('batch')->whereDate('scheduled_at', $data['scheduled_at'])
-        ->where('batch_id', $data['batch_id'])
-        ->first();
+            ->where('batch_id', $data['batch_id'])
+            ->first();
 
         if (! $schedule) {
             $data['scheduled_at'] .= ' '.$data['start_at'];
             $schedule = Schedule::create($data);
 
             $batch = Batch::with('course')->find($data['batch_id']);
-            if($batch->course->type=='Talaqqi Pengajar'){
-                foreach ($batch->teachers->filter(fn($value,$key) => $value->pivot->is_member)->all() as $member) {
+            if ($batch->course->type == 'Talaqqi Pengajar') {
+                foreach ($batch->teachers->filter(fn ($value, $key) => $value->pivot->is_member)->all() as $member) {
                     Present::create([
                         'schedule_id' => $schedule->id,
                         'user_id' => $member->user_id,
@@ -63,7 +63,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                         'type' => 'member',
                     ]);
                 }
-            }else{
+            } else {
                 foreach ($batch->members as $member) {
                     Present::create([
                         'schedule_id' => $schedule->id,
@@ -96,8 +96,8 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         $batch = Batch::find($data['batch_id']);
 
         $schedule = Schedule::with('batch')->whereDate('scheduled_at', Carbon::now()->startOfDay())
-        ->where('batch_id', $data['batch_id'])
-        ->first();
+            ->where('batch_id', $data['batch_id'])
+            ->first();
 
         if (! $schedule) {
             $data['scheduled_at'] = CarbonImmutable::now()->setTime($batch->start_time->hour, $batch->start_time->minute, 0);
@@ -106,8 +106,8 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $schedule = Schedule::create($data);
 
             $batch = Batch::with('course')->find($data['batch_id']);
-            if($batch->course->type=='Talaqqi Pengajar'){
-                foreach ($batch->teachers->filter(fn($value,$key) => $value->pivot->is_member)->all() as $member) {
+            if ($batch->course->type == 'Talaqqi Pengajar') {
+                foreach ($batch->teachers->filter(fn ($value, $key) => $value->pivot->is_member)->all() as $member) {
                     Present::create([
                         'schedule_id' => $schedule->id,
                         'user_id' => $member->user_id,
@@ -115,7 +115,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
                         'type' => 'member',
                     ]);
                 }
-            }else{
+            } else {
                 foreach ($batch->members as $member) {
                     Present::create([
                         'schedule_id' => $schedule->id,

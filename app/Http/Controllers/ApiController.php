@@ -32,8 +32,8 @@ class ApiController extends Controller
         $keyword = $request->get('q');
 
         $data['items'] = Product::active()->where('value', 'like', '%'.$keyword.'%')
-        ->orWhere('name', 'like', '%'.$keyword.'%')
-        ->select('id', 'value', 'name')->get();
+            ->orWhere('name', 'like', '%'.$keyword.'%')
+            ->select('id', 'value', 'name')->get();
         $data['total_count'] = count($data['items']);
 
         return response()->json($data);

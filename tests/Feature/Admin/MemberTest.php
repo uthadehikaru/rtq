@@ -44,6 +44,7 @@ it('admin can create member', function () {
         'postcode' => '12740',
         'nik' => '1234123412341234',
         'birth_date' => '2015-12-01',
+        'is_acceleration' => false,
     ];
 
     $response = $this->post(route('members.store'), $data);
@@ -62,9 +63,9 @@ it('generate non duplicate member no', function () {
     Artisan::call('member:generateno');
 
     $members = Member::whereNotNull('member_no')->select('member_no', 'full_name')
-    ->orderBy('birth_date')
-    ->orderBy('member_no')
-    ->get();
+        ->orderBy('birth_date')
+        ->orderBy('member_no')
+        ->get();
     expect($members->count())->toBe(5);
 
     $memberno = '';

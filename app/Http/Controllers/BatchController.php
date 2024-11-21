@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class BatchController extends Controller
 {
     public function index(CourseRepository $courseRepository, BatchRepository $batchRepository,
-    BatchesDataTable $dataTable, $course_id)
+        BatchesDataTable $dataTable, $course_id)
     {
         $dataTable->setCourseId($course_id);
 
@@ -32,8 +32,9 @@ class BatchController extends Controller
         $course = $courseRepository->find($course_id);
         $data['course'] = $course;
         $data['teachers'] = $teacherRepository->list();
-        if($course->type=='Talaqqi Pengajar')
+        if ($course->type == 'Talaqqi Pengajar') {
             $data['members'] = $teacherRepository->listAll();
+        }
         $data['batch'] = null;
 
         return view('forms.batch', $data);
@@ -70,8 +71,9 @@ class BatchController extends Controller
         $course = $courseRepository->find($course_id);
         $data['course'] = $course;
         $data['teachers'] = $teacherRepository->list();
-        if($course->type=='Talaqqi Pengajar')
+        if ($course->type == 'Talaqqi Pengajar') {
             $data['members'] = $teacherRepository->listAll();
+        }
         $data['batch'] = $batchRepository->find($batch_id);
         //dd($data['batch']->teachers);
 
@@ -101,7 +103,7 @@ class BatchController extends Controller
         try {
             $batchRepository->delete($batch_id);
             $data['statusCode'] = 200;
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $data['statusCode'] = 500;
             $data['message'] = $ex->getMessage();
         }

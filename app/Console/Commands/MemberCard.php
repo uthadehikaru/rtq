@@ -37,7 +37,7 @@ class MemberCard extends Command
         Storage::disk('public')->makeDirectory('idcards');
 
         $members = Member::whereNotNull('member_no')
-        ->orderBy('member_no');
+            ->orderBy('member_no');
 
         if ($no) {
             $members = $members->where('member_no', $no);

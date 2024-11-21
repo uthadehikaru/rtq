@@ -20,7 +20,6 @@ class LogMemberActivated implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  \App\Events\MemberActivated  $event
      * @return void
      */
     public function handle(MemberActivated $event)

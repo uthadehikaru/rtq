@@ -4,8 +4,6 @@ namespace App\DataTables;
 
 use App\Models\Period;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -16,7 +14,8 @@ class PeriodsDataTable extends DataTable
 {
     private $total = 0;
 
-    public function setTotal($total){
+    public function setTotal($total)
+    {
         $this->total = $total;
     }
 
@@ -24,7 +23,6 @@ class PeriodsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -38,7 +36,7 @@ class PeriodsDataTable extends DataTable
                     Aksi
                 </button>
                 <div class="dropdown-menu" aria-labelledby="action">';
-                $buttons .= '<a href="'.route('paymentdetails.index', ['period_id'=>$row->id]).'" class="dropdown-item pointer text-primary">Detail</a>';
+                $buttons .= '<a href="'.route('paymentdetails.index', ['period_id' => $row->id]).'" class="dropdown-item pointer text-primary">Detail</a>';
                 $buttons .= '<a href="javascript:;" class="dropdown-item pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 $buttons .= '</div></div>';
 
@@ -52,44 +50,39 @@ class PeriodsDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Period $model): QueryBuilder
     {
         return $model
-        ->withCount('paymentDetails')
-        ->newQuery();
+            ->withCount('paymentDetails')
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Period-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
+            ->setTableId('Period-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -99,17 +92,15 @@ class PeriodsDataTable extends DataTable
             Column::make('end_date')->title('Akhir'),
             Column::make('payment_details_count')->title('Pembayaran'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

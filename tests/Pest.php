@@ -56,20 +56,21 @@ function createTeacher()
 {
     $role = Role::firstOrCreate(['name' => 'teacher']);
     $user = createUser(($role));
+
     return User::find($user->id);
 }
 
 function createUser($roleName)
 {
     $user = User::factory()->create();
-    if($roleName){
-        if($roleName=='teacher'){
+    if ($roleName) {
+        if ($roleName == 'teacher') {
             Teacher::factory()->for($user)->create();
         }
-        if($roleName=='member'){
+        if ($roleName == 'member') {
             Member::factory()->for($user)->create();
         }
-        $role = Role::firstOrCreate(['name'=>$roleName]);
+        $role = Role::firstOrCreate(['name' => $roleName]);
         $user->assignRole($role);
     }
 
@@ -79,7 +80,7 @@ function createUser($roleName)
 function createBatch($user, $batch = null)
 {
     $batch = Batch::factory()->for(Course::factory())
-    ->create($batch);
+        ->create($batch);
 
     $batch->teachers()->attach($user->teacher->id);
 

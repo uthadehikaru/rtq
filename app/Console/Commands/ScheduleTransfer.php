@@ -29,8 +29,8 @@ class ScheduleTransfer extends Command
     public function handle()
     {
         $schedules = Schedule::latest()
-        ->with(['presents', 'batch', 'presents.user', 'presents.user.member'])
-        ->get();
+            ->with(['presents', 'batch', 'presents.user', 'presents.user.member'])
+            ->get();
 
         $bar = $this->output->createProgressBar($schedules->count());
 

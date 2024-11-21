@@ -23,7 +23,6 @@ class SchedulesDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -80,7 +79,6 @@ class SchedulesDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Schedule $model): QueryBuilder
     {
@@ -89,44 +87,40 @@ class SchedulesDataTable extends DataTable
         }
 
         return $model
-        ->join('batches', 'batches.id', 'schedules.batch_id')
-        ->with('batch', 'presents', 'presents.user')
-        ->withCount(['presents' => function ($query) {
-            $query->where('type', 'member');
-        }])
-        ->latest('scheduled_at')
-        ->newQuery();
+            ->join('batches', 'batches.id', 'schedules.batch_id')
+            ->with('batch', 'presents', 'presents.user')
+            ->withCount(['presents' => function ($query) {
+                $query->where('type', 'member');
+            }])
+            ->latest('scheduled_at')
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Schedule-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
+            ->setTableId('Schedule-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -139,17 +133,15 @@ class SchedulesDataTable extends DataTable
             Column::make('place')->title('Tempat'),
             Column::make('presents_count')->title('Peserta')->searchable(false),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

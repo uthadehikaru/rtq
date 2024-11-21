@@ -198,7 +198,7 @@ class MemberRepository implements MemberRepositoryInterface
             'group' => 'biodata',
             'name' => $data['member_id'],
         ])
-        ->first();
+            ->first();
 
         if ($biodata) {
             $msg = 'Biodata sudah pernah diinput, ';
@@ -252,8 +252,8 @@ class MemberRepository implements MemberRepositoryInterface
         }
 
         $last = Registration::whereYear('created_at', Carbon::now()->format('Y'))
-        ->whereMonth('created_at', Carbon::now()->format('m'))
-        ->count();
+            ->whereMonth('created_at', Carbon::now()->format('m'))
+            ->count();
         $data['registration_no'] = date('Ym').Str::padLeft(++$last, 3, '0');
         $data['type'] = $type;
         $registration = Registration::create($data);
@@ -267,8 +267,8 @@ class MemberRepository implements MemberRepositoryInterface
     public function search($keyword)
     {
         $members = Member::select('id', 'full_name')
-        ->whereRaw("lower(full_name) like '%".$keyword."%'")
-        ->orderBy('full_name')->get();
+            ->whereRaw("lower(full_name) like '%".$keyword."%'")
+            ->orderBy('full_name')->get();
         $data = [];
         foreach ($members as $member) {
             $data[] = [

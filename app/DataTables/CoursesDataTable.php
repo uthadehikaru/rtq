@@ -16,7 +16,6 @@ class CoursesDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -51,47 +50,40 @@ class CoursesDataTable extends DataTable
 
     /**
      * Get query source of dataTable.
-     *
-     * @param  \App\Models\Course  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Course $model): QueryBuilder
     {
         return $model
-        ->withCount('batches')
-        ->newQuery();
+            ->withCount('batches')
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('courses-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->responsive(true)
+            ->setTableId('courses-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->responsive(true)
                     //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -101,17 +93,15 @@ class CoursesDataTable extends DataTable
             Column::make('type'),
             Column::make('batches_count')->title('Halaqoh')->searchable(false),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

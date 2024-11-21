@@ -26,7 +26,7 @@ class SettingService
     {
         $setting = $this->get($name);
         if ($setting) {
-            $setting->update(['payload'=>json_encode($value)]);
+            $setting->update(['payload' => json_encode($value)]);
         }
 
         return $value;

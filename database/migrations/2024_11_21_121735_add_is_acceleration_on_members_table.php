@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('presents', function (Blueprint $table) {
-            $table->string('photo_out')->nullable();
-            $table->timestamp('leave_at')->nullable();
+        Schema::table('members', function (Blueprint $table) {
+            $table->boolean('is_acceleration')->default(false);
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('presents', function (Blueprint $table) {
-            $table->dropColumn(['photo_out', 'leave_at']);
+        Schema::table('members', function (Blueprint $table) {
+            $table->dropColumn('is_acceleration');
         });
     }
 };

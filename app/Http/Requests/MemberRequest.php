@@ -43,6 +43,7 @@ class MemberRequest extends FormRequest
             'status' => '',
             'profile_picture' => '',
             'leave_at' => 'nullable|date',
+            'is_acceleration' => 'required|boolean',
         ];
     }
 }

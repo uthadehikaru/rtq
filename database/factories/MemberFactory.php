@@ -27,6 +27,7 @@ class MemberFactory extends Factory
             'postcode' => $this->faker->postcode(),
             'user_id' => 0,
             'birth_date' => $this->faker->date(),
+            'is_acceleration' => $this->faker->boolean(),
         ];
     }
 }

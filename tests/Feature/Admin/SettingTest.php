@@ -23,14 +23,14 @@ test('admin can see settings', function () {
     actingAs($admin);
     $response = $this->get(route('settings.index'));
     $response->assertStatus(200)
-    ->assertSeeText('Halaman Depan')
-    ->assertSeeText('Umum')
-    ->assertSeeText('Kelas');
+        ->assertSeeText('Halaman Depan')
+        ->assertSeeText('Umum')
+        ->assertSeeText('Kelas');
 });
 
 test('non admin cant see settings', function () {
-    $roles = Role::where('name','<>','administrator')->get();
-    foreach($roles as $role){
+    $roles = Role::where('name', '<>', 'administrator')->get();
+    foreach ($roles as $role) {
         $user = createUser($role->name);
         actingAs($user);
         $response = $this->get(route('settings.index'));

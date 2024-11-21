@@ -38,9 +38,9 @@ class MemberGenerateNo extends Command
         }
 
         $members = Member::whereNull('member_no')
-        ->whereNotNull('birth_date')
-        ->orderByRaw('birth_date, created_at')
-        ->get();
+            ->whereNotNull('birth_date')
+            ->orderByRaw('birth_date, created_at')
+            ->get();
         $birthDate = null;
         $no = 1;
 

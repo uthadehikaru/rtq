@@ -16,7 +16,6 @@ class RegistrationsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -33,8 +32,8 @@ class RegistrationsDataTable extends DataTable
             ->editColumn('full_name', function ($row) {
                 $value = '<a href="'.route('registrations.show', $row->id).'" class="text-primary">';
                 $value .= $row->full_name;
-                if($row->user?->member){
-                    $value .= " - ".$row->user->member->member_no;
+                if ($row->user?->member) {
+                    $value .= ' - '.$row->user->member->member_no;
                 }
                 $value .= '</a>';
 
@@ -42,11 +41,11 @@ class RegistrationsDataTable extends DataTable
             })
             ->addColumn('action', function ($row) {
                 $buttons = '';
-                if($row->user?->member->leave_at){
+                if ($row->user?->member->leave_at) {
                     $buttons .= '<a href="'.(route('members.edit', $row->user->member->id)).'" class="ml-2 pointer text-default">Keluar pada '.$row->user->member->leave_at->format('d M Y').'</a>';
-                }elseif ($row->user?->member) {
+                } elseif ($row->user?->member) {
                     $buttons .= '<a href="'.(route('members.edit', $row->user->member->id)).'" class="ml-2 pointer text-success">Terdaftar</a>';
-                }else{
+                } else {
                     $buttons .= '<a href="javascript:;" class="ml-2 pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 }
 
@@ -58,48 +57,41 @@ class RegistrationsDataTable extends DataTable
 
     /**
      * Get query source of dataTable.
-     *
-     * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Registration $model): QueryBuilder
     {
         return $model
-        ->with(['user','user.member'])
-        ->newQuery();
+            ->with(['user', 'user.member'])
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('registration-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->responsive(true)
-                    ->stateSave(true)
+            ->setTableId('registration-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->responsive(true)
+            ->stateSave(true)
                     //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -112,17 +104,15 @@ class RegistrationsDataTable extends DataTable
             Column::make('birth_date'),
             Column::make('phone'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

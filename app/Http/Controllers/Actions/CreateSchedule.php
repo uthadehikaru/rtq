@@ -17,11 +17,10 @@ class CreateSchedule extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request,
-    ScheduleRepository $scheduleRepository)
+        ScheduleRepository $scheduleRepository)
     {
         $data = $request->validate([
             'lat' => 'required',
@@ -78,7 +77,7 @@ class CreateSchedule extends Controller
             }
 
             return response()->json(['error' => 'Gagal membuat jadwal']);
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             return response()->json(['error' => $ex->getMessage()]);
         }
     }

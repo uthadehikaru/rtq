@@ -2,16 +2,21 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Member;
 use App\Models\Period;
 use App\Repositories\PaymentRepository;
+use App\Services\SettingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class NewPayment extends Component
 {
     use WithFileUploads;
+
+    public $is_member = false;
 
     public $periods;
 
@@ -33,15 +38,17 @@ class NewPayment extends Component
         'period_ids' => 'required',
         'members' => 'required',
         'total' => 'required|numeric|min:0',
-        'attachment' => 'nullable|image',
+        'is_member' => 'required|boolean',
+        'attachment' => 'required_if:is_member,true|nullable|image',
         'description' => 'nullable|max:225',
         'paid_at' => 'required|date',
         'payment_method' => 'required|in:transfer,amplop',
     ];
 
-    public function mount()
+    public function mount($is_member = false)
     {
-        $this->periods = Period::all();
+        $this->is_member = $is_member;
+        $this->periods = Period::orderBy('start_date', 'desc')->get();
         $this->paid_at = Carbon::now()->toDateString();
     }
 
@@ -55,9 +62,9 @@ class NewPayment extends Component
             $this->validateMemberPeriod();
         }
 
-        if(!$this->description)
+        if (! $this->description) {
             $this->total = $this->calculateTotal();
-        else{
+        } else {
             $this->total = 0;
         }
     }
@@ -80,7 +87,19 @@ class NewPayment extends Component
 
     private function calculateTotal()
     {
-        return 120000 * count($this->members) * count($this->period_ids);
+        $memberFee = (new SettingService())->value('course_fee');
+        $total = 0;
+        foreach ($this->members as $member_id) {
+            $member = Member::with('batches')->find($member_id);
+            $type = $member->batches->first()->course->type;
+            if ($member->is_acceleration) {
+                $total += (new SettingService())->value('acceleration_'.Str::snake($type).'_fee', $memberFee);
+            } else {
+                $total += $memberFee;
+            }
+        }
+
+        return $total * count($this->period_ids);
     }
 
     public function savePayment()
@@ -93,7 +112,7 @@ class NewPayment extends Component
         }
 
         $total = $this->calculateTotal();
-        if (!$this->description && $this->total < $total) {
+        if (! $this->description && $this->total < $total) {
             return $this->addError('total', 'Minimal nominal pembayaran '.$total);
         }
 
@@ -107,11 +126,14 @@ class NewPayment extends Component
         $payment = [
             'amount' => $this->total,
             'attachment' => $path,
-            'description' => $this->description,
-            'paid_at' => $this->paid_at,
-            'status' => 'paid',
             'payment_method' => $this->payment_method,
         ];
+
+        if (! $this->is_member) {
+            $payment['description'] = $this->description;
+            $payment['paid_at'] = $this->paid_at;
+            $payment['status'] = 'paid';
+        }
 
         foreach ($this->period_ids as $period_id) {
             foreach ($this->members as $member_id) {
@@ -126,7 +148,11 @@ class NewPayment extends Component
 
         DB::commit();
 
-        return $this->emit('paymentCreated', 'Konfirmasi pembayaran telah kami terima, kami akan cek terlebih dahulu. terima kasih');
+        if ($this->is_member) {
+            return redirect()->route('home')->with('message', 'Pembayaran telah kami terima dan akan kami cek terlebih dahulu. Terima kasih');
+        }
+
+        return $this->emit('paymentCreated');
     }
 
     public function render()

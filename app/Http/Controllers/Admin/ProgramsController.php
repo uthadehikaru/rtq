@@ -40,7 +40,6 @@ class ProgramsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +53,8 @@ class ProgramsController extends Controller
         ]);
         $data['slug'] = Str::slug($data['title']);
         Program::create($data);
-        return redirect()->route('programs.index')->with('message','Program Created');
+
+        return redirect()->route('programs.index')->with('message', 'Program Created');
     }
 
     /**
@@ -66,13 +66,15 @@ class ProgramsController extends Controller
     public function show($id)
     {
         $program = Program::find($id);
-        if($program->published_at)
+        if ($program->published_at) {
             $program->published_at = null;
-        else
+        } else {
             $program->published_at = Carbon::now();
+        }
 
         $program->save();
-        return back()->with('message','Program updated');
+
+        return back()->with('message', 'Program updated');
     }
 
     /**
@@ -92,7 +94,6 @@ class ProgramsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -107,7 +108,8 @@ class ProgramsController extends Controller
             'thumbnail' => 'nullable|image',
         ]);
         $program->update($data);
-        return redirect()->route('programs.index')->with('message','Program Updated');
+
+        return redirect()->route('programs.index')->with('message', 'Program Updated');
     }
 
     /**
@@ -122,7 +124,7 @@ class ProgramsController extends Controller
             $program = Program::find($id);
             $program->delete();
             $data['statusCode'] = 200;
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $data['statusCode'] = 500;
             $data['message'] = $ex->getMessage();
         }

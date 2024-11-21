@@ -14,31 +14,32 @@ class BatchRepository implements BatchRepositoryInterface
     public function all()
     {
         return Batch::with('teachers', 'course', 'members')
-        ->orderBy('name')
-        ->get();
+            ->orderBy('name')
+            ->get();
     }
 
     public function active()
     {
         return Batch::with('teachers', 'course', 'members')
-        ->active()
-        ->orderBy('name')
-        ->get();
+            ->active()
+            ->orderBy('name')
+            ->get();
     }
 
     public function allWithTotalMembers()
     {
         return Batch::with('course')
-        ->withCount('members')
-        ->orderBy('name')
-        ->get();
+            ->withCount('members')
+            ->orderBy('name')
+            ->get();
     }
 
-    public function count($isactive=false)
+    public function count($isactive = false)
     {
-        if($isactive)
+        if ($isactive) {
             return Batch::active()->count();
-        
+        }
+
         return Batch::count();
     }
 
@@ -57,11 +58,11 @@ class BatchRepository implements BatchRepositoryInterface
         }
 
         return Batch::with(['course'])
-        ->withCount('members')
-        ->whereHas('course', function ($query) use ($types) {
-            $query->whereIn('type', $types);
-        })
-        ->get();
+            ->withCount('members')
+            ->whereHas('course', function ($query) use ($types) {
+                $query->whereIn('type', $types);
+            })
+            ->get();
     }
 
     public function getByCourse($course_id)
@@ -80,24 +81,24 @@ class BatchRepository implements BatchRepositoryInterface
     {
         return Member::whereNotExists(function ($query) use ($batch_id) {
             $query->select(DB::raw(1))
-                  ->from('batch_member')
-                  ->whereColumn('batch_member.member_id', 'members.id')
-                  ->where('batch_member.batch_id', $batch_id);
+                ->from('batch_member')
+                ->whereColumn('batch_member.member_id', 'members.id')
+                ->where('batch_member.batch_id', $batch_id);
         })->orderBy('full_name')->get();
     }
 
     public function getBatchMembers($keyword = '')
     {
         $members = DB::table('batch_member')
-        ->selectRaw("members.id as member_id, members.full_name, members.member_no, GROUP_CONCAT(DISTINCT batches.name SEPARATOR ' , ') as batch")
-        ->join('batches', 'batch_member.batch_id', 'batches.id')
-        ->join('courses', 'batches.course_id', 'courses.id')
-        ->join('members', 'batch_member.member_id', 'members.id')
-        ->where('members.full_name', 'LIKE', '%'.$keyword.'%')
-        ->groupBy('members.full_name', 'members.id', 'members.member_no')
-        ->orderBy('members.full_name')
-        ->take(10)
-        ->get();
+            ->selectRaw("members.id as member_id, members.full_name, members.member_no, GROUP_CONCAT(DISTINCT batches.name SEPARATOR ' , ') as batch")
+            ->join('batches', 'batch_member.batch_id', 'batches.id')
+            ->join('courses', 'batches.course_id', 'courses.id')
+            ->join('members', 'batch_member.member_id', 'members.id')
+            ->where('members.full_name', 'LIKE', '%'.$keyword.'%')
+            ->groupBy('members.full_name', 'members.id', 'members.member_no')
+            ->orderBy('members.full_name')
+            ->take(10)
+            ->get();
         $data = [];
         foreach ($members as $member) {
             $data[] = [
@@ -154,10 +155,11 @@ class BatchRepository implements BatchRepositoryInterface
             $course = Course::find($data['course_id']);
 
             $batch->teachers()->sync($data['teacher_ids']);
-            if($course->type=='Talaqqi Pengajar')
-                $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member'=>true], false);
-            else
+            if ($course->type == 'Talaqqi Pengajar') {
+                $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
+            } else {
                 $batch->members()->sync($data['member_ids']);
+            }
 
             return $batch;
         });
@@ -170,10 +172,11 @@ class BatchRepository implements BatchRepositoryInterface
         $batch->update($data);
 
         $batch->teachers()->sync($data['teacher_ids'] ?? []);
-        if($batch->course->type=='Talaqqi Pengajar')
-            $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member'=>true], false);
-        else
+        if ($batch->course->type == 'Talaqqi Pengajar') {
+            $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
+        } else {
             $batch->members()->sync($data['member_ids'] ?? []);
+        }
         DB::commit();
 
         return $batch;
@@ -189,8 +192,8 @@ class BatchRepository implements BatchRepositoryInterface
         $teacher = Teacher::with('user')->where('user_id', $user_id)->firstOrFail();
 
         return Batch::whereRelation('teachers', 'id', $teacher->id)
-        ->orderBy('name')
-        ->get();
+            ->orderBy('name')
+            ->get();
     }
 
     public function getByUser($user_id)
@@ -198,9 +201,9 @@ class BatchRepository implements BatchRepositoryInterface
         $teacher = Teacher::with('user')->where('user_id', $user_id)->firstOrFail();
 
         return Batch::with('course')
-        ->withCount('members')
-        ->whereRelation('teachers', 'id', $teacher->id)
-        ->orderBy('name')
-        ->get();
+            ->withCount('members')
+            ->whereRelation('teachers', 'id', $teacher->id)
+            ->orderBy('name')
+            ->get();
     }
 }

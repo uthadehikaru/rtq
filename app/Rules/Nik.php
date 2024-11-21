@@ -7,7 +7,7 @@ use App\Models\Registration;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\InvokableRule;
 
-class Nik implements InvokableRule, DataAwareRule
+class Nik implements DataAwareRule, InvokableRule
 {
     protected $data = [];
 

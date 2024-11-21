@@ -16,7 +16,6 @@ class ProgramsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -25,7 +24,7 @@ class ProgramsDataTable extends DataTable
                 return $row->created_at->diffForHumans();
             })
             ->editColumn('published_at', function ($row) {
-                return $row->published_at?'Ya':'Tidak';
+                return $row->published_at ? 'Ya' : 'Tidak';
             })
             ->addColumn('action', function ($row) {
                 $buttons = '
@@ -35,7 +34,7 @@ class ProgramsDataTable extends DataTable
                     </button>
                     <div class="dropdown-menu" aria-labelledby="action">
                         <a href="'.route('programs.show', $row->id).'" class="dropdown-item text-primary">
-                            '.($row->published_at?'Sembunyikan':'Tayangkan').'
+                            '.($row->published_at ? 'Sembunyikan' : 'Tayangkan').'
                         </a>
                         <a href="'.route('programs.edit', $row->id).'" class="dropdown-item text-warning">
                             <i class="la la-edit"></i> Ubah
@@ -54,9 +53,6 @@ class ProgramsDataTable extends DataTable
 
     /**
      * Get query source of dataTable.
-     *
-     * @param  \App\Models\Program  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Program $model): QueryBuilder
     {
@@ -65,29 +61,25 @@ class ProgramsDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Programs-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
+            ->setTableId('Programs-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -103,8 +95,6 @@ class ProgramsDataTable extends DataTable
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

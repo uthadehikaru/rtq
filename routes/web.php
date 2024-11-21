@@ -146,7 +146,7 @@ Route::middleware('auth')->group(function () {
         Route::get('payments', MemberPaymentController::class)->name('payments.index');
         Route::resource('profile', ProfileController::class)->only('update');
     });
-    Route::get('member/iqob', function(){
+    Route::get('member/iqob', function () {
         return redirect()->route('iqob.index');
     });
 
@@ -165,5 +165,6 @@ Route::post('/payment', [PaymentController::class, 'store'])->name('payment.conf
 Route::get('/member/biodata', [BiodataMemberController::class, 'add'])->name('member.biodata');
 Route::post('/member/biodata', [BiodataMemberController::class, 'store']);
 
-if(env('APP_ENV')=='local')
+if (env('APP_ENV') == 'local') {
     Route::get('/login-as/{user:email}', Actions\LoginAsUser::class)->name('login.as');
+}

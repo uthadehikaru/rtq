@@ -6,7 +6,6 @@ use App\Models\Member;
 use App\Models\PaymentDetail;
 use App\Models\Registration;
 use App\Models\Setting;
-use App\Models\Transaction;
 use App\Models\Violation;
 use App\Repositories\BatchRepository;
 use App\Repositories\CourseRepository;
@@ -17,7 +16,6 @@ use App\Repositories\PresentRepository;
 use App\Repositories\ScheduleRepository;
 use App\Repositories\TeacherRepository;
 use App\Repositories\TransactionRepository;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -46,10 +44,10 @@ class DashboardController extends Controller
         } else {
             $member = Member::where('user_id', Auth::id())->first();
             $data['payments'] = PaymentDetail::where('member_id', $member->id)
-            ->with(['payment', 'period'])
-            ->latest()
-            ->limit(5)
-            ->get();
+                ->with(['payment', 'period'])
+                ->latest()
+                ->limit(5)
+                ->get();
             $data['member'] = $member;
             if (! Storage::disk('public')->exists('idcards/'.$member->member_no.'.jpg')) {
                 Artisan::call('member:card', ['--no' => $member->member_no]);
@@ -66,8 +64,8 @@ class DashboardController extends Controller
     }
 
     public function admin(PaymentRepository $paymentRepository,
-    BatchRepository $batchRepository,
-    MemberRepository $memberRepository)
+        BatchRepository $batchRepository,
+        MemberRepository $memberRepository)
     {
         $data['unconfirmed_payments'] = $paymentRepository->countUnconfirmed();
         $data['active_batches'] = $batchRepository->count(true);
@@ -79,11 +77,10 @@ class DashboardController extends Controller
         $data['violation_count'] = Violation::whereNull('paid_at')->count();
         $data['cash'] = (new TransactionRepository)->getBalance();
 
-
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
         $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];
         $data['courses'] = (new CourseRepository)->membersPerType($data['types']);
-        
+
         //dd($data);
 
         return $data;

@@ -27,7 +27,7 @@ class MemberProfileCard extends Component
             ProfileUpdated::dispatch($this->member, $this->member->getDirty());
             $this->member->save();
         }
-        $this->setErrorBag(['message'=>'Data berhasil disimpan']);
+        $this->setErrorBag(['message' => 'Data berhasil disimpan']);
     }
 
     public function mount($member)

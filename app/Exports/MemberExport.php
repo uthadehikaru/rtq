@@ -21,7 +21,7 @@ class MemberExport implements FromQuery, WithHeadings, WithMapping, WithTitle
     public function query()
     {
         return Member::with('batches')
-        ->orderBy('full_name');
+            ->orderBy('full_name');
     }
 
     public function headings(): array

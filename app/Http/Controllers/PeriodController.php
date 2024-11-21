@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DataTables\PeriodsDataTable;
 use App\Exports\PaymentDetailsSheet;
 use App\Exports\PeriodsExport;
-use App\Interfaces\PeriodRepositoryInterface;
 use App\Models\Member;
 use App\Models\Period;
 use Illuminate\Http\Request;
@@ -17,6 +16,7 @@ class PeriodController extends Controller
         $total = Member::has('batches')->whereNull('status')->select('id')->count();
         $data['title'] = __('Periods');
         $dataTable->setTotal($total);
+
         return $dataTable->render('datatables.period', $data);
     }
 

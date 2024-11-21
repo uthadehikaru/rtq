@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class PaymentsExport implements FromCollection, WithHeadings, WithMapping, WithEvents, ShouldAutoSize
+class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithMapping
 {
     use Exportable, RegistersEventListeners;
 

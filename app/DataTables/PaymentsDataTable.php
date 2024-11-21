@@ -18,7 +18,6 @@ class PaymentsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -33,10 +32,10 @@ class PaymentsDataTable extends DataTable
             ->filterColumn('member', function ($query, $keyword) {
                 $query->whereExists(function ($query) use ($keyword) {
                     $query->select(DB::raw(1))
-                    ->from('payment_details')
-                    ->join('members', 'members.id', 'payment_details.member_id')
-                    ->whereColumn('payments.id', 'payment_details.payment_id')
-                    ->where('members.full_name', 'LIKE', '%'.$keyword.'%');
+                        ->from('payment_details')
+                        ->join('members', 'members.id', 'payment_details.member_id')
+                        ->whereColumn('payments.id', 'payment_details.payment_id')
+                        ->where('members.full_name', 'LIKE', '%'.$keyword.'%');
                 });
             })
             ->editColumn('created_at', function ($row) {
@@ -93,44 +92,39 @@ class PaymentsDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Payment $model): QueryBuilder
     {
         return $model
-        ->with(['details.member', 'details.batch', 'details.period'])
-        ->newQuery();
+            ->with(['details.member', 'details.batch', 'details.period'])
+            ->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Payment-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
+            ->setTableId('Payment-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+            ->orderBy(0)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload'),
+            ]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -144,17 +138,15 @@ class PaymentsDataTable extends DataTable
             Column::make('paid_at')->title('Dikonfirmasi pada'),
             Column::make('attachment')->title('Lampiran')->searchable(false),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

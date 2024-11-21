@@ -41,7 +41,6 @@ class ReportPresentsDataTable extends DataTable
      * Build DataTable class.
      *
      * @param  QueryBuilder  $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -57,9 +56,9 @@ class ReportPresentsDataTable extends DataTable
             ->filterColumn('user_id', function ($query, $keyword) {
                 $query->whereExists(function ($query) use ($keyword) {
                     $query->selectRaw('1')
-                    ->from('users')
-                    ->whereColumn('presents.user_id', 'users.id')
-                    ->where('users.name', 'like', '%'.$keyword.'%');
+                        ->from('users')
+                        ->whereColumn('presents.user_id', 'users.id')
+                        ->where('users.name', 'like', '%'.$keyword.'%');
                 });
             })
             ->filterColumn('batch_name', function ($query, $keyword) {
@@ -78,8 +77,9 @@ class ReportPresentsDataTable extends DataTable
                 $status = __('app.present.status.'.$row->status);
                 if ($row->status == 'present' && $row->attended_at) {
                     $status .= ' '.$row->attended_at->format('H:i');
-                    if($row->leave_at)
-                        $status .= " - ".$row->leave_at->format('H:i');
+                    if ($row->leave_at) {
+                        $status .= ' - '.$row->leave_at->format('H:i');
+                    }
                 }
 
                 return $status;
@@ -123,16 +123,15 @@ class ReportPresentsDataTable extends DataTable
      * Get query source of dataTable.
      *
      * @param  \App\Models\Registration  $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Present $model): QueryBuilder
     {
         $model = $model
-        ->selectRaw('presents.*,schedules.scheduled_at,batches.code as batch_code, batches.name as batch_name')
-        ->join('schedules', 'presents.schedule_id', 'schedules.id')
-        ->join('batches', 'schedules.batch_id', 'batches.id')
-        ->with(['schedule', 'schedule.batch', 'user'])
-        ->latest('scheduled_at');
+            ->selectRaw('presents.*,schedules.scheduled_at,batches.code as batch_code, batches.name as batch_name')
+            ->join('schedules', 'presents.schedule_id', 'schedules.id')
+            ->join('batches', 'schedules.batch_id', 'batches.id')
+            ->with(['schedule', 'schedule.batch', 'user'])
+            ->latest('scheduled_at');
 
         if ($this->type) {
             $model = $model->where('type', $this->type);
@@ -157,34 +156,30 @@ class ReportPresentsDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
         return $this->builder()->responsive(true)
-                    ->setTableId('Present-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->stateSave()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([]);
+            ->setTableId('Present-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->stateSave()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([]);
     }
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('scheduled_at')->title('jadwal')->searchable(false),
             Column::make('batch_name')->title('Halaqoh'),
             Column::make('user_id')->title('Nama'),
@@ -196,8 +191,6 @@ class ReportPresentsDataTable extends DataTable
 
     /**
      * Get filename for export.
-     *
-     * @return string
      */
     protected function filename(): string
     {

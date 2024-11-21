@@ -75,7 +75,7 @@ class PaymentRepository implements PaymentRepositoryInterface
             'member_id' => $member_id,
             'period_id' => $period_id,
         ])
-        ->first();
+            ->first();
 
         if ($detail) {
             $detail->load(['member', 'period']);

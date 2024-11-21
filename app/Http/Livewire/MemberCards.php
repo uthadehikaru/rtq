@@ -34,12 +34,12 @@ class MemberCards extends Component
     public function render()
     {
         $data['members'] = Member::has('batches')
-        ->orderBy('full_name')
-        ->select('full_name', 'member_no')
-        ->simplePaginate(24);
+            ->orderBy('full_name')
+            ->select('full_name', 'member_no')
+            ->simplePaginate(24);
 
         return view('livewire.member-cards', $data)
-        ->extends('layouts.app')
-        ->section('content');
+            ->extends('layouts.app')
+            ->section('content');
     }
 }

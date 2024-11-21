@@ -83,6 +83,18 @@
                             <input type="text" name="{{ 'durasi_'.str($type)->snake() }}" class="form-control" value="{{ $course['durasi_'.str($type)->snake()]->payload }}">
                         </div>
                         @endforeach
+                        <div class="form-group">
+                            <label>Biaya Kelas</label>
+                            <input type="text" name="{{ 'course_fee' }}" class="form-control" value="{{ $course['course_fee']->payload }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Biaya Akselerasi Tahsin Anak</label>
+                            <input type="text" name="{{ 'acceleration_tahsin_anak_fee' }}" class="form-control" value="{{ $course['acceleration_tahsin_anak_fee']->payload }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Biaya Akselerasi Tahsin Dewasa</label>
+                            <input type="text" name="{{ 'acceleration_tahsin_dewasa_fee' }}" class="form-control" value="{{ $course['acceleration_tahsin_dewasa_fee']->payload }}">
+                        </div>
                     </div>
                 </div>
             </div>

@@ -40,6 +40,7 @@ test('admin can create batch', function () {
         'place' => 'somewhere',
         'teacher_ids' => [$teacher->id],
         'member_ids' => null,
+        'is_active' => true,
     ];
 
     $response = $this->post(route('courses.batches.store', $course->id), $data);
@@ -58,7 +59,7 @@ test('admin can edit batch', function () {
 test('khidmat teacher not appear on batch form', function () {
     $admin = User::find(1);
     $course = Course::factory()->create();
-    $teacher = Teacher::factory()->for(User::factory())->create(['status'=>'khidmat']);
+    $teacher = Teacher::factory()->for(User::factory())->create(['status' => 'khidmat']);
     actingAs($admin);
     $response = $this->get(route('courses.batches.create', $course->id));
     $response->assertSuccessful();

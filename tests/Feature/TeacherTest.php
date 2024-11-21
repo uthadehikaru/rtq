@@ -20,9 +20,9 @@ test('teacher can access dashboard', function () {
     $user = createUser('teacher');
     $batch = createBatch($user);
     actingAs($user)
-    ->get('dashboard')
-    ->assertStatus(200)
-    ->assertSee($user->name);
+        ->get('dashboard')
+        ->assertStatus(200)
+        ->assertSee($user->name);
 });
 
 test('teacher can create their schedule', function () {
@@ -42,10 +42,10 @@ test('teacher can create their schedule', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.create'), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.create'), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 
     $schedule = Schedule::first();
     expect($schedule->batch_id)->toBe($batch->id);
@@ -56,10 +56,10 @@ test('teacher can create their schedule', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.close', $schedule->id), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.close', $schedule->id), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 
     $schedule->refresh();
     expect($schedule->end_at)->not()->toBeEmpty();
@@ -82,10 +82,10 @@ test('teacher cannot create past schedule', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.create'), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.create'), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 });
 
 test('teacher can close schedule after min duration', function () {
@@ -108,10 +108,10 @@ test('teacher can close schedule after min duration', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.create'), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.create'), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 
     $schedule = Schedule::first();
     expect($schedule->batch_id)->toBe($batch->id);
@@ -124,10 +124,10 @@ test('teacher can close schedule after min duration', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.close', $schedule->id), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.close', $schedule->id), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 
     $schedule->refresh();
     expect($schedule->end_at)->not()->toBeEmpty();
@@ -153,22 +153,22 @@ test('teacher can not close schedule before min duration', function () {
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.create'), $data)
-    ->assertJson([
-        'error' => null,
-    ]);
+        ->post(route('teacher.schedules.create'), $data)
+        ->assertJson([
+            'error' => null,
+        ]);
 
     $schedule = Schedule::first();
     expect($schedule->batch_id)->toBe($batch->id);
-    
+
     $data = [
         'photo' => $file,
         'lat' => 1,
         'long' => 1,
     ];
     actingAs($user)
-    ->post(route('teacher.schedules.close', $schedule->id), $data)
-    ->assertJson([
-        'error' => "Belum diperbolehkan absen keluar, minimal jam ".Carbon::now()->addMinutes(120)->format("H:i"),
-    ]);
+        ->post(route('teacher.schedules.close', $schedule->id), $data)
+        ->assertJson([
+            'error' => 'Belum diperbolehkan absen keluar, minimal jam '.Carbon::now()->addMinutes(120)->format('H:i'),
+        ]);
 });

@@ -82,7 +82,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function list()
     {
-        return Teacher::whereNotIn('status',['khidmat'])->pluck('name', 'id');
+        return Teacher::whereNotIn('status', ['khidmat'])->pluck('name', 'id');
     }
 
     public function listAll()

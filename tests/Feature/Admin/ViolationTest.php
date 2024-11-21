@@ -30,8 +30,8 @@ test('admin can see violation', function () {
 });
 
 test('non admin cannot see violation', function () {
-    $roles = Role::where('name','<>','administrator')->get();
-    foreach($roles as $role){
+    $roles = Role::where('name', '<>', 'administrator')->get();
+    foreach ($roles as $role) {
         $user = createUser($role->name);
         actingAs($user);
         $response = $this->get(route('violations.index'));
@@ -63,7 +63,7 @@ test('admin can insert violation for member', function () {
     $user = createUser('member');
     $violation = Violation::factory()->make()->toArray();
     $violation['user_id'] = $user->id;
-    $violation['description'] = "Telat Masuk";
+    $violation['description'] = 'Telat Masuk';
     $violation['amount'] = 500;
     $response = $this->post(route('violations.store'), $violation);
     $response->assertSessionHasNoErrors();
@@ -84,7 +84,7 @@ test('admin can insert violation for teacher', function () {
     $violation = Violation::factory()->make()->toArray();
     $violation['user_id'] = $user->id;
     $violation['type'] = 'teacher';
-    $violation['description'] = "Lupa tutup kelas";
+    $violation['description'] = 'Lupa tutup kelas';
     $violation['amount'] = 1000;
     $response = $this->post(route('violations.store'), $violation);
     $response->assertSessionHasNoErrors();
@@ -118,8 +118,8 @@ test('admin can update violation', function () {
 });
 
 test('non admin can see their own violation', function () {
-    $roles = Role::where('name','<>','administrator')->get();
-    foreach($roles as $role){
+    $roles = Role::where('name', '<>', 'administrator')->get();
+    foreach ($roles as $role) {
         $user = createUser($role->name);
         actingAs($user);
         $response = $this->get(route('iqob.index'));

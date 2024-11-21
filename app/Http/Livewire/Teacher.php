@@ -10,9 +10,13 @@ use Livewire\Component;
 class Teacher extends Component
 {
     public $present;
+
     public $schedule;
+
     public $statuses;
+
     public $presentCount = 0;
+
     public $duration = 0;
 
     protected $listeners = ['message' => 'recalculate'];

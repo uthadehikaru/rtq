@@ -42,13 +42,13 @@ class CreateMemberCardZip implements ShouldQueue
         $zip_file = storage_path('app/public/cards/'.$filename); // Name of our archive to download
 
         $batches = Member::select('batches.name as batch', 'member_no')
-        ->join('batch_member', 'members.id', 'batch_member.member_id')
-        ->join('batches', 'batch_member.batch_id', 'batches.id')
-        ->join('courses', 'batches.course_id', 'courses.id')
-        ->where('courses.type', '<>', 'Talaqqi Jamai')
-        ->orderByRaw('courses.type, batches.name')
-        ->get()
-        ->groupBy('batch');
+            ->join('batch_member', 'members.id', 'batch_member.member_id')
+            ->join('batches', 'batch_member.batch_id', 'batches.id')
+            ->join('courses', 'batches.course_id', 'courses.id')
+            ->where('courses.type', '<>', 'Talaqqi Jamai')
+            ->orderByRaw('courses.type, batches.name')
+            ->get()
+            ->groupBy('batch');
 
         // Initializing PHP class
         $zip = new ZipArchive();
