@@ -123,7 +123,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/login-as/{user:id}', Actions\LoginAsUser::class)->name('login.as');
         });
         Route::resource('settings', SettingController::class);
-        Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
     });
     Route::name('teacher.')->prefix('teacher')->middleware('role:teacher')->group(function () {
         Route::post('upload', Actions\Upload::class)->name('upload');
