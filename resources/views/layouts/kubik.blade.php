@@ -40,9 +40,20 @@
                     <div class="flex items-center justify-between mb-10 lg:mb-0">
                         <a href="{{ route('home') }}"><img src="{{ asset('assets/images/rtq maisuro.png') }}" class="w-20" alt="Logo"></a>
 
-                        <button class="flex items-center justify-center border border-green-500 w-10 h-10 text-green-500 rounded-md outline-none lg:hidden ml-auto" @click="navbarOpen = !navbarOpen">
-                            <i data-feather="menu"></i>
-                        </button>
+						<div class="flex items-center justify-center gap-2">
+							<a href="{{ route('payment') }}" class="flex items-center justify-center p-2 h-10 text-green-500 rounded-md outline-none lg:hidden ml-auto">
+								Konfirmasi Pembayaran
+							</a>
+							@auth
+							<a href="{{ route('dashboard') }}" class="flex items-center justify-center border border-green-500 p-2 h-10 text-green-500 rounded-md outline-none lg:hidden ml-auto">
+								Dashboard
+							</a>
+							@else
+							<a href="{{ route('login') }}" class="flex items-center justify-center border border-green-500 p-2 h-10 text-green-500 rounded-md outline-none lg:hidden ml-auto">
+								Masuk
+							</a>
+							@endauth
+						</div>
                     </div>
 
                     <ul class="hidden lg:block lg:flex flex-col lg:flex-row lg:items-center lg:space-x-20" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
@@ -56,7 +67,7 @@
                        	</li>
 						@else
                        	<li class="px-8 py-3 font-medium text-green-500 text-lg text-center border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white transition ease-linear duration-300">
-                            <a href="{{ route('login') }}">Masuk</a>
+                            <a href="{{ route('login') }}" class="w-full">Masuk</a>
                        </li>
 						@endauth
                     </ul>
