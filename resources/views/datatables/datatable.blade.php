@@ -38,9 +38,10 @@
 @push('styles')
 		<link href="{{ asset('datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ asset('datatables/Buttons-2.3.6/css/buttons.dataTables.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('datatables/Responsive-2.4.1/css/dataTables.responsive.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('datatables/Responsive-2.4.1/css/responsive.dataTables.min.css') }}" />
 @endpush
 @push('scripts')
+
 	<script src="{{ asset('datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('datatables/Buttons-2.3.6/js/buttons.dataTables.min.js') }}"></script>
 	<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}" type="text/javascript"></script>
