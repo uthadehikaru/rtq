@@ -13,7 +13,7 @@ class SalaryService
 {
     public function all()
     {
-        return Salary::all();
+        return Salary::with('details')->latest()->get();
     }
 
     public function store($data)

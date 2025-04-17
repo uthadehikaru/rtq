@@ -119,6 +119,7 @@ jQuery(document).ready(function () {
                     <th title="Field #1">@lang('Created at')</th>
                     <th title="Field #2">@lang('Name')</th>
                     <th title="Field #2">@lang('Period')</th>
+                    <th title="Field #2">@lang('Total')</th>
                     <th title="Field #2">@lang('Disetujui pada')</th>
                     <th title="Field #2">@lang('Action')</th>
                 </tr>
@@ -129,6 +130,7 @@ jQuery(document).ready(function () {
                         <td>{{ $salary->created_at->format('d/m/y h:i') }}</td>
                         <td>{{ $salary->name }}</td>
                         <td>{{ $salary->start_date->format('d/m/y') }} - {{ $salary->end_date->format('d/m/y') }}</td>
+                        <td class="text-right">{{ number_format($salary->details->sum('amount'), 0, ',', '.') }}</td>
                         <td>{{ $salary->approved_at?->format('d/m/y H:i') }}</td>
                         <td>
                             <a href="{{ route('salaries.details.index', $salary->id) }}" class="text-primary">

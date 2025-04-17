@@ -14,7 +14,22 @@ var KTDatatableJsonRemoteDemo = function () {
             },
             search: {
                 input: $('#generalSearch'),
-            },  
+            },
+            columns: [
+                { field: 'Created at', class: 'text-left' },
+                { field: 'Teacher', class: 'text-left' },
+                { field: 'Jadwal', class: 'text-right' },
+                { field: 'Badal', class: 'text-right' },
+                { field: 'Hadir', class: 'text-right' },
+                { field: 'Telat', class: 'text-right' },
+                { field: 'Absen', class: 'text-right' },
+                { field: 'Izin/Sakit', class: 'text-right' },
+                { 
+                    field: 'Nominal',
+                    class: 'text-right'
+                },
+                { field: 'Action' }
+            ]
         });
 
     };
@@ -73,7 +88,7 @@ jQuery(document).ready(function () {
                 <i class="kt-font-brand flaticon2-users"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                {{ $salary->name }}
+                {{ $salary->name }}. Total: Rp. {{ number_format($total, 0, ',', '.') }}
             </h3>
         </div>
         <div class="kt-portlet__head-toolbar">
@@ -159,7 +174,7 @@ jQuery(document).ready(function () {
                         <td>{{ $detail->summary['late'] }}</td>
                         <td>{{ $detail->summary['absent'] }}</td>
                         <td>{{ $detail->summary['permit'] }}</td>
-                        <td>{{ $detail->amount }}</td>
+                        <td class="text-right">{{ number_format($detail->amount, 0, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('salaries.report', [$salary->id,$detail->user_id]) }}" class="text-info" target="_blank">
                                 <i class="la la-file"></i> @lang('Report')

@@ -14,7 +14,7 @@ class SalaryDetailController extends Controller
         $details = $salary->details;
         $data['salary'] = $salary;
         $data['details'] = $details;
-        $data['total'] = $details->count();
+        $data['total'] = $details->sum('amount');
 
         return view('datatables.salary-details', $data);
     }
