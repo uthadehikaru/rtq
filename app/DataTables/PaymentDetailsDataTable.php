@@ -33,9 +33,6 @@ class PaymentDetailsDataTable extends DataTable
             ->editColumn('member_id', function ($row) {
                 return $row->member->full_name;
             })
-            ->editColumn('payment_id', function ($row) {
-                return $row->payment->amount;
-            })
             ->addColumn('action', function ($row) {
                 $buttons = '<div class="btn-group" role="group">
                 <button id="action" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,7 +96,6 @@ class PaymentDetailsDataTable extends DataTable
         return [
             Column::make('created_at')->title('Tanggal'),
             Column::make('member_id')->title('Member'),
-            Column::make('payment_id')->title('Amount'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

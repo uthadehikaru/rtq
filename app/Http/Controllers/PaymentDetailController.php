@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\DataTables\PaymentDetailsDataTable;
 use App\Models\PaymentDetail;
 use App\Models\Period;
+use App\Services\SettingService;
 use Illuminate\Http\Request;
+use OpenSpout\Reader\ODS\Helper\SettingsHelper;
 
 class PaymentDetailController extends Controller
 {
@@ -24,6 +26,12 @@ class PaymentDetailController extends Controller
             $data['title'] .= ' Periode '.$data['period']->name;
             $dataTable->setPeriod($request->period_id);
         }
+        $memberFee = (new SettingService())->value('course_fee', 0);
+        $total = PaymentDetail::with('payment')
+            ->where('period_id', $request->period_id)
+            ->count();
+        $amt = $total * $memberFee;
+        $data['title'] .= ' Total: Rp. '.number_format($amt, 0, ',', '.');
 
         return $dataTable->render('datatables.paymentdetails', $data);
     }
