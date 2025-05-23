@@ -167,11 +167,16 @@ class SalaryService
 
             if ($summary['present'] > 0) {
                 $summary['tunjangan'] = $settings['tunjangan'] * $ratio;
+                
                 $totalPermit = $summary[Present::STATUS_ABSENT] + $summary['permit'] + $summary['sick'];
                 if ($totalPermit > $settings['maks_izin']) {
                     $summary['tunjangan'] = 0;
                 } else {
-                    $summary['tunjangan'] -= $totalPermit * $settings['pengurangan_tunjangan_per_izin'];
+                    $permitPenalty = 0;
+                    for ($i = 1; $i <= $totalPermit; $i++) {
+                        $permitPenalty += $i;
+                    }
+                    $summary['tunjangan'] -= $permitPenalty * $settings['pengurangan_tunjangan_per_izin'];
                 }
 
                 $amount += $summary['tunjangan'];
