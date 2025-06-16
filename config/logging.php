@@ -48,6 +48,14 @@ return [
     */
 
     'channels' => [
+        'rtq' => [
+            'driver' => 'stack',
+            'channels' => ['daily', 'sentry'],
+            'ignore_exceptions' => false,
+        ],
+        'sentry' => [
+            'driver' => 'sentry',
+        ],
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

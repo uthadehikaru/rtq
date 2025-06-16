@@ -21,6 +21,7 @@
         "maatwebsite/excel": "^3.1",
         "opcodesio/log-viewer": "^3.12",
         "qcod/laravel-imageup": "^1.2",
+        "sentry/sentry-laravel": "^4.15",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-backup": "^9.0",
