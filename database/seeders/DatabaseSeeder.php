@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             PeriodSeeder::class,
-            BlogSeeder::class,
         ]);
     }
 }

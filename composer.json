@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^2.0",
-        "binshops/laravel-blog": "^9.3",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",

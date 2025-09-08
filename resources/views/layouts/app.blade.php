@@ -177,11 +177,6 @@
 														<span class="kt-menu__link-text">@lang('Pengguna')</span>
 													</a>
 												</li>
-												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('blog*')?'kt-menu__item--active':'' }}">
-													<a href="{{ url('blog_admin') }}" class="kt-menu__link">
-														<span class="kt-menu__link-text">@lang('Artikel')</span>
-													</a>
-												</li>
 												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('notifications*')?'kt-menu__item--active':'' }}">
 													<a href="{{ route('admin.notifications.index') }}" class="kt-menu__link">
 														<span class="kt-menu__link-text">@lang('Notifikasi')</span>
