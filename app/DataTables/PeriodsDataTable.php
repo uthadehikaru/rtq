@@ -90,7 +90,8 @@ class PeriodsDataTable extends DataTable
             Column::make('name')->title('Nama'),
             Column::make('start_date')->title('Awal'),
             Column::make('end_date')->title('Akhir'),
-            Column::make('payment_details_count')->title('Pembayaran'),
+            Column::make('payment_details_count')->title('Pembayaran')->searchable(false)
+            ->sortable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
