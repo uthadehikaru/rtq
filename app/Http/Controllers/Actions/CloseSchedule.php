@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Actions;
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
 use App\Repositories\ScheduleRepository;
+use App\Services\BatchService;
 use App\Services\SettingService;
 use Carbon\Carbon;
 use Exception;
@@ -33,7 +34,7 @@ class CloseSchedule extends Controller
             $present = $schedule->presents()->where('user_id', Auth::id())->first();
             $batch = $schedule->batch;
 
-            $duration = $settingService->value('durasi_'.str($schedule->batch->course->type)->snake(), 0);
+            $duration = (new BatchService)->getDuration($batch->id);
             if (Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
                 return response()->json(['error' => 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i')]);
             }
