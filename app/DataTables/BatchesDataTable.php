@@ -59,6 +59,9 @@ class BatchesDataTable extends DataTable
 
                 return $row->members_count;
             })
+            ->addColumn('tipe', function ($row) {
+                return $row->size_type;
+            })
             ->rawColumns(['action'])
             ->setRowId('id');
     }
@@ -113,6 +116,7 @@ class BatchesDataTable extends DataTable
             Column::make('is_active')->title('Aktif'),
             Column::make('teachers')->title('Pengajar')->searchable(false),
             Column::make('members_count')->title('Peserta')->searchable(false),
+            Column::make('tipe')->title('Tipe')->searchable(false),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

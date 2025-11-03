@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Present;
 use App\Models\Schedule;
-use App\Services\SettingService;
+use App\Services\BatchService;
 use Livewire\Component;
 
 class Teacher extends Component
@@ -19,6 +19,8 @@ class Teacher extends Component
 
     public $duration = 0;
 
+    public $size_type = '';
+
     protected $listeners = ['message' => 'recalculate'];
 
     public function __construct()
@@ -28,7 +30,8 @@ class Teacher extends Component
 
     public function mount()
     {
-        $this->duration = (new SettingService)->value('durasi_'.str($this->schedule->batch->course->type)->snake(), 0);
+        $this->duration = (new BatchService)->getDuration($this->schedule->batch_id);
+        $this->size_type = $this->schedule->batch->size_type;
         $this->presentCount = $this->schedule->presents()->present()->count();
     }
 

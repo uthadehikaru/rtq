@@ -21,7 +21,7 @@
             <select class="form-control kt-select2" name="batch_id" id="batch" required>
                 <option value="">@lang('Select Batch')</option>
                 @foreach($batches as $batch)
-                    <option value="{{ $batch->id }}">{{ $batch->course->name }}
+                    <option value="{{ $batch->id }}">{{ $batch->size_type ? \Str::ucfirst($batch->size_type).' : ' : '' }} {{ $batch->course->name }}
                         {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }} {{ $batch->teachers?->pluck('name')->join(',') }})</option>
                 @endforeach
             </select>
@@ -81,7 +81,9 @@ jQuery(document).ready(function() {
    })
    .catch(err => {
        console.log(err);
+        @if(env('APP_ENV') != 'local')
         $('#capture').addClass('d-none');
+        @endif
         $('#alert').removeClass('alert-primary');
         $('#alert').addClass('alert-danger');
         $('#alert').text('Gagal mengakses kamera. pastikan anda memberikan akses ke kamera untuk melakukan absensi. silahkan refresh kembali dan pastikan akses kamera diberikan');

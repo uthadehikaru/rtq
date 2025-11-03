@@ -63,7 +63,8 @@
         <a href="{{ asset('storage/'.$present->photo_out) }}" target="_BLANK"><img src="{{ asset('storage/'.$present->photo_out) }}" class="img-fluid" /></a>
         @else
         <h3 class="mt-2">Informasi</h3>
-        Durasi Kelas : {{ $duration }} Menit
+        Tipe Kelas : {{ $size_type }}
+        <br/>Durasi Kelas : {{ $duration }} Menit
         <br/>Min Tutup Kelas : {{ $present->attended_at?->addMinutes($duration)->format('H:i') }}
         <br/>Kehadiran : {{ $presentCount }}
         <br/>Durasi per Peserta : {{ round($duration/$presentCount) }} menit

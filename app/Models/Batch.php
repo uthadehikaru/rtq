@@ -42,4 +42,25 @@ class Batch extends Model
     {
         return $this->belongsToMany(Teacher::class)->withPivot('is_member');
     }
+
+    public function getSizeTypeAttribute()
+    {
+        $tipe = '';
+        if($this->course->type == 'Tahsin Anak') {
+            if($this->members->count() >= 14)
+                $tipe = 'besar';
+            elseif($this->members->count() >= 11)
+                $tipe = 'sedang';
+            else
+                $tipe = 'kecil';
+        }elseif($this->course->type == 'Tahsin Dewasa') {
+            if($this->members->count() >= 14)
+                $tipe = 'besar';
+            elseif($this->members->count() >= 10)
+                $tipe = 'sedang';
+            else
+                $tipe = 'kecil';
+        }
+        return $tipe;
+    }
 }
