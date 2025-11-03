@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
+use App\Services\BatchService;
 use App\Services\SettingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class CloseSchedule extends Controller
             return back()->with('error', 'Anda sudah absen keluar pada '.$present->leave_at->format('H:i'));
         }
 
-        $duration = $settingService->value('durasi_'.str($schedule->batch->course->type)->snake(), 0);
+        $duration = (new BatchService)->getDuration($schedule->batch_id);
         if (Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
             return back()->with('error', 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i'));
         }
