@@ -39,6 +39,16 @@ class Present extends Model
         'leave_at' => 'datetime',
     ];
 
+    public function scopeMember($query)
+    {
+        return $query->where('type', 'member');
+    }
+
+    public function scopeTeacher($query)
+    {
+        return $query->where('type', 'teacher');
+    }
+
     public function scopePresent($query)
     {
         return $query->where('status', self::STATUS_PRESENT);

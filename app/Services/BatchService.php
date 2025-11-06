@@ -30,4 +30,25 @@ class BatchService {
         }
         return (new SettingService)->value('durasi_'.str($batch->course->type)->snake(), 0);
     }
+
+    public function getSizeType($type, $count)
+    {
+        $tipe = '';
+        if($type == 'Tahsin Anak') {
+            if($count >= 14)
+                $tipe = 'besar';
+            elseif($count >= 11)
+                $tipe = 'sedang';
+            else
+                $tipe = 'kecil';
+        }elseif($type == 'Tahsin Dewasa') {
+            if($count >= 13)
+                $tipe = 'besar';
+            elseif($count >= 10)
+                $tipe = 'sedang';
+            else
+                $tipe = 'kecil';
+        }
+        return $tipe;
+    }
 }

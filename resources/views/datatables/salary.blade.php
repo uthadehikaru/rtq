@@ -127,7 +127,7 @@ jQuery(document).ready(function () {
             <tbody>
                 @foreach($salaries as $salary)
                     <tr>
-                        <td>{{ $salary->created_at->format('d/m/y h:i') }}</td>
+                        <td>{{ $salary->created_at->format('y-m-d h:i') }}</td>
                         <td>{{ $salary->name }}</td>
                         <td>{{ $salary->start_date->format('d/m/y') }} - {{ $salary->end_date->format('d/m/y') }}</td>
                         <td class="text-right">{{ number_format($salary->details->sum('amount'), 0, ',', '.') }}</td>

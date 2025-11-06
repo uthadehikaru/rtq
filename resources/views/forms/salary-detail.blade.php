@@ -46,11 +46,58 @@
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
+                        <h4 class="kt-section__title">@lang('Nominal per Kelas')</h4>
+                        @foreach (['tahsin_anak','tahsin_dewasa','tahsin_balita','talaqqi_jamai'] as $type)
                         <div class="form-group">
-                            <label>@lang('Amount')</label>
-                            <input type="number" name="amount" class="form-control"
-                            value="{{ old('amount', $detail?$detail->amount:'') }}"
+                            <label>{{ Str::title($type) }}</label>
+                            <input type="number" name="{{ $type }}[amount]" class="form-control"
+                            value="{{ old($type.'.amount', isset($detail) && isset($detail->summary[$type]['amount']) ? $detail->summary[$type]['amount'] : 0) }}"
                             required>
+                        </div>
+                        @endforeach
+                        
+                        <h4 class="kt-section__title mt-4">@lang('Total Semua Kelas')</h4>
+                        <div class="form-group">
+                            <label>@lang('total')</label>
+                            <input type="number" name="base" class="form-control"
+                            value="{{ old('base', isset($detail) && isset($detail->summary['base']) ? $detail->summary['base'] : 0) }}"
+                            disabled>
+                        </div>
+                        
+                        <h4 class="kt-section__title mt-4">@lang('Tunjangan dan Potongan')</h4>
+                        <div class="form-group">
+                            <label>@lang('Transportasi')</label>
+                            <input type="number" name="transportasi" class="form-control"
+                            value="{{ old('transportasi', isset($detail) && isset($detail->summary['transportasi']) ? $detail->summary['transportasi'] : 0) }}"
+                            required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>@lang('Potongan Telat')</label>
+                            <input type="number" name="potongan_telat" class="form-control"
+                            value="{{ old('potongan_telat', isset($detail) && isset($detail->summary['potongan_telat']) ? $detail->summary['potongan_telat'] : 0) }}"
+                            required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>@lang('Operan Santri')</label>
+                            <input type="number" name="nominal_oper" class="form-control"
+                            value="{{ old('nominal_oper', isset($detail) && isset($detail->summary['nominal_oper']) ? $detail->summary['nominal_oper'] : 0) }}"
+                            required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>@lang('Tunjangan')</label>
+                            <input type="number" name="tunjangan" class="form-control"
+                            value="{{ old('tunjangan', isset($detail) && isset($detail->summary['tunjangan']) ? $detail->summary['tunjangan'] : 0) }}"
+                            required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>@lang('Total Keseluruhan')</label>
+                            <input type="number" name="amount" class="form-control"
+                            value="{{ old('amount', isset($detail) ? $detail->amount : 0) }}"
+                            disabled>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\BatchService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -43,5 +44,10 @@ class Schedule extends Model
         $users = $teachers->pluck('user_id');
 
         return User::whereIn('id', $users)->get();
+    }
+
+    public function getSizeTypeAttribute()
+    {
+        return (new BatchService)->getSizeType($this->batch->course->type, $this->presents()->member()->count());
     }
 }

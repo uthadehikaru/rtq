@@ -44,28 +44,6 @@ var KTDatatableJsonRemoteDemo = function () {
 
 jQuery(document).ready(function () {    
 	KTDatatableJsonRemoteDemo.init();
-
-    $(document).on("click", ".delete", function() { 
-        if(confirm("@lang('Are you sure?')")) {
-            var id= $(this).data('id');
-            var url = "{{ route('salaries.details.index', $salary->id) }}";
-            var dltUrl = url+"/"+id;
-            $.ajax({
-                url: dltUrl,
-                type: "DELETE",
-                cache: false,
-                data:{
-                    _token:'{{ csrf_token() }}'
-                },
-                success: function(dataResult){
-                    if(dataResult.statusCode==200){
-                        alert('@lang('Deleted Successfully')');
-                        location.reload(true);
-                    }
-                }
-            });
-        }
-	});
 });
 </script>
 @endpush
@@ -99,7 +77,7 @@ jQuery(document).ready(function () {
                         @lang('Back')
                     </a>
                     @if(!$salary->approved_at)
-                    <a href="{{ route('salaries.calculate', $salary->id) }}" class="btn btn-primary btn-icon-sm">
+                    <a href="{{ route('salaries.calculate', $salary->id) }}" class="btn btn-primary btn-icon-sm" onclick="return confirm('Anda yakin ingin menghitung ulang?')">
                         <i class="la la-refresh"></i>
                         @lang('Calculate')
                     </a>
@@ -176,15 +154,12 @@ jQuery(document).ready(function () {
                         <td>{{ $detail->summary['permit'] }}</td>
                         <td class="text-right">{{ number_format($detail->amount, 0, ',', '.') }}</td>
                         <td>
-                            <a href="{{ route('salaries.report', [$salary->id,$detail->user_id]) }}" class="text-info" target="_blank">
+                            <a href="{{ route('salaries.report', [$salary->id,$detail->id]) }}" class="text-info" target="_blank">
                                 <i class="la la-file"></i> @lang('Report')
                             </a>
                             @if(!$salary->approved_at)
                             <a href="{{ route('salaries.details.edit', [$salary->id,$detail->id]) }}" class="text-warning">
                                 <i class="la la-edit"></i> @lang('Edit')
-                            </a>
-                            <a href="javascript:;" class="text-danger delete" data-id="{{ $detail->id }}">
-                                <i class="la la-trash"></i> @lang('Delete')
                             </a>
                             @endif
                         </td>

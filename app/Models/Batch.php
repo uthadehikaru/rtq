@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\BatchService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,22 +46,6 @@ class Batch extends Model
 
     public function getSizeTypeAttribute()
     {
-        $tipe = '';
-        if($this->course->type == 'Tahsin Anak') {
-            if($this->members->count() >= 14)
-                $tipe = 'besar';
-            elseif($this->members->count() >= 11)
-                $tipe = 'sedang';
-            else
-                $tipe = 'kecil';
-        }elseif($this->course->type == 'Tahsin Dewasa') {
-            if($this->members->count() >= 14)
-                $tipe = 'besar';
-            elseif($this->members->count() >= 10)
-                $tipe = 'sedang';
-            else
-                $tipe = 'kecil';
-        }
-        return $tipe;
+        return (new BatchService)->getSizeType($this->course->type, $this->members->count());
     }
 }

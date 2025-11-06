@@ -109,7 +109,8 @@ class SalaryService
 
                     $ratio = $present->user->teacher->status == 'training' ? 0.5 : 1;
                     $summary[$type]['total']++;
-                    $rate = $settings[$type] * $ratio;
+                    $rate = $this->getRate($type, $present->schedule->size_type, $settings[$type]);
+                    $rate *= $ratio;
                     $summary[$type]['amount'] += $rate;
                     $summary['base'] += $rate;
                     $amount += $rate;
@@ -192,6 +193,28 @@ class SalaryService
         }
 
         DB::commit();
+    }
+
+    public function getRate($type, $size_type, $rate)
+    {
+        if($type == 'tahsin_anak') {
+            if($size_type == 'besar') {
+                return 75000;
+            } elseif($size_type == 'sedang') {
+                return 62500;
+            } else {
+                return 50000;
+            }
+        } elseif($type == 'tahsin_dewasa') {
+            if($size_type == 'besar') {
+                return 100000;
+            } elseif($size_type == 'sedang') {
+                return 75000;
+            } else {
+                return 50000;
+            }
+        }
+        return $rate;
     }
 
     public function getPresentOfSalary($salary_id, $user_id = 0)

@@ -52,6 +52,8 @@
                             <th title="">@lang('Schedule')</th>
                             <th title="">@lang('Course')</th>
                             <th title="">@lang('Batch')</th>
+                            <th title="">@lang('Peserta')</th>
+                            <th title="">@lang('Type')</th>
                             <th title="">@lang('status')</th>
                             <th title="">@lang('Badal')</th>
                             <th title="">@lang('description')</th>
@@ -67,19 +69,21 @@
                                         {{ $present->schedule->batch->name }}
                                     </span>
                                 </td>
+                                <td width="15%">{{ $present->schedule->presents()->member()->count() }}</td>
+                                <td width="15%">{{ $present->schedule->batch->course->type }} {{ $present->schedule->size_type }}</td>
                                 <td width="15%">
                                     <span class="text-{{ $present->status=='present'?'primary':'danger' }}">
                                         @lang('app.present.status.'.$present->status)
                                         @if($present->status=='present')
                                             {{ $present->attended_at?->format('H:i') }}
-                                            {{ $present->leave_at?' - '.$present->leave_at->format('H:i'):'' }}
+                                            {!! $present->leave_at?' - '.$present->leave_at->format('H:i'):' - <span class="text-danger">belum tutup kelas</span>' !!}
                                             @php 
                                             $attended_at = $present->attended_at;
                                             if(!$attended_at)
                                                 $attended_at = $present->created_at;
                                             if($attended_at->greaterThan($present->schedule->start_at)){
                                                 $late = $attended_at->diffInMinutes($present->schedule->start_at);
-                                                echo $late>$detail->summary['maks_waktu_telat']?'(Telat '.$late.' menit)':'';
+                                                echo $late>$detail->summary['maks_waktu_telat']?'<span class="text-danger">(Telat '.$late.' menit)</span>':'';
                                             }
                                             @endphp
                                         @endif
