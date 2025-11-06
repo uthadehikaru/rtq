@@ -25,9 +25,9 @@
                         </div>
                         <span class="message text-success" id="message-{{ $present->id }}"></span>
                         @if($present->is_transfer)
-                        <a href="{{ route('teacher.schedules.presents.remove', [$present->schedule_id, $present->id]) }}" 
-                        onclick="return confirm('Yakin ingin menghapus?')"
-                        class="text-danger mt-2">(hapus)</a>
+                        <button type="button" wire:click="remove({{ $present->id }})" 
+                        wire:confirm="Yakin ingin menghapus?"
+                        class="btn btn-outline-danger btn-sm mt-2">(hapus)</button>
                         @endif
                     </div>
                     <div class="col-8">

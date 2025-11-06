@@ -9,6 +9,8 @@ class Presents extends Component
 {
     public $presents;
 
+    public $schedule_id;
+
     public $statuses = [];
 
     protected $rules = [
@@ -16,9 +18,22 @@ class Presents extends Component
         'presents.*.description' => '',
     ];
 
+    protected $listeners = ['member-present-updated' => 'refresh'];
+
     public function __construct()
     {
         $this->statuses = Present::STATUSES;
+    }
+
+    public function refresh()
+    {
+        $this->presents = Present::with('user')->where('schedule_id', $this->schedule_id)->get();
+    }
+
+    public function remove($present_id)
+    {
+        Present::find($present_id)->delete();
+        $this->refresh();
     }
 
     public function updateStatus($present_id, $status)

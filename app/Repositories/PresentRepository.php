@@ -20,6 +20,14 @@ class PresentRepository implements PresentRepositoryInterface
             ->get();
     }
 
+    public function getPresentByUser($schedule_id, $user_id)
+    {
+        return Present::with('user')
+            ->where('schedule_id', $schedule_id)
+            ->where('user_id', $user_id)
+            ->first();
+    }
+
     public function getByTeacher($user_id)
     {
         return Present::with('schedule', 'user', 'schedule.batch')

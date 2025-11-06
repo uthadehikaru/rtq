@@ -48,59 +48,65 @@
                 <livewire:teacher :present="$teacherPresent" :schedule="$schedule" />
             </div>
             @endif
-            <livewire:presents :presents="$schedule->presents" />
+            <livewire:presents :schedule_id="$schedule->id" :presents="$schedule->presents" />
         </div>
         
-
-        <form class="kt-form" method="POST" action="{{ route('teacher.schedules.presents.add', $schedule->id) }}">
-        @csrf
-        <div class="kt-portlet">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        Oper Santri
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <button class="btn btn-primary btn-icon-sm">
-                                <i class="la la-plus"></i>
-                                @lang('Tambah')
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <livewire:member-scan :schedule_id="$schedule->id" />
             </div>
-
-            <div class="kt-portlet__body">
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <label>Peserta (bisa lebih dari satu)</label>
-                            <select class="form-control select2" id="kt-select2-user" name="user_id[]" multiple required>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->member->batch()->name }}</option>
-                                @endforeach
-                            </select>
+            <div class="col-12 col-md-8 mt-4 mt-md-0">
+                <form class="kt-form" method="POST" action="{{ route('teacher.schedules.presents.add', $schedule->id) }}">
+                @csrf
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Oper Santri
+                            </h3>
                         </div>
-                        <div class="col-12 col-md-4">
-                            <label>Status</label>
-                            <select class="form-control" name="status" required>
-                                @foreach($statuses as $status)
-                                <option value="{{ $status }}" @selected($status=='present')>@lang('app.present.status.'.$status)</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <label>Keterangan</label>
-                            <input type="text" class="form-control"
-                            placeholder="Masukkan keterangan"
-                            name="description" />
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div class="kt-portlet__head-actions">
+                                    <button class="btn btn-primary btn-icon-sm">
+                                        <i class="la la-plus"></i>
+                                        @lang('Tambah')
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="kt-portlet__body">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <label>Peserta (bisa lebih dari satu)</label>
+                                    <select class="form-control select2" id="kt-select2-user" name="user_id[]" multiple required>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->member->batch()->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label>Status</label>
+                                    <select class="form-control" name="status" required>
+                                        @foreach($statuses as $status)
+                                        <option value="{{ $status }}" @selected($status=='present')>@lang('app.present.status.'.$status)</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label>Keterangan</label>
+                                    <input type="text" class="form-control"
+                                    placeholder="Masukkan keterangan"
+                                    name="description" />
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
-        </form>
 
     </div>
 </div>

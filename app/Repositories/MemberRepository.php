@@ -41,6 +41,11 @@ class MemberRepository implements MemberRepositoryInterface
         return Member::findOrFail($id);
     }
 
+    public function findByMemberNo($member_no)
+    {
+        return Member::where('member_no', $member_no)->first();
+    }
+
     public function delete($id)
     {
         return DB::transaction(function () use ($id) {
