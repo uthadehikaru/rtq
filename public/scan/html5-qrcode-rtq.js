@@ -47,6 +47,10 @@ docReady(function() {
     resultContainer = document.getElementById('results');
     template = document.getElementById('row-template');
 
+    const readerElem = document.getElementById("qr-reader");
+    const width = readerElem.offsetWidth;
+    const qrBoxSize = Math.floor(width * 0.8); // e.g. 80% of container width
+
     const formatsToSupport = [
         Html5QrcodeSupportedFormats.QR_CODE,
         Html5QrcodeSupportedFormats.UPC_A,
@@ -56,7 +60,7 @@ docReady(function() {
         "qr-reader", 
         { 
             fps: 10,
-            qrbox: { "width":300, "height": 200},
+            qrbox: qrBoxSize,
             //formatsToSupport: formatsToSupport,
             experimentalFeatures: {
                 useBarCodeDetectorIfSupported: true
