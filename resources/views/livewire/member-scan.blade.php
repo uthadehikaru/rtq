@@ -15,5 +15,5 @@
 </div>
 @push('scripts')
 <script type="text/javascript" src="{{ asset('scan/html5-qrcode.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('scan/html5-qrcode-rtq.js') }}?v=20251107120000"></script>
+<script type="text/javascript" src="{{ asset('scan/html5-qrcode-rtq.js') }}?v=20251107130000"></script>
 @endpush
