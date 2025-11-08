@@ -197,21 +197,23 @@ class SalaryService
 
     public function getRate($type, $size_type, $rate)
     {
-        if(in_array($type, ['tahsin_anak', 'tahsin_balita'])) {
-            if($size_type == 'besar') {
-                return 75000;
-            } elseif($size_type == 'sedang') {
+        if (in_array($type, ['tahsin_anak', 'tahsin_balita'])) {
+            if ($size_type == 'kecil') {
+                return 50000;
+            } elseif ($size_type == 'sedang') {
                 return 62500;
             } else {
-                return 50000;
-            }
-        } elseif($type == 'tahsin_dewasa') {
-            if($size_type == 'besar') {
-                return 100000;
-            } elseif($size_type == 'sedang') {
                 return 75000;
-            } else {
+            }
+        } elseif ($type == 'tahsin_dewasa') {
+            if ($size_type == 'kecil') {
                 return 50000;
+            } elseif ($size_type == 'sedang') {
+                return 75000;
+            } elseif ($size_type == 'besar') {
+                return 100000;
+            } else {
+                return 125000;
             }
         }
         return $rate;

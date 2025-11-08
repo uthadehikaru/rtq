@@ -12,20 +12,22 @@ class BatchService {
         $batch = Batch::with('course')->find($batch_id);
         $size_type = $batch->size_type;
         if($batch->course->type == 'Tahsin Anak') {
-            if($size_type == 'besar') {
-                return 90;
+            if($size_type == 'kecil') {
+                return 60;
             } elseif($size_type == 'sedang') {
                 return 75;
             } else {
-                return 60;
+                return 90;
             }
-        }elseif($batch->course->type == 'Tahsin Dewasa') {
-            if($size_type == 'besar') {
-                return 120;
+        } elseif($batch->course->type == 'Tahsin Dewasa') {
+            if($size_type == 'kecil') {
+                return 60;
             } elseif($size_type == 'sedang') {
                 return 90;
+            } elseif($size_type == 'besar') {
+                return 120;
             } else {
-                return 60;
+                return 150;
             }
         }
         return (new SettingService)->value('durasi_'.str($batch->course->type)->snake(), 0);
@@ -35,19 +37,23 @@ class BatchService {
     {
         $tipe = '';
         if(in_array($type, ['Tahsin Anak', 'Tahsin Balita'])) {
-            if($count >= 14)
-                $tipe = 'besar';
-            elseif($count >= 11)
-                $tipe = 'sedang';
-            else
+            if($count < 11)
                 $tipe = 'kecil';
-        }elseif($type == 'Tahsin Dewasa') {
-            if($count >= 13)
-                $tipe = 'besar';
-            elseif($count >= 10)
+            elseif($count < 14)
                 $tipe = 'sedang';
+            elseif($count < 19)
+                $tipe = 'besar';
             else
+                $tipe = 'super_besar';
+        } elseif($type == 'Tahsin Dewasa') {
+            if($count < 10)
                 $tipe = 'kecil';
+            elseif($count < 13)
+                $tipe = 'sedang';
+            elseif($count < 19)
+                $tipe = 'besar';
+            else
+                $tipe = 'super_besar';
         }
         return $tipe;
     }
