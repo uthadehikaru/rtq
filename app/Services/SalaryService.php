@@ -197,7 +197,7 @@ class SalaryService
 
     public function getRate($type, $size_type, $rate)
     {
-        if($type == 'tahsin_anak') {
+        if(in_array($type, ['tahsin_anak', 'tahsin_balita'])) {
             if($size_type == 'besar') {
                 return 75000;
             } elseif($size_type == 'sedang') {

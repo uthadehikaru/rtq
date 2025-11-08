@@ -34,7 +34,7 @@ class BatchService {
     public function getSizeType($type, $count)
     {
         $tipe = '';
-        if($type == 'Tahsin Anak') {
+        if(in_array($type, ['Tahsin Anak', 'Tahsin Balita'])) {
             if($count >= 14)
                 $tipe = 'besar';
             elseif($count >= 11)
