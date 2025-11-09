@@ -12,6 +12,13 @@ use Yajra\DataTables\Services\DataTable;
 
 class RegistrationsDataTable extends DataTable
 {
+    public $unregisteredOnly = true;
+
+    public function unregisteredOnly($value = true)
+    {
+        $this->unregisteredOnly = $value;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -60,9 +67,15 @@ class RegistrationsDataTable extends DataTable
      */
     public function query(Registration $model): QueryBuilder
     {
-        return $model
+        $query = $model
             ->with(['user', 'user.member'])
             ->newQuery();
+
+        if ($this->unregisteredOnly) {
+            $query = $query->whereDoesntHave('user');
+        }
+
+        return $query;
     }
 
     /**

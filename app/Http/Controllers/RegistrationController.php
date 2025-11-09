@@ -15,11 +15,15 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(RegistrationsDataTable $dataTable)
+    public function index(Request $request, RegistrationsDataTable $dataTable)
     {
         $data['title'] = 'Pendaftaran';
-
-        return $dataTable->render('datatables.datatable', $data);
+        $dataTable->unregisteredOnly();
+        if ($request->get('action') == 'all') {
+            $dataTable->unregisteredOnly(false);
+        }
+        $data['action'] = $request->get('action');
+        return $dataTable->render('datatables.registration', $data);
     }
 
     /**
