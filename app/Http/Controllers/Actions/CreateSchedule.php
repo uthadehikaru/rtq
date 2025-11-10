@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
+use App\Notifications\TeacherCheckIn;
 use App\Repositories\ScheduleRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -72,6 +74,8 @@ class CreateSchedule extends Controller
                 $result['error'] = null;
                 $result['schedule_id'] = $schedule->id;
                 $result['path'] = asset('storage/'.$file);
+
+                Auth::user()->notify(new TeacherCheckIn($schedule));
 
                 return response()->json($result);
             }

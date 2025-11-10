@@ -22,7 +22,7 @@ class PresentRepository implements PresentRepositoryInterface
 
     public function getPresentByUser($schedule_id, $user_id)
     {
-        return Present::with('user')
+        return Present::with(['schedule', 'user', 'schedule.batch'])
             ->where('schedule_id', $schedule_id)
             ->where('user_id', $user_id)
             ->first();

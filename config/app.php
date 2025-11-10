@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'whatsapp_url' => env('WHATSAPP_URL', 'http://localhost:3000/api/v1/'),
+    'whatsapp_token' => env('WHATSAPP_TOKEN', ''),
 
     /*
     |--------------------------------------------------------------------------

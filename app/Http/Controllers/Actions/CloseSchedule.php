@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Actions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
+use App\Notifications\TeacherCheckOut;
 use App\Repositories\ScheduleRepository;
 use App\Services\BatchService;
 use App\Services\SettingService;
@@ -35,7 +36,7 @@ class CloseSchedule extends Controller
             $batch = $schedule->batch;
 
             $duration = (new BatchService)->getDuration($batch->id);
-            if (Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
+            if (app()->isProduction() && Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
                 return response()->json(['error' => 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i')]);
             }
 
@@ -73,6 +74,8 @@ class CloseSchedule extends Controller
             $result['error'] = null;
             $result['schedule_id'] = $schedule->id;
             $result['path'] = asset('storage/'.$file);
+
+            Auth::user()->notify(new TeacherCheckOut($present));
 
             return response()->json($result);
         } catch (Exception $ex) {

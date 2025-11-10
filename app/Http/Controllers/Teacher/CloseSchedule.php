@@ -20,7 +20,7 @@ class CloseSchedule extends Controller
         }
 
         $duration = (new BatchService)->getDuration($schedule->batch_id);
-        if (Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
+        if (app()->isProduction() && Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
             return back()->with('error', 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i'));
         }
         $data['duration'] = $duration;
