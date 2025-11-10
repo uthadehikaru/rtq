@@ -27,8 +27,14 @@ class WhatsappService
             'message' => $message,
         ]);
 
-        Log::info($response->json());
-        return $response->json();
+        $result = $response->json();
+        if($result['success'] != true) {
+            throw new \Exception($result['message']);
+        }else{
+            Log::info($result);
+        }
+
+        return $result;
     }
     
     public function sendImage($phone, $base64Image, $caption = null)
@@ -40,7 +46,13 @@ class WhatsappService
             'caption' => $caption,
         ]);
 
-        Log::info($response->json());
-        return $response->json();
+        $result = $response->json();
+        if($result['success'] != true) {
+            throw new \Exception($result['message']);
+        }else{
+            Log::info($result);
+        }
+
+        return $result;
     }
 }

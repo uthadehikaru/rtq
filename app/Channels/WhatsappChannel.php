@@ -25,19 +25,21 @@ class WhatsappChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        try {
+        $data = [];
+        if(method_exists($notification, 'toWhatsapp')) {
+            $data = $notification->toWhatsapp($notifiable);
+        }else{
             $data = $notification->toArray($notifiable);
-            $phone = $data['number'];
-            $message = $data['message'];
+        }
+        $phone = $data['number'];
 
-            // Send the message
-            $this->whatsappService->sendMessage($phone, $message);
-            
-            if(isset($data['image'])) {
-                $this->whatsappService->sendImage($phone, $data['image'], $data['caption'] ?? null);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error sending WhatsApp message: '.$e->getMessage());
+        // Send the message
+        if(isset($data['message'])) {
+            $this->whatsappService->sendMessage($phone, $data['message']);
+        }
+        
+        if(isset($data['image'])) {
+            $this->whatsappService->sendImage($phone, $data['image'], $data['caption'] ?? null);
         }
     }
 }

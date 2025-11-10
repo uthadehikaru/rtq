@@ -42,11 +42,6 @@ class TeacherCheckIn extends Notification implements ShouldQueue
         $presentRepository = new PresentRepository();
         $present = $presentRepository->getPresentByUser($this->schedule->id, $notifiable->id);
         
-        // Method 1: Using Storage facade (recommended for Laravel)
-        $image = null;
-        if ($present->photo && Storage::disk('public')->exists($present->photo)) {
-            $image = base64_encode(Storage::disk('public')->get($present->photo));
-        }
         $mimeType = Storage::disk('public')->mimeType($present->photo);
         $image = 'data:'.$mimeType.';base64,'.base64_encode(Storage::disk('public')->get($present->photo));
         

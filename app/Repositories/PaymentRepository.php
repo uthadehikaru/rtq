@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Interfaces\PaymentRepositoryInterface;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\User;
+use App\Notifications\PaymentConfirmation;
 use App\Notifications\PaymentConfirmed;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +62,9 @@ class PaymentRepository implements PaymentRepositoryInterface
             $detail['payment_id'] = $payment->id;
             PaymentDetail::create($detail);
         }
+
+        $admins = User::role('administrator')->notify()->get();
+        Notification::send($admins, new PaymentConfirmation($payment));
 
         return $payment;
     }

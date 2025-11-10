@@ -40,13 +40,8 @@ class TeacherCheckOut extends Notification implements ShouldQueue
     {
         $present = $this->present;
         
-        // Method 1: Using Storage facade (recommended for Laravel)
-        $image = null;
-        if ($present->photo && Storage::disk('public')->exists($present->photo)) {
-            $image = base64_encode(Storage::disk('public')->get($present->photo));
-        }
-        $mimeType = Storage::disk('public')->mimeType($present->photo);
-        $image = 'data:'.$mimeType.';base64,'.base64_encode(Storage::disk('public')->get($present->photo));
+        $mimeType = Storage::disk('public')->mimeType($present->photo_out);
+        $image = 'data:'.$mimeType.';base64,'.base64_encode(Storage::disk('public')->get($present->photo_out));
         
         $caption = 'Bukti Absen Keluar '.$present->user->name. ' - '.$present->schedule->batch->name .' - '.$present->schedule->scheduled_at->format('d-M-Y') .' - '.$present->leave_at->format('H:i');
         $number = (new SettingService())->value('whatsapp');
