@@ -19,6 +19,48 @@ class WhatsappService
         $this->token = config('app.whatsapp_token');
     }
 
+    public function getQrcode()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'qr/image');
+        $result = $response->json();
+        return $result;
+    }
+
+    public function logout()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'qr/logout');
+        $result = $response->json();
+        return $result;
+    }
+
+    public function getQrcodeBase64()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'qr/image/base64');
+        $result = $response->json();
+        return $result;
+    }
+
+    public function clearAuth()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'qr/clear-auth');
+        $result = $response->json();
+        return $result;
+    }
+
+    public function regenerateQrcode()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'qr/generate');
+        $result = $response->json();
+        return $result;
+    }
+
+    public function getStatus()
+    {
+        $response = Http::withHeaders(['Authorization' => 'Bearer '.$this->token])->get($this->url.'status');
+        $result = $response->json();
+        return $result;
+    }
+
     public function sendMessage($phone, $message)
     {
         Log::debug('Sending message to '.$phone.' with message '.$message);

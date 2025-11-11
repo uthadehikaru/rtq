@@ -187,6 +187,11 @@
 														<span class="kt-menu__link-text">@lang('Pengaturan')</span>
 													</a>
 												</li>
+												<li class="kt-menu__item kt-menu__item--rel {{ \Request::is('whatsapp*')?'kt-menu__item--active':'' }}">
+													<a href="{{ route('admin.whatsapp.config') }}" class="kt-menu__link">
+														<span class="kt-menu__link-text">@lang('Whatsapp')</span>
+													</a>
+												</li>
 											</ul>
 										</div>
 									</li>
