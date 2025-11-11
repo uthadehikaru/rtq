@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Registration;
+use App\Services\SettingService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -31,7 +32,7 @@ class RegisteredUser extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'whatsapp'];
     }
 
     /**
@@ -46,6 +47,17 @@ class RegisteredUser extends Notification implements ShouldQueue
             'title' => $this->registration->full_name.' mendaftar tahsin '.$this->registration->type,
             'created_at' => $this->registration->created_at,
             'url' => route('registrations.show', $this->registration->id),
+        ];
+    }
+
+    public function toWhatsapp($notifiable)
+    {
+        $url = route('registrations.show', $this->registration->id);
+        return [
+            'number' => (new SettingService())->value('whatsapp'),
+            'message' => $this->registration->full_name.' mendaftar tahsin '.$this->registration->type. "\n"
+            ."*klik link untuk melihat detail pendaftaran*\n"
+            .$url,
         ];
     }
 }
