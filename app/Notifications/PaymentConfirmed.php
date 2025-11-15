@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\PaymentDetail;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,16 +12,16 @@ class PaymentConfirmed extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $paymentDetail;
+    private $payment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(PaymentDetail $paymentDetail)
+    public function __construct(Payment $payment)
     {
-        $this->paymentDetail = $paymentDetail;
+        $this->payment = $payment;
     }
 
     /**
@@ -32,7 +32,7 @@ class PaymentConfirmed extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'whatsapp'];
     }
 
     /**
@@ -44,9 +44,24 @@ class PaymentConfirmed extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Pembayaran periode '.$this->paymentDetail->period->name.' telah dikonfirmasi',
+            'title' => 'Pembayaran pada tanggal '.$this->payment->created_at->format('d M Y').' telah dikonfirmasi',
             'created_at' => Carbon::now(),
-            'url' => route('dashboard'),
+            'url' => route('member.payments.index'),
+        ];
+    }
+
+    public function toWhatsapp($notifiable)
+    {
+        $details = '';
+        foreach ($this->payment->details as $detail) {
+            $details .= 'Anggota : '.$detail->member->full_name.' periode '.$detail->period->name."\n";
+        }
+        return [
+            'number' => $notifiable->member?->phone,
+            'message' => 'Terima kasih, pembayaran SPP '.config('app.name').' pada tanggal '.$this->payment->created_at->format('d M Y').' telah dikonfirmasi'."\n"
+            .$details."\n"
+            ."cek pembayaran di : ".route('member.payments.index')."\n\n"
+            ."*pesan ini dikirim otomatis oleh sistem ".config('app.name')."*",
         ];
     }
 }

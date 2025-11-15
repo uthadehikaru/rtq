@@ -115,14 +115,18 @@ class PaymentRepository implements PaymentRepositoryInterface
         $payment->paid_at = Carbon::now();
         $payment->save();
 
+        $users = [];
         foreach ($payment->details as $detail) {
-            $user = $detail->member->user;
-            if ($user) {
-                Notification::send($user, new PaymentConfirmed($detail));
+            $user_id = $detail->member->user_id;
+            if (! in_array($user_id, $users)) {
+                $users[] = $user_id;
             }
         }
-
         DB::commit();
+
+        foreach ($users as $user_id) {
+            Notification::send(User::find($user_id), new PaymentConfirmed($payment));
+        }
 
         return $payment;
     }
