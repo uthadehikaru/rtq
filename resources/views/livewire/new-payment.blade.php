@@ -81,6 +81,12 @@
                         </div>
                         @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+                    <div class="alert alert-warning">
+                        <p>
+                            <i class="la la-info-circle"></i>
+                            Dapatkan notifikasi pembayaran melalui WhatsApp dengan melengkapi nomor telepon di profil anda. <a href="{{ route('dashboard') }}" class="text-primary">klik disini</a>
+                        </p>
+                    </div>
                     <button type="submit" class="btn btn-primary" wire:target="savePayment" wire:loading.attr="disabled">Simpan
                     </button>
                     @if($is_member)

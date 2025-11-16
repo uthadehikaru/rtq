@@ -6,6 +6,7 @@ use App\Notifications\Messages\WhatsappMessage;
 use App\Services\WhatsappService;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class WhatsappChannel
 {
@@ -35,6 +36,10 @@ class WhatsappChannel
         if(!$phone) {
             Log::warning('No phone number found for '. $notifiable->email);
             return;
+        }
+
+        if(Str::prefix($phone, '0')) {
+            $phone = '62'.substr($phone, 1);
         }
 
         // Send the message
