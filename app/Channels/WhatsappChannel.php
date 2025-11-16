@@ -38,7 +38,7 @@ class WhatsappChannel
             return;
         }
 
-        if(Str::prefix($phone, '0')) {
+        if(Str::startsWith($phone, '0')) {
             $phone = '62'.substr($phone, 1);
         }
 
