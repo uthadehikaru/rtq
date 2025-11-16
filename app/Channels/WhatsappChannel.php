@@ -32,6 +32,10 @@ class WhatsappChannel
             $data = $notification->toArray($notifiable);
         }
         $phone = $data['number'];
+        if(!$phone) {
+            Log::warning('No phone number found for '. $notifiable->email);
+            return;
+        }
 
         // Send the message
         if(isset($data['message'])) {
