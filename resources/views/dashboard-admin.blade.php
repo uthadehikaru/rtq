@@ -75,6 +75,60 @@
             </div>
         </div>
     </div>
+    <div class="col-12">
+    <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="flaticon-calendar"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Jadwal Halaqoh Terbaru
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped m-0">
+                    <thead>
+                        <tr>
+                            <th>@lang('Tanggal')</th>
+                            <th>@lang('Halaqoh')</th>
+                            <th>@lang('Pengajar')</th>
+                            <th>@lang('Mulai')</th>
+                            <th>@lang('Selesai')</th>
+                            <th>@lang('Tempat')</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($schedules as $schedule)
+                        <tr>
+                            <td>{{ $schedule->scheduled_at->format('d M Y') }}</td>
+                            <td>{{ $schedule->batch->name }}</td>
+                            <td>
+                                @php 
+                                $teachers = [];
+                                foreach ($schedule->presents->where('type', 'teacher') as $present) {
+                                    if($present->user) $teachers[] = $present->user->name;
+                                }
+                                @endphp
+                                {{ implode(', ', $teachers) }}
+                            </td>
+                            <td>{{ $schedule->start_at ? $schedule->start_at->format('H:i') : '-' }}</td>
+                            <td>{{ $schedule->end_at ? $schedule->end_at->format('H:i') : '-' }}</td>
+                            <td>{{ $schedule->place }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">@lang('Belum ada jadwal')</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="col-md-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-widget14">

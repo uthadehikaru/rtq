@@ -51,6 +51,9 @@ class SchedulesDataTable extends DataTable
             ->editColumn('batch_id', function ($row) {
                 return $row->batch->name;
             })
+            ->editColumn('presents_count', function ($row) {
+                return $row->presents_count. ' '.$row->getSizeType($row->presents_count);
+            })
             ->addColumn('teacher', function ($row) {
                 $teachers = [];
                 foreach ($row->presents->where('type', 'teacher') as $teacher) {
@@ -88,7 +91,7 @@ class SchedulesDataTable extends DataTable
 
         return $model
             ->join('batches', 'batches.id', 'schedules.batch_id')
-            ->with('batch', 'presents', 'presents.user')
+            ->with('batch', 'presents', 'presents.user', 'batch.course')
             ->withCount(['presents' => function ($query) {
                 $query->where('type', 'member');
             }])

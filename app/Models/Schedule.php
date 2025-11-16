@@ -50,4 +50,9 @@ class Schedule extends Model
     {
         return (new BatchService)->getSizeType($this->batch->course->type, $this->presents()->member()->count());
     }
+
+    public function getSizeType($count)
+    {
+        return (new BatchService)->getSizeType($this->batch->course->type, $count);
+    }
 }
