@@ -75,7 +75,7 @@ class CloseSchedule extends Controller
             $result['schedule_id'] = $schedule->id;
             $result['path'] = asset('storage/'.$file);
 
-            Auth::user()->notify(new TeacherCheckOut($present));
+            // Auth::user()->notify(new TeacherCheckOut($present));
 
             return response()->json($result);
         } catch (Exception $ex) {

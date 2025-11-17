@@ -75,7 +75,7 @@ class CreateSchedule extends Controller
                 $result['schedule_id'] = $schedule->id;
                 $result['path'] = asset('storage/'.$file);
 
-                Auth::user()->notify(new TeacherCheckIn($schedule));
+                // Auth::user()->notify(new TeacherCheckIn($schedule));
 
                 return response()->json($result);
             }
