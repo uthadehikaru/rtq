@@ -41,7 +41,7 @@ class BatchService {
                 $tipe = 'kecil';
             elseif($count < 14)
                 $tipe = 'sedang';
-            elseif($count < 19)
+            elseif($count < 17)
                 $tipe = 'besar';
             else
                 $tipe = 'super_besar';
@@ -50,7 +50,7 @@ class BatchService {
                 $tipe = 'kecil';
             elseif($count < 13)
                 $tipe = 'sedang';
-            elseif($count < 19)
+            elseif($count < 16)
                 $tipe = 'besar';
             else
                 $tipe = 'super_besar';
