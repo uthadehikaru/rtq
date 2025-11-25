@@ -54,6 +54,9 @@ class PaymentConfirmed extends Notification implements ShouldQueue
     {
         $details = '';
         foreach ($this->payment->details as $detail) {
+            if ($detail->member->phone !== $notifiable->member?->phone) {
+                continue;
+            }
             $details .= 'Anggota : '.$detail->member->full_name.' periode '.$detail->period->name."\n";
         }
         return [
