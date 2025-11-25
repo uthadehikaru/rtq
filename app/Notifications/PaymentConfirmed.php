@@ -61,7 +61,7 @@ class PaymentConfirmed extends Notification implements ShouldQueue
         }
         return [
             'number' => $notifiable->member?->phone,
-            'message' => 'Terima kasih, pembayaran SPP '.config('app.name').' pada tanggal '.$this->payment->created_at->format('d M Y').' telah dikonfirmasi'."\n"
+            'message' => 'Terima kasih, pembayaran SPP '.config('app.name').' pada tanggal '.$this->payment->created_at->format('d M Y').' via '.$this->payment->payment_method.' telah dikonfirmasi'."\n"
             .$details."\n"
             ."cek pembayaran di : ".route('member.payments.index')."\n\n"
             ."*pesan ini dikirim otomatis oleh sistem ".config('app.name')."*",
