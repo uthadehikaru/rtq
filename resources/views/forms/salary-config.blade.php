@@ -88,18 +88,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Potongan Tunjangan per 1x Izin</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Rp.</span>
-                                </div>
-                                <input type="number" name="pengurangan_tunjangan_per_izin" class="form-control"
-                                value="{{ old('pengurangan_tunjangan_per_izin', $settings['pengurangan_tunjangan_per_izin']) }}"
-                                required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Maksimal Izin yang mendapatkan tunjangan</label>
+                            <label>Maksimal Kehadiran yang mendapatkan tunjangan (dalam persentase)</label>
                             <div class="input-group">
                                 <input type="number" name="maks_izin" class="form-control"
                                 value="{{ old('maks_izin', $settings['maks_izin']) }}"

@@ -16,19 +16,16 @@ var KTDatatableJsonRemoteDemo = function () {
                 input: $('#generalSearch'),
             },
             columns: [
-                { field: 'Created at', class: 'text-left' },
-                { field: 'Teacher', class: 'text-left' },
-                { field: 'Jadwal', class: 'text-right' },
-                { field: 'Badal', class: 'text-right' },
-                { field: 'Hadir', class: 'text-right' },
-                { field: 'Telat', class: 'text-right' },
-                { field: 'Absen', class: 'text-right' },
-                { field: 'Izin/Sakit', class: 'text-right' },
-                { 
-                    field: 'Nominal',
-                    class: 'text-right'
-                },
-                { field: 'Action' }
+                { field: 'created_at', class: 'text-left' },
+                { field: 'user_name', class: 'text-left' },
+                { field: 'own', class: 'text-right' },
+                { field: 'switch', class: 'text-right' },
+                { field: 'present', class: 'text-right' },
+                { field: 'late', class: 'text-right' },
+                { field: 'absent', class: 'text-right' },
+                { field: 'permit', class: 'text-right' },
+                { field: 'amount', class: 'text-right' },
+                { field: 'action', class: 'text-right' }
             ]
         });
 
@@ -129,16 +126,16 @@ jQuery(document).ready(function () {
         <table class="kt-datatable" id="html_table" width="100%">
             <thead>
                 <tr>
-                    <th title="Field #1">@lang('Created at')</th>
-                    <th title="Field #2">@lang('Teacher')</th>
-                    <th title="Field #2">@lang('Jadwal')</th>
-                    <th title="Field #2">@lang('Badal')</th>
-                    <th title="Field #2">@lang('Hadir')</th>
-                    <th title="Field #2">@lang('Telat')</th>
-                    <th title="Field #2">@lang('Absen')</th>
-                    <th title="Field #2">@lang('Izin/Sakit')</th>
-                    <th title="Field #2">@lang('Nominal')</th>
-                    <th title="Field #2">@lang('Action')</th>
+                    <th title="created_at">@lang('Created at')</th>
+                    <th title="user_name">@lang('Teacher')</th>
+                    <th title="own">@lang('Jadwal')</th>
+                    <th title="switch">@lang('Badal')</th>
+                    <th title="present">@lang('Hadir')</th>
+                    <th title="late">@lang('Telat')</th>
+                    <th title="absent">@lang('Alfa')</th>
+                    <th title="permit">@lang('Izin/Sakit')</th>
+                    <th title="amount">@lang('Nominal')</th>
+                    <th title="action">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -148,7 +145,7 @@ jQuery(document).ready(function () {
                         <td>{{ $detail->user->name }}</td>
                         <td>{{ $detail->summary['own'] }}</td>
                         <td>{{ $detail->summary['switch'] }}</td>
-                        <td>{{ $detail->summary['present'] }}</td>
+                        <td>{{ $detail->summary['present'] }} ({{ round($detail->summary['present'] / $detail->summary['own'] * 100, 0) }}%)</td>
                         <td>{{ $detail->summary['late'] }}</td>
                         <td>{{ $detail->summary['absent'] }}</td>
                         <td>{{ $detail->summary['permit'] }}</td>

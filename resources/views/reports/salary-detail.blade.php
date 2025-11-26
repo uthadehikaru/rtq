@@ -26,7 +26,7 @@
                         <td>Pokok : @money($detail->summary['base'])</td>
                     </tr>
                     <tr>
-                        <td>Hadir : {{ $detail->summary['present'] }}</td>
+                        <td>Hadir : {{ $detail->summary['present'] }} ({{ round($detail->summary['present'] / $detail->summary['own'] * 100, 0) }}%)</td>
                         <td>Transportasi : @money($detail->summary['transportasi'])</td>
                     </tr>
                     <tr>
@@ -41,7 +41,7 @@
                         <td>Operan Santri : @money($detail->summary['nominal_oper'])</td>
                     </tr>
                     <tr>
-                        <td>Alpha : {{ $detail->summary['absent'] }} | Izin : {{ $detail->summary['permit'] }} | Sakit : {{ $detail->summary['sick'] }}</td>
+                        <td>Alfa : {{ $detail->summary['absent'] }} | Izin : {{ $detail->summary['permit'] }} | Sakit : {{ $detail->summary['sick'] }}</td>
                         <td>Tunjangan : @money($detail->summary['tunjangan'])</td>
                     </tr>
                 </table>
