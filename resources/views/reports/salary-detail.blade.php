@@ -71,7 +71,7 @@
                                         {{ $present->schedule->batch->name }}
                                     </span>
                                 </td>
-                                <td width="15%">{{ $present->schedule->presents()->member()->count() }}</td>
+                                <td width="">{{ $present->schedule->presents()->member()->count() }}</td>
                                 <td width="15%">{{ $present->schedule->batch->course->type }} {{ $present->schedule->size_type }}</td>
                                 <td width="15%">
                                     <span class="text-{{ $present->status=='present'?'primary':'danger' }}">
