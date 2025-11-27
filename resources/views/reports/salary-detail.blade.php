@@ -76,7 +76,13 @@
                                         @lang('app.present.status.'.$present->status)
                                         @if($present->status=='present')
                                             {{ $present->attended_at?->format('H:i') }}
-                                            {!! $present->leave_at?' - '.$present->leave_at->format('H:i'):' - <span class="text-danger">belum tutup kelas</span>' !!}
+                                            @if($present->leave_at)
+                                                - {{ $present->leave_at->format('H:i') }}
+                                            @elseif($present->schedule->end_at)
+                                                - {{ $present->schedule->end_at->format('H:i') }}
+                                            @else
+                                                - <span class="text-danger">belum tutup kelas</span>
+                                            @endif
                                             @php 
                                             $attended_at = $present->attended_at;
                                             if(!$attended_at)
