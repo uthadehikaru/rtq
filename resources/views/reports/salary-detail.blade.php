@@ -49,6 +49,7 @@
                 <table class="table border" id="html_table" width="100%">
                     <thead>
                         <tr>
+                            <th title="">@lang('No.')</th>
                             <th title="">@lang('Schedule')</th>
                             <th title="">@lang('Course')</th>
                             <th title="">@lang('Batch')</th>
@@ -62,6 +63,7 @@
                     <tbody>
                         @foreach($teacherPresents[$detail->user_id] as $present)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td width="25%">@lang('day_'.$present->schedule->scheduled_at->format('N')), {{ $present->schedule->scheduled_at->format('d M Y') }} {{ $present->schedule->start_at?->format('H:i') }}</td>
                                 <td width="15%">{{ $present->schedule->batch->course->name }}</td>
                                 <td width="15%">
