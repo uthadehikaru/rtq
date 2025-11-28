@@ -7,7 +7,6 @@ use App\Services\SettingService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Storage;
 
 class PaymentConfirmation extends Notification implements ShouldQueue
 {
@@ -53,8 +52,6 @@ class PaymentConfirmation extends Notification implements ShouldQueue
 
     public function toWhatsapp($notifiable)
     {
-        $mimeType = Storage::disk('public')->mimeType($this->payment->attachment);
-        $image = 'data:'.$mimeType.';base64,'.base64_encode(Storage::disk('public')->get($this->payment->attachment));
         $url = route('payments.confirm', $this->payment->id);
         $details = '';
         foreach ($this->payment->details as $detail) {
@@ -62,8 +59,7 @@ class PaymentConfirmation extends Notification implements ShouldQueue
         }
         return [
             'number' => (new SettingService())->value('whatsapp'),
-            'image' => $image,
-            'caption' => '*Konfirmasi Pembayaran terbaru* '."\n"
+            'message' => '*Konfirmasi Pembayaran terbaru* '."\n"
             ."Nominal : ".$this->payment->formattedAmount()."\n"
             .$details."\n"
             ."*klik link untuk mengkonfirmasi*\n"
