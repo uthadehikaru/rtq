@@ -15,7 +15,7 @@ class ReportSalary extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, $salary_id, $detail_id = 0)
+    public function __invoke(Request $request, $salary_id, $detail_id)
     {
         $salary = Salary::find($salary_id);
         $detail = (new SalaryService())->findDetail($detail_id);

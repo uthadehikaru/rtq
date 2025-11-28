@@ -97,7 +97,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('finances')->group(function () {
             Route::get('salaries/config', [ConfigSalary::class, 'index'])->name('salaries.config');
             Route::post('salaries/config', [ConfigSalary::class, 'save']);
-            Route::get('salaries/{id}/report/{user_id?}', Actions\ReportSalary::class)->name('salaries.report');
+            Route::get('salaries/{id}/report/{user_id}', Actions\ReportSalary::class)->name('salaries.report');
             Route::get('salaries/{id}/approve', Actions\ApproveSalary::class)->name('salaries.approve');
             Route::get('salaries/{id}/cancel', Actions\CancelSalary::class)->name('salaries.cancel');
             Route::get('salaries/{id}/calculate', Actions\CalculateSalary::class)->name('salaries.calculate');

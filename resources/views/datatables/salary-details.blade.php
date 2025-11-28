@@ -90,10 +90,6 @@ jQuery(document).ready(function () {
                         @lang('Batal')
                     </a>
                     @endif
-                    <a href="{{ route('salaries.report', $salary->id) }}" class="btn btn-success btn-icon-sm" target="_BLANK">
-                        <i class="la la-file"></i>
-                        @lang('Report')
-                    </a>
                 </div>
             </div>
         </div>
