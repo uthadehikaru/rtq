@@ -72,6 +72,7 @@ class BatchesDataTable extends DataTable
     public function query(Batch $model): QueryBuilder
     {
         return $model
+            ->active()
             ->withCount('members')
             ->with(['teachers', 'course'])
             ->where('course_id', $this->course_id)
