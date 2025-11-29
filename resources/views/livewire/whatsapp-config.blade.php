@@ -11,7 +11,6 @@
 			</div>
 		</div>
 		<div class="kt-portlet__body d-flex flex-column align-items-center">
-            <p class="">Endpoint : {{ $whatsapp_url }}</p>
             <p class="">Service : {{ $service ?? 'No Service' }}</p>
             <p class="">Status : {{ $status }}</p>
             @if($qrcode)
