@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-2">
-        <h3 class="mt-2">{{Auth::user()->name}} {{ $present->is_badal?'(Guru Pengganti)':'' }}</h3>
+        <h3 class="mt-2">{{Auth::user()->name}}<br/>{{ $present->is_badal?'(Guru Pengganti)':'' }}</h3>
         @if($present->photo)
         <a href="{{ asset('storage/'.$present->photo) }}" target="_BLANK"><img src="{{ asset('storage/'.$present->photo) }}" class="img-fluid" /></a>
         @endif

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 
 class CreateSchedule extends Controller
 {
@@ -37,6 +38,7 @@ class CreateSchedule extends Controller
             return response(['error' => 'Absen halaqoh '.$batch->name.' hanya bisa dilakukan pada jam '.$batch->start_time->format('H:i')]);
         }
 
+        DB::beginTransaction();
         try {
             $file = 'jadwal/'.Auth::user()->name.' '.$batch->name.' '.Carbon::now()->format('d-M-Y H-i').'.jpg';
             Storage::disk('public')->put($file, file_get_contents($data['photo']));
@@ -74,6 +76,7 @@ class CreateSchedule extends Controller
                 $result['error'] = null;
                 $result['schedule_id'] = $schedule->id;
                 $result['path'] = asset('storage/'.$file);
+                DB::commit();
 
                 // Auth::user()->notify(new TeacherCheckIn($schedule));
 
@@ -82,6 +85,7 @@ class CreateSchedule extends Controller
 
             return response()->json(['error' => 'Gagal membuat jadwal']);
         } catch (Exception $ex) {
+            DB::rollBack();
             return response()->json(['error' => $ex->getMessage()]);
         }
     }

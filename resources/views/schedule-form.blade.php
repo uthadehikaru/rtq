@@ -21,7 +21,7 @@
             <select class="form-control kt-select2" name="batch_id" id="batch" required>
                 <option value="">@lang('Select Batch')</option>
                 @foreach($batches as $batch)
-                    <option value="{{ $batch->id }}">{{ $batch->size_type ? \Str::ucfirst($batch->size_type).' : ' : '' }} {{ $batch->course->name }}
+                    <option value="{{ $batch->id }}" data-teachers="{{ $batch->teachers?->pluck('id')->join(',') ?? '' }}">{{ $batch->size_type ? \Str::ucfirst($batch->size_type).' : ' : '' }} {{ $batch->course->name }}
                         {{ $batch->name }} ({{ $batch->start_time?->format('H:i') }} @ {{ $batch->place }} {{ $batch->teachers?->pluck('name')->join(',') }})</option>
                 @endforeach
             </select>
@@ -34,7 +34,7 @@
                         <input type="radio" name="badal" value="1" required>
                         <span></span>Ya</label>
                     <label class="radio radio-outline radio-success">
-                        <input type="radio" name="badal" checked="checked" value="0" required>
+                        <input type="radio" name="badal" value="0" required>
                         <span></span>Tidak</label>
                 </div>
             </div>
@@ -61,6 +61,7 @@ jQuery(document).ready(function() {
     const canvasElement = document.getElementById('canvas');
     const snapSoundElement = document.getElementById('snapSound');
     const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+    const loggedInUserId = {{ Auth::user()->teacher->id ?? 0 }};
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(locationSuccess);
@@ -70,6 +71,29 @@ jQuery(document).ready(function() {
     
     $('.kt-select2').select2({
         placeholder: "@lang('Pilih Halaqoh')"
+    });
+
+    // Check if logged-in user is in the selected batch's teachers
+    $('#batch').on('change', function() {
+        const selectedOption = $(this).find('option:selected');
+        const teachersData = selectedOption.attr('data-teachers');
+        
+        if (teachersData && typeof teachersData === 'string' && teachersData.trim() !== '') {
+            const teacherIds = teachersData.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+            
+            // Convert loggedInUserId to number for comparison
+            const userId = parseInt(loggedInUserId);
+            const isUserInTeachers = teacherIds.includes(userId);
+            // If user is not in the teachers list, set badal to 1 (Yes)
+            if (!isUserInTeachers) {
+                $('input[name="badal"][value="1"]').prop('checked', true);
+            } else {
+                $('input[name="badal"][value="0"]').prop('checked', true);
+            }
+        } else {
+            // If no teachers data, default to badal = 1 (Yes)
+            $('input[name="badal"][value="1"]').prop('checked', true);
+        }
     });
 
     webcam.start()
