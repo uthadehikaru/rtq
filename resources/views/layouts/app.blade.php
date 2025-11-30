@@ -348,6 +348,7 @@
 								@role('administrator')
 								<a href="{{ route('activities') }}" target="_blank" class="kt-footer__menu-link kt-link">Activities</a>
 								<a href="{{ url('lara-logs') }}" target="_blank" class="kt-footer__menu-link kt-link">Logs</a>
+								<a href="{{ url('failed-jobs') }}" target="_blank" class="kt-footer__menu-link kt-link">Failed Jobs</a>
 								@endrole
 							</div>
 						</div>

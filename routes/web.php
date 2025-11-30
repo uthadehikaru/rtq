@@ -41,6 +41,7 @@ use App\Http\Controllers\Teacher\Schedule as TeacherSchedule;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViolationController;
+use App\Http\Controllers\FailedJobsController;
 use App\Http\Livewire\MemberCards;
 use App\Http\Livewire\PaymentCheck;
 use App\Http\Livewire\Profile;
@@ -123,6 +124,13 @@ Route::middleware('auth')->group(function () {
             Route::get('notifications/clean', CleanOldNotifications::class)->name('notifications.clean');
             Route::get('/login-as/{user:id}', Actions\LoginAsUser::class)->name('login.as');
             Route::get('whatsapp', WhatsappConfig::class)->name('whatsapp.config');
+        });
+        Route::prefix('failed-jobs')->name('failed-jobs.')->group(function () {
+            Route::get('/', [FailedJobsController::class, 'index'])->name('index');
+            Route::get('retry-all', [FailedJobsController::class, 'retryAll'])->name('retry-all');
+            Route::get('flush-all', [FailedJobsController::class, 'flushAll'])->name('flush-all');
+            Route::get('{id}/retry', [FailedJobsController::class, 'retry'])->name('retry');
+            Route::delete('{id}/forget', [FailedJobsController::class, 'forget'])->name('forget');
         });
         Route::resource('settings', SettingController::class);
     });
