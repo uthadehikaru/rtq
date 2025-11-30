@@ -21,6 +21,8 @@ class Teacher extends Component
 
     public $size_type = '';
 
+    public $is_badal = 0;
+
     protected $listeners = ['message' => 'recalculate'];
 
     public function __construct()
@@ -33,6 +35,7 @@ class Teacher extends Component
         $this->duration = (new BatchService)->getDuration($this->schedule->batch_id);
         $this->size_type = $this->schedule->batch->size_type;
         $this->presentCount = $this->schedule->presents()->present()->count();
+        $this->is_badal = $this->present->is_badal ?? 0;
     }
 
     public function recalculate()
@@ -56,6 +59,12 @@ class Teacher extends Component
             $schedule->update(['place' => $place]);
             $this->emit('message', 'Tempat diperbaharui');
         }
+    }
+
+    public function updatedIsBadal()
+    {
+        $this->present->update(['is_badal' => $this->is_badal]);
+        $this->emit('message', 'Badal diperbaharui');
     }
 
     public function render()

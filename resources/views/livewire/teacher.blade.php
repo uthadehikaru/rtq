@@ -48,12 +48,19 @@
                 <input type="time" class="form-control"
                 name="leave_at[{{$present->id}}]"  value="{{ $present->leave_at?->format('H:i') }}"  disabled="disabled" />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
                 <label>Keterangan</label>
                 <input type="text" class="form-control"
                 placeholder="Tidak ada keterangan"
                 wire:blur="updateDescription({{ $present->id }}, $event.target.value)"
                 name="description[{{$present->id}}]"  value="{{ $present->description }}" />
+            </div>
+            <div class="col-12 col-md-6">
+                <label>Badal</label>
+                <select class="form-control" name="is_badal" wire:model="is_badal">
+                    <option value="1">Ya</option>
+                    <option value="0">Tidak</option>
+                </select>
             </div>
         </div>
     </div>
