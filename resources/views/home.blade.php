@@ -97,7 +97,7 @@
 
 	<div class="flex flex-col xl:flex-row items-center justify-between">
 		<div class="mx-auto xl:mx-0 mb-20 xl:mb-0">
-			<img src="{{ asset('assets/images/wakaf.png') }}" alt="Image">
+			<img src="{{ asset('qris.jpg') }}" alt="Image">
 		</div>
 
 		<div class="mx-auto xl:mx-0 text-center xl:text-left">
