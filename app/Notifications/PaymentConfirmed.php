@@ -32,7 +32,7 @@ class PaymentConfirmed extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'whatsapp'];
+        return ['database'];
     }
 
     /**
