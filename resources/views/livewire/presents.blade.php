@@ -10,7 +10,7 @@
         <div class="card mt-2">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-4 text-center">
+                    <div class="col-4 text-center d-flex flex-column justify-content-center">
                         @if($present->user->member?->profile_picture)
                         <img 
                         src="{{ thumbnail($present->user->member->profile_picture, 300, 400) }}"
@@ -31,7 +31,11 @@
                         @endif
                     </div>
                     <div class="col-8">
-                        <label class="form-control">{{ $present->name() }}</label>
+                        <p>{{ $present->name() }} 
+                            @if($present->user->member?->phone)
+                            <a href="tel:{{ $present->user->member->phone }}">{{ $present->user->member->phone }}</a>
+                            @endif
+                        </p>
                         <select class="form-control mt-2" 
                         wire:change="updateStatus({{ $present->id }}, $event.target.value)">
                             @foreach($statuses as $status)
@@ -40,7 +44,7 @@
                         </select>
                         <input type="text" class="form-control mt-2"
                         placeholder="keterangan"
-                         value="{{ $present->description }}" wire:blur="updateDescription({{ $present->id }}, $event.target.value)" />
+                         value="{{ $present->description }}" wire:change="updateDescription({{ $present->id }}, $event.target.value)" />
                     </div>
                 </div>
             </div>
