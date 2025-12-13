@@ -32,10 +32,13 @@ class CreateSchedule extends Controller
             'batch_id' => 'required',
             'badal' => 'required',
         ]);
+        $today = Carbon::now()->format('Y-m-d');
         $batch = Batch::find($data['batch_id']);
-
-        if (Carbon::now()->lessThan($batch->start_time)) {
+        $schedule = $scheduleRepository->findByBatchId($today, $batch->id);
+        if (!$schedule && Carbon::now()->lessThan($batch->start_time)) {
             return response(['error' => 'Absen halaqoh '.$batch->name.' hanya bisa dilakukan pada jam '.$batch->start_time->format('H:i')]);
+        }elseif ($schedule && Carbon::now()->lessThan($schedule->start_at)) {
+            return response()->json(['error' => 'Absen halaqoh '.$batch->name.' hanya bisa dilakukan pada jam '.$schedule->start_time->format('H:i')]);
         }
 
         DB::beginTransaction();

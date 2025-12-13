@@ -72,7 +72,7 @@
         <h3 class="mt-2">Informasi</h3>
         Tipe Kelas : {{ $size_type }}
         <br/>Durasi Kelas : {{ $duration }} Menit
-        <br/>Min Tutup Kelas : {{ $present->attended_at?->addMinutes($duration)->format('H:i') }}
+        <br/>Min Tutup Kelas : {{ $present->attended_at?->addMinutes($duration)->format('h:i A') }}
         <br/>Kehadiran : {{ $presentCount }}
         <br/>Durasi per Peserta : {{ round($duration/$presentCount) }} menit
         @endif

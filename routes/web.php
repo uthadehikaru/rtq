@@ -45,6 +45,7 @@ use App\Http\Controllers\FailedJobsController;
 use App\Http\Livewire\MemberCards;
 use App\Http\Livewire\PaymentCheck;
 use App\Http\Livewire\Profile;
+use App\Http\Livewire\ScheduleForm;
 use App\Http\Livewire\UpdatePassword;
 use App\Http\Livewire\WhatsappConfig;
 use Illuminate\Support\Facades\Route;
@@ -124,6 +125,7 @@ Route::middleware('auth')->group(function () {
             Route::get('notifications/clean', CleanOldNotifications::class)->name('notifications.clean');
             Route::get('/login-as/{user:id}', Actions\LoginAsUser::class)->name('login.as');
             Route::get('whatsapp', WhatsappConfig::class)->name('whatsapp.config');
+            Route::get('schedules/form', ScheduleForm::class)->name('schedules.form');
         });
         Route::prefix('failed-jobs')->name('failed-jobs.')->group(function () {
             Route::get('/', [FailedJobsController::class, 'index'])->name('index');

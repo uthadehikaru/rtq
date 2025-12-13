@@ -193,4 +193,11 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
         return round(1000 * 6378.8 * (2 * asin(sqrt($val)))); // in meters
     }
+
+    public function findByBatchId($today, $batch_id)
+    {
+        return Schedule::whereDate('scheduled_at', $today)
+            ->where('batch_id', $batch_id)
+            ->first();
+    }
 }

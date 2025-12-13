@@ -77,16 +77,26 @@
     </div>
     <div class="col-12">
     <div class="kt-portlet">
-        <div class="kt-portlet__head">
-            <div class="kt-portlet__head-label">
-                <span class="kt-portlet__head-icon">
-                    <i class="flaticon-calendar"></i>
-                </span>
-                <h3 class="kt-portlet__head-title">
-                    Jadwal Halaqoh Terbaru
-                </h3>
+    <div class="kt-portlet__head kt-portlet__head--lg">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="kt-font-brand flaticon-calendar"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Jadwal Halaqoh Terbaru
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            <a href="{{ route('admin.schedules.form') }}" class="btn btn-primary btn-sm mt-2">
+                                <i class="la la-plus"></i>
+                                Tambah Jadwal
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="kt-portlet__body p-0">
             <div class="table-responsive">
                 <table class="table table-hover table-striped m-0">
