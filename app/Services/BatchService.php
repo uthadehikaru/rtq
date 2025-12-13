@@ -11,7 +11,7 @@ class BatchService {
     {
         $batch = Batch::with('course')->find($batch_id);
         $size_type = $batch->size_type;
-        if($batch->course->type == 'Tahsin Anak') {
+        if(in_array($batch->course->type, ['Tahsin Anak', 'Tahsin Balita'])) {
             if($size_type == 'kecil') {
                 return 60;
             } elseif($size_type == 'sedang') {
