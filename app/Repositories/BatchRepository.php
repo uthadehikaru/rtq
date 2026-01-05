@@ -155,10 +155,12 @@ class BatchRepository implements BatchRepositoryInterface
             $course = Course::find($data['course_id']);
 
             $batch->teachers()->sync($data['teacher_ids']);
-            if ($course->type == 'Talaqqi Pengajar') {
-                $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
-            } else {
-                $batch->members()->sync($data['member_ids']);
+            if(isset($data['member_ids'])) {
+                if ($course->type == 'Talaqqi Pengajar') {
+                    $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
+                } else {
+                    $batch->members()->sync($data['member_ids']);
+                }
             }
 
             return $batch;
@@ -172,10 +174,12 @@ class BatchRepository implements BatchRepositoryInterface
         $batch->update($data);
 
         $batch->teachers()->sync($data['teacher_ids'] ?? []);
-        if ($batch->course->type == 'Talaqqi Pengajar') {
-            $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
-        } else {
-            $batch->members()->sync($data['member_ids'] ?? []);
+        if(isset($data['member_ids'])) {
+            if ($batch->course->type == 'Talaqqi Pengajar') {
+                $batch->teachers()->syncWithPivotValues($data['member_ids'], ['is_member' => true], false);
+            } else {
+                $batch->members()->sync($data['member_ids'] ?? []);
+            }
         }
         DB::commit();
 
