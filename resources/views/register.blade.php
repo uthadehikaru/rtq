@@ -290,6 +290,23 @@ Pendaftaran {{ $type }}
 										</div>
                                     </div>
 									@endif
+									@if(in_array($type,['anak','dewasa']))
+									<div class="form-group">
+                                        <label>Tipe Kelas yang diinginkan</label>
+                                        <div class="radio-inline">
+											<label class="radio">
+												<input type="radio" name="is_acceleration" value="0">
+												<span></span>
+												Reguler
+											</label>
+											<label class="radio">
+												<input type="radio" name="is_acceleration" value="1">
+												<span></span>
+												Akselerasi
+											</label>
+										</div>
+                                    </div>
+									@endif
 									<div class="form-group">
 										<label>Referensi Peserta Tahsin di RTQ</label>
 										<input class="form-control" name="reference" />

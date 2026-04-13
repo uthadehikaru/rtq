@@ -261,6 +261,7 @@ class MemberRepository implements MemberRepositoryInterface
             ->count();
         $data['registration_no'] = date('Ym').Str::padLeft(++$last, 3, '0');
         $data['type'] = $type;
+        $data['is_acceleration'] = $data['is_acceleration'] ?? false;
         $registration = Registration::create($data);
 
         $admins = User::role('administrator')->notify()->get();

@@ -43,12 +43,14 @@ class Registration extends Model
         'reference_schedule',
         'user_id',
         'is_yatim',
+        'is_acceleration',
     ];
 
     protected $casts = [
         'birth_date' => 'date',
         'school_start_time' => 'datetime',
         'school_end_time' => 'datetime',
+        'is_acceleration' => 'boolean',
     ];
 
     public function user(): BelongsTo

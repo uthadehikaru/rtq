@@ -53,6 +53,7 @@ class RegistrationRepository
             'email' => $registration->email,
             'school' => $registration->school_name,
             'class' => $registration->class,
+            'is_acceleration' => $registration->is_acceleration,
         ]);
 
         // register batch

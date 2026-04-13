@@ -37,6 +37,7 @@ class RegisterController extends Controller
             'school_end_time' => '',
             'start_school' => '',
             'schedule_option' => '',
+            'is_acceleration' => 'boolean',
             'reference' => 'required|max:255',
             'reference_schedule' => 'max:255',
             'term_condition' => 'required',

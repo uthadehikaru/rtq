@@ -64,6 +64,7 @@
         @else
         <p>Jadwal Tahsin yang Diinginkan : {{ $registration->schedule_option }}</p>
         @endif
+        <p>Tipe Kelas : {{ $registration->is_acceleration ? 'Akselerasi' : 'Reguler' }}</p>
     </div>
 </div>
 @if(!$registration->user)
