@@ -33,8 +33,15 @@
                                 @lang('Back')
                             </a>
                             @if(!$schedule->end_at || !$teacherPresent->leave_at)
+                            @php
+                                $duration = app(\App\Services\BatchService::class)->getDuration($schedule->batch_id);
+                                $sizeType = $schedule->batch->size_type;
+                                $presentCount = $schedule->presents()->present()->count();
+                                $minTutupKelas = $teacherPresent->attended_at?->copy()->addMinutes($duration)->format('h:i A');
+                                $durasiPerPeserta = $presentCount > 0 ? round($duration / $presentCount) : 0;
+                            @endphp
                             <a href="{{ route('teacher.schedules.close', $schedule->id) }}" class="btn btn-success btn-icon-sm mt-2"
-                            onclick="return confirm('Apakah anda yakin ingin menutup kelas?')">
+                            onclick="return confirm('Apakah anda yakin ingin menutup kelas?\n\nTipe Kelas : {{ $sizeType }}\nDurasi Kelas : {{ $duration }} Menit\nMin Tutup Kelas : {{ $minTutupKelas }}\nKehadiran : {{ $presentCount }}\nDurasi per Peserta : {{ $durasiPerPeserta }} menit')">
                                 tutup Kelas
                             </a>
                             @endif
