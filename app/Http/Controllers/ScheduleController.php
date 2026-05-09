@@ -21,13 +21,17 @@ class ScheduleController extends Controller
     {
         $data['title'] = __('Schedules');
         if (Auth::user()->hasRole('administrator')) {
-            $data['buttons'] = '<a href="'.route('schedules.report').'" class="btn btn-success btn-icon-sm mt-2">
+            $data['buttons'] = '<a href="'.route('schedules.report', ['type' => 'teacher', 'range' => 'today']).'" class="btn btn-label-success btn-icon-sm mt-2 mr-2">
                 <i class="la la-file"></i>
-                Laporan
+                <span class="d-none d-md-inline">Laporan pengajar hari ini</span>
+            </a>
+            <a href="'.route('schedules.report').'" class="btn btn-success btn-icon-sm mt-2 mr-2">
+                <i class="la la-file"></i>
+                <span class="d-none d-md-inline">Laporan</span>
             </a>
             <a href="'.route('schedules.create').'" class="btn btn-primary btn-icon-sm mt-2">
                 <i class="la la-plus"></i>
-                Tambah Jadwal
+                <span class="d-none d-md-inline">Tambah Jadwal</span>
             </a>';
         } else {
             $dataTable->setUserId(Auth::id());

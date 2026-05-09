@@ -18,8 +18,14 @@ class Report extends Controller
     public function __invoke(Request $request, ReportPresentsDataTable $dataTable)
     {
         $data['title'] = 'Laporan';
-        $data['start_date'] = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));
-        $data['end_date'] = $request->get('end_date', Carbon::now()->endOfMonth()->format('Y-m-d'));
+        $today = Carbon::today()->format('Y-m-d');
+        if ($request->get('range') === 'today') {
+            $data['start_date'] = $today;
+            $data['end_date'] = $today;
+        } else {
+            $data['start_date'] = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));
+            $data['end_date'] = $request->get('end_date', Carbon::now()->endOfMonth()->format('Y-m-d'));
+        }
         $dataTable->filterDate($data['start_date'], $data['end_date']);
         if ($request->has('type')) {
             $data['title'] .= ' '.__($request->type);

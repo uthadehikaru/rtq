@@ -77,23 +77,30 @@
     </div>
     <div class="col-12">
     <div class="kt-portlet">
-    <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
+    <div class="kt-portlet__head kt-portlet__head--lg row py-4">
+                <div class="kt-portlet__head-label col-md-6">
                     <span class="kt-portlet__head-icon">
                         <i class="kt-font-brand flaticon-calendar"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Jadwal Halaqoh Terbaru
+                        Absensi Hari Ini
+                        <small class="text-muted ml-2">{{ \Carbon\Carbon::today()->translatedFormat('l, d F Y') }}</small>
                     </h3>
                 </div>
-                <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-toolbar col-md-6">
                     <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <a href="{{ route('admin.schedules.form') }}" class="btn btn-primary btn-sm mt-2">
-                                <i class="la la-plus"></i>
-                                Tambah Jadwal
-                            </a>
-                        </div>
+                        <a href="{{ route('schedules.index') }}" class="btn btn-label-primary btn-sm mt-2 mr-2">
+                            <i class="la la-list"></i>
+                            <span class="d-none d-md-inline">Semua Jadwal</span>
+                        </a>
+                        <a href="{{ route('schedules.report', ['type' => 'teacher', 'range' => 'today']) }}" class="btn btn-label-success btn-sm mt-2 mr-2">
+                            <i class="la la-file"></i>
+                            <span class="d-none d-md-inline">Laporan pengajar hari ini</span>
+                        </a>
+                        <a href="{{ route('admin.schedules.form') }}" class="btn btn-primary btn-sm mt-2">
+                            <i class="la la-plus"></i>
+                            <span class="d-none d-md-inline">Buat Absensi</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -102,21 +109,20 @@
                 <table class="table table-hover table-striped m-0">
                     <thead>
                         <tr>
-                            <th>@lang('Tanggal')</th>
                             <th>@lang('Halaqoh')</th>
                             <th>@lang('Pengajar')</th>
                             <th>@lang('Mulai')</th>
                             <th>@lang('Selesai')</th>
                             <th>@lang('Tempat')</th>
+                            <th>@lang('Kehadiran')</th>
                         </tr>
                     </thead>
                     <tbody>
                     @forelse($schedules as $schedule)
                         <tr>
-                            <td>{{ $schedule->scheduled_at->format('d M Y') }}</td>
                             <td>{{ $schedule->batch->name }}</td>
                             <td>
-                                @php 
+                                @php
                                 $teachers = [];
                                 foreach ($schedule->presents->where('type', 'teacher') as $present) {
                                     if($present->user) $teachers[] = $present->user->name;
@@ -127,10 +133,11 @@
                             <td>{{ $schedule->start_at ? $schedule->start_at->format('H:i') : '-' }}</td>
                             <td>{{ $schedule->end_at ? $schedule->end_at->format('H:i') : '-' }}</td>
                             <td>{{ $schedule->place }}</td>
+                            <td>{{ $schedule->members_present_count }} / {{ $schedule->members_count }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">@lang('Belum ada jadwal')</td>
+                            <td colspan="6" class="text-center">@lang('Belum ada jadwal hari ini')</td>
                         </tr>
                     @endforelse
                     </tbody>

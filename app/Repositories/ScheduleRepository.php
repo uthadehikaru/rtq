@@ -31,6 +31,22 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         return Schedule::latest()->paginate($limit);
     }
 
+    public function getToday()
+    {
+        return Schedule::with(['batch', 'presents', 'presents.user'])
+            ->withCount([
+                'presents as members_count' => function ($query) {
+                    $query->where('type', 'member');
+                },
+                'presents as members_present_count' => function ($query) {
+                    $query->where('type', 'member')->where('status', Present::STATUS_PRESENT);
+                },
+            ])
+            ->whereDate('scheduled_at', Carbon::today())
+            ->orderBy('start_at')
+            ->get();
+    }
+
     public function find($id)
     {
         return Schedule::with(['presents', 'presents.user', 'presents.user.member'])->findOrFail($id);

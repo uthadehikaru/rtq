@@ -80,7 +80,7 @@ class DashboardController extends Controller
         $data['periods'] = (new PeriodRepository)->PaymentPerPeriod();
         $data['types'] = ['success' => 'Tahsin Anak', 'danger' => 'Tahsin Dewasa', 'primary' => 'Tahsin Balita'];
         $data['courses'] = (new CourseRepository)->membersPerType($data['types']);
-        $data['schedules'] = (new ScheduleRepository)->getLatest(10);
+        $data['schedules'] = (new ScheduleRepository)->getToday();
 
         //dd($data);
 

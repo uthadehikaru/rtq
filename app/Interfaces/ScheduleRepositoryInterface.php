@@ -10,6 +10,8 @@ interface ScheduleRepositoryInterface
 
     public function getLatest($limit = 10);
 
+    public function getToday();
+
     public function find($id);
 
     public function create(array $data);
