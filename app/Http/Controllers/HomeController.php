@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data['programs'] = Program::latest()->whereNotNull('published_at')->get();
+        $data['programs'] = Program::latest()->whereNotNull('published_at')->take(3)->get();
 
         return view('home', $data);
     }

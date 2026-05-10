@@ -14,6 +14,7 @@ use App\Http\Controllers\BatchMemberController;
 use App\Http\Controllers\BiodataMemberController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FailedJobsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Member\IqobController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PresentController;
+use App\Http\Controllers\PublicProgramsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Salary\ConfigSalary;
@@ -41,7 +43,6 @@ use App\Http\Controllers\Teacher\Schedule as TeacherSchedule;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViolationController;
-use App\Http\Controllers\FailedJobsController;
 use App\Http\Livewire\MemberCards;
 use App\Http\Livewire\PaymentCheck;
 use App\Http\Livewire\Profile;
@@ -62,6 +63,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/programs', [PublicProgramsController::class, 'index'])->name('programs.public');
 Route::post('/upload', Actions\UploadImage::class)->name('upload');
 Route::post('/dropzone', Actions\Dropzone::class)->name('dropzone');
 

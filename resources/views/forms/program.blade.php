@@ -66,7 +66,7 @@
                                 <div class="form-group">
                                     <label>@lang('Amount')</label>
                                     <input type="number" name="amount" class="form-control" placeholder="@lang('Enter Program amount')"
-                                    value="{{ old('amount', $program?$program->amount:'') }}"
+                                    value="{{ old('amount', $program?$program->amount:0) }}"
                                     required>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <label>@lang('Donatur')</label>
                                     <input type="number" name="qty" class="form-control" placeholder="program qty"
-                                    value="{{ old('qty', $program?$program->qty:'') }}"
+                                    value="{{ old('qty', $program?$program->qty:0) }}"
                                     required>
                                 </div>
                             </div>
