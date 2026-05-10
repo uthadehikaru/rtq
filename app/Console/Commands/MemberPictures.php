@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Member;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class MemberPictures extends Command
@@ -52,6 +53,7 @@ class MemberPictures extends Command
                     $image->rotate(-90);
                 }
                 $new = rand().'.jpg';
+                Storage::disk('public')->makeDirectory('profiles');
                 $image->save(storage_path('app/public/profiles/'.$new));
                 $member->update(['profile_picture' => 'profiles/'.$new]);
                 unlink(storage_path('app/public/profiles/'.$filename));

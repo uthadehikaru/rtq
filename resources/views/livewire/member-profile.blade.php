@@ -1,11 +1,11 @@
 <div>
     <p><img src="{{ $profile_picture }}" id="profilepicture" class="img-fluid" width="200" /></p>
     <a class="btn btn-primary btn-sm text-white file-btn">
-        <span>Upload</span>
+        <span><i class="fas fa-upload"></i> Upload Foto</span>
         <input type="file" id="upload" value="Choose a file" accept="image/*" />
     </a>
-    <button type="button" class="btn btn-warning btn-sm btn-icon-sm rotate"><i class="fas fa-sync-alt"></i> Rotate</button>    
-    <button type="button" class="btn btn-success btn-sm btn-icon-sm save"><i class="fas fa-save"></i> Update Image</button>
+    <button type="button" class="btn btn-warning btn-sm btn-icon-sm rotate"><i class="fas fa-sync-alt"></i> Putar</button>    
+    <button type="button" class="btn btn-success btn-sm btn-icon-sm save"><i class="fas fa-save"></i> Simpan</button>
     
     <div class="spinner-border" wire:loading.delay>
     <span class="sr-only">Loading...</span>
@@ -74,7 +74,7 @@
         profilepicture.result({
             type: 'base64',
         }).then(function (resp) {
-            @this.set('profile_picture', resp);
+            @this.call('saveProfilePhoto', resp);
         });
     });
     Livewire.on('refresh',function(){

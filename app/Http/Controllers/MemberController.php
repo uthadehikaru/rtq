@@ -146,6 +146,10 @@ class MemberController extends Controller
 
     public function cards($member_no = null)
     {
+        $template = Storage::disk('public')->get('uploads/'.basename(setting('idcard')));
+        if (! $template) {
+            return back()->with('error', 'Template kartu tidak ditemukan, silahkan upload template di menu Pengaturan');
+        }
         if ($member_no) {
             $member = Member::where('member_no', $member_no)->first();
             Artisan::call('member:card', ['--no' => $member_no]);

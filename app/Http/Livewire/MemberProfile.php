@@ -28,26 +28,36 @@ class MemberProfile extends Component
         }
     }
 
-    public function updated($property)
+    public function saveProfilePhoto(string $imageData)
     {
-        if ($property == 'profile_picture') {
-            $image = Image::make($this->profile_picture);
-            $filename = $this->member->profile_picture;
-            if ($filename) {
-                $thumbnail = 'thumbnail/'.basename($filename);
-                Storage::disk('public')->delete('thumbnails/'.$thumbnail);
-            } else {
-                $filename .= 'profiles/'.Str::random().'.jpg';
-                $this->member->profile_picture = $filename;
-            }
-            $this->member->updated_at = Carbon::now();
-            $changeColumn = $this->member->getDirty();
-            $this->member->save();
-            $image->save(storage_path('app/public/'.$filename));
-            Artisan::call('member:card', ['--no' => $this->member->member_no]);
-            ProfileUpdated::dispatch($this->member, $changeColumn);
-            $this->emit('refresh');
+        if ($imageData === '') {
+            return;
         }
+
+        $image = Image::make($imageData);
+        $filename = $this->member->profile_picture;
+        if ($filename) {
+            $thumbnail = 'thumbnail/'.basename($filename);
+            Storage::disk('public')->delete('thumbnails/'.$thumbnail);
+        } else {
+            $filename = 'profiles/'.Str::random().'.jpg';
+            $this->member->profile_picture = $filename;
+        }
+        $this->member->updated_at = Carbon::now();
+        $changeColumn = $this->member->getDirty();
+        $this->member->save();
+        $directory = dirname($filename);
+        if ($directory !== '.' && $directory !== '') {
+            Storage::disk('public')->makeDirectory($directory);
+        }
+        $image->save(storage_path('app/public/'.$filename));
+
+        if (filled($this->member->member_no)) {
+            Artisan::call('member:card', ['--no' => (string) $this->member->member_no]);
+        }
+
+        ProfileUpdated::dispatch($this->member, $changeColumn);
+        $this->emit('refresh');
     }
 
     public function render()
