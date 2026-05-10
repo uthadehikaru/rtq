@@ -82,6 +82,15 @@
 		</div>
 	</div>
 
+	<div class="text-center mt-10 p-4 bg-yellow-50 text-yellow-500 rounded-md mb-5 md:mb-10">
+
+		<h2 class="font-semibold text-gray-900 text-xl md:text-3xl mb-5">Kelas Akselerasi</h2>
+
+		<p class="font-normal text-gray-700 text-sm md:text-lg mb-5">
+			Tersedia kelas akselerasi untuk anak dan dewasa dengan pertemuan lebih intens dan jadwal khusus pada hari tertentu. hubungi admin <a href="https://wa.me/{{ $settings->value('whatsapp') }}" target="whatsapp" class="font-semibold text-green-500 text-lg gap-3 hover:text-green-700 transition ease-in-out duration-300">081293297936 (WA)</a> untuk informasi lebih lanjut.
+		</p>
+	</div>
+
 </div> <!-- container.// -->
 
 </section>
