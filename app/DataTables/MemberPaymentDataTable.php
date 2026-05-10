@@ -46,6 +46,12 @@ class MemberPaymentDataTable extends DataTable
             ->editColumn('payment.status', function ($row) {
                 return __('app.payment.status.'.$row->payment->status);
             })
+            ->editColumn('payment.attachment', function ($row) {
+                if ($row->payment->attachment) {
+                    return '<a href="'.asset('storage/'.$row->payment->attachment).'" data-lightbox="attachment-'.$row->payment->id.'">Lampiran</a>';
+                }
+            })
+            ->rawColumns(['payment.attachment'])
             ->setRowId('id');
     }
 
@@ -103,6 +109,7 @@ class MemberPaymentDataTable extends DataTable
             Column::make('member_id')->title('Member'),
             Column::make('payment_id')->title('Amount'),
             Column::make('payment.status')->title('Status'),
+            Column::make('payment.attachment')->title('bukti transfer'),
         ];
     }
 
