@@ -15,7 +15,7 @@
                 <form id="paymentForm" wire:submit.prevent="savePayment">
                     <input type="hidden" name="is_member" value="{{ $is_member }}">
                     <div class="form-group">
-                        <label class="col-form-label">@lang('Period')</label>
+                        <label class="col-form-label">@lang('Period') (bisa lebih dari 1)</label>
                         <div wire:ignore>
                             <select class="form-control kt-select-period" name="period_ids[]" multiple>
                                 @foreach($periods as $period)
@@ -26,7 +26,7 @@
                         @error('period_ids') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Daftar Peserta</label>
+                        <label class="col-form-label">Daftar Peserta (bisa lebih dari 1)</label>
                         <div wire:ignore>
                             <select class="form-control kt-select-member" name="members[]" multiple>
                                 <option></option>
@@ -35,7 +35,7 @@
                         @error('members') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label class="col-form-label">Total Transfer</label>
+                        <label class="col-form-label">Nominal Transfer</label>
                         <div>
                             <input class="form-control" id="total" type="number" name="total" wire:model.lazy="total">
                         </div>
@@ -84,7 +84,7 @@
                     <div class="alert alert-warning">
                         <p>
                             <i class="la la-info-circle"></i>
-                            Dapatkan notifikasi pembayaran melalui WhatsApp dengan melengkapi nomor telepon di profil anda. <a href="{{ route('dashboard') }}" class="text-primary">klik disini</a>
+                            Lakukan transfer ke Bank Syariah Indonesia (BSI) dengan nomor rekening <a href="#" onclick="copyToClipboard('7136499151');alert('Nomor rekening berhasil disalin');">7136499151</a> (A.N. Muslim)
                         </p>
                     </div>
                     <button type="submit" class="btn btn-primary" wire:target="savePayment" wire:loading.attr="disabled">Simpan
@@ -100,6 +100,9 @@
 </div>
 @push('scripts')
     <script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+    }
 	$(document).ready(function(){
         $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 
@@ -109,7 +112,7 @@
         });
 
         $('.kt-select-member').select2({
-			placeholder: "Pilih Peserta",
+			placeholder: "Ketik Nama Peserta...",
             width: '100%',
 			ajax: {
 				url: '{{ route('api.batchmembers') }}',
