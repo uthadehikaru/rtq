@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Payment;
 use App\Models\PaymentDetail;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -17,18 +16,24 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
 {
     use Exportable, RegistersEventListeners;
 
+    public function __construct(
+        private ?string $startDate = null,
+        private ?string $endDate = null,
+    ) {}
+
     public static function afterSheet(AfterSheet $event)
     {
         $worksheet = $event->sheet;
-        // Get the highest row and column numbers referenced in the worksheet
-        $highestRow = $worksheet->getHighestRow(); // e.g. 10
-        $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
-        $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
+        $highestRow = $worksheet->getHighestRow();
+        $attachmentColumn = count((new self)->headings());
 
-        for ($row = 1; $row <= $highestRow; $row++) {
-            $value = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-            if ($row > 1 && $value) {
-                $worksheet->getCellByColumnAndRow(7, $row)->setValue('bukti transfer')->getHyperlink()->setUrl($value);
+        for ($row = 2; $row <= $highestRow; $row++) {
+            $value = $worksheet->getCellByColumnAndRow($attachmentColumn, $row)->getValue();
+            if ($value) {
+                $worksheet->getCellByColumnAndRow($attachmentColumn, $row)
+                    ->setValue('bukti transfer')
+                    ->getHyperlink()
+                    ->setUrl($value);
             }
         }
     }
@@ -36,11 +41,12 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
     public function headings(): array
     {
         return [
-            'Tanggal',
+            'Tanggal dibuat',
             'Periode',
             'Anggota',
             'Halaqoh',
             'Nominal',
+            'via',
             'Status',
             'Dikonfirmasi pada',
             'Lampiran',
@@ -48,7 +54,7 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
     }
 
     /**
-     * @var Payment
+     * @var PaymentDetail
      */
     public function map($paymentDetail): array
     {
@@ -58,10 +64,10 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
             $paymentDetail->member->full_name,
             $paymentDetail->member->batches()->pluck('name')->join(','),
             $paymentDetail->payment->amount,
+            $paymentDetail->payment->payment_method,
             __('app.payment.status.'.$paymentDetail->payment->status),
             $paymentDetail->payment->paid_at,
-            asset('storage/'.$paymentDetail->payment->attachment),
-
+            $paymentDetail->payment->attachment ? asset('storage/'.$paymentDetail->payment->attachment) : null,
         ];
     }
 
@@ -70,6 +76,18 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
      */
     public function collection()
     {
-        return PaymentDetail::with('payment', 'member', 'member.batches', 'period')->orderByDesc('period_id')->get();
+        $query = PaymentDetail::with('payment', 'member', 'member.batches', 'period');
+
+        $query->whereHas('payment', function ($query) {
+            if ($this->startDate) {
+                $query->whereDate('created_at', '>=', $this->startDate);
+            }
+
+            if ($this->endDate) {
+                $query->whereDate('created_at', '<=', $this->endDate);
+            }
+        });
+
+        return $query->orderByDesc('period_id')->get();
     }
 }

@@ -14,6 +14,16 @@ use Yajra\DataTables\Services\DataTable;
 
 class PaymentsDataTable extends DataTable
 {
+    private $start_date = null;
+
+    private $end_date = null;
+
+    public function filterDate($start_date, $end_date)
+    {
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
+    }
+
     /**
      * Build DataTable class.
      *
@@ -95,9 +105,19 @@ class PaymentsDataTable extends DataTable
      */
     public function query(Payment $model): QueryBuilder
     {
-        return $model
+        $query = $model
             ->with(['details.member', 'details.batch', 'details.period'])
             ->newQuery();
+
+        if ($this->start_date) {
+            $query->whereDate('created_at', '>=', $this->start_date);
+        }
+
+        if ($this->end_date) {
+            $query->whereDate('created_at', '<=', $this->end_date);
+        }
+
+        return $query;
     }
 
     /**
@@ -129,7 +149,7 @@ class PaymentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('created_at')->title('Tanggal'),
+            Column::make('created_at')->title('Tanggal dibuat'),
             Column::make('member')->title('Anggota'),
             Column::make('amount')->title('Nominal'),
             Column::make('payment_method')->title('via'),

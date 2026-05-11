@@ -11,15 +11,20 @@ use App\Notifications\PaymentConfirmation;
 use App\Repositories\BatchRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\PeriodRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class PaymentController extends Controller
 {
-    public function index(PaymentRepository $paymentRepository, PaymentsDataTable $dataTable)
+    public function index(PaymentRepository $paymentRepository, PaymentsDataTable $dataTable, Request $request)
     {
-        $data['title'] = $paymentRepository->count().' Pembayaran';
+        $data['title'] = 'Pembayaran';
+        $data['start_date'] = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));
+        $data['end_date'] = $request->get('end_date', Carbon::today()->format('Y-m-d'));
+
+        $dataTable->filterDate($data['start_date'], $data['end_date']);
 
         return $dataTable->render('datatables.payment', $data);
     }
@@ -138,8 +143,13 @@ class PaymentController extends Controller
         return response()->json($data);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return (new PaymentsExport)->download('pembayaran per '.date('d M Y H.i').'.xlsx');
+        $startDate = $request->get('start_date', Carbon::now()->startOfMonth()->format('Y-m-d'));
+        $endDate = $request->get('end_date', Carbon::today()->format('Y-m-d'));
+
+        $filename = 'pembayaran '.Carbon::parse($startDate)->format('d M Y').' - '.Carbon::parse($endDate)->format('d M Y').'.xlsx';
+
+        return (new PaymentsExport($startDate, $endDate))->download($filename);
     }
 }

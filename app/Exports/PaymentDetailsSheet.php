@@ -47,6 +47,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             'halaqoh',
             'status',
             'tanggal bayar',
+            'metode pembayaran',
         ];
     }
 
@@ -63,6 +64,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $member->batches->first()?->name,
             $status,
             $member->paymentDetails->first()?->created_at,
+            $member->paymentDetails->first()?->payment->payment_method,
         ];
     }
 }
