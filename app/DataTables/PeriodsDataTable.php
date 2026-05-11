@@ -37,6 +37,7 @@ class PeriodsDataTable extends DataTable
                 </button>
                 <div class="dropdown-menu" aria-labelledby="action">';
                 $buttons .= '<a href="'.route('paymentdetails.index', ['period_id' => $row->id]).'" class="dropdown-item pointer text-primary">Detail</a>';
+                $buttons .= '<a href="'.route('periods.export', $row->id).'" class="dropdown-item pointer text-success">Export</a>';
                 $buttons .= '<a href="javascript:;" class="dropdown-item pointer text-danger delete" data-id="'.$row->id.'">Hapus</a>';
                 $buttons .= '</div></div>';
 

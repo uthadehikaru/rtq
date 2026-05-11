@@ -10,3 +10,8 @@
     {{ $period->name ?? 'All' }}
 </span>
 @endsection
+@section('buttons')
+        <a class="btn btn-success" href="{{ $period ? route('periods.export', $period->id) : route('periods.export') }}">
+            <i class="la la-share"></i> Export to Excel
+        </a>
+@endsection

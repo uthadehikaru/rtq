@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Member;
 use App\Models\Period;
+use App\Services\SettingService;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -13,12 +14,14 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithTitle
 {
     use Exportable;
-
+    
+    private $memberFee = 0;
     private $period;
 
     public function __construct(Period $period)
     {
         $this->period = $period;
+        $this->memberFee = (new SettingService())->value('course_fee', 0);
     }
 
     public function title(): string
@@ -48,6 +51,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             'status',
             'tanggal bayar',
             'metode pembayaran',
+            'nominal',
         ];
     }
 
@@ -64,7 +68,8 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $member->batches->first()?->name,
             $status,
             $member->paymentDetails->first()?->created_at,
-            $member->paymentDetails->first()?->payment->payment_method,
+            $status == 'Sudah Bayar' ? $member->paymentDetails->first()?->payment->payment_method : '',
+            $status == 'Sudah Bayar' ? $this->memberFee : '',
         ];
     }
 }

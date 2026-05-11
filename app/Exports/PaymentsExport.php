@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\PaymentDetail;
+use App\Models\Payment;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
@@ -42,8 +42,7 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
     {
         return [
             'Tanggal dibuat',
-            'Periode',
-            'Anggota',
+            'Detail',
             'Halaqoh',
             'Nominal',
             'via',
@@ -54,20 +53,29 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
     }
 
     /**
-     * @var PaymentDetail
+     * @var Payment
      */
-    public function map($paymentDetail): array
+    public function map($payment): array
     {
+        $detailsText = $payment->details
+            ->map(fn ($detail) => $detail->member->full_name.' periode '.$detail->period->name)
+            ->join('; ');
+
+        $halaqoh = $payment->details
+            ->map(fn ($detail) => $detail->member->batches->pluck('name')->join(','))
+            ->filter()
+            ->unique()
+            ->join('; ');
+
         return [
-            $paymentDetail->created_at,
-            $paymentDetail->period->name,
-            $paymentDetail->member->full_name,
-            $paymentDetail->member->batches()->pluck('name')->join(','),
-            $paymentDetail->payment->amount,
-            $paymentDetail->payment->payment_method,
-            __('app.payment.status.'.$paymentDetail->payment->status),
-            $paymentDetail->payment->paid_at,
-            $paymentDetail->payment->attachment ? asset('storage/'.$paymentDetail->payment->attachment) : null,
+            $payment->created_at,
+            $detailsText,
+            $halaqoh,
+            $payment->amount,
+            $payment->payment_method,
+            __('app.payment.status.'.$payment->status),
+            $payment->paid_at,
+            $payment->attachment ? asset('storage/'.$payment->attachment) : null,
         ];
     }
 
@@ -76,18 +84,16 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
      */
     public function collection()
     {
-        $query = PaymentDetail::with('payment', 'member', 'member.batches', 'period');
+        $query = Payment::with(['details.member.batches', 'details.period']);
 
-        $query->whereHas('payment', function ($query) {
-            if ($this->startDate) {
-                $query->whereDate('created_at', '>=', $this->startDate);
-            }
+        if ($this->startDate) {
+            $query->whereDate('created_at', '>=', $this->startDate);
+        }
 
-            if ($this->endDate) {
-                $query->whereDate('created_at', '<=', $this->endDate);
-            }
-        });
+        if ($this->endDate) {
+            $query->whereDate('created_at', '<=', $this->endDate);
+        }
 
-        return $query->orderByDesc('period_id')->get();
+        return $query->orderByDesc('created_at')->get();
     }
 }

@@ -7,6 +7,7 @@ use App\Exports\PaymentDetailsSheet;
 use App\Exports\PeriodsExport;
 use App\Models\Member;
 use App\Models\Period;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PeriodController extends Controller
@@ -59,9 +60,9 @@ class PeriodController extends Controller
     {
         $period = Period::find($period_id);
         if ($period) {
-            return (new PaymentDetailsSheet($period))->download('pembayaran per '.date('d M Y H.i').'.xlsx');
+            return (new PaymentDetailsSheet($period))->download('pembayaran periode '.$period->name.'.xlsx');
         }
 
-        return (new PeriodsExport())->download('pembayaran per '.date('d M Y H.i').'.xlsx');
+        return (new PeriodsExport())->download('pembayaran periode per '.Carbon::now()->format('d M Y').'.xlsx');
     }
 }
