@@ -39,7 +39,6 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
                 $query->orderBy('name');
             },
         ])
-            ->whereHas('batches')
             ->orderBy('full_name');
     }
 
@@ -57,19 +56,23 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
 
     public function map($member): array
     {
-        if ($member->status) {
+        if ($member->paymentDetails->count()) {
+            $status = 'Sudah Bayar';
+        } elseif ($member->status == 'free') {
             $status = 'Gratis';
+        } elseif(!$member->batches->first()) {
+            $status = 'Inaktif';
         } else {
-            $status = $member->paymentDetails->count() ? 'Sudah Bayar' : 'Belum Bayar';
+            $status = 'Belum Bayar';
         }
 
         return [
             $member->full_name,
             $member->batches->first()?->name,
             $status,
-            $member->paymentDetails->first()?->created_at,
-            $status == 'Sudah Bayar' ? $member->paymentDetails->first()?->payment->payment_method : '',
-            $status == 'Sudah Bayar' ? $this->memberFee : '',
+            $member->paymentDetails->first()?->created_at ?? '',
+            $status == 'Sudah Bayar' ? $member->paymentDetails->first()?->payment->payment_method ?? '' : '',
+            $status == 'Sudah Bayar' ? $this->memberFee ?? '' : '',
         ];
     }
 }
