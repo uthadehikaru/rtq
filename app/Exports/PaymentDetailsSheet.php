@@ -58,10 +58,10 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
     {
         if ($member->paymentDetails->count()) {
             $status = 'Sudah Bayar';
-        } elseif ($member->status) {
-            $status = 'Gratis';
         } elseif(!$member->batches->first()) {
             $status = 'Inaktif';
+        } elseif ($member->status) {
+            $status = 'Gratis';
         } else {
             $status = 'Belum Bayar';
         }
