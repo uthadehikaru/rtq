@@ -152,6 +152,7 @@ class PaymentsDataTable extends DataTable
             Column::make('created_at')->title('Tanggal dibuat'),
             Column::make('member')->title('Anggota'),
             Column::make('amount')->title('Nominal'),
+            Column::make('target_account')->title('Tujuan Transfer'),
             Column::make('payment_method')->title('via'),
             Column::make('status'),
             Column::make('description')->title('Keterangan'),

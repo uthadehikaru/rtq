@@ -34,6 +34,8 @@ class NewPayment extends Component
 
     public $payment_method = 'transfer';
 
+    public $target_account = '';
+
     protected $rules = [
         'period_ids' => 'required',
         'members' => 'required',
@@ -43,6 +45,11 @@ class NewPayment extends Component
         'description' => 'nullable|max:225',
         'paid_at' => 'required|date',
         'payment_method' => 'required|in:transfer,amplop',
+        'target_account' => 'required_if:is_member,true|string',
+    ];
+
+    protected $messages = [
+        'target_account.required_if' => 'Tujuan transfer wajib dipilih',
     ];
 
     public function mount($is_member = false)
@@ -129,7 +136,10 @@ class NewPayment extends Component
             'payment_method' => $this->payment_method,
         ];
 
-        if (! $this->is_member) {
+        if ($this->payment_method == 'transfer') {
+            $payment['target_account'] = $this->target_account;
+        }
+        if(!$this->is_member) {
             $payment['description'] = $this->description;
             $payment['paid_at'] = $this->paid_at;
             $payment['status'] = 'paid';

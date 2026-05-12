@@ -16,6 +16,7 @@ class Payment extends Model
         'status',
         'payment_method',
         'description',
+        'target_account',
     ];
 
     protected $casts = [

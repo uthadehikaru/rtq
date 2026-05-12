@@ -15,11 +15,17 @@ class PaymentForm extends Component
 
     public $member_id;
 
+    public $target_account;
+
     public $rules = [
         'payment.amount' => 'required|numeric',
         'payment.payment_method' => 'required|in:transfer,amplop',
         'payment.paid_at' => 'nullable|date',
         'payment.details.*.period_id' => 'required',
+        'payment.target_account' => 'required_if:payment.payment_method,transfer|string',
+    ];
+    protected $messages = [
+        'payment.target_account.required_if' => 'Tujuan transfer wajib dipilih',
     ];
 
     protected $appends = ['payment.amount'];

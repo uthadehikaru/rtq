@@ -41,37 +41,63 @@
                         </div>
                         @error('total') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    @if(!$is_member)
-                    <div class="form-group">
-                        <label class="col-form-label">Keterangan</label>
-                        <div>
-                            <input class="form-control" id="description" type="text" name="description" wire:model="description">
-                        </div>
-                        @error('description') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Metode Pembayaran</label>
-                        <div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" 
-                            id="transfer" value="transfer" wire:model.defer="payment_method">
-                            <label class="form-check-label" for="transfer">transfer</label>
+                    @if($is_member)
+                        <div class="form-group">
+                            <label class="col-form-label">Tujuan Transfer</label>
+                            <p class="text-danger">bagi yang masih transfer ke rekening Ust. Muslim, disarankan selanjutnya transfer ke rekening Yayasan</p>
+                            <div>
+                                <select class="form-control" name="target_account" wire:model.defer="target_account" required>
+                                    <option value="">Pilih Tujuan Transfer</option>
+                                    <option value="BSI_7779996861">BSI 7779996861 A.N. Yayasan Al Muzzammil Quranic Reading Organization</option>
+                                    <option value="BSI_7136499151">BSI 7136499151 A.N. Muslim</option>
+                                </select>
                             </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" 
-                            id="amplop" value="amplop" wire:model.defer="payment_method">
-                            <label class="form-check-label" for="amplop">amplop</label>
+                            @error('target_account') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    @else
+                        <div class="form-group">
+                            <label class="col-form-label">Metode Pembayaran</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                id="transfer" value="transfer" wire:model.live="payment_method">
+                                <label class="form-check-label" for="transfer">transfer</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                id="amplop" value="amplop" wire:model.live="payment_method">
+                                <label class="form-check-label" for="amplop">amplop</label>
+                                </div>
                             </div>
+                            @error('payment_method') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        @error('payment_method') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="col-form-label">Tanggal Konfirmasi</label>
-                        <div>
-                            <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.lazy="paid_at">
+                        @if($payment_method == 'transfer')
+                        <div class="form-group">
+                            <label class="col-form-label">Tujan Transfer</label>
+                            <div>
+                                <select class="form-control" name="target_account" wire:model.defer="target_account" required>
+                                    <option value="">Pilih Tujuan Transfer</option>
+                                    <option value="BSI_7779996861">BSI 7779996861 A.N. Yayasan Al Muzzammil Quranic Reading Organization</option>
+                                    <option value="BSI_7136499151">BSI 7136499151 A.N. Muslim</option>
+                                </select>
+                            </div>
+                            @error('target_account') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
+                        @endif
+                        <div class="form-group">
+                            <label class="col-form-label">Keterangan</label>
+                            <div>
+                                <input class="form-control" id="description" type="text" name="description" wire:model="description">
+                            </div>
+                            @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Tanggal Konfirmasi</label>
+                            <div>
+                                <input class="form-control" id="paid_at" type="date" name="paid_at" wire:model.lazy="paid_at">
+                            </div>
+                            @error('paid_at') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                     @endif
                     <div class="form-group">
                         <label class="col-form-label">Bukti Transfer</label>
@@ -80,12 +106,6 @@
                             wire:model="attachment" accept="image/*">
                         </div>
                         @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="alert alert-warning">
-                        <p>
-                            <i class="la la-info-circle"></i>
-                            Lakukan transfer ke Bank Syariah Indonesia (BSI) dengan nomor rekening <a href="#" onclick="copyToClipboard('7136499151');alert('Nomor rekening berhasil disalin');">7136499151</a> (A.N. Muslim)
-                        </p>
                     </div>
                     <button type="submit" class="btn btn-primary" wire:target="savePayment" wire:loading.attr="disabled">Simpan
                     </button>

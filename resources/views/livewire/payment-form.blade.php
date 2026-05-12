@@ -47,6 +47,19 @@
                             </div>
                         </div>
                     </div>
+                    @if($payment->payment_method == 'transfer')
+                    <div class="form-group">
+                        <label>Tujuan Transfer</label>
+                        <select class="form-control" name="target_account" wire:model.defer="payment.target_account" required>
+                            <option value="">Pilih Tujuan Transfer</option>
+                            <option value="BSI_7779996861">BSI 7779996861 A.N. Yayasan Al Muzzammil Quranic Reading Organization</option>
+                            <option value="BSI_7136499151">BSI 7136499151 A.N. Muslim</option>
+                        </select>
+                        @error('target_account')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    @endif
                     <div class="form-group">
                         <label>Dikonfirmasi pada</label>
                         <input type="date" name="paid_at" class="form-control"

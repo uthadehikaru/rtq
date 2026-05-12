@@ -51,6 +51,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             'tanggal bayar',
             'metode pembayaran',
             'nominal',
+            'tujuan transfer',
         ];
     }
 
@@ -73,6 +74,7 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $member->paymentDetails->first()?->created_at ?? '',
             $status == 'Sudah Bayar' ? $member->paymentDetails->first()?->payment->payment_method ?? '' : '',
             $status == 'Sudah Bayar' ? $this->memberFee ?? '' : '',
+            $member->paymentDetails->first()?->payment->target_account ?? '',
         ];
     }
 }

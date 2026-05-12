@@ -49,6 +49,8 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
             'Status',
             'Dikonfirmasi pada',
             'Lampiran',
+            'Tujuan Transfer',
+            'Keterangan',
         ];
     }
 
@@ -76,6 +78,8 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithEvents, With
             __('app.payment.status.'.$payment->status),
             $payment->paid_at,
             $payment->attachment ? asset('storage/'.$payment->attachment) : null,
+            $payment->target_account,
+            $payment->description,
         ];
     }
 
