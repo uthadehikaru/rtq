@@ -54,35 +54,52 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-
-                @if($schedules)
-                    <div class="kt-timeline-v2">
-                        <div class="kt-timeline-v2__items  kt-padding-top-25 kt-padding-bottom-30">
-                            @foreach($schedules as $schedule)
-                                <div class="kt-timeline-v2__item">
-                                    <a href="{{ route('teacher.schedules.detail', $schedule->id) }}"
-                                        class="kt-timeline-v2__item-time btn btn-sm btn-icon btn-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <div class="kt-timeline-v2__item-cricle">
-                                        <i class="fa fa-genderless kt-font-primary"></i>
-                                    </div>
-                                    <div class="kt-timeline-v2__item-text  kt-padding-top-5">
-                                        Jadwal Halaqoh {{ $schedule->batch->name }} pada
-                                        {{ $schedule->scheduled_at->format('d M Y') }}
-                                        {{ $schedule->start_at->format('H:i') }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @else
-                    <p class="text-center">@lang('Belum ada jadwal yang diinput')</p>
-                @endif
-
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped m-0">
+                        <thead>
+                            <tr>
+                                <th>@lang('Tanggal')</th>
+                                <th>@lang('Halaqoh')</th>
+                                <th>@lang('Pengajar')</th>
+                                <th>@lang('Mulai')</th>
+                                <th>@lang('Selesai')</th>
+                                <th>@lang('Tempat')</th>
+                                <th>@lang('Peserta')</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($schedules as $schedule)
+                                @php
+                                    $teachers = [];
+                                    foreach ($schedule->presents->where('type', 'teacher') as $present) {
+                                        if ($present->user) {
+                                            $teachers[] = $present->user->name;
+                                        }
+                                    }
+                                @endphp
+                                <tr>
+                                    <td>{{ $schedule->scheduled_at->format('d M Y') }}</td>
+                                    <td>{{ $schedule->batch->name }}</td>
+                                    <td>{{ implode(', ', $teachers) }}</td>
+                                    <td>{{ $schedule->start_at->format('H:i') }}</td>
+                                    <td>{{ $schedule->end_at?->format('H:i') ?? '-' }}</td>
+                                    <td>{{ $schedule->place }}</td>
+                                    <td>{{ $schedule->presents_count }} ({{ $schedule->getSizeType($schedule->presents_count) }})</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('teacher.schedules.detail', $schedule->id) }}" class="text-primary">Detail</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center">@lang('Belum ada jadwal yang diinput')</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
     </div>
     <div class="col-lg-6">
         <x-violation-card :violations="$violations" />

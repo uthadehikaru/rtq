@@ -52,7 +52,7 @@ class SchedulesDataTable extends DataTable
                 return $row->batch->name;
             })
             ->editColumn('presents_count', function ($row) {
-                return $row->presents_count. ' '.$row->getSizeType($row->presents_count);
+                return $row->presents_count. ' ('.$row->getSizeType($row->presents_count).')';
             })
             ->addColumn('teacher', function ($row) {
                 $teachers = [];

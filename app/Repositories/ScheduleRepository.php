@@ -180,7 +180,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     public function currentMonth($user_id)
     {
-        return Schedule::with('batch')
+        return Schedule::with('batch', 'batch.course', 'presents', 'presents.user')
             ->withCount(['presents' => function ($query) {
                 $query->where('type', 'member');
             }])
