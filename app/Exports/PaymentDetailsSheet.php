@@ -3,8 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Member;
+use App\Models\PaymentDetail;
 use App\Models\Period;
-use App\Services\SettingService;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -15,13 +15,11 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
 {
     use Exportable;
     
-    private $memberFee = 0;
     private $period;
 
     public function __construct(Period $period)
     {
         $this->period = $period;
-        $this->memberFee = (new SettingService())->value('course_fee', 0);
     }
 
     public function title(): string
@@ -33,7 +31,8 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
     {
         return Member::with([
             'paymentDetails' => function ($query) {
-                $query->where('period_id', $this->period->id);
+                $query->where('period_id', $this->period->id)
+                    ->with(['payment' => fn ($paymentQuery) => $paymentQuery->withCount('details')]);
             },
             'batches' => function ($query) {
                 $query->orderBy('name');
@@ -67,14 +66,28 @@ class PaymentDetailsSheet implements FromQuery, WithHeadings, WithMapping, WithT
             $status = 'Belum Bayar';
         }
 
+        $paymentDetail = $member->paymentDetails->first();
+
         return [
             $member->full_name,
             $member->batches->first()?->name,
             $status,
-            $member->paymentDetails->first()?->created_at ?? '',
-            $status == 'Sudah Bayar' ? $member->paymentDetails->first()?->payment->payment_method ?? '' : '',
-            $status == 'Sudah Bayar' ? $this->memberFee ?? '' : '',
-            $member->paymentDetails->first()?->payment->target_account ?? '',
+            $paymentDetail?->created_at ?? '',
+            $status == 'Sudah Bayar' ? $paymentDetail?->payment->payment_method ?? '' : '',
+            $status == 'Sudah Bayar' && $paymentDetail ? $this->nominalForDetail($paymentDetail) : '',
+            $paymentDetail?->payment->target_account ?? '',
         ];
+    }
+
+    private function nominalForDetail(PaymentDetail $detail): int
+    {
+        $payment = $detail->payment;
+        $detailCount = $payment->details_count;
+
+        if ($detailCount > 1) {
+            return (int) round($payment->amount / $detailCount);
+        }
+
+        return $payment->amount;
     }
 }

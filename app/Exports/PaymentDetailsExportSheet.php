@@ -31,7 +31,12 @@ class PaymentDetailsExportSheet implements FromQuery, ShouldAutoSize, WithHeadin
 
     public function query()
     {
-        $query = PaymentDetail::with(['payment', 'period', 'member.batches', 'batch'])
+        $query = PaymentDetail::with([
+            'payment' => fn ($query) => $query->withCount('details'),
+            'period',
+            'member.batches',
+            'batch',
+        ])
             ->whereHas('payment', function ($paymentQuery) {
                 if ($this->startDate) {
                     $paymentQuery->whereDate('created_at', '>=', $this->startDate);
@@ -74,12 +79,24 @@ class PaymentDetailsExportSheet implements FromQuery, ShouldAutoSize, WithHeadin
             $detail->member->full_name,
             $detail->period->name,
             $halaqoh,
-            $this->memberFee,
+            $this->nominalForDetail($detail),
             $detail->payment->payment_method,
             __('app.payment.status.'.$detail->payment->status),
             $detail->payment->paid_at,
             $detail->payment->target_account,
             $detail->payment_id,
         ];
+    }
+
+    private function nominalForDetail(PaymentDetail $detail): int
+    {
+        $payment = $detail->payment;
+        $detailCount = $payment->details_count;
+
+        if ($detailCount > 1) {
+            return (int) round($payment->amount / $detailCount);
+        }
+
+        return $payment->amount;
     }
 }
