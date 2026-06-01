@@ -38,6 +38,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            Route::get('/health', \App\Http\Controllers\HealthController::class)
+                ->middleware('health.token');
+
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
