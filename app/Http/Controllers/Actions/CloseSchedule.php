@@ -35,7 +35,8 @@ class CloseSchedule extends Controller
             $present = $schedule->presents()->where('user_id', Auth::id())->first();
             $batch = $schedule->batch;
 
-            $duration = (new BatchService)->getDuration($batch->id);
+            $memberCount = $schedule->presents()->member()->count();
+            $duration = (new BatchService)->getDuration($batch->id, $memberCount);
             if (app()->isProduction() && Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
                 return response()->json(['error' => 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i')]);
             }

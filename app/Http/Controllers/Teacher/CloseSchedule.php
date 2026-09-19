@@ -19,7 +19,8 @@ class CloseSchedule extends Controller
             return back()->with('error', 'Anda sudah absen keluar pada '.$present->leave_at->format('H:i'));
         }
 
-        $duration = (new BatchService)->getDuration($schedule->batch_id);
+        $memberCount = $schedule->presents()->member()->count();
+        $duration = (new BatchService)->getDuration($schedule->batch_id, $memberCount);
         if (app()->isProduction() && Carbon::now()->diffInMinutes($present->attended_at) < $duration) {
             return back()->with('error', 'Belum diperbolehkan absen keluar, minimal jam '.$present->attended_at->addMinutes($duration)->format('H:i'));
         }

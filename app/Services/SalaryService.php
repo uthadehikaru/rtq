@@ -109,7 +109,9 @@ class SalaryService
 
                     $ratio = $present->user->teacher->status == 'training' ? 0.5 : 1;
                     $summary[$type]['total']++;
-                    $rate = $this->getRate($type, $present->schedule->size_type, $settings[$type]);
+                    $memberCount = $present->schedule->presents()->member()->count();
+                    $sizeType = (new BatchService)->getSizeType($present->schedule->batch->course->type, $memberCount);
+                    $rate = $this->getRate($type, $sizeType, $settings[$type], $memberCount);
                     $rate *= $ratio;
                     $summary[$type]['amount'] += $rate;
                     $summary['base'] += $rate;
@@ -168,18 +170,18 @@ class SalaryService
 
             if ($summary['present'] > 0) {
                 $summary['tunjangan'] = $settings['tunjangan'] * $ratio;
-                
+
                 $present_percentage = round($summary['present'] / $summary['own'] * 100, 0);
                 $fix_amount = round($settings['tunjangan'] * 0.3);
                 $present_amount = $settings['tunjangan'] - $fix_amount;
-                if($summary['absent'] > 0) {
+                if ($summary['absent'] > 0) {
                     $present_amount = 0;
-                }elseif ($present_percentage < $settings['maks_izin']) {
+                } elseif ($present_percentage < $settings['maks_izin']) {
                     $present_amount = 0;
                 }
-                if($present_amount > 0) {
+                if ($present_amount > 0) {
                     $present_amount = round($present_amount * $present_percentage / 100);
-                }else{
+                } else {
                     $fix_amount = round($fix_amount * $present_percentage / 100);
                 }
                 $summary['tunjangan'] = $fix_amount + $present_amount;
@@ -199,7 +201,7 @@ class SalaryService
         DB::commit();
     }
 
-    public function getRate($type, $size_type, $rate)
+    public function getRate($type, $size_type, $rate, $memberCount = 0)
     {
         if (in_array($type, ['tahsin_anak', 'tahsin_balita'])) {
             if ($size_type == 'kecil') {
@@ -216,10 +218,13 @@ class SalaryService
                 return 75000;
             } elseif ($size_type == 'besar') {
                 return 100000;
-            } else {
-                return 125000;
             }
+
+            $multipliers = max(1, (new BatchService)->getDewasaExtraMultiplier($memberCount));
+
+            return 100000 + $multipliers * BatchService::DEWASA_EXTRA_FEE;
         }
+
         return $rate;
     }
 

@@ -3,58 +3,85 @@
 namespace App\Services;
 
 use App\Models\Batch;
-use PHPUnit\Event\Telemetry\System;
 
-class BatchService {
+class BatchService
+{
+    public const DEWASA_EXTRA_MEMBER_THRESHOLD = 15;
 
-    public function getDuration($batch_id)
+    public const DEWASA_EXTRA_MEMBER_STEP = 3;
+
+    public const DEWASA_EXTRA_FEE = 25000;
+
+    public const DEWASA_EXTRA_DURATION_MINUTES = 15;
+
+    public function getDuration($batch_id, $count = null)
     {
-        $batch = Batch::with('course')->find($batch_id);
-        $size_type = $batch->size_type;
-        if(in_array($batch->course->type, ['Tahsin Anak', 'Tahsin Balita'])) {
-            if($size_type == 'kecil') {
+        $batch = Batch::with(['course', 'members'])->find($batch_id);
+
+        return $this->calculateDuration($batch->course->type, $count ?? $batch->members->count());
+    }
+
+    public function calculateDuration($type, $count)
+    {
+        $sizeType = $this->getSizeType($type, $count);
+
+        if (in_array($type, ['Tahsin Anak', 'Tahsin Balita'])) {
+            if ($sizeType == 'kecil') {
                 return 60;
-            } elseif($size_type == 'sedang') {
+            } elseif ($sizeType == 'sedang') {
                 return 75;
-            } else {
-                return 90;
             }
-        } elseif($batch->course->type == 'Tahsin Dewasa') {
-            if($size_type == 'kecil') {
+
+            return 90;
+        } elseif ($type == 'Tahsin Dewasa') {
+            if ($sizeType == 'kecil') {
                 return 60;
-            } elseif($size_type == 'sedang') {
+            } elseif ($sizeType == 'sedang') {
                 return 90;
-            } elseif($size_type == 'besar') {
+            } elseif ($sizeType == 'besar') {
                 return 120;
-            } else {
-                return 150;
             }
+
+            return 120 + $this->getDewasaExtraMultiplier($count) * self::DEWASA_EXTRA_DURATION_MINUTES;
         }
-        return (new SettingService)->value('durasi_'.str($batch->course->type)->snake(), 0);
+
+        return (new SettingService)->value('durasi_'.str($type)->snake(), 0);
     }
 
     public function getSizeType($type, $count)
     {
         $tipe = '';
-        if(in_array($type, ['Tahsin Anak', 'Tahsin Balita'])) {
-            if($count < 11)
+        if (in_array($type, ['Tahsin Anak', 'Tahsin Balita'])) {
+            if ($count < 11) {
                 $tipe = 'kecil';
-            elseif($count < 14)
+            } elseif ($count < 14) {
                 $tipe = 'sedang';
-            elseif($count < 17)
+            } elseif ($count < 17) {
                 $tipe = 'besar';
-            else
+            } else {
                 $tipe = 'super_besar';
-        } elseif($type == 'Tahsin Dewasa') {
-            if($count < 10)
+            }
+        } elseif ($type == 'Tahsin Dewasa') {
+            if ($count < 10) {
                 $tipe = 'kecil';
-            elseif($count < 13)
+            } elseif ($count < 13) {
                 $tipe = 'sedang';
-            elseif($count < 16)
+            } elseif ($count < 16) {
                 $tipe = 'besar';
-            else
+            } else {
                 $tipe = 'super_besar';
+            }
         }
+
         return $tipe;
+    }
+
+    public function getDewasaExtraMultiplier($count)
+    {
+        if ($count <= self::DEWASA_EXTRA_MEMBER_THRESHOLD) {
+            return 0;
+        }
+
+        return (int) ceil(($count - self::DEWASA_EXTRA_MEMBER_THRESHOLD) / self::DEWASA_EXTRA_MEMBER_STEP);
     }
 }

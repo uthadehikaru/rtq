@@ -32,8 +32,9 @@ class Teacher extends Component
 
     public function mount()
     {
-        $this->duration = (new BatchService)->getDuration($this->schedule->batch_id);
-        $this->size_type = $this->schedule->batch->size_type;
+        $memberCount = $this->schedule->presents()->member()->count();
+        $this->duration = (new BatchService)->getDuration($this->schedule->batch_id, $memberCount);
+        $this->size_type = $this->schedule->size_type;
         $this->presentCount = $this->schedule->presents()->present()->count();
         $this->is_badal = $this->present->is_badal ?? 0;
     }

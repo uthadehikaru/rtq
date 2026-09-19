@@ -34,8 +34,9 @@
                             </a>
                             @if(!$schedule->end_at || !$teacherPresent->leave_at)
                             @php
-                                $duration = app(\App\Services\BatchService::class)->getDuration($schedule->batch_id);
-                                $sizeType = $schedule->batch->size_type;
+                                $memberCount = $schedule->presents()->member()->count();
+                                $duration = app(\App\Services\BatchService::class)->getDuration($schedule->batch_id, $memberCount);
+                                $sizeType = $schedule->size_type;
                                 $presentCount = $schedule->presents()->present()->count();
                                 $minTutupKelas = $teacherPresent->attended_at?->copy()->addMinutes($duration)->format('h:i A');
                                 $durasiPerPeserta = $presentCount > 0 ? round($duration / $presentCount) : 0;
