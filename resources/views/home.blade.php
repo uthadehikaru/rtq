@@ -100,35 +100,6 @@
 
 <div class="container max-w-screen-xl mx-auto px-4">
 
-	<h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">WAKAF PEMBEBASAN LAHAN & BANGUNAN RTQ MAISŪRŌ</h1>
-
-	<p class="font-normal text-gray-500 text-md md:text-lg text-center mb-10 md:mb-20">Mari Bersama Kita Wujudkan Harapan Ummat Untuk Menjadikan Bangunan Ini Sebagai Pusat Pendidikan Al-Qur'an Melalui Program Wakaf Pembebasan Lahan & Bangunan Untuk Rumah Tartil Al-Qur'an (RTQ) Maisūrō</p>
-
-	<div class="flex flex-col xl:flex-row items-center justify-between">
-		<div class="mx-auto xl:mx-0 mb-20 xl:mb-0">
-			<img src="{{ asset('qris.jpg') }}" alt="Image">
-		</div>
-
-		<div class="mx-auto xl:mx-0 text-center xl:text-left">
-			<h1 class="font-bold text-gray-700 text-3xl md:text-4xl mb-10">BSI 777.999.6861<br/>
-			An. Yayasan Al Muzzammil Quranic Reading Organization</h1>
-
-			<p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Mari Bersama Kita Wujudkan Harapan Ummat Untuk Menjadikan Bangunan Ini Sebagai Pusat Pendidikan Al-Qur'an Melalui Program Wakaf Pembebasan Lahan & Bangunan Untuk Rumah Tartil Al-Qur'an (RTQ) Maisūrō</p>
-
-			<a href="https://wa.me/{{ $settings->value('whatsapp') }}" target="whatsapp" class="flex items-center justify-center xl:justify-start font-semibold text-green-500 text-lg gap-3 hover:text-green-700 transition ease-in-out duration-300">
-				More Info 081293297936 (WA)
-			</a>
-		</div>
-	</div>
-
-</div> <!-- container.// -->
-
-</section>
-
-<section class="py-8 md:py-16">
-
-<div class="container max-w-screen-xl mx-auto px-4">
-
 	<h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">Program Kami</h1>
 
 	<p class="font-normal text-gray-500 text-md md:text-lg text-center mb-20">Jadilah bagian dari perjuangan dakwah kami</p>
