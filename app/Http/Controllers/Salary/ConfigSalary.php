@@ -27,7 +27,6 @@ class ConfigSalary extends Controller
             'tunjangan' => 'required',
             'telat_tanpa_konfirmasi' => 'required',
             'maks_telat_dengan_konfirmasi' => 'required',
-            'pengurangan_tunjangan_per_izin' => 'required',
             'maks_izin' => 'required',
             'maks_waktu_telat' => 'required',
         ];
