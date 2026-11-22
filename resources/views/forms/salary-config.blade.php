@@ -43,7 +43,7 @@
                     <div class="kt-section kt-section--first">
                         @foreach ($course_types as $type)
                         <div class="form-group">
-                            <label>Kelas {{ $type }}</label>
+                            <label>Kelas {{ $type }}@if(array_key_exists(Str::snake($type), \App\Services\SalaryService::HOURLY_COURSE_TYPES)) (per jam)@endif</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>

@@ -27,23 +27,27 @@ test('tahsin dewasa duration adds 15 minutes for each 3 members above 15', funct
     expect($service->calculateDuration('Tahsin Dewasa', 22))->toBe(165);
 });
 
-test('tahsin dewasa salary adds 25000 for each 3 members above 15', function () {
+test('tahsin fee is the hourly rate times class hours for its size', function () {
     $service = new SalaryService();
 
-    expect($service->getRate('tahsin_dewasa', 'kecil', 0, 9))->toBe(50000);
-    expect($service->getRate('tahsin_dewasa', 'sedang', 0, 12))->toBe(75000);
-    expect($service->getRate('tahsin_dewasa', 'besar', 0, 15))->toBe(100000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 0, 16))->toBe(125000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 0, 18))->toBe(125000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 0, 19))->toBe(150000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 0, 21))->toBe(150000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 0, 22))->toBe(175000);
+    // Tahsin Anak / Balita: kecil 1h, sedang 1.25h, besar & super besar 1.5h
+    expect($service->getRate('tahsin_anak', 'kecil', 50000, 10))->toBe(50000);
+    expect($service->getRate('tahsin_anak', 'sedang', 50000, 11))->toBe(62500);
+    expect($service->getRate('tahsin_anak', 'besar', 50000, 16))->toBe(75000);
+    expect($service->getRate('tahsin_anak', 'super_besar', 50000, 18))->toBe(75000);
+    expect($service->getRate('tahsin_balita', 'sedang', 60000, 12))->toBe(75000);
+
+    // Tahsin Dewasa: kecil 1h, sedang 1.5h, besar 2h, +0.25h per 3 members above 15
+    expect($service->getRate('tahsin_dewasa', 'kecil', 50000, 9))->toBe(50000);
+    expect($service->getRate('tahsin_dewasa', 'sedang', 50000, 12))->toBe(75000);
+    expect($service->getRate('tahsin_dewasa', 'besar', 50000, 15))->toBe(100000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 16))->toBe(112500);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 19))->toBe(125000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 22))->toBe(137500);
 });
 
-test('tahsin anak duration and salary are unchanged by dewasa extra rule', function () {
-    $batchService = new BatchService();
-    $salaryService = new SalaryService();
+test('non tahsin courses keep their flat configured fee', function () {
+    $service = new SalaryService();
 
-    expect($batchService->calculateDuration('Tahsin Anak', 18))->toBe(90);
-    expect($salaryService->getRate('tahsin_anak', 'super_besar', 0, 18))->toBe(75000);
+    expect($service->getRate('talaqqi_jamai', '', 40000, 30))->toBe(40000);
 });

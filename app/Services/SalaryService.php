@@ -227,31 +227,39 @@ class SalaryService
         DB::commit();
     }
 
-    public function getRate($type, $size_type, $rate, $memberCount = 0)
+    /**
+     * Course types whose fee is an hourly rate (from the salary config)
+     * multiplied by the class hours for its size.
+     */
+    public const HOURLY_COURSE_TYPES = [
+        'tahsin_anak' => 'Tahsin Anak',
+        'tahsin_dewasa' => 'Tahsin Dewasa',
+        'tahsin_balita' => 'Tahsin Balita',
+    ];
+
+    /**
+     * Class hours for a course type and member count, based only on class size
+     * (kecil = 1 hour). Returns null for course types paid at a flat rate.
+     */
+    public function getClassHours($type, $memberCount)
     {
-        if (in_array($type, ['tahsin_anak', 'tahsin_balita'])) {
-            if ($size_type == 'kecil') {
-                return 50000;
-            } elseif ($size_type == 'sedang') {
-                return 62500;
-            } else {
-                return 75000;
-            }
-        } elseif ($type == 'tahsin_dewasa') {
-            if ($size_type == 'kecil') {
-                return 50000;
-            } elseif ($size_type == 'sedang') {
-                return 75000;
-            } elseif ($size_type == 'besar') {
-                return 100000;
-            }
-
-            $multipliers = max(1, (new BatchService)->getDewasaExtraMultiplier($memberCount));
-
-            return 100000 + $multipliers * BatchService::DEWASA_EXTRA_FEE;
+        if (! array_key_exists($type, self::HOURLY_COURSE_TYPES)) {
+            return null;
         }
 
-        return $rate;
+        $minutes = (new BatchService)->calculateDuration(self::HOURLY_COURSE_TYPES[$type], $memberCount);
+
+        return $minutes / 60;
+    }
+
+    public function getRate($type, $size_type, $rate, $memberCount = 0)
+    {
+        $hours = $this->getClassHours($type, $memberCount);
+        if ($hours === null) {
+            return $rate;
+        }
+
+        return (int) round((float) $rate * $hours);
     }
 
     public function getPresentOfSalary($salary_id, $user_id = 0)
