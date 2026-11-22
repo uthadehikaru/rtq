@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use App\Models\Setting;
+use App\Services\SalaryService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -51,6 +52,15 @@ class SettingSeeder extends Seeder
                 'name' => $setting,
             ], [
                 'payload' => 0,
+            ]);
+        }
+
+        foreach (SalaryService::OPER_SANTRI_DEFAULTS as $type => $amount) {
+            Setting::firstOrCreate([
+                'group' => 'salary',
+                'name' => SalaryService::operSantriKey($type),
+            ], [
+                'payload' => $amount,
             ]);
         }
 

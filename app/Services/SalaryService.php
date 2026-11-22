@@ -11,6 +11,30 @@ use Illuminate\Support\Str;
 
 class SalaryService
 {
+    /**
+     * Default operan santri amount per course type (per transferred member).
+     * Course types not listed here use the generic `oper_santri` setting.
+     */
+    public const OPER_SANTRI_DEFAULTS = [
+        'tahsin_anak' => 10000,
+        'tahsin_dewasa' => 12000,
+        'tahsin_balita' => 10000,
+    ];
+
+    public static function operSantriKey($type)
+    {
+        return 'oper_santri_'.$type;
+    }
+
+    public function getOperSantriRate($type, $settings)
+    {
+        if (array_key_exists($type, self::OPER_SANTRI_DEFAULTS)) {
+            return $settings[self::operSantriKey($type)] ?? self::OPER_SANTRI_DEFAULTS[$type];
+        }
+
+        return $settings['oper_santri'] ?? 0;
+    }
+
     public function all()
     {
         return Salary::with('details')->latest()->get();
@@ -94,6 +118,7 @@ class SalaryService
                 'sick' => 0,
                 'base' => 0,
                 'oper_santri' => 0,
+                'nominal_oper' => 0,
                 'transportasi' => 0,
                 'tunjangan' => 0,
                 'potongan_telat' => 0,
@@ -133,13 +158,15 @@ class SalaryService
                         }
                     }
 
-                    $summary['oper_santri'] += Present::where([
+                    $operCount = Present::where([
                         'schedule_id' => $present->schedule_id,
                         'type' => 'member',
                         'status' => 'present',
                         'is_transfer' => true,
                     ])
                         ->count();
+                    $summary['oper_santri'] += $operCount;
+                    $summary['nominal_oper'] += $operCount * $this->getOperSantriRate($type, $settings);
                 } elseif ($present->status == Present::STATUS_permit) {
                     $summary['permit']++;
                 } elseif ($present->status == Present::STATUS_SICK) {
@@ -161,7 +188,6 @@ class SalaryService
             $summary['transportasi'] = $summary['present'] * $settings['transportasi'];
             $amount += $summary['transportasi'];
 
-            $summary['nominal_oper'] = $summary['oper_santri'] * $settings['oper_santri'];
             $amount += $summary['nominal_oper'];
 
             $late = $summary['late'] - ($summary['late_with_confirm'] > $settings['maks_telat_dengan_konfirmasi'] ? 3 : $summary['late_with_confirm']);

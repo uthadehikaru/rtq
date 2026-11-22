@@ -54,8 +54,22 @@
                             </div>
                         </div>
                         @endforeach
+                        @foreach ($oper_santri_defaults as $type => $default)
+                        @php($key = \App\Services\SalaryService::operSantriKey($type))
                         <div class="form-group">
-                            <label>Operan Santri</label>
+                            <label>Operan Santri {{ Str::title(str_replace('_', ' ', $type)) }}</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp.</span>
+                                </div>
+                                <input type="number" name="{{ $key }}" class="form-control"
+                                value="{{ old($key, $settings[$key] ?? $default) }}"
+                                required>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div class="form-group">
+                            <label>Operan Santri Kelas Lainnya</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>

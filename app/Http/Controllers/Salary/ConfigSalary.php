@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Salary;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Setting;
+use App\Services\SalaryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,7 @@ class ConfigSalary extends Controller
         $data['course_types'] = Course::TYPES;
         $data['courses'] = Course::orderBy('name')->get();
         $data['settings'] = Setting::group('salary')->pluck('payload', 'name');
+        $data['oper_santri_defaults'] = SalaryService::OPER_SANTRI_DEFAULTS;
 
         return view('forms.salary-config', $data);
     }
@@ -33,6 +35,10 @@ class ConfigSalary extends Controller
 
         foreach (Course::TYPES as $type) {
             $validations[Str::snake($type)] = 'required';
+        }
+
+        foreach (array_keys(SalaryService::OPER_SANTRI_DEFAULTS) as $type) {
+            $validations[SalaryService::operSantriKey($type)] = 'required';
         }
 
         $data = $request->validate($validations);
