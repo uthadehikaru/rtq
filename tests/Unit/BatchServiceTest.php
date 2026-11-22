@@ -37,13 +37,17 @@ test('tahsin fee is the hourly rate times class hours for its size', function ()
     expect($service->getRate('tahsin_anak', 'super_besar', 50000, 18))->toBe(75000);
     expect($service->getRate('tahsin_balita', 'sedang', 60000, 12))->toBe(75000);
 
-    // Tahsin Dewasa: kecil 1h, sedang 1.5h, besar 2h, +0.25h per 3 members above 15
+    // Tahsin Dewasa: kecil 1h, sedang 1.5h, besar 2h,
+    // above 15 members: besar fee + 25000 per 3 extra members
     expect($service->getRate('tahsin_dewasa', 'kecil', 50000, 9))->toBe(50000);
     expect($service->getRate('tahsin_dewasa', 'sedang', 50000, 12))->toBe(75000);
     expect($service->getRate('tahsin_dewasa', 'besar', 50000, 15))->toBe(100000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 16))->toBe(112500);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 19))->toBe(125000);
-    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 22))->toBe(137500);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 16))->toBe(125000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 18))->toBe(125000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 19))->toBe(150000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 50000, 22))->toBe(175000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 55000, 16))->toBe(135000);
+    expect($service->getRate('tahsin_dewasa', 'super_besar', 55000, 22))->toBe(185000);
 });
 
 test('non tahsin courses keep their flat configured fee', function () {

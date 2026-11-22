@@ -238,8 +238,10 @@ class SalaryService
     ];
 
     /**
-     * Class hours for a course type and member count, based only on class size
-     * (kecil = 1 hour). Returns null for course types paid at a flat rate.
+     * Paid class hours for a course type and member count, based only on class
+     * size (kecil = 1 hour). Tahsin Dewasa above 15 members is capped at the
+     * besar hours; its extra time is paid as a flat fee (see getRate).
+     * Returns null for course types paid at a flat rate.
      */
     public function getClassHours($type, $memberCount)
     {
@@ -247,7 +249,12 @@ class SalaryService
             return null;
         }
 
-        $minutes = (new BatchService)->calculateDuration(self::HOURLY_COURSE_TYPES[$type], $memberCount);
+        $batchService = new BatchService;
+        if ($type == 'tahsin_dewasa') {
+            $memberCount = min($memberCount, BatchService::DEWASA_EXTRA_MEMBER_THRESHOLD);
+        }
+
+        $minutes = $batchService->calculateDuration(self::HOURLY_COURSE_TYPES[$type], $memberCount);
 
         return $minutes / 60;
     }
@@ -259,7 +266,13 @@ class SalaryService
             return $rate;
         }
 
-        return (int) round((float) $rate * $hours);
+        $fee = (float) $rate * $hours;
+
+        if ($type == 'tahsin_dewasa') {
+            $fee += (new BatchService)->getDewasaExtraMultiplier($memberCount) * BatchService::DEWASA_EXTRA_FEE;
+        }
+
+        return (int) round($fee);
     }
 
     public function getPresentOfSalary($salary_id, $user_id = 0)
